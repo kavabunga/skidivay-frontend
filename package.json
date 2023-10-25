@@ -1,80 +1,27 @@
 {
 	"name": "odcs-frontend",
-	"version": "0.1.0",
 	"private": true,
-	"dependencies": {
-		"@testing-library/jest-dom": "^5.17.0",
-		"@testing-library/react": "^13.4.0",
-		"@testing-library/user-event": "^13.5.0",
-		"react": "^18.2.0",
-		"react-dom": "^18.2.0",
-		"react-scripts": "5.0.1",
-		"web-vitals": "^2.1.4"
-	},
+	"version": "0.0.0",
+	"type": "module",
 	"scripts": {
-		"start": "react-scripts start",
-		"build": "react-scripts build",
-		"test": "react-scripts test",
-		"eject": "react-scripts eject",
-		"lint": "eslint . --ext .js,.jsx .",
+		"dev": "vite",
+		"build": "tsc && vite build",
+		"preview": "vite preview",
+		"lint": "eslint . --ext js,jsx,ts,tsx --report-unused-disable-directives --max-warnings 0",
 		"lint:fix": "npm run lint -- --fix",
 		"format": "prettier . --write",
 		"prepare": "husky install",
 		"commit": "cz",
 		"storybook": "storybook dev -p 6006",
-		"build-storybook": "storybook build",
-		"deploy": "gh-pages -d dist"
+		"build-storybook": "storybook build"
 	},
-	"eslintConfig": {
-		"extends": [
-			"react-app",
-			"react-app/jest",
-			"airbnb",
-			"airbnb/hooks",
-			"prettier",
-			"plugin:storybook/recommended"
-		],
-		"rules": {
-			"react/jsx-filename-extension": [
-				1,
-				{
-					"extensions": [
-						".js",
-						".jsx"
-					]
-				}
-			],
-			"react/react-in-jsx-scope": "off",
-			"import/prefer-default-export": "off",
-			"react/function-component-definition": "off",
-			"react/jsx-props-no-spreading": "off",
-			"react/no-unescaped-entities": "off",
-			"react/button-has-type": "off"
-		},
-		"overrides": [
-			{
-				"files": [
-					"**/*.stories.*",
-					"src/stories/**/*"
-				],
-				"rules": {
-					"import/no-anonymous-default-export": "off",
-					"import/no-extraneous-dependencies": "off"
-				}
-			}
-		]
+	"lint-staged": {
+		"*.{ts,tsx}": "npm run lint",
+		"*.{ts,tsx,css,md,html,json}": "npm run format"
 	},
-	"browserslist": {
-		"production": [
-			">0.2%",
-			"not dead",
-			"not op_mini all"
-		],
-		"development": [
-			"last 1 chrome version",
-			"last 1 firefox version",
-			"last 1 safari version"
-		]
+	"dependencies": {
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0"
 	},
 	"devDependencies": {
 		"@storybook/addon-essentials": "^7.5.1",
@@ -82,31 +29,26 @@
 		"@storybook/addon-links": "^7.5.1",
 		"@storybook/addon-onboarding": "^1.0.8",
 		"@storybook/blocks": "^7.5.1",
-		"@storybook/preset-create-react-app": "^7.5.1",
 		"@storybook/react": "^7.5.1",
-		"@storybook/react-webpack5": "^7.5.1",
+		"@storybook/react-vite": "^7.5.1",
 		"@storybook/testing-library": "^0.2.2",
-		"babel-plugin-named-exports-order": "^0.0.2",
+		"@types/react": "^18.2.15",
+		"@types/react-dom": "^18.2.7",
+		"@typescript-eslint/eslint-plugin": "^6.0.0",
+		"@typescript-eslint/parser": "^6.0.0",
+		"@vitejs/plugin-react": "^4.0.3",
 		"commitizen": "^4.3.0",
 		"cz-conventional-changelog": "^3.3.0",
-		"eslint-config-airbnb": "^19.0.4",
+		"eslint": "^8.45.0",
 		"eslint-config-prettier": "^9.0.0",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"eslint-plugin-react-refresh": "^0.4.3",
 		"eslint-plugin-storybook": "^0.6.15",
-		"gh-pages": "^6.0.0",
 		"husky": "^8.0.3",
 		"lint-staged": "^15.0.2",
-		"prettier": "^3.0.3",
-		"prop-types": "^15.8.1",
+		"prettier": "3.0.3",
 		"storybook": "^7.5.1",
-		"webpack": "^5.89.0"
-	},
-	"lint-staged": {
-		"*.{js,jsx}": "npm run lint",
-		"*.{js,jsx,css,md,html,json}": "npm run format"
-	},
-	"config": {
-		"commitizen": {
-			"path": "./node_modules/cz-conventional-changelog"
-		}
+		"typescript": "^5.0.2",
+		"vite": "^4.4.5"
 	}
 }
