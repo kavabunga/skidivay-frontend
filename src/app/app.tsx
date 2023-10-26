@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import reactLogo from '~/shared/assets/react.svg';
 import viteLogo from '/vite.svg';
+import { Button } from '@mui/material';
 import './App.css';
 
 export function App() {
@@ -8,6 +9,7 @@ export function App() {
 
 	return (
 		<>
+			<Button>MUI Button</Button>
 			<div>
 				<a href="https://vitejs.dev" target="_blank">
 					<img src={viteLogo} className="logo" alt="Vite logo" />
