@@ -1,5 +1,9 @@
 # ODCS FRONTEND
 
+- [Фич лист](https://docs.google.com/spreadsheets/d/1GwV1-NoSkC2oHRamFoRoKfmjsDQTBtnCVACTTKllpCs/edit#gid=1450262909)
+
+- [Дизайн](https://www.figma.com/file/3SieWKz3TaNqmqWhlz0dSt/Online-discount-card-service?type=design&node-id=41%3A2638&mode=design&t=eCfXjjFrXwwvUsxf-1)
+
 ## 💾 Git
 
 ### 📦 Ветки
