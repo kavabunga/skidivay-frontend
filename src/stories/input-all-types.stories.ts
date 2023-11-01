@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import InputMUI from '../shared/ui/Input-mui';
+import InputMUI from '../shared/ui/input-mui';
 
 const meta = {
 	title: 'Example/InputAllTypes',
