@@ -1,4 +1,4 @@
-# ODCS FRONTEND
+# Online Discount Card Service Frontend
 
 - [Фич лист](https://docs.google.com/spreadsheets/d/1GwV1-NoSkC2oHRamFoRoKfmjsDQTBtnCVACTTKllpCs/edit#gid=1450262909)
 
