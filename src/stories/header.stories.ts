@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-
-import { Header } from './Header';
+import Header from '../features/Header';
 
 const meta = {
 	title: 'Example/Header',
@@ -11,17 +10,23 @@ const meta = {
 		// More on how to position stories at: https://storybook.js.org/docs/react/configure/story-layout
 		layout: 'fullscreen',
 	},
+	argTypes: {
+		isLoggedIn: {
+			options: ['Logged', 'Not logged'],
+			control: { type: 'boolean' },
+		},
+		user: {
+			control: { type: 'object' },
+		},
+	},
 } satisfies Meta<typeof Header>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const LoggedIn: Story = {
-	args: {
-		user: {
-			name: 'Jane Doe',
-		},
-	},
+	args: { user: { name: 'Иван Петрович' }, isLoggedIn: true },
 };
-
-export const LoggedOut: Story = {};
+export const LoggedOut: Story = {
+	args: { user: { name: '' }, isLoggedIn: false },
+};
