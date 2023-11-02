@@ -1,0 +1,36 @@
+.close-button {
+	width: 14px;
+	height: 14px;
+	background-color: transparent;
+	border: none;
+	position: relative;
+	padding: 0;
+}
+
+.close-button::after {
+	content: '';
+	position: absolute;
+	height: 2px;
+	width: 14px;
+	background-color: rgba(73, 69, 79, 1);
+	transform: rotate(45deg);
+	top: 40%;
+	left: 0;
+}
+
+.close-button::before {
+	content: '';
+	position: absolute;
+	height: 2px;
+	width: 14px;
+	background-color: rgba(73, 69, 79, 1);
+	transform: rotate(315deg);
+	top: 40%;
+	left: 0;
+}
+
+@media screen {
+	.close-button {
+		cursor: pointer;
+	}
+}
