@@ -31,6 +31,9 @@ const meta = {
 		defaultValue: {
 			control: { type: 'text' },
 		},
+		error: {
+			control: { type: 'boolean' },
+		},
 	},
 } satisfies Meta<typeof InputMUI>;
 
@@ -42,10 +45,20 @@ export const Default: Story = {
 };
 export const Password: Story = {
 	args: {
-		label: 'password',
+		label: 'Пароль',
 		required: true,
 		variant: 'outlined',
 		type: 'password',
+	},
+};
+export const PasswordError: Story = {
+	args: {
+		label: 'Пароль',
+		required: true,
+		variant: 'outlined',
+		type: 'password',
+		error: true,
+		helperText: 'Неверно введен пароль',
 	},
 };
 export const Name: Story = {
@@ -55,5 +68,23 @@ export const Name: Story = {
 		variant: 'outlined',
 		type: 'text',
 		helperText: 'Как к вам обращаться?',
+	},
+};
+export const Email: Story = {
+	args: {
+		label: 'Email',
+		required: true,
+		variant: 'outlined',
+		type: 'text',
+	},
+};
+export const EmailError: Story = {
+	args: {
+		label: 'Email',
+		required: true,
+		variant: 'outlined',
+		type: 'text',
+		error: true,
+		helperText: 'Такого пользователя не существует',
 	},
 };
