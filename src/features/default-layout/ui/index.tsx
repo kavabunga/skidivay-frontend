@@ -3,18 +3,16 @@ import Container from '@mui/material/Container';
 
 interface DefaultLayoutProps {
 	header: React.ReactNode;
-	content: React.ReactNode;
+	children: React.ReactNode;
 }
 
-const DefaultLayout = ({ header, content }: DefaultLayoutProps) => {
+export const DefaultLayout = ({ header, children }: DefaultLayoutProps) => {
 	return (
 		<>
 			<Container>
 				{header}
-				{content}
+				{children}
 			</Container>
 		</>
 	);
 };
-
-export default DefaultLayout;

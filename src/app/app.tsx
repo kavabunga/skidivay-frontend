@@ -1,34 +1,26 @@
-import { useState } from 'react';
-import reactLogo from '~/shared/assets/react.svg';
-import viteLogo from '/vite.svg';
-import { Button } from '@mui/material';
-
+import { ThemeProvider } from '@emotion/react';
+import { CssBaseline } from '@mui/material';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { AuthLayout, Home, NotFound, RootLayout, Signin, Signup } from '~/page';
+import { lightTheme } from '~/shared/lib';
 export function App() {
-	const [count, setCount] = useState(0);
-
 	return (
 		<>
-			<Button>MUI Button</Button>
-			<div>
-				<a href="https://vitejs.dev" target="_blank">
-					<img src={viteLogo} className="logo" alt="Vite logo" />
-				</a>
-				<a href="https://react.dev" target="_blank">
-					<img src={reactLogo} className="logo react" alt="React logo" />
-				</a>
-			</div>
-			<h1>Vite + React</h1>
-			<div className="card">
-				<button onClick={() => setCount((count) => count + 1)}>
-					count is {count}
-				</button>
-				<p>
-					Edit <code>src/App.tsx</code> and save to test HMR
-				</p>
-			</div>
-			<p className="read-the-docs">
-				Click on the Vite and React logos to learn more
-			</p>
+			<ThemeProvider theme={lightTheme}>
+				<CssBaseline />
+				<BrowserRouter>
+					<Routes>
+						<Route path="/" Component={RootLayout}>
+							<Route index Component={Home} />
+						</Route>
+						<Route path="auth" Component={AuthLayout}>
+							<Route index Component={Signin} />
+							<Route path="signup" Component={Signup} />
+						</Route>
+						<Route path="*" Component={NotFound} />
+					</Routes>
+				</BrowserRouter>
+			</ThemeProvider>
 		</>
 	);
 }
