@@ -1,3 +1,4 @@
+import { Link, List, ListItem } from '@mui/material';
 import AuthForm from '~/entities/form';
 
 const SignInForm = () => {
@@ -21,7 +22,19 @@ const SignInForm = () => {
 			placeholder: '',
 		},
 	];
-	return <AuthForm fields={fields} />;
+
+	return (
+		<AuthForm fields={fields} button={{ label: 'Войти', isFullWidth: true }}>
+			<List sx={{ fontSize: '12px', fontWeight: 300 }}>
+				<ListItem dense disableGutters>
+					<Link>Забыли пароль?</Link>
+				</ListItem>
+				<ListItem dense disableGutters>
+					<Link>Нужна помощь?</Link>
+				</ListItem>
+			</List>
+		</AuthForm>
+	);
 };
 
 export default SignInForm;

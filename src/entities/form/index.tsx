@@ -3,7 +3,7 @@ import FormMui from '~/shared/ui/form-mui';
 import InputMUI from '~/shared/ui/input-mui';
 import ButtonMUI from '~/shared/ui/Button-mui';
 import style from './style';
-import { FC } from 'react';
+import { FC, ReactNode } from 'react';
 
 type Field = {
 	name: string;
@@ -15,7 +15,11 @@ type Field = {
 	required: boolean;
 };
 
-const AuthForm: FC<{ fields: Field[] }> = ({ fields }) => {
+const AuthForm: FC<{
+	fields: Field[];
+	children?: ReactNode | ReactNode[];
+	button: { label: string; isFullWidth: boolean; width?: number };
+}> = ({ fields, children, button }) => {
 	const {
 		register,
 		handleSubmit,
@@ -56,12 +60,14 @@ const AuthForm: FC<{ fields: Field[] }> = ({ fields }) => {
 						fullWidth
 					/>
 				))}
-
+			{children && children}
 			<ButtonMUI
-				label="Далее"
-				variant="contained"
 				type="submit"
+				variant="contained"
 				disabled={!isDirty || !isValid}
+				{...button}
+				fullwidth={button.isFullWidth}
+				sx={{ width: `${button.width}px` }}
 			/>
 		</FormMui>
 	);
