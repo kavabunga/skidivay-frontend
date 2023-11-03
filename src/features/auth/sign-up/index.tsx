@@ -12,11 +12,68 @@ type Inputs = {
 	passwordRepeat: string;
 };
 
+type Field = {
+	name: keyof Inputs;
+	label: string;
+	type: string;
+	autoComplete?: string;
+	defaultHelperText?: string;
+	placeholder?: string;
+	required: boolean;
+};
+
 const SignUpForm = () => {
+	const fields: Field[] = [
+		{
+			name: 'name',
+			label: 'Имя',
+			type: 'text',
+			defaultHelperText: 'Как к вам обращаться?',
+			autoComplete: 'name',
+			required: true,
+			placeholder: '',
+		},
+		{
+			name: 'phone',
+			label: 'Телефон',
+			type: 'tel',
+			defaultHelperText: '',
+			autoComplete: 'tel',
+			required: true,
+			placeholder: '+7 (999) 999-99-99',
+		},
+		{
+			name: 'email',
+			label: 'Email',
+			type: 'email',
+			defaultHelperText: '',
+			autoComplete: 'email',
+			required: true,
+			placeholder: '',
+		},
+		{
+			name: 'password',
+			label: 'Пароль',
+			type: 'password',
+			defaultHelperText: '',
+			autoComplete: 'new-password',
+			required: true,
+			placeholder: '',
+		},
+		{
+			name: 'passwordRepeat',
+			label: 'Пароль',
+			type: 'passwordRepeat',
+			defaultHelperText: '',
+			autoComplete: 'new-password',
+			required: true,
+			placeholder: '',
+		},
+	];
+
 	const {
 		register,
 		handleSubmit,
-		watch,
 		formState: { errors, isDirty, isValid },
 	} = useForm<Inputs>({
 		mode: 'onBlur',
@@ -26,72 +83,34 @@ const SignUpForm = () => {
 	return (
 		<FormMui
 			sx={style}
-			autocomplete="on"
+			autoComplete="on"
 			name="signUp"
 			noValidate
 			onSubmit={handleSubmit(onSubmit)}
 		>
-			<InputMUI
-				label="Имя"
-				value={watch('name')}
-				variant="outlined"
-				type="text"
-				helperText={errors.name ? errors.name.type : 'Как к вам обращаться?'}
-				autoComplete="name"
-				fullWidth
-				size="small"
-				error={!!errors.name}
-				inputProps={{ ...register('name', { required: true }) }}
-			/>
-			<InputMUI
-				label="Телефон"
-				value={watch('phone')}
-				placeholder="+7 (999) 999-99-99"
-				variant="outlined"
-				type="tel"
-				helperText={errors.phone && errors.phone.type}
-				error={!!errors.phone}
-				autoComplete="tel"
-				fullWidth
-				size="small"
-				inputProps={{ ...register('phone', { required: true }) }}
-			/>
-			<InputMUI
-				label="Email"
-				value={watch('email')}
-				variant="outlined"
-				type="email"
-				helperText={errors.email && errors.email.type}
-				error={!!errors.email}
-				autoComplete="email"
-				fullWidth
-				size="small"
-				inputProps={{ ...register('email', { required: true }) }}
-			/>
-			<InputMUI
-				label="Пароль"
-				value={watch('password')}
-				variant="outlined"
-				type="password"
-				helperText={errors.password && errors.password.type}
-				error={!!errors.password}
-				autoComplete="new-password"
-				fullWidth
-				size="small"
-				inputProps={{ ...register('password', { required: true }) }}
-			/>
-			<InputMUI
-				label="Подтверждение пароля"
-				value={watch('passwordRepeat')}
-				variant="outlined"
-				type="password"
-				helperText={errors.passwordRepeat && errors.passwordRepeat.type}
-				error={!!errors.passwordRepeat}
-				autoComplete="new-password"
-				fullWidth
-				size="small"
-				inputProps={{ ...register('passwordRepeat', { required: true }) }}
-			/>
+			{fields[0] &&
+				fields.map((input) => (
+					<InputMUI
+						key={input.name}
+						label={input.label}
+						placeholder={input.placeholder}
+						variant="outlined"
+						type={input.type}
+						helperText={
+							errors[input.name]
+								? errors[input.name]?.type
+								: input.defaultHelperText
+						}
+						error={!!errors[input.name]}
+						autoComplete={input.autoComplete}
+						fullWidth
+						size="small"
+						inputProps={{
+							...register(input.name, { required: input.required }),
+						}}
+					/>
+				))}
+
 			<ButtonMUI
 				label="Далее"
 				variant="contained"
