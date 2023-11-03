@@ -1,7 +1,12 @@
-import './close-button.css';
+import { IconButton } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 const CloseButton = () => {
-	return <button className="close-button"></button>;
+	return (
+		<IconButton>
+			<CloseIcon />
+		</IconButton>
+	);
 };
 
 export default CloseButton;
