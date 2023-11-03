@@ -1,9 +1,9 @@
 import { IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
-const CloseButton = () => {
+const CloseButton = ({ ...props }) => {
 	return (
-		<IconButton>
+		<IconButton {...props}>
 			<CloseIcon />
 		</IconButton>
 	);

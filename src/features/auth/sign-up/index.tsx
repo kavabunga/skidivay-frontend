@@ -48,7 +48,9 @@ const SignUpForm = () => {
 			placeholder: '',
 		},
 	];
-	return <AuthForm fields={fields} />;
+	return (
+		<AuthForm fields={fields} button={{ label: 'Далее', isFullWidth: true }} />
+	);
 };
 
 export default SignUpForm;
