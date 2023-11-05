@@ -1,71 +1,71 @@
 {
-	"name": "odcs-frontend",
-	"private": true,
-	"version": "0.0.0",
-	"type": "module",
-	"scripts": {
-		"dev": "vite",
-		"build": "tsc && vite build",
-		"preview": "vite preview",
-		"lint": "eslint . --ext js,jsx,ts,tsx --report-unused-disable-directives --max-warnings 0",
-		"lint:fix": "npm run lint -- --fix",
-		"format": "prettier . --write",
-		"prepare": "husky install",
-		"commit": "cz",
-		"storybook": "storybook dev -p 6006",
-		"build-storybook": "storybook build"
-	},
-	"lint-staged": {
-		"*.{ts,tsx}": "npm run lint",
-		"*.{ts,tsx,css,md,html,json}": "npm run format"
-	},
-	"dependencies": {
-		"@mui/icons-material": "^5.14.16",
-		"localforage": "^1.10.0",
-		"match-sorter": "^6.3.1",
-		"react": "^18.2.0",
-		"react-dom": "^18.2.0",
-		"react-hook-form": "^7.47.0",
-		"react-router-dom": "^6.18.0",
-		"sort-by": "^0.0.2"
-	},
-	"devDependencies": {
-		"@emotion/react": "^11.11.1",
-		"@emotion/styled": "^11.11.0",
-		"@mui/material": "^5.14.15",
-		"@storybook/addon-essentials": "^7.5.1",
-		"@storybook/addon-interactions": "^7.5.1",
-		"@storybook/addon-links": "^7.5.1",
-		"@storybook/addon-onboarding": "^1.0.8",
-		"@storybook/addon-themes": "^7.5.1",
-		"@storybook/addon-viewport": "^7.5.2",
-		"@storybook/blocks": "^7.5.1",
-		"@storybook/react": "^7.5.1",
-		"@storybook/react-vite": "^7.5.1",
-		"@storybook/testing-library": "^0.2.2",
-		"@types/react": "^18.2.15",
-		"@types/react-dom": "^18.2.7",
-		"@types/react-router-dom": "^5.3.3",
-		"@typescript-eslint/eslint-plugin": "^6.0.0",
-		"@typescript-eslint/parser": "^6.0.0",
-		"@vitejs/plugin-react": "^4.0.3",
-		"commitizen": "^4.3.0",
-		"cz-conventional-changelog": "^3.3.0",
-		"eslint": "^8.45.0",
-		"eslint-config-prettier": "^9.0.0",
-		"eslint-plugin-react-hooks": "^4.6.0",
-		"eslint-plugin-react-refresh": "^0.4.3",
-		"eslint-plugin-storybook": "^0.6.15",
-		"husky": "^8.0.3",
-		"lint-staged": "^15.0.2",
-		"prettier": "3.0.3",
-		"storybook": "^7.5.1",
-		"typescript": "^5.0.2",
-		"vite": "^4.4.5"
-	},
-	"config": {
-		"commitizen": {
-			"path": "./node_modules/cz-conventional-changelog"
-		}
-	}
+  "name": "odcs-frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext js,jsx,ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "npm run lint -- --fix",
+    "format": "prettier . --write",
+    "prepare": "husky install",
+    "commit": "cz",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": "npm run lint",
+    "*.{ts,tsx,css,md,html,json}": "npm run format"
+  },
+  "dependencies": {
+    "@mui/icons-material": "^5.14.16",
+    "localforage": "^1.10.0",
+    "match-sorter": "^6.3.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.47.0",
+    "react-router-dom": "^6.18.0",
+    "sort-by": "^0.0.2"
+  },
+  "devDependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.15",
+    "@storybook/addon-essentials": "^7.5.1",
+    "@storybook/addon-interactions": "^7.5.1",
+    "@storybook/addon-links": "^7.5.1",
+    "@storybook/addon-onboarding": "^1.0.8",
+    "@storybook/addon-themes": "^7.5.1",
+    "@storybook/addon-viewport": "^7.5.2",
+    "@storybook/blocks": "^7.5.1",
+    "@storybook/react": "^7.5.1",
+    "@storybook/react-vite": "^7.5.1",
+    "@storybook/testing-library": "^0.2.2",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@types/react-router-dom": "^5.3.3",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@vitejs/plugin-react": "^4.0.3",
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.45.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "eslint-plugin-storybook": "^0.6.15",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.0.2",
+    "prettier": "3.0.3",
+    "storybook": "^7.5.1",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }

@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { RootLayout } from '~/page';
+import { RootLayout } from '~/pages';
 
 const meta = {
-	title: 'Pages/RootLayout',
-	component: RootLayout,
-	parameters: {
-		layout: 'centered',
-	},
-	tags: ['autodocs'],
+  title: 'Pages/RootLayout',
+  component: RootLayout,
+  parameters: {
+    layout: 'centered',
+  },
+  tags: ['autodocs'],
 } satisfies Meta<typeof RootLayout>;
 
 export default meta;
