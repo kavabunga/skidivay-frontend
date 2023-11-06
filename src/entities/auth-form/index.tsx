@@ -1,7 +1,7 @@
+import { FC, ReactNode } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Box, TextField, Button } from '@mui/material';
 import style from './style';
-import { FC, ReactNode } from 'react';
 
 type Field = {
   name: string;
@@ -31,7 +31,7 @@ export const AuthForm: FC<{
   return (
     <Box
       component="form"
-      sx={style}
+      sx={style.form}
       autoComplete="on"
       name="signUp"
       noValidate
@@ -49,6 +49,7 @@ export const AuthForm: FC<{
                 ? errors[field.name]?.type
                 : field.defaultHelperText
             }
+            FormHelperTextProps={{ sx: style.textForm.helperText }}
             error={!!errors[field.name]}
             autoComplete={field.autoComplete}
             inputProps={{
@@ -59,7 +60,7 @@ export const AuthForm: FC<{
             fullWidth
           />
         ))}
-      {children && children}
+      {children}
       <Button
         type="submit"
         variant="contained"

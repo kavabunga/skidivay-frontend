@@ -2,7 +2,6 @@ import { ThemeProvider } from '@emotion/react';
 import { CssBaseline } from '@mui/material';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AuthLayout, Home, NotFound, RootLayout } from '~/pages';
-import { SignInWidget, SignUpWidget } from '~/widgets';
 import { lightTheme } from '~/shared/lib';
 export function App() {
   return (
@@ -14,10 +13,7 @@ export function App() {
             <Route path="/" Component={RootLayout}>
               <Route index Component={Home} />
             </Route>
-            <Route path="auth" Component={AuthLayout}>
-              <Route index Component={SignInWidget} />
-              <Route path="signup" Component={SignUpWidget} />
-            </Route>
+            <Route path="auth" Component={AuthLayout} />
             <Route path="*" Component={NotFound} />
           </Routes>
         </BrowserRouter>
