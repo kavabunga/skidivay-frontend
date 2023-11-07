@@ -99,7 +99,7 @@ export const SignUpForm = () => {
     <AuthForm
       fields={fields}
       schema={schema}
-      button={{ label: 'Далее', isFullWidth: true }}
+      button={{ label: 'Далее', fullWidth: true }}
     />
   );
 };

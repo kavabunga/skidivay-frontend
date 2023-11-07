@@ -26,19 +26,20 @@ export const Header: FC<HeaderProps> = ({ type, isLoggedIn }) => {
       position="static"
     >
       <Logo type={type === 'standard' ? 'full' : 'image'} />
-      {type !== 'minimal' && isLoggedIn ? (
-        <IconButton color="primary" size="small" sx={style.iconButton}>
-          <PermIdentity />
-        </IconButton>
-      ) : (
-        <Button
-          variant="outlined"
-          color="primary"
-          sx={{ border: '#7A757F 1px solid' }}
-        >
-          Войти
-        </Button>
-      )}
+      {type === 'standard' &&
+        (isLoggedIn ? (
+          <IconButton color="primary" size="small" sx={style.iconButton}>
+            <PermIdentity />
+          </IconButton>
+        ) : (
+          <Button
+            variant="outlined"
+            color="primary"
+            sx={{ border: '#7A757F 1px solid' }}
+          >
+            Войти
+          </Button>
+        ))}
       {type === 'minimal' && <CloseButton sx={style.closeButton} />}
     </AppBar>
   );

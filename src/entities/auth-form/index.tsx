@@ -19,7 +19,10 @@ export const AuthForm: FC<{
   fields: Field[];
   schema: ZodType;
   children?: ReactNode | ReactNode[];
-  button: { label: string; isFullWidth: boolean; width?: number };
+  button: React.ComponentProps<typeof Button> & {
+    label: string;
+    width?: number;
+  };
 }> = ({ fields, children, schema, button }) => {
   const {
     register,
@@ -69,7 +72,6 @@ export const AuthForm: FC<{
         type="submit"
         variant="contained"
         disabled={!isDirty || !isValid}
-        fullWidth={button.isFullWidth || !button.width}
         sx={{ width: `${button.width}px` }}
         {...button}
       >
