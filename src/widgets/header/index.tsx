@@ -1,11 +1,11 @@
 import { FC } from 'react';
-import { useTheme } from '@mui/material/styles';
-import { useMediaQuery, AppBar, ButtonGroup, Button } from '@mui/material';
+import { AppBar, Button, IconButton } from '@mui/material';
 import { Logo, CloseButton } from '~/shared/ui';
+import { PermIdentity } from '@mui/icons-material';
 import style from './style';
 
 type HeaderProps = {
-  user: {
+  user?: {
     name: string;
   };
   isLoggedIn: boolean;
@@ -14,10 +14,7 @@ type HeaderProps = {
 
 //INFO: 'minimal' for logo only, like on authorization screen, 'standard' for full featured header
 
-export const Header: FC<HeaderProps> = ({ user, isLoggedIn, type }) => {
-  const theme = useTheme();
-  const isMediumUp = useMediaQuery(theme.breakpoints.up('md'));
-
+export const Header: FC<HeaderProps> = ({ type, isLoggedIn }) => {
   return (
     <AppBar
       sx={{
@@ -29,19 +26,17 @@ export const Header: FC<HeaderProps> = ({ user, isLoggedIn, type }) => {
       position="static"
     >
       <Logo type={type === 'standard' ? 'full' : 'image'} />
-      {isMediumUp && type !== 'minimal' && (
-        <ButtonGroup>
-          <Button variant="text" color="primary">
-            Мои карты
-          </Button>
-          <Button variant="text" color="primary">
-            Каталог
-          </Button>
-        </ButtonGroup>
-      )}
-      {type !== 'minimal' && (
-        <Button variant="contained" color="primary">
-          {isLoggedIn ? user.name : 'Войти'}
+      {type !== 'minimal' && isLoggedIn ? (
+        <IconButton color="primary" size="small" sx={style.iconButton}>
+          <PermIdentity />
+        </IconButton>
+      ) : (
+        <Button
+          variant="outlined"
+          color="primary"
+          sx={{ border: '#7A757F 1px solid' }}
+        >
+          Войти
         </Button>
       )}
       {type === 'minimal' && <CloseButton sx={style.closeButton} />}

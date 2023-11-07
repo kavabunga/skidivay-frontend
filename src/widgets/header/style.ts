@@ -10,6 +10,13 @@ const style = {
     top: '12px',
     right: '24px',
   },
-};
+  iconButton: {
+    padding: 0,
+    margin: 0,
+    border: '#7A757F 1px solid',
+    borderRadius: '8px',
+    width: '48px',
+  },
+} as const;
 
 export default style;
