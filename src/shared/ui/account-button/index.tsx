@@ -1,20 +1,13 @@
 import { Button } from '@mui/material';
 import PermIdentityOutlined from '@mui/icons-material/PermIdentityOutlined';
+import { style } from './style';
 
 export const AccountButton = ({ ...props }) => {
   return (
     <Button
       variant="outlined"
       aria-label="account icon"
-      sx={{
-        padding: '0.75rem',
-        color: 'primary.main',
-        fontSize: '1rem',
-        borderSize: '1px',
-        borderStyle: 'solid',
-        borderColor: 'surface.main',
-        borderRadius: '0.5rem',
-      }}
+      sx={{ ...style }}
       {...props}
     >
       <PermIdentityOutlined fontSize="medium" />
