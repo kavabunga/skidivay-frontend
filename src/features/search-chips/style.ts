@@ -1,14 +1,4 @@
-type SxProps = {
-  display: string;
-  width: string;
-  height: string;
-  margin: string;
-  padding: string;
-  flexFlow: string;
-  justifyContent: string;
-  alignItems: string;
-  gap: string;
-};
+import { SxProps } from '@mui/material';
 
 export const style: SxProps = {
   display: 'flex',

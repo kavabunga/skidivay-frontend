@@ -1,19 +1,4 @@
-type SxProps = {
-  fontSize: string;
-  fontWeight: string;
-  lineHeight: string;
-  color: string;
-  borderRadius: string;
-  borderColor: string;
-  '&:hover': {
-    borderColor: string;
-    backgroundColor: string;
-  };
-  '&:active': {
-    borderColor: string;
-    backgroundColor: string;
-  };
-};
+import { SxProps } from '@mui/material';
 
 export const style: SxProps = {
   fontSize: '0.875rem',

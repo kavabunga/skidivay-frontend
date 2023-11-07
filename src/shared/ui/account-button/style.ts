@@ -1,12 +1,4 @@
-type SxProps = {
-  padding: string;
-  color: string;
-  fontSize: string;
-  borderSize: string;
-  borderStyle: string;
-  borderColor: string;
-  borderRadius: string;
-};
+import { SxProps } from '@mui/material';
 
 export const style: SxProps = {
   padding: '0.75rem',
