@@ -1,6 +1,53 @@
 import { AuthForm } from '~/entities';
+import { authFormErrors } from '~/shared/lib';
+import * as z from 'zod';
 
 export const SignUpForm = () => {
+  const schema = z
+    .object({
+      name: z
+        .string({
+          required_error: authFormErrors.required,
+          invalid_type_error: authFormErrors.wrongType,
+        })
+        .min(1, { message: authFormErrors.minOneSymbol }),
+      email: z
+        .string({
+          required_error: authFormErrors.required,
+          invalid_type_error: authFormErrors.wrongType,
+        })
+        .min(1, { message: authFormErrors.minOneSymbol })
+        .email({ message: authFormErrors.wrongEmail }),
+      phone: z
+        .string({
+          required_error: authFormErrors.required,
+          invalid_type_error: authFormErrors.wrongType,
+        })
+        .min(1, { message: authFormErrors.minOneSymbol })
+        .regex(/^((8|\+7)[- ]?)?(\(?\d{3}\)?[- ]?)?[\d\- ]{7,10}$/, {
+          message: authFormErrors.wrongPhone,
+        }),
+      password: z
+        .string({
+          required_error: authFormErrors.required,
+          invalid_type_error: authFormErrors.wrongType,
+        })
+        .min(8, { message: authFormErrors.minEightSymbols }),
+      passwordRepeat: z.string({
+        required_error: authFormErrors.required,
+        invalid_type_error: authFormErrors.wrongType,
+      }),
+    })
+    .superRefine(({ passwordRepeat, password }, ctx) => {
+      if (passwordRepeat !== password) {
+        ctx.addIssue({
+          code: 'custom',
+          message: authFormErrors.wrongPasswordRepeat,
+          path: ['passwordRepeat'],
+        });
+      }
+    });
+
   const fields = [
     {
       name: 'name',
@@ -41,7 +88,7 @@ export const SignUpForm = () => {
     {
       name: 'passwordRepeat',
       label: 'Пароль еще раз',
-      type: 'passwordRepeat',
+      type: 'password',
       defaultHelperText: ' ',
       autoComplete: 'new-password',
       required: true,
@@ -49,6 +96,10 @@ export const SignUpForm = () => {
     },
   ];
   return (
-    <AuthForm fields={fields} button={{ label: 'Далее', isFullWidth: true }} />
+    <AuthForm
+      fields={fields}
+      schema={schema}
+      button={{ label: 'Далее', isFullWidth: true }}
+    />
   );
 };

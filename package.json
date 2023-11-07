@@ -20,6 +20,7 @@
     "*.{ts,tsx,css,md,html,json}": "npm run format"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.2",
     "@mui/icons-material": "^5.14.16",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",

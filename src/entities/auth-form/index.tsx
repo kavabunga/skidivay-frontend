@@ -1,6 +1,8 @@
 import { FC, ReactNode } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Box, TextField, Button } from '@mui/material';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { ZodType } from 'zod';
 import style from './style';
 
 type Field = {
@@ -15,15 +17,17 @@ type Field = {
 
 export const AuthForm: FC<{
   fields: Field[];
+  schema: ZodType;
   children?: ReactNode | ReactNode[];
   button: { label: string; isFullWidth: boolean; width?: number };
-}> = ({ fields, children, button }) => {
+}> = ({ fields, children, schema, button }) => {
   const {
     register,
     handleSubmit,
     formState: { errors, isDirty, isValid },
   } = useForm<{ [key: string]: string }>({
     mode: 'onBlur',
+    resolver: zodResolver(schema),
   });
   const onSubmit: SubmitHandler<{ [key: string]: string }> = (data) =>
     console.log(data);
@@ -46,14 +50,14 @@ export const AuthForm: FC<{
             type={field.type}
             helperText={
               errors[field.name]
-                ? errors[field.name]?.type
+                ? errors[field.name]?.message
                 : field.defaultHelperText
             }
             FormHelperTextProps={{ sx: style.textForm.helperText }}
             error={!!errors[field.name]}
             autoComplete={field.autoComplete}
             inputProps={{
-              ...register(field.name, { required: field.required }),
+              ...register(field.name),
             }}
             variant="outlined"
             size="small"
