@@ -1,6 +1,6 @@
-import { Outlet } from 'react-router-dom';
 import { Box } from '@mui/material';
 import { Header } from '~/widgets';
+import { AuthWidget } from '~/widgets';
 import { AppFooter } from '~/shared/ui';
 
 export const AuthLayout = () => {
@@ -11,7 +11,7 @@ export const AuthLayout = () => {
   return (
     <Box component="main">
       <Header user={user} isLoggedIn={isLoggedIn} type="minimal" />
-      <Outlet />
+      <AuthWidget />
       <AppFooter />
     </Box>
   );

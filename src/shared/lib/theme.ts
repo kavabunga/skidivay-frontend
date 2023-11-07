@@ -48,6 +48,9 @@ export const lightTheme = createTheme({
         fontSize: '2rem',
       },
     },
+    button: {
+      textTransform: 'none',
+    },
   },
 });
 
