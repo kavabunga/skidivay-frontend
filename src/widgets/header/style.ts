@@ -1,13 +1,14 @@
 const style = {
   header: {
     paddingX: { xs: '16px', sm: '44px' },
-    paddingY: { xs: '12px', sm: '40px' },
+    paddingTop: { xs: '16px', sm: '40px' },
+    paddingBottom: { xs: '4px', sm: '40px' },
     display: 'flex',
     flexDirection: 'row',
   },
   closeButton: {
     position: 'absolute',
-    top: '12px',
+    top: '16px',
     right: '24px',
   },
   iconButton: {

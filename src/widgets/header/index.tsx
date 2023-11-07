@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { AppBar, Button, IconButton } from '@mui/material';
 import { Logo, CloseButton } from '~/shared/ui';
 import { PermIdentity } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 import style from './style';
 
 type HeaderProps = {
@@ -33,6 +34,8 @@ export const Header: FC<HeaderProps> = ({ type, isLoggedIn }) => {
           </IconButton>
         ) : (
           <Button
+            component={Link}
+            to="/auth"
             variant="outlined"
             color="primary"
             sx={{ border: '#7A757F 1px solid' }}
@@ -40,7 +43,9 @@ export const Header: FC<HeaderProps> = ({ type, isLoggedIn }) => {
             Войти
           </Button>
         ))}
-      {type === 'minimal' && <CloseButton sx={style.closeButton} />}
+      {type === 'minimal' && (
+        <CloseButton sx={style.closeButton} component={Link} to="/" />
+      )}
     </AppBar>
   );
 };
