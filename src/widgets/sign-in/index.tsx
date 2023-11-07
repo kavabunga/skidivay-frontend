@@ -1,6 +1,8 @@
 import { Container, Typography } from '@mui/material';
 import { SignInForm } from '~/features';
 
+//NOTE: Being replaced with authorization widget
+
 export const SignInWidget = () => {
   return (
     <Container

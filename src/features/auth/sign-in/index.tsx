@@ -1,5 +1,6 @@
 import { Link, List, ListItem } from '@mui/material';
 import { AuthForm } from '~/entities';
+import style from './style';
 
 export const SignInForm = () => {
   const fields = [
@@ -7,7 +8,7 @@ export const SignInForm = () => {
       name: 'email',
       label: 'Email',
       type: 'email',
-      defaultHelperText: '',
+      defaultHelperText: ' ',
       autoComplete: 'email',
       required: true,
       placeholder: '',
@@ -16,7 +17,7 @@ export const SignInForm = () => {
       name: 'password',
       label: 'Пароль',
       type: 'password',
-      defaultHelperText: '',
+      defaultHelperText: ' ',
       autoComplete: 'current-password',
       required: true,
       placeholder: '',
@@ -25,12 +26,9 @@ export const SignInForm = () => {
 
   return (
     <AuthForm fields={fields} button={{ label: 'Войти', isFullWidth: true }}>
-      <List sx={{ fontSize: '12px', fontWeight: 300 }}>
-        <ListItem dense disableGutters>
+      <List sx={style.list} color="secondary" dense disablePadding>
+        <ListItem disableGutters disablePadding dense>
           <Link>Забыли пароль?</Link>
-        </ListItem>
-        <ListItem dense disableGutters>
-          <Link>Нужна помощь?</Link>
         </ListItem>
       </List>
     </AuthForm>
