@@ -1,13 +1,32 @@
 import { Link, List, ListItem } from '@mui/material';
 import { AuthForm } from '~/entities';
+import * as z from 'zod';
+import { authFormErrors } from '~/shared/lib';
+import style from './style';
 
 export const SignInForm = () => {
+  const schema = z.object({
+    email: z
+      .string({
+        required_error: authFormErrors.required,
+        invalid_type_error: authFormErrors.wrongType,
+      })
+      .min(1, { message: authFormErrors.minOneSymbol })
+      .email({ message: authFormErrors.wrongEmail }),
+    password: z
+      .string({
+        required_error: authFormErrors.required,
+        invalid_type_error: authFormErrors.wrongType,
+      })
+      .min(8, { message: authFormErrors.minEightSymbols }),
+  });
+
   const fields = [
     {
       name: 'email',
       label: 'Email',
       type: 'email',
-      defaultHelperText: '',
+      defaultHelperText: ' ',
       autoComplete: 'email',
       required: true,
       placeholder: '',
@@ -16,7 +35,7 @@ export const SignInForm = () => {
       name: 'password',
       label: 'Пароль',
       type: 'password',
-      defaultHelperText: '',
+      defaultHelperText: ' ',
       autoComplete: 'current-password',
       required: true,
       placeholder: '',
@@ -24,13 +43,14 @@ export const SignInForm = () => {
   ];
 
   return (
-    <AuthForm fields={fields} button={{ label: 'Войти', isFullWidth: true }}>
-      <List sx={{ fontSize: '12px', fontWeight: 300 }}>
-        <ListItem dense disableGutters>
+    <AuthForm
+      fields={fields}
+      schema={schema}
+      button={{ label: 'Войти', isFullWidth: true }}
+    >
+      <List sx={style.list} color="secondary" dense disablePadding>
+        <ListItem disableGutters disablePadding dense>
           <Link>Забыли пароль?</Link>
-        </ListItem>
-        <ListItem dense disableGutters>
-          <Link>Нужна помощь?</Link>
         </ListItem>
       </List>
     </AuthForm>
