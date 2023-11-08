@@ -46,7 +46,7 @@ export const SignInForm = () => {
     <AuthForm
       fields={fields}
       schema={schema}
-      button={{ label: 'Войти', isFullWidth: true }}
+      button={{ label: 'Войти', fullWidth: true }}
     >
       <List sx={style.list} color="secondary" dense disablePadding>
         <ListItem disableGutters disablePadding dense>
