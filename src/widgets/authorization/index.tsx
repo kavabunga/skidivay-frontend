@@ -60,6 +60,9 @@ export const AuthWidget = () => {
         <SignInForm />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
+        <Typography component="h1" sx={style.authTitle}>
+          Регистрация
+        </Typography>
         <SignUpForm />
       </CustomTabPanel>
     </Container>
