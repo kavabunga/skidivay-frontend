@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { Button } from '@mui/material';
+import { style } from './style';
 
 interface AddCardButton {
   text: string;
@@ -12,21 +13,7 @@ export const AddCardButton: FC<AddCardButton> = ({ text, onClick }) => {
   }
 
   return (
-    <Button
-      variant="outlined"
-      sx={{
-        width: '100%',
-        aspectRatio: '1 / 0.63',
-        color: 'surface.dark',
-        fontSize: '1rem',
-        fontWeight: '500',
-        lineHeight: '1.5',
-        textTransform: 'none',
-        borderColor: 'surface.main',
-        borderRadius: '20px',
-      }}
-      onClick={handleClick}
-    >
+    <Button variant="outlined" sx={{ ...style }} onClick={handleClick}>
       {text}
     </Button>
   );
