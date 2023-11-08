@@ -35,7 +35,7 @@ export const lightTheme = createTheme({
     },
   },
   typography: {
-    fontFamily: ['Nunito', 'Arial', 'sans-serif'].join(','),
+    fontFamily: ['Roboto', 'Arial', 'sans-serif'].join(','),
     h1: {
       fontSize: '2.5rem',
       fontWeight: 500,
