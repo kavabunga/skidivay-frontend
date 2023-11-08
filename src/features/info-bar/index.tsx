@@ -21,7 +21,7 @@ export const InfoBar: FC<InfoBarProps> = ({ message, isError, isOpen }) => {
   const [open, setOpen] = React.useState(isOpen);
 
   const handleClose = (
-    event: React.SyntheticEvent | Event,
+    _event: React.SyntheticEvent | Event,
     reason?: string
   ) => {
     if (reason === 'clickaway') {
