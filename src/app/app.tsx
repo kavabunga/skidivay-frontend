@@ -3,6 +3,9 @@ import { CssBaseline } from '@mui/material';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AuthLayout, Home, NotFound, RootLayout } from '~/pages';
 import { lightTheme } from '~/shared/lib';
+import 'typeface-roboto';
+import 'typeface-nunito';
+
 export function App() {
   return (
     <>
