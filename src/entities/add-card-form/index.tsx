@@ -5,7 +5,7 @@ import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { mockShopList, ShopListType } from '~/shared/mock';
-import { authFormErrors } from '~/shared/lib';
+import { addCardFormErrors } from '~/shared/lib';
 import {
   formStyle,
   textInputStyle,
@@ -14,23 +14,24 @@ import {
   buttonStyle,
 } from './style';
 
+//NOTE: In case of clearing the field with the built in close-button, the value becomes NULL, so react-hook-form fires type error. That's why we use 'required' error text as invalid type eroor text in cardName field
 const schema = z
   .object({
     cardName: z
       .string({
-        required_error: authFormErrors.required,
-        invalid_type_error: authFormErrors.required,
+        required_error: addCardFormErrors.required,
+        invalid_type_error: addCardFormErrors.required,
       })
-      .min(1, { message: authFormErrors.minOneSymbol }),
+      .min(1, { message: addCardFormErrors.minOneSymbol }),
     cardNumber: z
       .string({
-        required_error: authFormErrors.required,
-        invalid_type_error: authFormErrors.wrongType,
+        required_error: addCardFormErrors.required,
+        invalid_type_error: addCardFormErrors.wrongType,
       })
-      .min(1, { message: authFormErrors.minOneSymbol }),
+      .min(1, { message: addCardFormErrors.minOneSymbol }),
     barcode: z.string({
-      required_error: authFormErrors.required,
-      invalid_type_error: authFormErrors.wrongType,
+      required_error: addCardFormErrors.required,
+      invalid_type_error: addCardFormErrors.wrongType,
     }),
   })
   .partial()
