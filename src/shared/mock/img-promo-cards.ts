@@ -1,10 +1,10 @@
 export const imgPromoCards: [string, string][] = [
   [
-    'https://i.postimg.cc/h42qWNnk/cloth-shoes-01.jpg',
-    'https://i.postimg.cc/d3L2tnQj/food-01.png',
+    'https://i.postimg.cc/zGHXvPqY/cloth-shoes-01.jpg',
+    'https://i.postimg.cc/X7xzRV5s/entertainments-01.jpg',
   ],
   [
-    'https://i.postimg.cc/1XkB1930/entertainments-01.jpg',
+    'https://i.postimg.cc/d3L2tnQj/food-01.png',
     'https://i.postimg.cc/Kzdpx79g/appliances-01.jpg',
   ],
   [
