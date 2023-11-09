@@ -19,10 +19,7 @@ export const Welcome: FC<WelcomeProps> = ({ user }) => {
         component="h1"
         variant="h1"
         textAlign="left"
-        sx={{
-          width: '100%',
-          padding: '1.5rem 0',
-        }}
+        sx={{ width: '100%' }}
       >
         {`Привет, ${user.name || 'Приятель'}!`}
       </Typography>
