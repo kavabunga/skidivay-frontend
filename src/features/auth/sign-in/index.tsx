@@ -11,14 +11,11 @@ export const SignInForm = () => {
         required_error: authFormErrors.required,
         invalid_type_error: authFormErrors.wrongType,
       })
-      .min(1, { message: authFormErrors.minOneSymbol })
       .email({ message: authFormErrors.wrongEmail }),
-    password: z
-      .string({
-        required_error: authFormErrors.required,
-        invalid_type_error: authFormErrors.wrongType,
-      })
-      .min(8, { message: authFormErrors.minEightSymbols }),
+    password: z.string({
+      required_error: authFormErrors.required,
+      invalid_type_error: authFormErrors.wrongType,
+    }),
   });
 
   const fields = [

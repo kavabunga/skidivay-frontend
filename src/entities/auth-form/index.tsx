@@ -1,8 +1,17 @@
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Box, TextField, Button } from '@mui/material';
+import {
+  Box,
+  TextField,
+  Button,
+  InputAdornment,
+  IconButton,
+} from '@mui/material';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ZodType } from 'zod';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
+import ErrorIcon from '@mui/icons-material/Error';
 import style from './style';
 
 type Field = {
@@ -24,6 +33,16 @@ export const AuthForm: FC<{
     width?: number;
   };
 }> = ({ fields, children, schema, button }) => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+  };
+
   const {
     register,
     handleSubmit,
@@ -50,7 +69,13 @@ export const AuthForm: FC<{
             key={field.name}
             label={field.label}
             placeholder={field.placeholder}
-            type={field.type}
+            type={
+              field.type === 'password' || field.name === 'password'
+                ? showPassword
+                  ? 'text'
+                  : 'password'
+                : field.type
+            }
             helperText={
               errors[field.name]
                 ? errors[field.name]?.message
@@ -61,6 +86,37 @@ export const AuthForm: FC<{
             autoComplete={field.autoComplete}
             inputProps={{
               ...register(field.name),
+            }}
+            InputProps={{
+              endAdornment:
+                field.type === 'password' ? (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      sx={{
+                        padding: 0.2,
+                        borderRadius: 0,
+                        '&:hover': {
+                          backgroundColor: 'unset',
+                        },
+                      }}
+                    >
+                      {showPassword ? (
+                        <VisibilityOffOutlinedIcon fontSize="small" />
+                      ) : (
+                        <VisibilityOutlinedIcon fontSize="small" />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ) : (
+                  !!errors[field.name] && (
+                    <InputAdornment position="end">
+                      <ErrorIcon color="error" fontSize="small" />
+                    </InputAdornment>
+                  )
+                ),
             }}
             variant="outlined"
             size="small"
