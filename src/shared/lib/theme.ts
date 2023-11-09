@@ -48,18 +48,6 @@ export const lightTheme = createTheme({
         fontSize: '1.5rem',
       },
     },
-    body1: {
-      fontSize: '1.5rem',
-      fontWeight: 500,
-      lineHeight: 1.5,
-      letterSpacing: 0,
-      '@media (max-width:600px)': {
-        fontSize: '1.125rem',
-      },
-      '@media (max-width:480px)': {
-        fontSize: '1rem',
-      },
-    },
     button: {
       textTransform: 'none',
     },
