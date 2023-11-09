@@ -9,4 +9,17 @@ export default defineConfig({
       '~': path.resolve(__dirname, './src/'),
     },
   },
+  server: {
+    watch: {
+      usePolling: true,
+    },
+    host: true,
+    strictPort: true,
+    port: 5173,
+  },
+  preview: {
+    host: true,
+    port: 8080,
+    strictPort: true,
+  },
 });

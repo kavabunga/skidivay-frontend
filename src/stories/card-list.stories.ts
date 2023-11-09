@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { defaultCards } from '~/shared/mock/default-cards';
 import { CardsList } from '~/widgets';
 
 const meta = {
@@ -14,4 +15,8 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {};
+export const Primary: Story = {
+  args: {
+    items: defaultCards,
+  },
+};

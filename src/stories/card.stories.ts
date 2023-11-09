@@ -19,6 +19,10 @@ export const Primary: Story = {
     card: {
       url: 'https://i.postimg.cc/h42qWNnk/cloth-shoes-01.jpg',
       isLiked: false,
+      _id: '0',
+      category: 'category',
+      name: 'name',
+      number: 'number',
     },
   },
 };
@@ -28,6 +32,10 @@ export const Secondary: Story = {
     card: {
       url: 'https://i.postimg.cc/d3L2tnQj/food-01.png',
       isLiked: true,
+      _id: '0',
+      category: 'category',
+      name: 'name',
+      number: 'number',
     },
   },
 };
