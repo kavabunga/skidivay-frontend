@@ -12,7 +12,7 @@ export const coverImgStyle: SxProps = {
 
 export const mainContainerStyle: SxProps = {
   display: 'flex',
-  height: 'calc(100vh - 10rem)',
+  height: '100%',
   flexDirection: 'column',
   justifyContent: 'flex-start',
   alignItems: 'center',
