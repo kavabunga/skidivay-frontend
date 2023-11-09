@@ -3,7 +3,7 @@ import { SxProps } from '@mui/material';
 export const containerStyle: SxProps = {
   display: 'flex',
   flexDirection: 'column',
-  paddingX: '30px',
+  paddingX: '16px',
   paddingTop: '8px',
   paddingBottom: '30px',
 };
