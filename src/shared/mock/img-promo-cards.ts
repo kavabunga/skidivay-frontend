@@ -1,4 +1,4 @@
-export const imgPromoCards: [string, string][] = [
+export const imgPromoCards: string[][] = [
   [
     'https://i.postimg.cc/zGHXvPqY/cloth-shoes-01.jpg',
     'https://i.postimg.cc/X7xzRV5s/entertainments-01.jpg',

@@ -12,7 +12,7 @@ type WelcomeProps = {
   };
 };
 
-export const Welcome: FC<WelcomeProps> = ({ name }) => {
+export const Welcome: FC<WelcomeProps> = ({ user }) => {
   return (
     <Container component="main" sx={{ ...mainContainerStyle }}>
       <Typography
@@ -24,7 +24,7 @@ export const Welcome: FC<WelcomeProps> = ({ name }) => {
           padding: '1.5rem 0',
         }}
       >
-        {`Привет, ${name || 'Приятель'}!`}
+        {`Привет, ${user.name || 'Приятель'}!`}
       </Typography>
 
       <Box

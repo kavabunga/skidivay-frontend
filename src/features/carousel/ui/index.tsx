@@ -5,7 +5,7 @@ import { imgPromoCards } from '~/shared/mock/img-promo-cards';
 import { ulStyle, liStyle, wrapCardstyle } from './style';
 
 type CarouselProps = {
-  items: string[];
+  items: string[][];
 };
 
 export const Carousel: FC<CarouselProps> = ({ items = imgPromoCards }) => {
