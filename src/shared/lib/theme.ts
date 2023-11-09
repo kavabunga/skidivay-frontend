@@ -37,15 +37,27 @@ export const lightTheme = createTheme({
   typography: {
     fontFamily: ['Roboto', 'Arial', 'sans-serif'].join(','),
     h1: {
-      fontSize: '2.5rem',
+      fontSize: '2.125rem',
       fontWeight: 500,
       lineHeight: 1.25,
       letterSpacing: 0,
       '@media (max-width:600px)': {
-        fontSize: '2.125rem',
+        fontSize: '2rem',
       },
       '@media (max-width:480px)': {
-        fontSize: '2rem',
+        fontSize: '1.5rem',
+      },
+    },
+    body1: {
+      fontSize: '1.5rem',
+      fontWeight: 500,
+      lineHeight: 1.5,
+      letterSpacing: 0,
+      '@media (max-width:600px)': {
+        fontSize: '1.125rem',
+      },
+      '@media (max-width:480px)': {
+        fontSize: '1rem',
       },
     },
     button: {
