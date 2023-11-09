@@ -1,16 +1,10 @@
 import { Typography } from '@mui/material';
 import { Box, Stack } from '@mui/system';
 import Logo from '~/shared/assets/logo.svg';
-import { style } from './style';
 
 export const AppFooter = () => {
   return (
-    <Box
-      component={'footer'}
-      height="7.5rem"
-      bgcolor={'#313033'}
-      sx={{ ...style }}
-    >
+    <Box component={'footer'} height="7.5rem" bgcolor={'#313033'}>
       <Stack
         direction={'column'}
         alignItems={'center'}
