@@ -9,3 +9,10 @@ export const authFormErrors = {
   userNotFound: 'Пользователь не найден',
   required: 'Это поле является обязательным',
 };
+export const addCardFormErrors = {
+  minOneSymbol: 'Минимальная длина: 1 символ',
+  wrongType: 'Неверный тип данных',
+  wrongCardNumber: 'Введен неверный номер',
+  wrongBarcodeNumber: 'Введен неверный номер',
+  required: 'Это поле является обязательным',
+};
