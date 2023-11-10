@@ -1,9 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { AddCardWidget } from '~/widgets/add-card';
+import { withRouter } from 'storybook-addon-react-router-v6';
 
 const meta = {
   title: 'Components/Add Card Widget',
   component: AddCardWidget,
+  decorators: [withRouter],
   parameters: {
     layout: 'centred',
   },

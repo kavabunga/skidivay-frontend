@@ -3,7 +3,7 @@ import { SxProps } from '@mui/material';
 export const containerStyle: SxProps = {
   display: 'flex',
   flexDirection: 'column',
-  paddingX: '30px',
+  paddingX: '16px',
   paddingTop: '8px',
   paddingBottom: '30px',
 };
@@ -14,11 +14,4 @@ export const titleStyle: SxProps = {
   fontWeight: 400,
   paddingTop: '40px',
   paddingBottom: '20px',
-};
-
-export const backButtonStyle: SxProps = {
-  alignSelf: 'flex-start',
-  fontSize: 12,
-  fontWeight: 500,
-  lineHeight: 1.33,
 };
