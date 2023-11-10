@@ -15,10 +15,3 @@ export const titleStyle: SxProps = {
   paddingTop: '40px',
   paddingBottom: '20px',
 };
-
-export const backButtonStyle: SxProps = {
-  alignSelf: 'flex-start',
-  fontSize: 12,
-  fontWeight: 500,
-  lineHeight: 1.33,
-};

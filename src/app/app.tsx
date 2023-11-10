@@ -9,22 +9,21 @@ import 'typeface-nunito';
 
 export function App() {
   return (
-    <>
-      <ThemeProvider theme={lightTheme}>
-        <CssBaseline />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" Component={RootLayout}>
-              <Route index Component={Home} />
-            </Route>
-            <Route path="auth" Component={AuthLayout} />
-            <Route path="card" Component={CardLayout}>
-              <Route path="new" Component={AddCardWidget} />
-            </Route>
-            <Route path="*" Component={NotFound} />
-          </Routes>
-        </BrowserRouter>
-      </ThemeProvider>
-    </>
+    <ThemeProvider theme={lightTheme}>
+      <CssBaseline />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" Component={RootLayout}>
+            <Route index Component={Home} />
+          </Route>
+          <Route path="auth" Component={AuthLayout} />
+          <Route path="card" Component={CardLayout}>
+            <Route path="new" Component={AddCardWidget} />
+            <Route path=":cardId" Component={AddCardWidget} />
+          </Route>
+          <Route path="*" Component={NotFound} />
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
