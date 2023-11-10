@@ -6,6 +6,7 @@ import { AddCardWidget } from '~/widgets/add-card';
 import { lightTheme } from '~/shared/lib';
 import 'typeface-roboto';
 import 'typeface-nunito';
+import { CardWidget } from '~/widgets';
 
 export function App() {
   return (
@@ -19,7 +20,15 @@ export function App() {
           <Route path="auth" Component={AuthLayout} />
           <Route path="card" Component={CardLayout}>
             <Route path="new" Component={AddCardWidget} />
-            <Route path=":cardId" Component={AddCardWidget} />
+            <Route
+              path=":id"
+              element={
+                <CardWidget
+                  cardNumber="1111 1383 0039 3838 49994"
+                  barcodeNumber="113839895849854"
+                />
+              }
+            />
           </Route>
           <Route path="*" Component={NotFound} />
         </Routes>

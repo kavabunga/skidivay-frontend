@@ -19,4 +19,5 @@ export const buttonStyle: SxProps = {
   fontWeight: 500,
   lineHeight: 1.4,
   paddingY: 2.25,
+  marginBottom: 4,
 };

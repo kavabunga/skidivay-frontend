@@ -119,11 +119,18 @@ export const EditCardForm: FC<EditCardFormProps> = ({
         variant="outlined"
         fullWidth
         disabled={!isActive}
+        InputProps={{
+          endAdornment: errors['cardNumber'] && (
+            <InputAdornment position="end">
+              <ErrorIcon color="error" fontSize="small" />
+            </InputAdornment>
+          ),
+        }}
       />
       {isActive && (
         <Button
           type="submit"
-          variant="contained"
+          variant="outlined"
           disabled={!isDirty || !isValid}
           fullWidth
           sx={buttonStyle}

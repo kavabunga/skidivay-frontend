@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { CardWidget } from '~/pages/CardWidget';
+import { CardWidget } from '~/widgets/card/index.tsx';
 import { withRouter } from 'storybook-addon-react-router-v6';
 
 const meta = {
