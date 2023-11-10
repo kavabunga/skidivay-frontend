@@ -5,3 +5,4 @@ export * from './authorization';
 export * from './cards-list';
 export * from './welcome';
 export * from './user-cards';
+export * from './home';
