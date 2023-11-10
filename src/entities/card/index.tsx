@@ -1,64 +1,47 @@
 import { FC } from 'react';
-import { useState } from 'react';
-import { Box, Paper, IconButton } from '@mui/material';
+import { Box, IconButton, Container, Typography } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { boxStyle, iconButtonStyle } from './styles';
+import { boxStyle, iconButtonStyle, barcodeStyle, titleStyle } from './styles';
+import Barcode from 'react-barcode';
 
-type CardProps = {
-  card: {
-    _id: string;
-    name: string;
-    number: string;
-    url: string;
-    category: string;
-    isLiked: boolean;
-  };
-  onClickCard(name: string, number: string, url: string): void;
-  onClickLike(card: {
-    _id: string;
-    name: string;
-    number: string;
-    url: string;
-    category: string;
-    isLiked: boolean;
-  }): void;
-};
+interface CardProps {
+  name: string;
+  number: string;
+  category: string;
+  _id: string | number;
+  isLiked: boolean;
+  url?: string;
+}
 
-export const Card: FC<CardProps> = ({ card, onClickCard, onClickLike }) => {
-  const [isLiked, setIsLiked] = useState(card.isLiked);
-
-  function handleClick() {
-    onClickCard(card.name, card.url, card.number);
-  }
-
-  function handleLikeClick() {
-    setIsLiked(!isLiked);
-    onClickLike(card);
-  }
-
+export const Card: FC<CardProps> = ({ name, isLiked, url, number }) => {
   return (
     <>
-      <Paper elevation={2} sx={{ borderRadius: '20px' }}>
-        <Box
-          component="img"
-          sx={{ ...boxStyle }}
-          alt={`скидочная карта от ${card.name}`}
-          src={card.url || '#'}
-          onClick={handleClick}
-        />
-      </Paper>
-      <IconButton
-        aria-label="heart symbol"
-        sx={{ ...iconButtonStyle }}
-        onClick={handleLikeClick}
-      >
-        {card.isLiked ? (
-          <FavoriteIcon fontSize="medium" />
+      <Container>
+        {url ? (
+          <Box sx={{ backgroundImage: `url(${url})`, ...boxStyle }}>
+            <IconButton sx={{ ...iconButtonStyle }}>
+              {isLiked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+            </IconButton>
+            <Box sx={{ ...barcodeStyle }}>
+              <Barcode value={number} />
+            </Box>
+            <Box sx={{ ...barcodeStyle }}>
+              <Barcode value={number} />
+            </Box>
+          </Box>
         ) : (
-          <FavoriteBorderIcon fontSize="medium" />
+          <Box sx={{ backgroundColor: '#52358f', ...boxStyle }}>
+            <IconButton sx={{ ...iconButtonStyle }}>
+              {isLiked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+            </IconButton>
+            <Typography sx={{ ...titleStyle }}>{name}</Typography>
+            <Box sx={{ ...barcodeStyle }}>
+              <Barcode value={number} />
+            </Box>
+          </Box>
         )}
-      </IconButton>
+      </Container>
     </>
   );
 };
