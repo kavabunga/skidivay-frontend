@@ -10,7 +10,7 @@ export const defaultCards: {
     _id: ' h54k5j',
     name: ' Лавка',
     number: '123',
-    url: 'https://i.postimg.cc/h42qWNnk/cloth-shoes-01.jpg',
+    url: 'https://i.postimg.cc/zGHXvPqY/cloth-shoes-01.jpg',
     category: 'cloth-shoes',
     isLiked: false,
   },

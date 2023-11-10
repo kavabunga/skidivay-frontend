@@ -1,8 +1,10 @@
 const style = {
   header: {
-    paddingX: { xs: '16px', sm: '44px' },
-    paddingTop: { xs: '16px', sm: '40px' },
-    paddingBottom: { xs: '4px', sm: '40px' },
+    maxWidth: '1200px',
+    margin: '0 auto',
+    paddingX: { xs: '1rem', sm: '1.5rem' },
+    paddingTop: { xs: '1rem', sm: '2.5rem' },
+    paddingBottom: { xs: '1.5rem', sm: '2.5rem' },
     display: 'flex',
     flexDirection: 'row',
   },
