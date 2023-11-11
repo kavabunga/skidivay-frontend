@@ -34,7 +34,10 @@ export const AuthForm: FC<{
   };
 }> = ({ fields, children, schema, button }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
+  const handleFocusOn = () => setIsFocused(() => true);
+  const handleFocusOff = () => setIsFocused(() => false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (
@@ -89,7 +92,7 @@ export const AuthForm: FC<{
             }}
             InputProps={{
               endAdornment:
-                field.type === 'password' ? (
+                field.type === 'password' && isFocused ? (
                   <InputAdornment position="end">
                     <IconButton
                       aria-label="toggle password visibility"
@@ -121,6 +124,10 @@ export const AuthForm: FC<{
             variant="outlined"
             size="small"
             fullWidth
+            {...(field.type === 'password' && {
+              onFocus: handleFocusOn,
+              onBlur: handleFocusOff,
+            })}
           />
         ))}
       {children}
