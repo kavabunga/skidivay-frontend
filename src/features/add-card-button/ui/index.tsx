@@ -1,6 +1,7 @@
 import { FC } from 'react';
-import { Button } from '@mui/material';
-import { style } from './style';
+import { Button, Typography } from '@mui/material';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { buttonStyle, titleStyle } from './style';
 
 interface AddCardButton {
   text: string;
@@ -13,8 +14,9 @@ export const AddCardButton: FC<AddCardButton> = ({ text, onClick }) => {
   }
 
   return (
-    <Button variant="outlined" sx={{ ...style }} onClick={handleClick}>
-      {text}
+    <Button variant="outlined" sx={{ ...buttonStyle }} onClick={handleClick}>
+      <AddCircleOutlineIcon fontSize="large" />
+      <Typography sx={{ ...titleStyle }}>{text}</Typography>
     </Button>
   );
 };

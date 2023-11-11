@@ -1,83 +1,48 @@
 import { FC } from 'react';
-import Grid from '@mui/material/Unstable_Grid2';
-import { Card } from '~/entities';
+import { Box, Stack } from '@mui/material/';
+import { CardSmall } from '~/entities';
 import { AddCardButton } from '~/features';
 import { defaultCards } from '~/shared/mock/default-cards';
-
-type CardProps = {
-  _id: string;
-  name: string;
-  number: string;
-  url: string;
-  category: string;
-  isLiked: boolean;
-};
+import { CardProps } from '~/shared/types';
+import { cardCellStyle } from './style';
 
 type CardsListProps = {
   items: CardProps[];
 };
 
 export const CardsList: FC<CardsListProps> = ({ items = defaultCards }) => {
-  function handleClickCard(name: string, number: string, url: string): void {
-    console.log(`card ${name}, ${number}, ${url}, is clicked`);
-  }
-
-  function handleClickLike(card: CardProps): void {
-    console.log(`card ${card} is liked`);
-  }
+  // function handleClickCard(name: string, number: string, url: string): void {
+  //   console.log(`card ${name}, ${number}, ${url}, is clicked`);
+  // }
+  // function handleClickLike(card: CardProps): void {
+  //   console.log(`card ${card} is liked`);
+  // }
 
   function handleAddCard(): void {
     console.log('card is added');
   }
 
   return (
-    <Grid
-      container
-      spacing={2}
-      columns={{ xs: 12 }}
-      justifyContent="flex-start"
-      alignItems="center"
-    >
-      <Grid
-        key={'add-card-button'}
-        justifyContent="center"
-        alignItems="center"
-        xs={6}
-        sm={4}
-        md={3}
-        sx={{
-          position: 'relative',
-          overflow: 'hidden',
-        }}
-      >
+    <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
+      <Box key={'add-new-card'} sx={cardCellStyle}>
         <AddCardButton
           onClick={handleAddCard}
           text="Добавить новую&nbsp;карту"
         />
-      </Grid>
-
+      </Box>
       {items.map((item) => {
         return (
-          <Grid
-            key={item._id}
-            justifyContent="center"
-            alignItems="center"
-            xs={6}
-            sm={4}
-            md={3}
-            sx={{
-              position: 'relative',
-              overflow: 'hidden',
-            }}
-          >
-            <Card
-              card={item}
-              onClickCard={handleClickCard}
-              onClickLike={handleClickLike}
+          <Box key={item._id} sx={cardCellStyle}>
+            <CardSmall
+              name={item.name}
+              isLiked={item.isLiked ? item.isLiked : false}
+              shopLogo={item.shopLogo}
+              barcodeNumber={item.barcodeNumber}
+              cardNumber={item.cardNumber}
             />
-          </Grid>
+          </Box>
         );
       })}
-    </Grid>
+    </Stack>
   );
 };

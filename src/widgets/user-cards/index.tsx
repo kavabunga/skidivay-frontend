@@ -3,24 +3,14 @@ import { Container, Typography, Button } from '@mui/material';
 import { SearchChips } from '~/features';
 import { CardsList } from '~/widgets';
 import { defaultCards } from '~/shared/mock/default-cards';
+import { CardProps } from '~/shared/types';
 import { mainContainerStyle, linkStyle } from './styles';
 
 type UserCardsProps = {
-  cards: [
-    {
-      _id: string;
-      name: string;
-      number: string;
-      url: string;
-      category: string;
-      isLiked: boolean;
-    },
-  ];
-  tags: [
-    {
-      label: string;
-    },
-  ];
+  cards: CardProps[];
+  tags: {
+    label: string;
+  }[];
   logOut(): void;
 };
 

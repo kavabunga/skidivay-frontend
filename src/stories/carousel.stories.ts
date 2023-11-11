@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Carousel } from '~/features';
+import { imgPromoCards } from '~/shared/mock/img-promo-cards';
 
 const meta = {
   title: 'Components/Carousel',
@@ -13,4 +14,8 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {};
+export const Primary: Story = {
+  args: {
+    items: imgPromoCards,
+  },
+};
