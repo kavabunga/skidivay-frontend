@@ -1,29 +1,27 @@
+import { Stack, Box } from '@mui/material';
 import { Outlet } from 'react-router-dom';
-import { Box } from '@mui/material';
 import { Header } from '~/widgets';
 import { AppFooter } from '~/shared/ui';
 
-export const CardLayout = () => {
+export const AuthLayout = () => {
   //NOTE: Temporary values while no API added
   const user: { name: string } = { name: '' };
-  const isLoggedIn: boolean = true;
-
+  const isLoggedIn: boolean = false;
   return (
-    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <Header user={user} isLoggedIn={isLoggedIn} type="standard" />
+    <Stack sx={{ minHeight: '100vh' }} direction="column">
+      <Header user={user} isLoggedIn={isLoggedIn} type="minimal" />
       <Box component="main">
         <Outlet />
       </Box>
-      <Box
+      <Stack
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
           justifyContent: 'flex-end',
           flexGrow: 1,
         }}
+        direction="column"
       >
         <AppFooter />
-      </Box>
-    </Box>
+      </Stack>
+    </Stack>
   );
 };
