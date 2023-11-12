@@ -9,12 +9,9 @@ const meta = {
     width: '320px',
   },
   tags: ['autodocs'],
-  argTypes: {},
 } satisfies Meta<typeof AddCardForm>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  args: {},
-};
+export const Default: Story = {};

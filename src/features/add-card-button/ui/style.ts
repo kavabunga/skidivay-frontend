@@ -1,13 +1,17 @@
 import { SxProps } from '@mui/material';
 
-export const style: SxProps = {
-  width: '100%',
-  aspectRatio: '1 / 0.63',
+export const buttonStyle: SxProps = {
+  width: '9.875rem',
+  height: '6.75rem',
   color: 'surface.dark',
-  fontSize: '1rem',
-  fontWeight: '500',
-  lineHeight: '1.5',
-  textTransform: 'none',
   borderColor: 'surface.main',
-  borderRadius: '20px',
+  borderRadius: '.5rem',
+  display: 'flex',
+  flexDirection: 'column',
+};
+
+export const titleStyle: SxProps = {
+  fontSize: 16,
+  fontWeight: 500,
+  lineHeight: 1.5,
 };
