@@ -8,7 +8,7 @@ export const CardFull: FC<CardProps> = ({ name, shopLogo, barcodeNumber }) => {
   return (
     <Card
       sx={{
-        backgroundImage: shopLogo ? `shopLogo(${shopLogo})` : '',
+        backgroundImage: shopLogo ? `url(${shopLogo})` : '',
         backgroundColor: shopLogo ? '' : '#52358f',
         ...cardStyle,
       }}

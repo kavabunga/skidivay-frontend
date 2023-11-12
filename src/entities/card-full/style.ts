@@ -3,8 +3,8 @@ import { SxProps } from '@mui/material';
 export const cardStyle: SxProps = {
   position: 'relative',
   marginX: 'auto',
-  height: '13.75rem',
-  minWidth: '15.375rem',
+  aspectRatio: 1.49,
+  minWidth: '18rem',
   maxWidth: '25rem',
   paddingTop: '1.56rem',
   paddingX: '1rem',
