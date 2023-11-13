@@ -5,7 +5,7 @@ import { PermIdentity } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import style from './style';
 
-type HeaderProps = {
+export type HeaderProps = {
   user?: {
     name: string;
   };
