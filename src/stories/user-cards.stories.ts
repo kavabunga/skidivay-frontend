@@ -20,6 +20,6 @@ export const Default: Story = {
   args: {
     cards: defaultCards,
     tags: chipsLabels,
-    logOut: () => console.log('logout'),
+    logOut: () => {},
   },
 };

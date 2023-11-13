@@ -20,15 +20,7 @@ export function App() {
             <Route index Component={Home} />
             <Route path="card">
               <Route path="new" Component={AddCardWidget} />
-              <Route
-                path=":id"
-                element={
-                  <CardWidget
-                    cardNumber="1111 1383 0039 3838 49994"
-                    barcodeNumber="113839895849854"
-                  />
-                }
-              />
+              <Route path=":id" Component={CardWidget} />
             </Route>
           </Route>
           <Route path="*" Component={RootLayout}>

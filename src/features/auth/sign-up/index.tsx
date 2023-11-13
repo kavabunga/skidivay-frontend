@@ -5,25 +5,22 @@ import * as z from 'zod';
 export const SignUpForm = () => {
   const schema = z
     .object({
-      name: z
-        .string({
-          required_error: authFormErrors.required,
-          invalid_type_error: authFormErrors.wrongType,
-        })
-        .min(1, { message: authFormErrors.minOneSymbol }),
+      name: z.string({
+        required_error: authFormErrors.required,
+        invalid_type_error: authFormErrors.wrongType,
+      }),
       email: z
         .string({
           required_error: authFormErrors.required,
           invalid_type_error: authFormErrors.wrongType,
         })
-        .min(1, { message: authFormErrors.minOneSymbol })
         .email({ message: authFormErrors.wrongEmail }),
       phone: z
         .string({
           required_error: authFormErrors.required,
           invalid_type_error: authFormErrors.wrongType,
         })
-        .min(1, { message: authFormErrors.minOneSymbol })
+        .min(10, { message: authFormErrors.minTenSymbols })
         .regex(/^((8|\+7)[- ]?)?(\(?\d{3}\)?[- ]?)?[\d\- ]{7,10}$/, {
           message: authFormErrors.wrongPhone,
         }),

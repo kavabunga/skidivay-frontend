@@ -43,7 +43,7 @@ type EditCardFormProps = {
 export const EditCardForm: FC<EditCardFormProps> = ({
   buttonSave = {
     label: 'Сохранить',
-    onClick: () => console.log('card saved'),
+    onClick: () => {},
   },
   isActive = true,
   cardNumberValue = '1111 1383 0039 3838 49994',
@@ -62,15 +62,12 @@ export const EditCardForm: FC<EditCardFormProps> = ({
     },
   });
 
-  const onSubmit: SubmitHandler<{ [key: string]: string }> = (data) => {
-    console.log(data);
-  };
+  const onSubmit: SubmitHandler<{ [key: string]: string }> = () => {};
 
   return (
     <Box
       component="form"
       sx={formStyle}
-      name="editCard"
       noValidate
       onSubmit={handleSubmit(onSubmit)}
     >
@@ -93,7 +90,7 @@ export const EditCardForm: FC<EditCardFormProps> = ({
           ) : (
             <InputAdornment position="end">
               <IconButton
-                aria-label="toggle password visibility"
+                aria-label="Переключатель видимости пароля"
                 sx={{
                   padding: 0.2,
                   borderRadius: 0,

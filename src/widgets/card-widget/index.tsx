@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button, Container, IconButton, Stack, Box } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -8,27 +8,19 @@ import { BackButton } from '~/features';
 import { CardFull, EditCardForm } from '~/entities';
 import { CardProps } from '~/shared/types';
 import { buttonStyle, topButtonsStyle } from './style';
+import { defaultCards } from '~/shared/mock/default-cards';
+import { defaultCard } from '~/shared/mock/default-card';
 
-//NOTE: name, shopName, shopLogo are disabled for debugging while no logic applied
-interface CardWidgetProps extends CardProps {
-  toggleLike?: () => void;
-}
-
-export const CardWidget: FC<CardWidgetProps> = ({
-  name = 'Мой магазин',
-  cardNumber = '1111 1383 0039 3838 49994',
-  barcodeNumber = '113839895849854',
-  // shopName,
-  shopLogo = '',
-  isLiked = false,
-}) => {
+//NOTE: Getting Card ID as useParams().id through Router's dynamic route
+export const CardWidget = () => {
+  const id = useParams().id;
+  const card: CardProps =
+    defaultCards.find((card) => card._id === id) || defaultCard;
+  const { cardNumber, barcodeNumber, isLiked } = card;
   const [isEditActive, setIsEditActive] = useState(false);
   const handleEditToggle = () => {
     setIsEditActive(() => !isEditActive);
   };
-
-  //NOTE: Getting card Id from react-router
-  console.log(useParams().id);
 
   return (
     <Container sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -52,19 +44,13 @@ export const CardWidget: FC<CardWidgetProps> = ({
           paddingY: 1.5,
         }}
       >
-        <CardFull
-          name={name}
-          cardNumber={cardNumber}
-          barcodeNumber={barcodeNumber}
-          shopLogo={shopLogo ? shopLogo : ''}
-          isLiked={isLiked}
-        />
+        <CardFull {...card} />
       </Box>
 
       <EditCardForm
         isActive={isEditActive}
-        cardNumberValue={cardNumber}
-        barcodeValue={barcodeNumber.toString()}
+        cardNumberValue={cardNumber ? cardNumber : ''}
+        barcodeValue={barcodeNumber ? barcodeNumber : ''}
       />
       <Stack spacing={{ xs: 1, sm: 2 }} useFlexGap>
         <Button variant="contained" sx={buttonStyle}>

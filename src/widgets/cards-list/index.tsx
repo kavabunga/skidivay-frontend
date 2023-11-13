@@ -11,16 +11,7 @@ type CardsListProps = {
 };
 
 export const CardsList: FC<CardsListProps> = ({ items = defaultCards }) => {
-  // function handleClickCard(name: string, number: string, url: string): void {
-  //   console.log(`card ${name}, ${number}, ${url}, is clicked`);
-  // }
-  // function handleClickLike(card: CardProps): void {
-  //   console.log(`card ${card} is liked`);
-  // }
-
-  function handleAddCard(): void {
-    console.log('card is added');
-  }
+  const handleAddCard = () => {};
 
   return (
     <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
@@ -33,13 +24,7 @@ export const CardsList: FC<CardsListProps> = ({ items = defaultCards }) => {
       {items.map((item) => {
         return (
           <Box key={item._id} sx={cardCellStyle}>
-            <CardSmall
-              name={item.name}
-              isLiked={item.isLiked ? item.isLiked : false}
-              shopLogo={item.shopLogo}
-              barcodeNumber={item.barcodeNumber}
-              cardNumber={item.cardNumber}
-            />
+            <CardSmall {...item} />
           </Box>
         );
       })}

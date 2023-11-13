@@ -35,7 +35,7 @@ export const InfoBar: FC<InfoBarProps> = ({ message, isError, isOpen }) => {
     <>
       <IconButton
         size="small"
-        aria-label="close"
+        aria-label="Закрыть сообщение"
         color="inherit"
         onClick={handleClose}
       >

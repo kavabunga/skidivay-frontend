@@ -7,8 +7,6 @@ export const formStyle: SxProps = {
   paddingTop: '12px',
 };
 
-export const textInputStyle: SxProps = {};
-
 export const helperTextStyle: SxProps = {
   fontSize: 12,
   fontWeight: 400,
