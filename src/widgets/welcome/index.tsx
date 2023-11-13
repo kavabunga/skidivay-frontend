@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { Box, Container, Typography } from '@mui/material';
 import { AccentButton } from '~/shared/ui';
-import { Carousel } from '~/features';
-import { imgPromoCards } from '~/shared/mock/img-promo-cards';
+import { PromoSlider } from '~/features';
+import { defaultPromoCards } from '~/shared/mock';
 import coverImage from '~/shared/assets/payment-bw-1.svg';
 import { coverImgStyle, mainContainerStyle, paragraphStyle } from './styles';
 
@@ -19,7 +19,7 @@ export const Welcome: FC<WelcomeProps> = ({ user }) => {
         component="h1"
         variant="h1"
         textAlign="left"
-        sx={{ width: '100%' }}
+        sx={{ padding: '0 0 1.5rem', width: '100%' }}
       >
         {`Привет, ${user.name || 'Приятель'}!`}
       </Typography>
@@ -27,7 +27,7 @@ export const Welcome: FC<WelcomeProps> = ({ user }) => {
       <Box
         component="img"
         sx={{ ...coverImgStyle }}
-        alt={`персонаж, подбрасывающий монету`}
+        alt={`Персонаж, подбрасывающий монету.`}
         src={coverImage}
       />
 
@@ -47,14 +47,14 @@ export const Welcome: FC<WelcomeProps> = ({ user }) => {
         component="p"
         textAlign="left"
         sx={{
-          padding: '1.5rem 0 0.5rem',
+          padding: '1.5rem 0 0',
           ...paragraphStyle,
         }}
       >
         Можно добавить
       </Typography>
 
-      <Carousel items={imgPromoCards} />
+      <PromoSlider items={defaultPromoCards} isLoggedIn={true} />
     </Container>
   );
 };

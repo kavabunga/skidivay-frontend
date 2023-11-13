@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Carousel } from '~/features';
+import { PromoSlider } from '~/features';
 
 const meta = {
-  title: 'Components/Carousel',
-  component: Carousel,
+  title: 'Components/Slider',
+  component: PromoSlider,
   parameters: {
     layout: 'fullscreen',
   },
@@ -13,7 +13,7 @@ const meta = {
       type: 'boolean',
     },
   },
-} satisfies Meta<typeof Carousel>;
+} satisfies Meta<typeof PromoSlider>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
