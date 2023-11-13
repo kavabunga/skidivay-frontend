@@ -6,7 +6,7 @@ export const AccountButton = ({ ...props }) => {
   return (
     <Button
       variant="outlined"
-      aria-label="account icon"
+      aria-label="Кнопка входа в личный кабинет"
       sx={{ ...style }}
       {...props}
     >

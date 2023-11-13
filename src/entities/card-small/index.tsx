@@ -5,7 +5,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { CardProps } from '~/shared/types';
 import { cardStyle, iconButtonStyle, titleStyle } from './style';
 
-export const CardSmall: FC<CardProps> = ({ name, isLiked, shopLogo }) => {
+export const CardSmall: FC<CardProps> = ({ shopName, isLiked, shopLogo }) => {
   return (
     <Card
       variant="outlined"
@@ -18,7 +18,7 @@ export const CardSmall: FC<CardProps> = ({ name, isLiked, shopLogo }) => {
       <IconButton size="small" sx={{ ...iconButtonStyle }}>
         {isLiked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
       </IconButton>
-      {!shopLogo && <Typography sx={{ ...titleStyle }}>{name}</Typography>}
+      {!shopLogo && <Typography sx={{ ...titleStyle }}>{shopName}</Typography>}
     </Card>
   );
 };

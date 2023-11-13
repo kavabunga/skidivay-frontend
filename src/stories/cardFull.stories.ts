@@ -30,7 +30,7 @@ export const Primary: Story = {
     _id: '0',
     category: 'category',
     name: 'name',
-    barcodeNumber: 'number',
+    barcodeNumber: '923238223892',
     cardNumber: '',
   },
 };
@@ -42,7 +42,7 @@ export const Secondary: Story = {
     _id: '0',
     category: 'category',
     name: 'name',
-    barcodeNumber: 'number',
+    barcodeNumber: '923238223892',
     cardNumber: '',
   },
 };
@@ -54,7 +54,7 @@ export const NoImg: Story = {
     _id: '0',
     category: 'category',
     name: '24 часа',
-    barcodeNumber: 'number',
+    barcodeNumber: '923238223892',
     cardNumber: '',
   },
 };
@@ -66,7 +66,7 @@ export const NoImgLongName: Story = {
     _id: '0',
     category: 'category',
     name: 'Очень длинное название для карточки',
-    barcodeNumber: 'number',
+    barcodeNumber: '923238223892',
     cardNumber: '',
   },
 };

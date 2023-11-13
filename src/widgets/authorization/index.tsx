@@ -47,7 +47,7 @@ export const AuthWidget = () => {
           variant="fullWidth"
           value={value}
           onChange={handleChange}
-          aria-label="auth tabs"
+          aria-label="Вкладки логина и регистрации"
         >
           <Tab label="Вход" {...a11yProps(0)} />
           <Tab label="Регистрация" {...a11yProps(1)} />

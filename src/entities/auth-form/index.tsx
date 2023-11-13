@@ -51,15 +51,13 @@ export const AuthForm: FC<{
     mode: 'onBlur',
     resolver: zodResolver(schema),
   });
-  const onSubmit: SubmitHandler<{ [key: string]: string }> = (data) =>
-    console.log(data);
+  const onSubmit: SubmitHandler<{ [key: string]: string }> = () => {};
 
   return (
     <Box
       component="form"
       sx={style.form}
       autoComplete="on"
-      name="signUp"
       noValidate
       onSubmit={handleSubmit(onSubmit)}
     >
@@ -92,7 +90,7 @@ export const AuthForm: FC<{
                 field.type === 'password' ? (
                   <InputAdornment position="end">
                     <IconButton
-                      aria-label="toggle password visibility"
+                      aria-label="Переключатель видимости пароля"
                       onClick={handleClickShowPassword}
                       onMouseDown={handleMouseDownPassword}
                       sx={{

@@ -6,29 +6,19 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { mockShopList, ShopListType } from '~/shared/mock';
 import { addCardFormErrors } from '~/shared/lib';
-import {
-  formStyle,
-  textInputStyle,
-  helperTextStyle,
-  listBoxStyle,
-  buttonStyle,
-} from './style';
+import { formStyle, helperTextStyle, listBoxStyle, buttonStyle } from './style';
 
-//NOTE: In case of clearing the field with the built in close-button, the value becomes NULL, so react-hook-form fires type error. That's why we use 'required' error text as invalid type eroor text in cardName field
+//NOTE: In case of clearing the field with the built in close-button, the value becomes NULL, so react-hook-form fires type error. That's why we use 'required' error text as invalid type eroor text in shopName field
 const schema = z
   .object({
-    cardName: z
-      .string({
-        required_error: addCardFormErrors.required,
-        invalid_type_error: addCardFormErrors.required,
-      })
-      .min(1, { message: addCardFormErrors.minOneSymbol }),
-    cardNumber: z
-      .string({
-        required_error: addCardFormErrors.required,
-        invalid_type_error: addCardFormErrors.wrongType,
-      })
-      .min(1, { message: addCardFormErrors.minOneSymbol }),
+    shopName: z.string({
+      required_error: addCardFormErrors.required,
+      invalid_type_error: addCardFormErrors.required,
+    }),
+    cardNumber: z.string({
+      required_error: addCardFormErrors.required,
+      invalid_type_error: addCardFormErrors.wrongType,
+    }),
     barcode: z.string({
       required_error: addCardFormErrors.required,
       invalid_type_error: addCardFormErrors.wrongType,
@@ -36,7 +26,7 @@ const schema = z
   })
   .partial()
   .required({
-    cardName: true,
+    shopName: true,
     cardNumber: true,
   });
 
@@ -53,11 +43,11 @@ export const AddCardForm: FC<{
 }> = ({
   buttonAddBarcode = {
     label: 'Добавить штрихкод',
-    onClick: () => console.log('barcode scan'),
+    onClick: () => {},
   },
   buttonSave = {
     label: 'Сохранить',
-    onClick: () => console.log('card saved'),
+    onClick: () => {},
   },
   shopList = mockShopList,
 }) => {
@@ -72,25 +62,24 @@ export const AddCardForm: FC<{
   });
 
   const onSubmit: SubmitHandler<{ [key: string]: string }> = (data) => {
-    const shop = shopList.find((element) => element.name === data.cardName);
+    const shop = shopList.find((element) => element.name === data.shopName);
     if (shop !== undefined) {
       data = { ...data, shopId: shop.id.toString() };
     } else {
       data = { ...data, shopId: '' };
     }
-    console.log(data);
+    return;
   };
 
   return (
     <Box
       component="form"
       sx={formStyle}
-      name="addCard"
       noValidate
       onSubmit={handleSubmit(onSubmit)}
     >
       <Controller
-        name="cardName"
+        name="shopName"
         control={control}
         render={({
           field: { value, onChange, onBlur, ref },
@@ -110,7 +99,6 @@ export const AddCardForm: FC<{
               <TextField
                 {...params}
                 label="Название магазина"
-                sx={textInputStyle}
                 error={Boolean(error)}
                 helperText={error ? error.message : ' '}
                 FormHelperTextProps={{ sx: helperTextStyle }}
@@ -124,7 +112,6 @@ export const AddCardForm: FC<{
       />
       <TextField
         label="Номер карты"
-        placeholder="0000 0000 0000 0000"
         helperText={errors['cardNumber'] ? errors['cardNumber']?.message : ' '}
         FormHelperTextProps={{ sx: helperTextStyle }}
         error={!!errors['cardNumber']}
