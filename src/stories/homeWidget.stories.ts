@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Home } from '~/widgets';
 
 const meta = {
-  title: 'Components/Home',
+  title: 'Components/Home Widget',
   component: Home,
   parameters: {
     layout: 'centered',
