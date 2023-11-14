@@ -1,9 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { AccentButton } from '~/shared/ui';
+import { withRouter } from 'storybook-addon-react-router-v6';
 
 const meta = {
   title: 'UI/AccentButton',
   component: AccentButton,
+  decorators: [withRouter],
   parameters: {
     layout: 'centered',
   },

@@ -1,9 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Home } from '~/widgets';
+import { withRouter } from 'storybook-addon-react-router-v6';
 
 const meta = {
   title: 'Components/Home Widget',
   component: Home,
+  decorators: [withRouter],
   parameters: {
     layout: 'centered',
   },

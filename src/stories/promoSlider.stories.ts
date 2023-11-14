@@ -1,10 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { PromoSlider } from '~/features';
 import { defaultPromoCards } from '~/shared/mock';
+import { withRouter } from 'storybook-addon-react-router-v6';
 
 const meta = {
   title: 'Components/Carousel',
   component: PromoSlider,
+  decorators: [withRouter],
   parameters: {
     layout: 'fullscreen',
   },

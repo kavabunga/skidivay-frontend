@@ -47,7 +47,12 @@ export const AuthForm: FC<AuthFormType> = ({
     >
       {fields[0] &&
         fields.map((field) => (
-          <InputSelector {...field} register={register} errors={errors} />
+          <InputSelector
+            {...field}
+            register={register}
+            errors={errors}
+            key={field.name}
+          />
         ))}
 
       {children}

@@ -1,9 +1,11 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { AuthWidget } from '~/widgets/authorization';
+import { withRouter } from 'storybook-addon-react-router-v6';
 
 const meta = {
   title: 'Components/Auth Widget',
   component: AuthWidget,
+  decorators: [withRouter],
   parameters: {
     layout: 'centred',
   },
