@@ -1,16 +1,18 @@
 import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, Typography } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { buttonStyle, titleStyle } from './style';
 
 interface AddCardButton {
   text: string;
-  onClick(): void;
 }
 
-export const AddCardButton: FC<AddCardButton> = ({ text, onClick }) => {
+export const AddCardButton: FC<AddCardButton> = ({ text }) => {
+  const navigate = useNavigate();
+
   function handleClick() {
-    onClick();
+    navigate('/card/new', { relative: 'path' });
   }
 
   return (

@@ -15,6 +15,7 @@ export interface AuthFormType {
     label: string;
     width?: number;
   };
+  submit: () => void;
 }
 
 export const AuthForm: FC<AuthFormType> = ({
@@ -22,6 +23,7 @@ export const AuthForm: FC<AuthFormType> = ({
   children,
   schema,
   button,
+  submit,
 }) => {
   const {
     register,
@@ -31,7 +33,9 @@ export const AuthForm: FC<AuthFormType> = ({
     mode: 'onBlur',
     resolver: zodResolver(schema),
   });
-  const onSubmit: SubmitHandler<{ [key: string]: string }> = () => {};
+  const onSubmit: SubmitHandler<{ [key: string]: string }> = () => {
+    submit();
+  };
 
   return (
     <Box

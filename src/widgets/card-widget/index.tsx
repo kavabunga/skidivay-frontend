@@ -18,8 +18,9 @@ export const CardWidget = () => {
     defaultCards.find((card) => card._id === id) || defaultCard;
   const { cardNumber, barcodeNumber, isLiked } = card;
   const [isEditActive, setIsEditActive] = useState(false);
-  const handleEditToggle = () => {
-    setIsEditActive(() => !isEditActive);
+
+  const handleEditEnable = () => {
+    setIsEditActive(true);
   };
 
   return (
@@ -30,14 +31,16 @@ export const CardWidget = () => {
         sx={topButtonsStyle}
       >
         <BackButton />
-        <Stack direction="row">
-          <IconButton sx={{ padding: 0.5 }}>
-            {isLiked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-          </IconButton>
-          <IconButton onClick={handleEditToggle} sx={{ padding: 0.5 }}>
-            <CreateIcon />
-          </IconButton>
-        </Stack>
+        {!isEditActive && (
+          <Stack direction="row">
+            <IconButton sx={{ padding: 0.5 }}>
+              {isLiked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+            </IconButton>
+            <IconButton onClick={handleEditEnable} sx={{ padding: 0.5 }}>
+              <CreateIcon />
+            </IconButton>
+          </Stack>
+        )}
       </Stack>
       <Box
         sx={{
@@ -52,14 +55,16 @@ export const CardWidget = () => {
         cardNumberValue={cardNumber ? cardNumber : ''}
         barcodeNumberValue={barcodeNumber ? barcodeNumber : ''}
       />
-      <Stack spacing={{ xs: 1, sm: 2 }} useFlexGap>
-        <Button variant="contained" sx={buttonStyle}>
-          Поделиться картой
-        </Button>
-        <Button variant="outlined" sx={buttonStyle}>
-          Удалить карту
-        </Button>
-      </Stack>
+      {!isEditActive && (
+        <Stack spacing={{ xs: 1, sm: 2 }} useFlexGap>
+          <Button variant="contained" sx={buttonStyle}>
+            Поделиться картой
+          </Button>
+          <Button variant="outlined" sx={buttonStyle}>
+            Удалить карту
+          </Button>
+        </Stack>
+      )}
     </Container>
   );
 };

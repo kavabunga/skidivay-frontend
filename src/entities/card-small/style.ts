@@ -1,8 +1,8 @@
 import { SxProps } from '@mui/material';
 
 export const cardStyle: SxProps = {
-  width: '9.875rem',
-  height: '6.75rem',
+  width: '9.6875rem',
+  aspectRatio: 1.435,
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'cover',
   borderRadius: '.5rem',

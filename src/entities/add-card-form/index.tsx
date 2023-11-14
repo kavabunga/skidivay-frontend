@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import Barcode from 'react-barcode';
 import { Box, TextField, Button, Autocomplete, Card } from '@mui/material';
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
@@ -64,6 +65,7 @@ export const AddCardForm: FC<AddCardFormType> = ({
   },
   shopList = mockShopList,
 }) => {
+  const navigate = useNavigate();
   const {
     control,
     register,
@@ -84,7 +86,7 @@ export const AddCardForm: FC<AddCardFormType> = ({
     } else {
       data = { ...data, shopId: '' };
     }
-    return;
+    navigate('../../authorizedWithCards', { relative: 'path' });
   };
 
   const onBarcodeDetect = () => {

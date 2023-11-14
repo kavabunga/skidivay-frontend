@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Box, Container, Typography } from '@mui/material';
 import { AccentButton } from '~/shared/ui';
 import { PromoSlider } from '~/features';
@@ -6,6 +7,7 @@ import { defaultPromoCards } from '~/shared/mock';
 import { coverImgStyle, mainContainerStyle, paragraphStyle } from './styles';
 
 export const Home = () => {
+  const navigate = useNavigate();
   return (
     <Container component="main" sx={{ ...mainContainerStyle }}>
       <Typography
@@ -34,7 +36,10 @@ export const Home = () => {
 
       <PromoSlider items={defaultPromoCards} isLoggedIn={false} />
 
-      <AccentButton children={'Попробовать'} />
+      <AccentButton
+        onClick={() => navigate('/auth', { relative: 'path' })}
+        children={'Попробовать'}
+      />
     </Container>
   );
 };

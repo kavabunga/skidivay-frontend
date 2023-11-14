@@ -1,10 +1,12 @@
 import { Link, List, ListItem } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import { AuthForm } from '..';
 import * as z from 'zod';
 import { authFormErrors } from '~/shared/lib';
 import style from './style';
 
 export const SignInForm = () => {
+  const navigate = useNavigate();
   const schema = z.object({
     email: z
       .string({
@@ -39,11 +41,16 @@ export const SignInForm = () => {
     },
   ];
 
+  const submit = () => {
+    navigate('/authorizedWithCards', { relative: 'path' });
+  };
+
   return (
     <AuthForm
       fields={fields}
       schema={schema}
       button={{ label: 'Войти', fullWidth: true }}
+      submit={submit}
     >
       <List sx={style.list} color="secondary" dense disablePadding>
         <ListItem disableGutters disablePadding dense>
