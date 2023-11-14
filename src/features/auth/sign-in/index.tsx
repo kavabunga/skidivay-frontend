@@ -1,5 +1,5 @@
 import { Link, List, ListItem } from '@mui/material';
-import { AuthForm } from '~/entities';
+import { AuthForm } from '..';
 import * as z from 'zod';
 import { authFormErrors } from '~/shared/lib';
 import style from './style';

@@ -18,5 +18,7 @@ export const addCardFormErrors = {
   wrongCardNumber: 'Некорректный номер карты',
   cardNumberExists: 'Карта была добавлена ранее',
   wrongBarcodeNumber: 'Введен неверный номер',
+  requiredBarcodeOrNumber:
+    'Необходимо указать номер карты или добавить штрихкод',
   required: 'Это поле является обязательным',
 };

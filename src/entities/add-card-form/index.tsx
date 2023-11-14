@@ -1,12 +1,20 @@
 import { FC } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { Box, TextField, Button, Autocomplete } from '@mui/material';
+import Barcode from 'react-barcode';
+import { Box, TextField, Button, Autocomplete, Card } from '@mui/material';
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { mockShopList, ShopListType } from '~/shared/mock';
 import { addCardFormErrors } from '~/shared/lib';
-import { formStyle, helperTextStyle, listBoxStyle, buttonStyle } from './style';
+import { Input } from '~/shared/ui';
+import {
+  formStyle,
+  helperTextStyle,
+  listBoxStyle,
+  buttonStyle,
+  barcodeStyle,
+} from './style';
 
 //NOTE: In case of clearing the field with the built in close-button, the value becomes NULL, so react-hook-form fires type error. That's why we use 'required' error text as invalid type eroor text in shopName field
 const schema = z
@@ -19,20 +27,23 @@ const schema = z
       required_error: addCardFormErrors.required,
       invalid_type_error: addCardFormErrors.wrongType,
     }),
-    barcode: z.string({
+    barcodeNumber: z.string({
       required_error: addCardFormErrors.required,
       invalid_type_error: addCardFormErrors.wrongType,
     }),
   })
   .partial()
-  .required({
-    shopName: true,
-    cardNumber: true,
+  .superRefine(({ barcodeNumber, cardNumber }, ctx) => {
+    if (!barcodeNumber && !cardNumber) {
+      ctx.addIssue({
+        code: 'custom',
+        message: addCardFormErrors.requiredBarcodeOrNumber,
+        path: ['cardNumber'],
+      });
+    }
   });
 
-type FormFields = z.infer<typeof schema>;
-
-export const AddCardForm: FC<{
+export interface AddCardFormType {
   shopList?: ShopListType[];
   buttonAddBarcode?: React.ComponentProps<typeof Button> & {
     label: string;
@@ -40,7 +51,9 @@ export const AddCardForm: FC<{
   buttonSave?: React.ComponentProps<typeof Button> & {
     label: string;
   };
-}> = ({
+}
+
+export const AddCardForm: FC<AddCardFormType> = ({
   buttonAddBarcode = {
     label: 'Добавить штрихкод',
     onClick: () => {},
@@ -55,9 +68,12 @@ export const AddCardForm: FC<{
     control,
     register,
     handleSubmit,
+    setValue,
+    watch,
+    trigger,
     formState: { errors, isDirty, isValid },
-  } = useForm<FormFields>({
-    mode: 'onChange',
+  } = useForm<{ [key: string]: string }>({
+    mode: 'all',
     resolver: zodResolver(schema),
   });
 
@@ -69,6 +85,11 @@ export const AddCardForm: FC<{
       data = { ...data, shopId: '' };
     }
     return;
+  };
+
+  const onBarcodeDetect = () => {
+    setValue('barcodeNumber', '123456789123', { shouldTouch: true });
+    trigger(['barcodeNumber', 'cardNumber']);
   };
 
   return (
@@ -90,7 +111,6 @@ export const AddCardForm: FC<{
               onChange(item);
             }}
             freeSolo
-            size="small"
             fullWidth
             autoSelect
             value={value ?? null}
@@ -110,27 +130,53 @@ export const AddCardForm: FC<{
           />
         )}
       />
-      <TextField
+      <Input
+        name="cardNumber"
         label="Номер карты"
-        helperText={errors['cardNumber'] ? errors['cardNumber']?.message : ' '}
-        FormHelperTextProps={{ sx: helperTextStyle }}
-        error={!!errors['cardNumber']}
-        inputProps={{
-          ...register('cardNumber'),
-        }}
-        variant="outlined"
-        size="small"
-        fullWidth
+        type="text"
+        autoComplete="no"
+        defaultHelperText=" "
+        placeholder=""
+        register={register}
+        errors={errors}
       />
-      <Button
-        variant="outlined"
-        fullWidth
-        sx={buttonStyle}
-        {...buttonAddBarcode}
-        endIcon={<CameraAltOutlinedIcon />}
-      >
-        {buttonAddBarcode.label}
-      </Button>
+      {watch('barcodeNumber') && (
+        <Box sx={{ paddingBottom: '1.25rem' }}>
+          <Card sx={{ ...barcodeStyle }} variant="outlined">
+            <Barcode
+              displayValue={false}
+              margin={0}
+              value={watch('barcodeNumber')}
+              format={'EAN13'}
+            />
+          </Card>
+        </Box>
+      )}
+      {watch('barcodeNumber') && (
+        <Input
+          name="barcodeNumber"
+          label="Номер штрихкода"
+          type="text"
+          autoComplete="no"
+          defaultHelperText=" "
+          placeholder=""
+          register={register}
+          errors={errors}
+        />
+      )}
+      {!watch('barcodeNumber') && (
+        <Button
+          variant="outlined"
+          fullWidth
+          sx={buttonStyle}
+          {...buttonAddBarcode}
+          onClick={onBarcodeDetect}
+          endIcon={<CameraAltOutlinedIcon />}
+        >
+          {buttonAddBarcode.label}
+        </Button>
+      )}
+
       <Button
         type="submit"
         variant="contained"
