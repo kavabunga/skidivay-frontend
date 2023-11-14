@@ -1,11 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { TextField } from '@mui/material';
+import { withRouter } from 'storybook-addon-react-router-v6';
 
 type TextFieldPropsAndCustomArgs = React.ComponentProps<typeof TextField>;
 
 const meta: Meta<TextFieldPropsAndCustomArgs> = {
   title: 'UI/Input',
   component: TextField,
+  decorators: [withRouter],
   parameters: {
     layout: 'centered',
   },

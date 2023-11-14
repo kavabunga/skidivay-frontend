@@ -1,10 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { defaultCards } from '~/shared/mock/default-cards';
 import { CardsList } from '~/widgets';
+import { withRouter } from 'storybook-addon-react-router-v6';
 
 const meta = {
   title: 'Components/CardsList',
   component: CardsList,
+  decorators: [withRouter],
   tags: ['autodocs'],
   parameters: {
     layout: 'center',

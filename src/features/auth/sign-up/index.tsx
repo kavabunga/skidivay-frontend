@@ -1,8 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import { AuthForm } from '..';
 import { authFormErrors } from '~/shared/lib';
 import * as z from 'zod';
 
 export const SignUpForm = () => {
+  const navigate = useNavigate();
   const schema = z
     .object({
       name: z.string({
@@ -92,11 +94,17 @@ export const SignUpForm = () => {
       placeholder: '',
     },
   ];
+
+  const submit = () => {
+    navigate('/authorizedNoCards', { relative: 'path' });
+  };
+
   return (
     <AuthForm
       fields={fields}
       schema={schema}
       button={{ label: 'Далее', fullWidth: true }}
+      submit={submit}
     />
   );
 };

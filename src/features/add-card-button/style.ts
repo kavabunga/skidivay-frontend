@@ -1,8 +1,8 @@
 import { SxProps } from '@mui/material';
 
 export const buttonStyle: SxProps = {
-  width: '9.875rem',
-  height: '6.75rem',
+  width: '9.6875rem',
+  aspectRatio: 1.435,
   color: 'surface.dark',
   borderColor: 'surface.main',
   borderRadius: '.5rem',

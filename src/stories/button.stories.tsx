@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Button } from '@mui/material';
+import { withRouter } from 'storybook-addon-react-router-v6';
 
 type ButtonPropsAndCustomArgs = React.ComponentProps<typeof Button> & {
   label?: string;
@@ -8,6 +9,7 @@ type ButtonPropsAndCustomArgs = React.ComponentProps<typeof Button> & {
 const meta: Meta<ButtonPropsAndCustomArgs> = {
   title: 'UI/Button',
   component: Button,
+  decorators: [withRouter],
   parameters: {
     layout: 'centered',
   },

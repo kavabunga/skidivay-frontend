@@ -21,14 +21,9 @@ const schema = z
     }),
   })
   .partial()
-  .superRefine(({ barcodeNumber, cardNumber }, ctx) => {
-    if (!barcodeNumber && !cardNumber) {
-      ctx.addIssue({
-        code: 'custom',
-        message: addCardFormErrors.requiredBarcodeOrNumber,
-        path: ['cardNumber'],
-      });
-    }
+  .refine((data) => !(!data.barcodeNumber && !data.cardNumber), {
+    message: addCardFormErrors.requiredBarcodeOrNumber,
+    path: ['cardNumber'],
   });
 
 export interface EditCardFormProps {
@@ -52,7 +47,7 @@ export const EditCardForm: FC<EditCardFormProps> = ({
   const {
     register,
     handleSubmit,
-    formState: { errors, isDirty, isValid },
+    formState: { errors, isValid },
   } = useForm<{ [key: string]: string }>({
     mode: 'all',
     resolver: zodResolver(schema),
@@ -119,7 +114,7 @@ export const EditCardForm: FC<EditCardFormProps> = ({
         <Button
           type="submit"
           variant="outlined"
-          disabled={!isDirty || !isValid}
+          disabled={!isValid}
           fullWidth
           sx={buttonStyle}
           {...buttonSave}

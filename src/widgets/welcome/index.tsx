@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Box, Container, Typography } from '@mui/material';
 import { AccentButton } from '~/shared/ui';
 import { PromoSlider } from '~/features';
@@ -13,6 +14,7 @@ type WelcomeProps = {
 };
 
 export const Welcome: FC<WelcomeProps> = ({ user }) => {
+  const navigate = useNavigate();
   return (
     <Container component="main" sx={{ ...mainContainerStyle }}>
       <Typography
@@ -41,7 +43,10 @@ export const Welcome: FC<WelcomeProps> = ({ user }) => {
         Здесь пока нет добавленных карт
       </Typography>
 
-      <AccentButton children={'Добавить карту'} />
+      <AccentButton
+        onClick={() => navigate('/card/new', { relative: 'path' })}
+        children={'Добавить карту'}
+      />
 
       <Typography
         component="p"

@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Container, Typography, Button } from '@mui/material';
 import { SearchChips } from '~/features';
 import { CardsList } from '~/widgets';
@@ -19,9 +20,11 @@ export const UserCards: FC<UserCardsProps> = ({
   tags,
   logOut,
 }) => {
-  function handleClick() {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate('..', { relative: 'path' });
     logOut();
-  }
+  };
 
   return (
     <Container component="main" sx={{ ...mainContainerStyle }}>

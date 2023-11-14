@@ -1,6 +1,6 @@
 import { ThemeProvider } from '@emotion/react';
 import { CssBaseline } from '@mui/material';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AuthLayout, NotFound, RootLayout } from '~/pages';
 import {
   Home,
@@ -16,8 +16,8 @@ import { lightTheme } from '~/shared/lib';
 import 'typeface-roboto';
 import 'typeface-nunito';
 
-const isLoggedIn: boolean = true;
-const isUserCards: boolean = true;
+// const isLoggedIn: boolean = true;
+// const isUserCards: boolean = true;
 
 function handleLogOut() {
   return;
@@ -33,7 +33,8 @@ export function App() {
             <Route index Component={AuthWidget} />
           </Route>
           <Route path="/" Component={RootLayout}>
-            <Route
+            <Route index Component={Home} />
+            {/* <Route
               index
               element={
                 !isLoggedIn ? (
@@ -44,7 +45,7 @@ export function App() {
                   <Navigate to="authorizedNoCards" replace />
                 )
               }
-            />
+            /> */}
             <Route
               path="authorizedNoCards"
               element={<Welcome user={{ name: 'Василий' }} />}
