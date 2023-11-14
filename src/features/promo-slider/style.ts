@@ -9,6 +9,7 @@ export const sliderWindowStyle: SxProps = {
   flexFlow: 'column nowrap',
   justifyContent: 'flex-start',
   alignItems: 'center',
+  overflow: 'hidden',
 };
 
 export const slideStyle: SxProps = {
