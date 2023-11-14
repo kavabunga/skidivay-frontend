@@ -7,7 +7,6 @@ export const mainContainerStyle: SxProps = {
   flexDirection: 'column',
   justifyContent: 'flex-start',
   alignItems: 'center',
-  gap: '1rem',
 };
 
 export const paragraphStyle: SxProps = {
