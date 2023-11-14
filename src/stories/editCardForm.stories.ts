@@ -19,6 +19,6 @@ export const Default: Story = {
   args: {
     isActive: true,
     cardNumberValue: '1111 1383 0039 3838 49994',
-    barcodeValue: '113839895849854',
+    barcodeNumberValue: '113839895849854',
   },
 };

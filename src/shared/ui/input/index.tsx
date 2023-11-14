@@ -18,6 +18,7 @@ export interface InputType extends FieldType {
   errors: FieldErrors<{ [key: string]: string }>;
   onFocus?: () => void;
   onBlur?: () => void;
+  disabled?: boolean;
   InputProps?: InputProps;
 }
 

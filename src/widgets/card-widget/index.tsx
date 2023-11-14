@@ -50,7 +50,7 @@ export const CardWidget = () => {
       <EditCardForm
         isActive={isEditActive}
         cardNumberValue={cardNumber ? cardNumber : ''}
-        barcodeValue={barcodeNumber ? barcodeNumber : ''}
+        barcodeNumberValue={barcodeNumber ? barcodeNumber : ''}
       />
       <Stack spacing={{ xs: 1, sm: 2 }} useFlexGap>
         <Button variant="contained" sx={buttonStyle}>

@@ -1,44 +1,44 @@
 import { FC } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import {
-  Box,
-  TextField,
-  Button,
-  InputAdornment,
-  IconButton,
-} from '@mui/material';
+import { Box, Button, InputAdornment, IconButton } from '@mui/material';
+import { Input } from '~/shared/ui';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import ErrorIcon from '@mui/icons-material/Error';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { addCardFormErrors } from '~/shared/lib';
-import { formStyle, helperTextStyle, buttonStyle } from './style';
+import { formStyle, buttonStyle } from './style';
 
-const schema = z.object({
-  cardNumber: z
-    .string({
+const schema = z
+  .object({
+    cardNumber: z.string({
       required_error: addCardFormErrors.required,
       invalid_type_error: addCardFormErrors.wrongType,
-    })
-    .min(1, { message: addCardFormErrors.minOneSymbol }),
-  barcode: z
-    .string({
+    }),
+    barcodeNumber: z.string({
       required_error: addCardFormErrors.required,
       invalid_type_error: addCardFormErrors.wrongType,
-    })
-    .min(1, { message: addCardFormErrors.minOneSymbol }),
-});
+    }),
+  })
+  .partial()
+  .superRefine(({ barcodeNumber, cardNumber }, ctx) => {
+    if (!barcodeNumber && !cardNumber) {
+      ctx.addIssue({
+        code: 'custom',
+        message: addCardFormErrors.requiredBarcodeOrNumber,
+        path: ['cardNumber'],
+      });
+    }
+  });
 
-type FormFields = z.infer<typeof schema>;
-
-type EditCardFormProps = {
+export interface EditCardFormProps {
   isActive: boolean;
   cardNumberValue: string;
-  barcodeValue: string;
+  barcodeNumberValue: string;
   buttonSave?: React.ComponentProps<typeof Button> & {
     label: string;
   };
-};
+}
 
 export const EditCardForm: FC<EditCardFormProps> = ({
   buttonSave = {
@@ -47,18 +47,18 @@ export const EditCardForm: FC<EditCardFormProps> = ({
   },
   isActive = true,
   cardNumberValue = '1111 1383 0039 3838 49994',
-  barcodeValue = '113839895849854',
+  barcodeNumberValue = '113839895849854',
 }) => {
   const {
     register,
     handleSubmit,
     formState: { errors, isDirty, isValid },
-  } = useForm<FormFields>({
-    mode: 'onChange',
+  } = useForm<{ [key: string]: string }>({
+    mode: 'all',
     resolver: zodResolver(schema),
     defaultValues: {
       cardNumber: cardNumberValue,
-      barcode: barcodeValue,
+      barcodeNumber: barcodeNumberValue,
     },
   });
 
@@ -71,16 +71,15 @@ export const EditCardForm: FC<EditCardFormProps> = ({
       noValidate
       onSubmit={handleSubmit(onSubmit)}
     >
-      <TextField
+      <Input
+        name="cardNumber"
         label="Номер карты"
-        helperText={errors['cardNumber'] ? errors['cardNumber']?.message : ' '}
-        FormHelperTextProps={{ sx: helperTextStyle }}
-        error={!!errors['cardNumber']}
-        inputProps={{
-          ...register('cardNumber'),
-        }}
-        variant="outlined"
-        fullWidth
+        type="text"
+        autoComplete="no"
+        defaultHelperText=" "
+        placeholder=""
+        register={register}
+        errors={errors}
         disabled={!isActive}
         InputProps={{
           endAdornment: errors['cardNumber'] ? (
@@ -90,7 +89,7 @@ export const EditCardForm: FC<EditCardFormProps> = ({
           ) : (
             <InputAdornment position="end">
               <IconButton
-                aria-label="Переключатель видимости пароля"
+                aria-label="Кнопка копирования номера карты"
                 sx={{
                   padding: 0.2,
                   borderRadius: 0,
@@ -105,24 +104,16 @@ export const EditCardForm: FC<EditCardFormProps> = ({
           ),
         }}
       />
-      <TextField
+      <Input
+        name="barcodeNumber"
         label="Номер штрихкода"
-        helperText={errors['barcode'] ? errors['barcode']?.message : ' '}
-        FormHelperTextProps={{ sx: helperTextStyle }}
-        error={!!errors['barcode']}
-        inputProps={{
-          ...register('barcode'),
-        }}
-        variant="outlined"
-        fullWidth
+        type="text"
+        autoComplete="no"
+        defaultHelperText=" "
+        placeholder=""
+        register={register}
+        errors={errors}
         disabled={!isActive}
-        InputProps={{
-          endAdornment: errors['cardNumber'] && (
-            <InputAdornment position="end">
-              <ErrorIcon color="error" fontSize="small" />
-            </InputAdornment>
-          ),
-        }}
       />
       {isActive && (
         <Button
