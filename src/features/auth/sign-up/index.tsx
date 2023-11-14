@@ -1,4 +1,4 @@
-import { AuthForm } from '~/entities';
+import { AuthForm } from '..';
 import { authFormErrors } from '~/shared/lib';
 import * as z from 'zod';
 
