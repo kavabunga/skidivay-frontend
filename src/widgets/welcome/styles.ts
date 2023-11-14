@@ -1,5 +1,14 @@
 import { SxProps } from '@mui/material';
 
+export const mainContainerStyle: SxProps = {
+  display: 'flex',
+  height: '100%',
+  paddingBottom: '1rem',
+  flexDirection: 'column',
+  justifyContent: 'flex-start',
+  alignItems: 'center',
+};
+
 export const coverImgStyle: SxProps = {
   display: 'block',
   width: '55.5%',
@@ -8,14 +17,6 @@ export const coverImgStyle: SxProps = {
   objectFit: 'contain',
   objectPosition: 'center',
   flexShrink: '0',
-};
-
-export const mainContainerStyle: SxProps = {
-  display: 'flex',
-  height: '100%',
-  flexDirection: 'column',
-  justifyContent: 'flex-start',
-  alignItems: 'center',
 };
 
 export const paragraphStyle: SxProps = {

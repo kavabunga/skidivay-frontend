@@ -63,18 +63,18 @@ export const InfoBar: FC<InfoBarProps> = ({ message, isError, isOpen }) => {
               backgroundColor: 'error.main',
             }}
           >
-            {message || 'ошибка!'}
+            {message || 'Ошибка!'}
           </Alert>
         ) : (
           <Alert
             onClose={handleClose}
-            severity="info"
+            severity="success"
             sx={{
               width: '100%',
               backgroundColor: 'secondary.main',
             }}
           >
-            {message || 'все ок!'}
+            {message || 'Все ок!'}
           </Alert>
         )}
       </Snackbar>
