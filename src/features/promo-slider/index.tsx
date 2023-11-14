@@ -23,7 +23,6 @@ export const PromoSlider: FC<PromoSliderProps> = ({
   isLoggedIn,
 }) => {
   interface SliderSettings {
-    dots: boolean;
     infinite: boolean;
     slidesToShow: number;
     slidesToScroll: number;
@@ -35,13 +34,12 @@ export const PromoSlider: FC<PromoSliderProps> = ({
   }
 
   const settings: SliderSettings = {
-    dots: true,
     infinite: true,
     slidesToShow: 2,
     slidesToScroll: 2,
     autoplay: true,
     speed: 2000,
-    autoplaySpeed: 3000,
+    autoplaySpeed: 4000,
     pauseOnHover: true,
     cssEase: 'ease',
   };

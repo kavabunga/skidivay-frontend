@@ -5,7 +5,7 @@ export const sliderWindowStyle: SxProps = {
   display: 'flex',
   width: '100%',
   maxWidth: '100%',
-  padding: '0.5rem 0 2rem',
+  padding: '0.5rem 0',
   flexFlow: 'column nowrap',
   justifyContent: 'flex-start',
   alignItems: 'center',
