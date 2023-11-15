@@ -1,12 +1,13 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { CardWidget } from '~/widgets/card-widget';
+import { CardWidget } from '~/widgets/';
 import { withRouter } from 'storybook-addon-react-router-v6';
 
 const meta = {
   title: 'Components/Card Widget',
   component: CardWidget,
   parameters: {
-    layout: 'centred',
+    layout: 'centered',
+    width: '360px',
   },
   decorators: [withRouter],
   tags: ['autodocs'],

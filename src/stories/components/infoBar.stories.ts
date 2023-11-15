@@ -3,7 +3,7 @@ import { InfoBar } from '~/features';
 import { withRouter } from 'storybook-addon-react-router-v6';
 
 const meta = {
-  title: 'Components/InfoBar',
+  title: 'Components/Info Bar',
   component: InfoBar,
   decorators: [withRouter],
   tags: ['autodocs'],

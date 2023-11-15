@@ -4,7 +4,7 @@ import { defaultPromoCards } from '~/shared/mock';
 import { withRouter } from 'storybook-addon-react-router-v6';
 
 const meta = {
-  title: 'Components/Carousel',
+  title: 'Components/Promo Slider',
   component: PromoSlider,
   decorators: [withRouter],
   parameters: {

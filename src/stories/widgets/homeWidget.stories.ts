@@ -1,16 +1,17 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { AddCardWidget } from '~/widgets/add-card';
+import { Home } from '~/widgets';
 import { withRouter } from 'storybook-addon-react-router-v6';
 
 const meta = {
-  title: 'Components/Add Card Widget',
-  component: AddCardWidget,
-  decorators: [withRouter],
+  title: 'Components/Home Widget',
+  component: Home,
   parameters: {
-    layout: 'centred',
+    layout: 'padded',
   },
+  decorators: [withRouter],
   tags: ['autodocs'],
-} satisfies Meta<typeof AddCardWidget>;
+} satisfies Meta<typeof Home>;
+
 export default meta;
 
 type Story = StoryObj<typeof meta>;
