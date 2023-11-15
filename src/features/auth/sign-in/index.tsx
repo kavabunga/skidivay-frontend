@@ -11,12 +11,10 @@ export const SignInForm = () => {
     email: z
       .string({
         required_error: authFormErrors.required,
-        invalid_type_error: authFormErrors.wrongType,
       })
       .email({ message: authFormErrors.wrongEmail }),
     password: z.string({
       required_error: authFormErrors.required,
-      invalid_type_error: authFormErrors.wrongType,
     }),
   });
 

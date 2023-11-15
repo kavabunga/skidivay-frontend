@@ -7,34 +7,43 @@ export const SignUpForm = () => {
   const navigate = useNavigate();
   const schema = z
     .object({
-      name: z.string({
-        required_error: authFormErrors.required,
-        invalid_type_error: authFormErrors.wrongType,
-      }),
+      name: z
+        .string({
+          required_error: authFormErrors.required,
+        })
+        .max(60, { message: authFormErrors.maxSixtySymbols })
+        .regex(/^[[a-z\][A-Z\][а-я\][А-Я\]\s\-—_]+$/, {
+          message: authFormErrors.wrongName,
+        }),
       email: z
         .string({
           required_error: authFormErrors.required,
-          invalid_type_error: authFormErrors.wrongType,
         })
+        .max(30, { message: authFormErrors.maxThirtySymbols })
         .email({ message: authFormErrors.wrongEmail }),
       phone: z
         .string({
           required_error: authFormErrors.required,
-          invalid_type_error: authFormErrors.wrongType,
         })
         .min(10, { message: authFormErrors.minTenSymbols })
+        .max(12, { message: authFormErrors.maxTwelveSymbols })
         .regex(/^((8|\+7)[- ]?)?(\(?\d{3}\)?[- ]?)?[\d\- ]{7,10}$/, {
           message: authFormErrors.wrongPhone,
         }),
       password: z
         .string({
           required_error: authFormErrors.required,
-          invalid_type_error: authFormErrors.wrongType,
         })
-        .min(8, { message: authFormErrors.minEightSymbols }),
+        .min(8, { message: authFormErrors.minEightSymbols })
+        .max(20, { message: authFormErrors.maxTwentySymbols })
+        .regex(
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*()-_+=<>?]{1,}$/,
+          {
+            message: authFormErrors.wrongPasswordCreated,
+          }
+        ),
       passwordRepeat: z.string({
         required_error: authFormErrors.required,
-        invalid_type_error: authFormErrors.wrongType,
       }),
     })
     .superRefine(({ passwordRepeat, password }, ctx) => {

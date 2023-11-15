@@ -7,7 +7,7 @@ import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { mockShopList, ShopListType } from '~/shared/mock';
-import { addCardFormErrors } from '~/shared/lib';
+import { cardFormErrors } from '~/shared/lib';
 import { Input } from '~/shared/ui';
 import {
   formStyle,
@@ -20,25 +20,34 @@ import {
 //NOTE: In case of clearing the field with the built in close-button, the value becomes NULL, so react-hook-form fires type error. That's why we use 'required' error text as invalid type eroor text in shopName field
 const schema = z
   .object({
-    shopName: z.string({
-      required_error: addCardFormErrors.required,
-      invalid_type_error: addCardFormErrors.required,
-    }),
-    cardNumber: z.string({
-      required_error: addCardFormErrors.required,
-      invalid_type_error: addCardFormErrors.wrongType,
-    }),
-    barcodeNumber: z.string({
-      required_error: addCardFormErrors.required,
-      invalid_type_error: addCardFormErrors.wrongType,
-    }),
+    shopName: z
+      .string({
+        required_error: cardFormErrors.required,
+        invalid_type_error: cardFormErrors.required,
+      })
+      .max(30, { message: cardFormErrors.maxThirtySymbols })
+      .regex(/^[A-Za-zА-Яа-я0-9+.\-_,!@=]+$/, {
+        message: cardFormErrors.wrongShopName,
+      }),
+    cardNumber: z
+      .string({})
+      .max(40, { message: cardFormErrors.maxFortySymbols })
+      .regex(/^\d+$/, {
+        message: cardFormErrors.wrongNumber,
+      }),
+    barcodeNumber: z
+      .string({})
+      .max(40, { message: cardFormErrors.maxFortySymbols })
+      .regex(/^\d+$/, {
+        message: cardFormErrors.wrongNumber,
+      }),
   })
   .partial()
   .superRefine(({ barcodeNumber, cardNumber }, ctx) => {
     if (!barcodeNumber && !cardNumber) {
       ctx.addIssue({
         code: 'custom',
-        message: addCardFormErrors.requiredBarcodeOrNumber,
+        message: cardFormErrors.requiredBarcodeOrNumber,
         path: ['cardNumber'],
       });
     }

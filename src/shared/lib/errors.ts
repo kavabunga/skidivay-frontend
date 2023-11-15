@@ -2,20 +2,32 @@ export const authFormErrors = {
   minOneSymbol: 'Минимальная длина: 1 символ',
   minEightSymbols: 'Минимальная длина: 8 символов',
   minTenSymbols: 'Минимальная длина: 10 символов',
+  maxTwelveSymbols: 'Максимальная длина: 12 символов',
+  maxTwentySymbols: 'Максимальная длина: 20 символов',
+  maxThirtySymbols: 'Максимальная длина: 30 символов',
+  maxSixtySymbols: 'Максимальная длина: 60 символов',
   wrongType: 'Введен неверный тип данных',
-  wrongEmail: 'Неверно указан email',
+  wrongName: 'Имя может содержать буквы, пробелы и дефисы',
+  wrongEmail: 'Неверно указан Email',
   wrongPhone: 'Неверно указан номер. Нужно ввести номер в формате 1234567891',
   phoneExists: 'Пользователь с таким номером уже существует',
   emailExists: 'Пользователь с таким Email уже существует',
+  wrongPasswordCreated:
+    'Пароль должен содержать хотя бы 1 заглавную и хотя бы 1 строчную буквы, а также хотя бы 1 цифру. Пароль может содержать буквы латинского алфавита, цифры и символы)',
   wrongPassword: 'Введен неверный пароль',
   wrongPasswordRepeat: 'Пароли не совпадают',
   userNotFound: 'Пользователь не найден',
   required: 'Это поле является обязательным',
 };
-export const addCardFormErrors = {
+export const cardFormErrors = {
   minOneSymbol: 'Минимальная длина: 1 символ',
+  maxThirtySymbols: 'Максимальная длина: 30 символов',
+  maxFortySymbols: 'Максимальная длина: 40 символов',
   wrongType: 'Неверный тип данных',
+  wrongShopName:
+    'Название может содержать латинские и русские буквы, цифры, а также символы: + . - _ , ! @ =',
   wrongCardNumber: 'Некорректный номер карты',
+  wrongNumber: 'Номер может содержать только цифры',
   cardNumberExists: 'Карта была добавлена ранее',
   wrongBarcodeNumber: 'Введен неверный номер',
   requiredBarcodeOrNumber:
