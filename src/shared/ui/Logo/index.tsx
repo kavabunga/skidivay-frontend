@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Typography } from '@mui/material';
 import logoPath from '~/shared/assets/logo.svg';
-import './logo.css';
+import './Logo.css';
 import style from './style';
 
 type Logo = {
