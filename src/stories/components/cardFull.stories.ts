@@ -8,6 +8,7 @@ const meta = {
   decorators: [withRouter],
   parameters: {
     layout: 'centered',
+    width: '360px',
   },
   tags: ['autodocs'],
   argTypes: {

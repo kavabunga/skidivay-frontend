@@ -15,14 +15,13 @@ export const Home = () => {
         textAlign="center"
         sx={{ paddingBottom: '1rem', ...paragraphStyle }}
       >
-        Удобный и быстрый доступ к вашим картам лояльности
-        в&nbsp;любом&nbsp;месте
+        Удобный и быстрый доступ к вашим картам лояльности в любом месте
       </Typography>
 
       <Box
         component="img"
         sx={{ ...coverImgStyle }}
-        alt={`Персонаж, несущий свинью-копилку.`}
+        alt="Персонаж, несущий свинью-копилку"
         src={coverImage}
       />
 

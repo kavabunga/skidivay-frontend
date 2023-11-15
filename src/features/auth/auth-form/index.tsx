@@ -30,7 +30,7 @@ export const AuthForm: FC<AuthFormType> = ({
     handleSubmit,
     formState: { errors, isDirty, isValid },
   } = useForm<{ [key: string]: string }>({
-    mode: 'onBlur',
+    mode: 'all',
     resolver: zodResolver(schema),
   });
   const onSubmit: SubmitHandler<{ [key: string]: string }> = () => {

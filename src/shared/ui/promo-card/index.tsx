@@ -12,7 +12,7 @@ export const PromoCard: FC<PromoCardProps> = ({ cardUrl }) => {
       <Box
         component="img"
         sx={{ ...style }}
-        alt={`скидочная карта`}
+        alt="Скидочная карта"
         src={cardUrl || '#'}
       />
     </Paper>

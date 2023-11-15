@@ -17,7 +17,7 @@ export const CardsList: FC<CardsListProps> = ({ items = defaultCards }) => {
   return (
     <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
       <Box key={'add-new-card'} sx={cardCellStyle}>
-        <AddCardButton text="Добавить новую&nbsp;карту" />
+        <AddCardButton text="Добавить новую карту" />
       </Box>
       {items.map((item) => {
         return (

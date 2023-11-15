@@ -3,7 +3,7 @@ import { AccentButton } from '~/shared/ui';
 import { withRouter } from 'storybook-addon-react-router-v6';
 
 const meta = {
-  title: 'UI/AccentButton',
+  title: 'UI/Accent Button',
   component: AccentButton,
   decorators: [withRouter],
   parameters: {

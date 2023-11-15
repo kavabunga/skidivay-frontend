@@ -5,11 +5,11 @@ import { chipsLabels } from '~/shared/mock/chips-labels';
 import { withRouter } from 'storybook-addon-react-router-v6';
 
 const meta = {
-  title: 'Components/User Cards',
+  title: 'Widgets/User Cards',
   component: UserCards,
   decorators: [withRouter],
   parameters: {
-    layout: 'center',
+    layout: 'centered',
   },
   tags: ['autodocs'],
 } satisfies Meta<typeof UserCards>;

@@ -1,18 +1,17 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { SignUpForm } from '~/features';
+import { Meta, StoryObj } from '@storybook/react';
+import { AuthWidget } from '~/widgets/authorization';
 import { withRouter } from 'storybook-addon-react-router-v6';
 
 const meta = {
-  title: 'Components/Sign Up form',
-  component: SignUpForm,
+  title: 'Widgets/Auth Widget',
+  component: AuthWidget,
   decorators: [withRouter],
   parameters: {
     layout: 'centered',
-    width: '320px',
+    width: '360px',
   },
   tags: ['autodocs'],
-} satisfies Meta<typeof SignUpForm>;
-
+} satisfies Meta<typeof AuthWidget>;
 export default meta;
 
 type Story = StoryObj<typeof meta>;

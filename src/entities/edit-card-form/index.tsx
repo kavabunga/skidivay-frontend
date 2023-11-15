@@ -6,23 +6,31 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import ErrorIcon from '@mui/icons-material/Error';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { addCardFormErrors } from '~/shared/lib';
+import { cardFormErrors } from '~/shared/lib';
 import { formStyle, buttonStyle } from './style';
 
 const schema = z
   .object({
-    cardNumber: z.string({
-      required_error: addCardFormErrors.required,
-      invalid_type_error: addCardFormErrors.wrongType,
-    }),
-    barcodeNumber: z.string({
-      required_error: addCardFormErrors.required,
-      invalid_type_error: addCardFormErrors.wrongType,
-    }),
+    cardNumber: z
+      .string({
+        required_error: cardFormErrors.required,
+      })
+      .max(40, { message: cardFormErrors.maxFortySymbols })
+      .regex(/^\d+$/, {
+        message: cardFormErrors.wrongNumber,
+      }),
+    barcodeNumber: z
+      .string({
+        required_error: cardFormErrors.required,
+      })
+      .max(40, { message: cardFormErrors.maxFortySymbols })
+      .regex(/^\d+$/, {
+        message: cardFormErrors.wrongNumber,
+      }),
   })
   .partial()
   .refine((data) => !(!data.barcodeNumber && !data.cardNumber), {
-    message: addCardFormErrors.requiredBarcodeOrNumber,
+    message: cardFormErrors.requiredBarcodeOrNumber,
     path: ['cardNumber'],
   });
 

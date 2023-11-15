@@ -4,12 +4,12 @@ import { CardsList } from '~/widgets';
 import { withRouter } from 'storybook-addon-react-router-v6';
 
 const meta = {
-  title: 'Components/CardsList',
+  title: 'Components/Cards List',
   component: CardsList,
   decorators: [withRouter],
   tags: ['autodocs'],
   parameters: {
-    layout: 'center',
+    layout: 'centered',
   },
 } satisfies Meta<typeof CardsList>;
 

@@ -1,19 +1,25 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Home } from '~/widgets';
+import { Welcome } from '~/widgets';
 import { withRouter } from 'storybook-addon-react-router-v6';
 
 const meta = {
-  title: 'Components/Home Widget',
-  component: Home,
+  title: 'Widgets/Welcome',
+  component: Welcome,
   decorators: [withRouter],
   parameters: {
-    layout: 'centered',
+    layout: 'padded',
   },
   tags: ['autodocs'],
-} satisfies Meta<typeof Home>;
+} satisfies Meta<typeof Welcome>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  args: {
+    user: {
+      name: 'Петр',
+    },
+  },
+};
