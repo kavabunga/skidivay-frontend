@@ -21,7 +21,7 @@ export const Home = () => {
       <Box
         component="img"
         sx={{ ...coverImgStyle }}
-        alt={`Персонаж, несущий свинью-копилку.`}
+        alt="Персонаж, несущий свинью-копилку"
         src={coverImage}
       />
 

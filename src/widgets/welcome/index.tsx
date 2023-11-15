@@ -29,7 +29,7 @@ export const Welcome: FC<WelcomeProps> = ({ user }) => {
       <Box
         component="img"
         sx={{ ...coverImgStyle }}
-        alt={`Персонаж, подбрасывающий монету.`}
+        alt="Персонаж, подбрасывающий монету"
         src={coverImage}
       />
 
