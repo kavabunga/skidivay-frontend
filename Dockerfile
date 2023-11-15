@@ -1,4 +1,4 @@
-FROM node:20-alpine3.17 as build
+FROM --platform=amd64 node:20-alpine3.17 as build-amd64
 
 WORKDIR /app
 
