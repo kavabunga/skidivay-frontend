@@ -12,7 +12,7 @@ export const SignUpForm = () => {
           required_error: authFormErrors.required,
         })
         .max(60, { message: authFormErrors.maxSixtySymbols })
-        .regex(/^[[a-z\][A-Z\][а-я\][А-Я\]\s\-—_]+$/, {
+        .regex(/^[[a-z\][A-Z\][а-я\][А-Я\]\s\-—_]*$/, {
           message: authFormErrors.wrongName,
         }),
       email: z

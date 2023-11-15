@@ -26,23 +26,25 @@ const schema = z
         invalid_type_error: cardFormErrors.required,
       })
       .max(30, { message: cardFormErrors.maxThirtySymbols })
-      .regex(/^[A-Za-zА-Яа-я0-9+.\-_,!@=]+$/, {
+      .regex(/^[A-Za-zА-Яа-я0-9+.\-_,!@=\s]*$/, {
         message: cardFormErrors.wrongShopName,
       }),
     cardNumber: z
       .string({})
       .max(40, { message: cardFormErrors.maxFortySymbols })
-      .regex(/^\d+$/, {
+      .regex(/^\d*$/, {
         message: cardFormErrors.wrongNumber,
       }),
     barcodeNumber: z
       .string({})
       .max(40, { message: cardFormErrors.maxFortySymbols })
-      .regex(/^\d+$/, {
+      .regex(/^\d*$/, {
         message: cardFormErrors.wrongNumber,
       }),
   })
-  .partial()
+  .required({
+    shopName: true,
+  })
   .superRefine(({ barcodeNumber, cardNumber }, ctx) => {
     if (!barcodeNumber && !cardNumber) {
       ctx.addIssue({
