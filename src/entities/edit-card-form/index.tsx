@@ -16,7 +16,7 @@ const schema = z
         required_error: cardFormErrors.required,
       })
       .max(40, { message: cardFormErrors.maxFortySymbols })
-      .regex(/^\d+$/, {
+      .regex(/^\d*$/, {
         message: cardFormErrors.wrongNumber,
       }),
     barcodeNumber: z
@@ -24,14 +24,24 @@ const schema = z
         required_error: cardFormErrors.required,
       })
       .max(40, { message: cardFormErrors.maxFortySymbols })
-      .regex(/^\d+$/, {
+      .regex(/^\d*$/, {
         message: cardFormErrors.wrongNumber,
       }),
   })
   .partial()
-  .refine((data) => !(!data.barcodeNumber && !data.cardNumber), {
-    message: cardFormErrors.requiredBarcodeOrNumber,
-    path: ['cardNumber'],
+  .superRefine(({ barcodeNumber, cardNumber }, ctx) => {
+    if (!barcodeNumber && !cardNumber) {
+      ctx.addIssue({
+        code: 'custom',
+        message: cardFormErrors.requiredBarcodeOrNumber,
+        path: ['cardNumber'],
+      });
+      ctx.addIssue({
+        code: 'custom',
+        message: cardFormErrors.requiredBarcodeOrNumber,
+        path: ['barcodeNumber'],
+      });
+    }
   });
 
 export interface EditCardFormProps {
