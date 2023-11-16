@@ -10,7 +10,7 @@ export const defaultCards = [
     barcodeNumber: '9232382238923',
   },
   {
-    _id: ' h54kfg5j',
+    _id: 'h54kfg5j',
     name: ' Лавка',
     shopName: 'Пятерочка',
     cardNumber: '123',
@@ -20,7 +20,7 @@ export const defaultCards = [
     barcodeNumber: '9232382238923',
   },
   {
-    _id: ' h5sd5j',
+    _id: 'h5sd5j',
     name: ' Лавка',
     shopName: 'Пятерочка',
     cardNumber: '123',
@@ -30,7 +30,7 @@ export const defaultCards = [
     barcodeNumber: '9232382238923',
   },
   {
-    _id: ' h54shk5j',
+    _id: 'h54shk5j',
     name: ' Лавка',
     shopName: 'Пятерочка',
     cardNumber: '123',
@@ -40,7 +40,7 @@ export const defaultCards = [
     barcodeNumber: '9232382238923',
   },
   {
-    _id: ' h54974k5j',
+    _id: 'h54974k5j',
     name: ' Лавка',
     shopName: 'Пятерочка',
     cardNumber: '123',
@@ -50,7 +50,7 @@ export const defaultCards = [
     barcodeNumber: '9232382238923',
   },
   {
-    _id: ' 6774k5j',
+    _id: '6774k5j',
     name: ' Лавка',
     shopName: 'Пятерочка',
     cardNumber: '123',
@@ -60,7 +60,7 @@ export const defaultCards = [
     barcodeNumber: '9232382238923',
   },
   {
-    _id: ' hwwek5j',
+    _id: 'hwwek5j',
     name: ' Лавка',
     shopName: 'Пятерочка',
     cardNumber: '123',
@@ -70,7 +70,7 @@ export const defaultCards = [
     barcodeNumber: '9232382238923',
   },
   {
-    _id: ' h5dd4k5j',
+    _id: 'h5dd4k5j',
     name: ' Лавка',
     shopName: 'Пятерочка',
     cardNumber: '123',
@@ -80,7 +80,7 @@ export const defaultCards = [
     barcodeNumber: '9232382238923',
   },
   {
-    _id: ' h5458k5j',
+    _id: 'h5458k5j',
     name: ' Лавка',
     shopName: 'Пятерочка',
     cardNumber: '123',
@@ -90,7 +90,7 @@ export const defaultCards = [
     barcodeNumber: '9232382238923',
   },
   {
-    _id: ' h54sdomvk5j',
+    _id: 'h54sdomvk5j',
     name: ' Лавка',
     shopName: 'Пятерочка',
     cardNumber: '123',
@@ -100,7 +100,7 @@ export const defaultCards = [
     barcodeNumber: '9232382238923',
   },
   {
-    _id: ' h549v4k5j',
+    _id: 'h549v4k5j',
     name: ' Лавка',
     shopName: 'Пятерочка',
     cardNumber: '123',
@@ -110,7 +110,7 @@ export const defaultCards = [
     barcodeNumber: '9232382238923',
   },
   {
-    _id: ' h5458k5j',
+    _id: '5458k5j',
     name: ' Лавка',
     shopName: 'Пятерочка',
     cardNumber: '123',
@@ -140,7 +140,7 @@ export const defaultCards = [
     barcodeNumber: '9232382238923',
   },
   {
-    _id: ' h604554k5j',
+    _id: 'h604554k5j',
     name: ' Лавка',
     shopName: 'Пятерочка',
     cardNumber: '123',
@@ -150,7 +150,7 @@ export const defaultCards = [
     barcodeNumber: '9232382238923',
   },
   {
-    _id: ' h5407k5j',
+    _id: 'h5407k5j',
     name: ' Лавка',
     shopName: 'Пятерочка',
     cardNumber: '123',
@@ -160,7 +160,7 @@ export const defaultCards = [
     barcodeNumber: '9232382238923',
   },
   {
-    _id: ' h52854k5j',
+    _id: 'h52854k5j',
     name: ' Лавка',
     shopName: 'Пятерочка',
     cardNumber: '123',
@@ -170,7 +170,7 @@ export const defaultCards = [
     barcodeNumber: '9232382238923',
   },
   {
-    _id: ' h5f3494k5j',
+    _id: 'h5f3494k5j',
     name: ' Лавка',
     shopName: 'Пятерочка',
     cardNumber: '123',
@@ -180,7 +180,7 @@ export const defaultCards = [
     barcodeNumber: '9232382238923',
   },
   {
-    _id: ' h54dmik5j',
+    _id: 'h54dmik5j',
     name: ' Лавка',
     shopName: 'Пятерочка',
     cardNumber: '123',

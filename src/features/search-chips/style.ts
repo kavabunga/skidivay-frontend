@@ -1,13 +1,16 @@
 import { SxProps } from '@mui/material';
 
-export const style: SxProps = {
+export const sliderWindowStyle: SxProps = {
+  position: 'relative',
   display: 'flex',
   width: '100%',
-  height: 'auto',
-  margin: '0',
-  padding: '0',
-  flexFlow: 'row wrap',
+  maxWidth: '100%',
+  padding: '0 0.5rem',
+  flexFlow: 'row nowrap',
   justifyContent: 'flex-start',
   alignItems: 'center',
-  gap: '0.5rem 0.75rem',
+  overflow: 'hidden',
+  '& > .slick-slider .slick-list .slick-track .slick-slide': {
+    margin: '0 0.5rem',
+  },
 };

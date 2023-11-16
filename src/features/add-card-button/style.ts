@@ -11,7 +11,7 @@ export const buttonStyle: SxProps = {
 };
 
 export const titleStyle: SxProps = {
-  fontSize: 16,
+  fontSize: '1rem',
   fontWeight: 500,
-  lineHeight: 1.5,
+  lineHeight: 1.2,
 };
