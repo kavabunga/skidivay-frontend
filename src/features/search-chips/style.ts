@@ -10,6 +10,9 @@ export const sliderWindowStyle: SxProps = {
   justifyContent: 'flex-start',
   alignItems: 'center',
   overflow: 'hidden',
+  '& > .slick-slider .slick-list': {
+    margin: '0 -0.5rem',
+  },
   '& > .slick-slider .slick-list .slick-track .slick-slide': {
     margin: '0 0.5rem',
   },

@@ -5,7 +5,6 @@ import { chipsLabels } from '~/shared/mock/chips-labels';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { sliderWindowStyle } from './style';
-import './style.css';
 
 export const SearchChips = ({ items = chipsLabels }) => {
   interface SliderSettings {

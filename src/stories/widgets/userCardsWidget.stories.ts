@@ -9,7 +9,7 @@ const meta = {
   component: UserCards,
   decorators: [withRouter],
   parameters: {
-    layout: 'centered',
+    layout: 'padded',
   },
   tags: ['autodocs'],
 } satisfies Meta<typeof UserCards>;
