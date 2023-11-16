@@ -62,7 +62,7 @@ export const PromoSlider: FC<PromoSliderProps> = ({
     shopName: string | null;
     shopLogo: string | null;
   }) {
-    console.log(item);
+    return item;
   }
 
   return (
