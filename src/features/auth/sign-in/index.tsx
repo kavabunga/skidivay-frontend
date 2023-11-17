@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthForm } from '..';
 import * as z from 'zod';
 import { authFormErrors } from '~/shared/lib';
-import style from './style';
+import { listStyle, linkStyle } from './style';
 
 export const SignInForm = () => {
   const navigate = useNavigate();
@@ -50,9 +50,9 @@ export const SignInForm = () => {
       button={{ label: 'Войти', fullWidth: true }}
       submit={submit}
     >
-      <List sx={style.list} color="secondary" dense disablePadding>
+      <List sx={{ ...listStyle }} color="secondary" dense disablePadding>
         <ListItem disableGutters disablePadding dense>
-          <Link>Забыли пароль?</Link>
+          <Link sx={{ ...linkStyle }}>Забыли пароль?</Link>
         </ListItem>
       </List>
     </AuthForm>

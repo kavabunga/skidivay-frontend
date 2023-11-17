@@ -17,6 +17,7 @@ export const linkStyle: SxProps = {
   lineHeight: '1.5rem',
   textDecoration: 'underline',
   alignSelf: 'flex-start',
+  cursor: 'pointer',
   '&:hover': {
     color: 'primary.main',
     textDecoration: 'underline',
