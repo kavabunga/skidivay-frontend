@@ -1,10 +1,10 @@
 import { createContext } from 'react';
-import { IUserContext } from './types';
+import { IUserContext } from '~/shared';
 
 const defaultUser: IUserContext = {
   id: 0,
   email: 'Загрузка...',
-  username: 'Загрузка...',
+  name: 'Загрузка...',
   cards: [],
 };
 

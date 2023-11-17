@@ -11,13 +11,6 @@ const meta = {
     layout: 'fullscreen',
   },
   argTypes: {
-    isLoggedIn: {
-      options: ['Logged', 'Not logged'],
-      control: { type: 'boolean' },
-    },
-    user: {
-      control: { type: 'object' },
-    },
     type: {
       options: ['standard', 'minimal'],
       control: { type: 'radio' },
@@ -29,11 +22,8 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const LoggedIn: Story = {
-  args: { user: { name: 'Иван Петрович' }, isLoggedIn: true, type: 'standard' },
-};
-export const LoggedOut: Story = {
-  args: { user: { name: '' }, isLoggedIn: false, type: 'standard' },
+  args: { type: 'standard' },
 };
 export const LoggedOutAuth: Story = {
-  args: { user: { name: '' }, isLoggedIn: false, type: 'minimal' },
+  args: { type: 'minimal' },
 };

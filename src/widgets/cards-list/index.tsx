@@ -1,18 +1,14 @@
-import { FC } from 'react';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Box, Stack } from '@mui/material/';
 import { CardSmall } from '~/entities';
+import { CardsContext } from '~/app';
 import { AddCardButton } from '~/features';
-import { defaultCards } from '~/shared/mock/default-cards';
-import { CardProps } from '~/shared/types';
 import { cardCellStyle } from './style';
 
-type CardsListProps = {
-  items: CardProps[];
-};
-
-export const CardsList: FC<CardsListProps> = ({ items = defaultCards }) => {
+export const CardsList = () => {
   const navigate = useNavigate();
+  const items = useContext(CardsContext);
 
   return (
     <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
@@ -22,7 +18,7 @@ export const CardsList: FC<CardsListProps> = ({ items = defaultCards }) => {
       {items.map((item) => {
         return (
           <Button
-            key={item._id}
+            key={item.id}
             sx={cardCellStyle}
             onClick={() => navigate('/card/123', { relative: 'path' })}
           >

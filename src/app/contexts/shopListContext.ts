@@ -1,10 +1,12 @@
 import { createContext } from 'react';
-import { IshopListContext } from './types';
+import { IShopListContext } from '~/shared';
 
-const defaultShopList: IshopListContext = {
-  name: 'Загрузка...',
-  id: 0,
-  logo: null,
-};
+const defaultShopList: IShopListContext = [
+  {
+    name: 'Загрузка...',
+    id: 0,
+    logo: null,
+  },
+];
 
-export const ShopListContext = createContext<IshopListContext>(defaultShopList);
+export const ShopListContext = createContext<IShopListContext>(defaultShopList);

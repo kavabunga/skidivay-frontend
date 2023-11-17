@@ -3,23 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { Container, Typography, Button } from '@mui/material';
 import { SearchChips } from '~/features';
 import { CardsList } from '~/widgets';
-import { defaultCards } from '~/shared/mock/default-cards';
-import { CardProps } from '~/shared/types';
 import { mainContainerStyle, linkStyle } from './styles';
 
 type UserCardsProps = {
-  cards: CardProps[];
   tags: {
     label: string;
   }[];
   logOut(): void;
 };
 
-export const UserCards: FC<UserCardsProps> = ({
-  cards = defaultCards,
-  tags,
-  logOut,
-}) => {
+export const UserCards: FC<UserCardsProps> = ({ tags, logOut }) => {
   const navigate = useNavigate();
   const handleClick = () => {
     navigate('..', { relative: 'path' });
@@ -39,7 +32,7 @@ export const UserCards: FC<UserCardsProps> = ({
         {`Мои карты`}
       </Typography>
       <SearchChips items={tags} />
-      <CardsList items={cards} />
+      <CardsList />
       <Button
         variant="text"
         onClick={handleClick}
