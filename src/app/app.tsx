@@ -21,6 +21,8 @@ import {
   defaultCard,
   chipsLabels,
 } from '~/shared/mock/';
+import { api } from '~/shared';
+import React from 'react';
 
 // import { getShopList } from '~/shared/api';
 
@@ -32,6 +34,10 @@ function handleLogOut() {
 // getShopList();
 
 export function App() {
+  React.useEffect(() => {
+    api.getShops().then((res) => console.log(res));
+  }, []);
+
   //NOTE: Temporary solution to connect Contexts
   const user = mockUser;
   const cards = defaultCards;
