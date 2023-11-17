@@ -1,10 +1,11 @@
 import { createContext } from 'react';
-import { ICardContext } from './types';
+import { ICardContext } from '~/shared';
 
 const defaultCard: ICardContext = {
+  id: 0,
   name: 'Загрузка...',
-  imageCard:
-    'Или ссылка на картинку заглушку (уточнить у дизайнеров), или просто фоновая заливка на время загрузки',
+  // Или ссылка на картинку заглушку (уточнить у дизайнеров), или просто фоновая заливка на время загрузки
+  imageCard: '',
 };
 
 export const CardContext = createContext<ICardContext>(defaultCard);

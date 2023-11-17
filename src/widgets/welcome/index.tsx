@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Container, Typography } from '@mui/material';
 import { AccentButton } from '~/shared/ui';
@@ -6,14 +6,10 @@ import { PromoSlider } from '~/features';
 import { defaultPromoCards } from '~/shared/mock';
 import coverImage from '~/shared/assets/payment-bw-1.svg';
 import { coverImgStyle, mainContainerStyle, paragraphStyle } from './styles';
+import { UserContext } from '~/app';
 
-type WelcomeProps = {
-  user: {
-    name: string;
-  };
-};
-
-export const Welcome: FC<WelcomeProps> = ({ user }) => {
+export const Welcome = () => {
+  const user = useContext(UserContext);
   const navigate = useNavigate();
   return (
     <Container component="main" sx={{ ...mainContainerStyle }}>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button, Container, IconButton, Stack, Box } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -6,18 +6,18 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import CreateIcon from '@mui/icons-material/Create';
 import { BackButton } from '~/features';
 import { CardFull, EditCardForm } from '~/entities';
-import { CardProps } from '~/shared/types';
 import { buttonStyle, topButtonsStyle } from './style';
-import { defaultCards } from '~/shared/mock/default-cards';
 import { defaultCard } from '~/shared/mock/default-card';
+import { CardsContext } from '~/app';
 
 //NOTE: Getting Card ID as useParams().id through Router's dynamic route
 export const CardWidget = () => {
-  const id = useParams().id;
-  const card: CardProps =
-    defaultCards.find((card) => card._id === id) || defaultCard;
-  const { cardNumber, barcodeNumber, isLiked } = card;
   const [isEditActive, setIsEditActive] = useState(false);
+  const id = useParams().id;
+  const cards = useContext(CardsContext);
+  const card = cards.find((card) => card.id == id) || defaultCard;
+  const { cardNumber, barcodeNumber } = card;
+  const isLiked = false;
 
   const handleEditEnable = () => {
     setIsEditActive(true);

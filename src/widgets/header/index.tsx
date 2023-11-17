@@ -1,21 +1,18 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import { AppBar, Button, IconButton } from '@mui/material';
 import { Logo, CloseButton } from '~/shared/ui';
 import { PermIdentity } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import style from './style';
+import { UserContext } from '~/app';
 
+//INFO: 'minimal' for logo only, like on authorization screen, 'standard' for full featured header
 export type HeaderProps = {
-  user?: {
-    name: string;
-  };
-  isLoggedIn: boolean;
   type: 'minimal' | 'standard';
 };
 
-//INFO: 'minimal' for logo only, like on authorization screen, 'standard' for full featured header
-
-export const Header: FC<HeaderProps> = ({ type, isLoggedIn }) => {
+export const Header: FC<HeaderProps> = ({ type }) => {
+  const user = useContext(UserContext);
   return (
     <AppBar
       sx={{
@@ -28,7 +25,7 @@ export const Header: FC<HeaderProps> = ({ type, isLoggedIn }) => {
     >
       <Logo type={type === 'standard' ? 'full' : 'image'} />
       {type === 'standard' &&
-        (isLoggedIn ? (
+        (user ? (
           <IconButton color="primary" size="small" sx={style.iconButton}>
             <PermIdentity />
           </IconButton>

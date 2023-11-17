@@ -2,10 +2,13 @@ import { FC } from 'react';
 import { Card, Typography, IconButton } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { CardProps } from '~/shared/types';
+import { ICardContext } from '~/shared/types';
 import { cardStyle, iconButtonStyle, titleStyle } from './style';
 
-export const CardSmall: FC<CardProps> = ({ shopName, isLiked, shopLogo }) => {
+export const CardSmall: FC<ICardContext> = (item) => {
+  const shopName = item.shop?.name || '';
+  const shopLogo = item.shop?.logo || '';
+  const isLiked = false;
   return (
     <Card
       variant="outlined"

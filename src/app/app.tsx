@@ -1,3 +1,4 @@
+import { Contexts } from '.';
 import { ThemeProvider } from '@emotion/react';
 import { CssBaseline } from '@mui/material';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -10,31 +11,41 @@ import {
   Welcome,
   UserCards,
 } from '~/widgets';
-import { defaultCards } from '~/shared/mock/default-cards';
-import { chipsLabels } from '~/shared/mock/chips-labels';
 import { lightTheme } from '~/shared/lib';
 import 'typeface-roboto';
 import 'typeface-nunito';
-
-// const isLoggedIn: boolean = true;
-// const isUserCards: boolean = true;
+import {
+  mockUser,
+  mockShopList,
+  defaultCards,
+  defaultCard,
+  chipsLabels,
+} from '~/shared/mock/';
 
 function handleLogOut() {
   return;
 }
 
 export function App() {
+  //NOTE: Temporary solution to connect Contexts
+  const user = mockUser;
+  const cards = defaultCards;
+  const card = defaultCard;
+  const shops = mockShopList;
   return (
     <ThemeProvider theme={lightTheme}>
       <CssBaseline />
       <BrowserRouter>
-        <Routes>
-          <Route path="/auth" Component={AuthLayout}>
-            <Route index Component={AuthWidget} />
-          </Route>
-          <Route path="/" Component={RootLayout}>
-            <Route index Component={Home} />
-            {/* <Route
+        <Contexts user={user} cards={cards} card={card} shops={shops}>
+          <Routes>
+            <Route path="/auth" Component={AuthLayout}>
+              <Route index Component={AuthWidget} />
+            </Route>
+            <Route path="/" Component={RootLayout}>
+              <Route index Component={Home} />
+              {/*
+              //NOTE: Main screen logic yet not active
+              <Route
               index
               element={
                 !isLoggedIn ? (
@@ -46,29 +57,21 @@ export function App() {
                 )
               }
             /> */}
-            <Route
-              path="authorizedNoCards"
-              element={<Welcome user={{ name: 'Василий' }} />}
-            />
-            <Route
-              path="authorizedWithCards"
-              element={
-                <UserCards
-                  cards={defaultCards}
-                  tags={chipsLabels}
-                  logOut={handleLogOut}
-                />
-              }
-            />
-            <Route path="card">
-              <Route path="new" Component={AddCardWidget} />
-              <Route path=":id" Component={CardWidget} />
+              <Route path="authorizedNoCards" element={<Welcome />} />
+              <Route
+                path="authorizedWithCards"
+                element={<UserCards tags={chipsLabels} logOut={handleLogOut} />}
+              />
+              <Route path="card">
+                <Route path="new" Component={AddCardWidget} />
+                <Route path=":id" Component={CardWidget} />
+              </Route>
             </Route>
-          </Route>
-          <Route path="*" Component={RootLayout}>
-            <Route index Component={NotFound} />
-          </Route>
-        </Routes>
+            <Route path="*" Component={RootLayout}>
+              <Route index Component={NotFound} />
+            </Route>
+          </Routes>
+        </Contexts>
       </BrowserRouter>
     </ThemeProvider>
   );
