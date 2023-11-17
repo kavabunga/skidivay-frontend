@@ -3,7 +3,7 @@ import { SxProps } from '@mui/material';
 export const style: SxProps = {
   fontSize: '0.875rem',
   fontWeight: '500',
-  lineHeight: '1.25rem',
+  lineHeight: '2rem',
   color: 'surface.dark',
   borderRadius: '0.5rem',
   borderColor: 'surface.main',
