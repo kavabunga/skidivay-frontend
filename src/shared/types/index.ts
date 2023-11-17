@@ -44,9 +44,22 @@ export interface CardProps extends ICardContext {
   isLiked: boolean;
 }
 
-export interface ISignUpRequest {
+export interface ISignInRequest {
   email: string;
+  password: string;
+}
+export interface ISignUpRequest extends ISignInRequest {
   name: string;
   phone_number: string;
-  password: string;
+}
+
+//NOTE: Owner is not confirmed
+export interface IPostCard {
+  name: string;
+  owner?: {
+    username: string;
+  };
+  shop: number;
+  card_number: string;
+  barcode_number: string;
 }

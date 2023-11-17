@@ -1,5 +1,4 @@
-import { ISignUpRequest } from '..';
-// import { IUserContext, ICardsContext, IShopListContext } from '..';
+import { IPostCard, ISignInRequest, ISignUpRequest } from '..';
 
 interface IRequestOptions {
   headers: HeadersInit;
@@ -46,6 +45,89 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
       headers: this._headers,
       credentials: 'include',
       body: JSON.stringify(data),
+    };
+    return this._requestApi(url, options);
+  }
+
+  signIn(data: ISignInRequest) {
+    const url: string = `${this._url}/auth/token/login/`;
+    const options: IRequestOptions = {
+      method: 'POST',
+      headers: this._headers,
+      credentials: 'include',
+      body: JSON.stringify(data),
+    };
+    return this._requestApi(url, options);
+  }
+
+  signOut() {
+    const url: string = `${this._url}/auth/token/logout/`;
+    const options: IRequestOptions = {
+      method: 'POST',
+      headers: this._headers,
+      credentials: 'include',
+    };
+    return this._requestApi(url, options);
+  }
+
+  getUser() {
+    const url: string = `${this._url}/users/me/`;
+    const options: IRequestOptions = {
+      method: 'GET',
+      headers: this._headers,
+      credentials: 'include',
+    };
+    return this._requestApi(url, options);
+  }
+
+  getShops() {
+    const url: string = `${this._url}/shops/`;
+    const options: IRequestOptions = {
+      method: 'GET',
+      headers: this._headers,
+      credentials: 'include',
+    };
+    return this._requestApi(url, options);
+  }
+
+  getCards() {
+    const url: string = `${this._url}/cards/`;
+    const options: IRequestOptions = {
+      method: 'GET',
+      headers: this._headers,
+      credentials: 'include',
+    };
+    return this._requestApi(url, options);
+  }
+
+  postCard(data: IPostCard) {
+    const url: string = `${this._url}/cards/`;
+    const options: IRequestOptions = {
+      method: 'POST',
+      headers: this._headers,
+      credentials: 'include',
+      body: JSON.stringify(data),
+    };
+    return this._requestApi(url, options);
+  }
+
+  editCard(data: IPostCard, id: number) {
+    const url: string = `${this._url}/cards/${id.toString()}`;
+    const options: IRequestOptions = {
+      method: 'PATCH',
+      headers: this._headers,
+      credentials: 'include',
+      body: JSON.stringify(data),
+    };
+    return this._requestApi(url, options);
+  }
+
+  deleteCard(id: number) {
+    const url: string = `${this._url}/cards/${id.toString()}`;
+    const options: IRequestOptions = {
+      method: 'DELETE',
+      headers: this._headers,
+      credentials: 'include',
     };
     return this._requestApi(url, options);
   }
