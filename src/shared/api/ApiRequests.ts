@@ -39,7 +39,7 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
   }
 
   signUp(data: ISignUpRequest) {
-    const url: string = `${this._url}/users/`;
+    const url = `${this._url}/users/`;
     const options: IRequestOptions = {
       method: 'POST',
       headers: this._headers,
@@ -50,7 +50,7 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
   }
 
   signIn(data: ISignInRequest) {
-    const url: string = `${this._url}/auth/token/login/`;
+    const url = `${this._url}/auth/token/login/`;
     const options: IRequestOptions = {
       method: 'POST',
       headers: this._headers,
@@ -61,7 +61,7 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
   }
 
   signOut() {
-    const url: string = `${this._url}/auth/token/logout/`;
+    const url = `${this._url}/auth/token/logout/`;
     const options: IRequestOptions = {
       method: 'POST',
       headers: this._headers,
@@ -71,7 +71,7 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
   }
 
   getUser() {
-    const url: string = `${this._url}/users/me/`;
+    const url = `${this._url}/users/me/`;
     const options: IRequestOptions = {
       method: 'GET',
       headers: this._headers,
@@ -81,7 +81,7 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
   }
 
   getShops() {
-    const url: string = `${this._url}/shops/`;
+    const url = `${this._url}/shops/`;
     const options: IRequestOptions = {
       method: 'GET',
       headers: this._headers,
@@ -91,7 +91,7 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
   }
 
   getCards() {
-    const url: string = `${this._url}/cards/`;
+    const url = `${this._url}/cards/`;
     const options: IRequestOptions = {
       method: 'GET',
       headers: this._headers,
@@ -101,7 +101,7 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
   }
 
   postCard(data: IPostCard) {
-    const url: string = `${this._url}/cards/`;
+    const url = `${this._url}/cards/`;
     const options: IRequestOptions = {
       method: 'POST',
       headers: this._headers,
@@ -112,7 +112,7 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
   }
 
   editCard(data: IPostCard, id: number) {
-    const url: string = `${this._url}/cards/${id.toString()}`;
+    const url = `${this._url}/cards/${id.toString()}`;
     const options: IRequestOptions = {
       method: 'PATCH',
       headers: this._headers,
@@ -123,7 +123,7 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
   }
 
   deleteCard(id: number) {
-    const url: string = `${this._url}/cards/${id.toString()}`;
+    const url = `${this._url}/cards/${id.toString()}`;
     const options: IRequestOptions = {
       method: 'DELETE',
       headers: this._headers,
