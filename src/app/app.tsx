@@ -30,12 +30,10 @@ function handleLogOut() {
   return;
 }
 
-//NOTE: получение списка магазинова пока без useEffect
-// getShopList();
-
+//NOTE: test api call for debugging
 export function App() {
   React.useEffect(() => {
-    api.getShops().then((res) => console.log(res));
+    api.getShops().then((res) => console.log('getShops() result: ', res));
   }, []);
 
   //NOTE: Temporary solution to connect Contexts

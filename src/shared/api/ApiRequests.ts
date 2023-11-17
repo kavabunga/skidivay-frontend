@@ -41,6 +41,7 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
   }
 
   _requestApi(url: string, options: IRequestOptions) {
+    console.log('reqApi - url: ', url, 'reqApi - options: ', options);
     return fetch(`${url}`, options).then(this._checkResponse);
   }
 
@@ -87,6 +88,7 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
       headers: this._headers,
       credentials: 'include',
     };
+    console.log('getUser - url: ', url, 'getUser - options: ', options);
     return this._requestApi(url, options);
   }
 
