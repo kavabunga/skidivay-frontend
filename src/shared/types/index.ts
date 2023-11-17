@@ -43,3 +43,10 @@ export interface ICardsContext extends Array<ICardContext> {}
 export interface CardProps extends ICardContext {
   isLiked: boolean;
 }
+
+export interface ISignUpRequest {
+  email: string;
+  name: string;
+  phone_number: string;
+  password: string;
+}
