@@ -22,9 +22,14 @@ import {
   chipsLabels,
 } from '~/shared/mock/';
 
+import { getShopList } from '~/features/get-shop-list';
+
 function handleLogOut() {
   return;
 }
+
+//получение списка магазинова пока без useEffect
+getShopList();
 
 export function App() {
   //NOTE: Temporary solution to connect Contexts
