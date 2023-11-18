@@ -17,7 +17,6 @@ interface IApiRequests {
   getUser(): Promise<void>;
   getShops(): Promise<void>;
   getCards(): Promise<void>;
-  getCards(): Promise<void>;
   postCard(data: IPostCard): Promise<void>;
   editCard(data: IPostCard, id: number): Promise<void>;
   deleteCard(id: number): Promise<void>;
