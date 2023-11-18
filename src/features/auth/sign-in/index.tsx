@@ -1,11 +1,16 @@
 import { Link, List, ListItem } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { AuthForm } from '..';
+import { AuthForm, onSignIn } from '..';
 import * as z from 'zod';
 import { authFormErrors } from '~/shared/lib';
 import { listStyle, linkStyle } from './style';
+import { ISignInRequest } from '~/shared';
+import { useContext } from 'react';
+import { UserContext } from '~/app';
+import { getUser } from '~/features';
 
 export const SignInForm = () => {
+  const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
   const schema = z.object({
     email: z
@@ -39,8 +44,17 @@ export const SignInForm = () => {
     },
   ];
 
-  const submit = () => {
-    navigate('/authorizedWithCards', { relative: 'path' });
+  const submit = (data: { [key: string]: string }) => {
+    const request: ISignInRequest = {
+      email: data.email || '',
+      password: data.password || '',
+    };
+    onSignIn(request)
+      .then(() => {
+        return getUser().then((res) => setUser && setUser(res));
+      })
+      .then(() => navigate('/authorizedNoCards', { relative: 'path' }))
+      .catch((err) => console.log(err));
   };
 
   return (

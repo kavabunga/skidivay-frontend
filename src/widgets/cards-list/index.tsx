@@ -8,24 +8,25 @@ import { cardCellStyle } from './style';
 
 export const CardsList = () => {
   const navigate = useNavigate();
-  const items = useContext(CardsContext);
+  const { cards } = useContext(CardsContext);
 
   return (
     <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
       <Box key={'add-new-card'} sx={cardCellStyle}>
         <AddCardButton text="Добавить новую карту" />
       </Box>
-      {items.map((item) => {
-        return (
-          <Button
-            key={item.id}
-            sx={cardCellStyle}
-            onClick={() => navigate('/card/123', { relative: 'path' })}
-          >
-            <CardSmall {...item} />
-          </Button>
-        );
-      })}
+      {cards &&
+        cards.map((item) => {
+          return (
+            <Button
+              key={item.id}
+              sx={cardCellStyle}
+              onClick={() => navigate('/card/123', { relative: 'path' })}
+            >
+              <CardSmall {...item} />
+            </Button>
+          );
+        })}
     </Stack>
   );
 };

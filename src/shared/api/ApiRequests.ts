@@ -1,4 +1,12 @@
-import { IPostCard, ISignInRequest, ISignUpRequest } from '..';
+import {
+  IPostCard,
+  IShopListContext,
+  ISignInRequest,
+  ISignInResponse,
+  ISignUpRequest,
+  IUserContext,
+  IUserResponse,
+} from '..';
 
 interface IRequestOptions {
   headers: HeadersInit;
@@ -11,11 +19,11 @@ interface IApiRequests {
   _url: string;
   _headers: HeadersInit;
   _requestApi: (url: string, options: IRequestOptions) => void;
-  signUp(data: ISignUpRequest): Promise<void>;
-  signIn(data: ISignInRequest): Promise<void>;
-  signOut(): Promise<void>;
-  getUser(): Promise<void>;
-  getShops(): Promise<void>;
+  signUp(data: ISignUpRequest): Promise<IUserResponse>;
+  signIn(data: ISignInRequest): Promise<ISignInResponse>;
+  signOut(): Promise<Response>;
+  getUser(): Promise<IUserContext>;
+  getShops(): Promise<IShopListContext>;
   getCards(): Promise<void>;
   postCard(data: IPostCard): Promise<void>;
   editCard(data: IPostCard, id: number): Promise<void>;
@@ -46,7 +54,9 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
       };
     }
     return fetch(`${url}`, options).then((res) =>
-      res.ok ? res.json() : Promise.reject(`${res.status}`)
+      res.ok
+        ? res.json()
+        : res.json().then((res) => Promise.reject(new Error(res.message)))
     );
   }
 
@@ -76,7 +86,17 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
       method: 'POST',
       headers: this._headers,
     };
-    return this._requestApi(url, options);
+    if (localStorage.getItem('token')) {
+      options.headers = {
+        ...options.headers,
+        authorization: `Token ${localStorage.getItem('token') || ''}`,
+      };
+    }
+    return fetch(`${url}`, options).then((res) =>
+      res.ok
+        ? res
+        : res.json().then((res) => Promise.reject(new Error(res.message)))
+    );
   }
 
   getUser() {

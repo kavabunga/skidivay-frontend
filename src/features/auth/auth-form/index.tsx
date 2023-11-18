@@ -15,7 +15,7 @@ export interface AuthFormType {
     label: string;
     width?: number;
   };
-  submit: () => void;
+  submit: (data: { [key: string]: string }) => void;
 }
 
 export const AuthForm: FC<AuthFormType> = ({
@@ -33,8 +33,8 @@ export const AuthForm: FC<AuthFormType> = ({
     mode: 'all',
     resolver: zodResolver(schema),
   });
-  const onSubmit: SubmitHandler<{ [key: string]: string }> = () => {
-    submit();
+  const onSubmit: SubmitHandler<{ [key: string]: string }> = (data) => {
+    submit(data);
   };
 
   return (
