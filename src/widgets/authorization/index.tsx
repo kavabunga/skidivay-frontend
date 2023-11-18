@@ -49,7 +49,7 @@ export const AuthWidget = () => {
           onChange={handleChange}
           aria-label="Вкладки логина и регистрации"
         >
-          <Tab label="Вход" {...a11yProps(0)} />
+          <Tab label="Войти" {...a11yProps(0)} />
           <Tab label="Регистрация" {...a11yProps(1)} />
         </Tabs>
       </Box>
