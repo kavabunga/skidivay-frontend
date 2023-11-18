@@ -5,8 +5,12 @@ import * as z from 'zod';
 import { authFormErrors } from '~/shared/lib';
 import { listStyle, linkStyle } from './style';
 import { ISignInRequest } from '~/shared';
+import { useContext } from 'react';
+import { UserContext } from '~/app';
+import { getUser } from '~/features';
 
 export const SignInForm = () => {
+  const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
   const schema = z.object({
     email: z
@@ -46,10 +50,10 @@ export const SignInForm = () => {
       password: data.password || '',
     };
     onSignIn(request)
-      .then((res) => {
-        console.log(res);
-        navigate('/authorizedNoCards', { relative: 'path' });
+      .then(() => {
+        return getUser().then((res) => setUser && setUser(res));
       })
+      .then(() => navigate('/authorizedNoCards', { relative: 'path' }))
       .catch((err) => console.log(err));
   };
 

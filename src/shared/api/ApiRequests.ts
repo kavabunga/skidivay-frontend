@@ -21,7 +21,7 @@ interface IApiRequests {
   _requestApi: (url: string, options: IRequestOptions) => void;
   signUp(data: ISignUpRequest): Promise<IUserResponse>;
   signIn(data: ISignInRequest): Promise<ISignInResponse>;
-  signOut(): Promise<void>;
+  signOut(): Promise<Response>;
   getUser(): Promise<IUserContext>;
   getShops(): Promise<IShopListContext>;
   getCards(): Promise<void>;
@@ -86,7 +86,17 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
       method: 'POST',
       headers: this._headers,
     };
-    return this._requestApi(url, options);
+    if (localStorage.getItem('token')) {
+      options.headers = {
+        ...options.headers,
+        authorization: `Token ${localStorage.getItem('token') || ''}`,
+      };
+    }
+    return fetch(`${url}`, options).then((res) =>
+      res.ok
+        ? res
+        : res.json().then((res) => Promise.reject(new Error(res.message)))
+    );
   }
 
   getUser() {

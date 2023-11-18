@@ -16,10 +16,6 @@ import 'typeface-roboto';
 import 'typeface-nunito';
 import { chipsLabels } from '~/shared/mock/';
 
-function handleLogOut() {
-  return;
-}
-
 export function App() {
   return (
     <ThemeProvider theme={lightTheme}>
@@ -49,7 +45,7 @@ export function App() {
               <Route path="authorizedNoCards" element={<Welcome />} />
               <Route
                 path="authorizedWithCards"
-                element={<UserCards tags={chipsLabels} logOut={handleLogOut} />}
+                element={<UserCards tags={chipsLabels} />}
               />
               <Route path="card">
                 <Route path="new" Component={AddCardWidget} />

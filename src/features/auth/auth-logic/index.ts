@@ -5,7 +5,13 @@ export function onSignUp(data: ISignUpRequest) {
 }
 
 export function onSignIn(data: ISignInRequest) {
-  return api
-    .signIn(data)
-    .then((res) => localStorage.setItem('token', res.auth_token));
+  return api.signIn(data).then((res) => {
+    localStorage.setItem('token', res.auth_token);
+    return res;
+  });
+}
+
+export function onSignOut() {
+  console.log('token removing');
+  return api.signOut().then(() => localStorage.removeItem('token'));
 }
