@@ -49,7 +49,8 @@ export interface ISignInRequest {
   password: string;
 }
 export interface ISignUpRequest extends ISignInRequest {
-  name: string;
+  username: string;
+  name?: string;
   phone_number: string;
 }
 

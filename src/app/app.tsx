@@ -21,17 +21,23 @@ import {
   defaultCard,
   chipsLabels,
 } from '~/shared/mock/';
-
-// import { getShopList } from '~/shared/api';
+import { api } from '~/shared';
+import React from 'react';
 
 function handleLogOut() {
   return;
 }
 
-//NOTE: получение списка магазинова пока без useEffect
-// getShopList();
-
+//NOTE: test api call for debugging
 export function App() {
+  React.useEffect(() => {
+    api
+      .getShops()
+      .then((res) =>
+        console.log('getShops() test request from app.tsx: ', res)
+      );
+  }, []);
+
   //NOTE: Temporary solution to connect Contexts
   const user = mockUser;
   const cards = defaultCards;
