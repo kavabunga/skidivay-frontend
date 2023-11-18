@@ -31,6 +31,7 @@ export const Welcome = () => {
 
       <Typography
         component="p"
+        textAlign="center"
         sx={{
           padding: '2rem 0',
           ...paragraphStyle,
