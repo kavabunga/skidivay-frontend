@@ -14,40 +14,18 @@ import {
 import { lightTheme } from '~/shared/lib';
 import 'typeface-roboto';
 import 'typeface-nunito';
-import {
-  mockUser,
-  mockShopList,
-  defaultCards,
-  defaultCard,
-  chipsLabels,
-} from '~/shared/mock/';
-import { api } from '~/shared';
-import React from 'react';
+import { chipsLabels } from '~/shared/mock/';
 
 function handleLogOut() {
   return;
 }
 
-//NOTE: test api call for debugging
 export function App() {
-  React.useEffect(() => {
-    api
-      .getShops()
-      .then((res) =>
-        console.log('getShops() test request from app.tsx: ', res)
-      );
-  }, []);
-
-  //NOTE: Temporary solution to connect Contexts
-  const user = mockUser;
-  const cards = defaultCards;
-  const card = defaultCard;
-  const shops = mockShopList;
   return (
     <ThemeProvider theme={lightTheme}>
       <CssBaseline />
       <BrowserRouter>
-        <Contexts user={user} cards={cards} card={card} shops={shops}>
+        <Contexts>
           <Routes>
             <Route path="/auth" Component={AuthLayout}>
               <Route index Component={AuthWidget} />

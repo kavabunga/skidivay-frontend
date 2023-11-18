@@ -1,9 +1,10 @@
 import { Link, List, ListItem } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { AuthForm } from '..';
+import { AuthForm, onSignIn } from '..';
 import * as z from 'zod';
 import { authFormErrors } from '~/shared/lib';
 import { listStyle, linkStyle } from './style';
+import { ISignInRequest } from '~/shared';
 
 export const SignInForm = () => {
   const navigate = useNavigate();
@@ -39,8 +40,17 @@ export const SignInForm = () => {
     },
   ];
 
-  const submit = () => {
-    navigate('/authorizedWithCards', { relative: 'path' });
+  const submit = (data: { [key: string]: string }) => {
+    const request: ISignInRequest = {
+      email: data.email || '',
+      password: data.password || '',
+    };
+    onSignIn(request)
+      .then((res) => {
+        console.log(res);
+        navigate('/authorizedNoCards', { relative: 'path' });
+      })
+      .catch((err) => console.log(err));
   };
 
   return (

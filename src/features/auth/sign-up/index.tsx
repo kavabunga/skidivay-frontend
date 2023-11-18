@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { AuthForm } from '..';
+import { AuthForm, onSignUp } from '..';
 import { authFormErrors } from '~/shared/lib';
 import * as z from 'zod';
+import { ISignUpRequest } from '~/shared';
 
 export const SignUpForm = () => {
   const navigate = useNavigate();
@@ -104,8 +105,19 @@ export const SignUpForm = () => {
     },
   ];
 
-  const submit = () => {
-    navigate('/authorizedNoCards', { relative: 'path' });
+  const submit = (data: { [key: string]: string }) => {
+    const request: ISignUpRequest = {
+      username: data.name || '',
+      email: data.email || '',
+      phone_number: data.phone || '',
+      password: data.password || '',
+    };
+    onSignUp(request)
+      .then((res) => {
+        console.log(res);
+        navigate('/authorizedNoCards', { relative: 'path' });
+      })
+      .catch((err) => console.log(err));
   };
 
   return (

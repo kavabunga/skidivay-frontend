@@ -14,11 +14,14 @@ export interface ICardContext {
   group?: number[];
 }
 
-export interface IUserContext {
+export interface IUserResponse {
   id: number;
   email: string;
-  name: string;
+  username: string;
   phoneNumber?: string;
+  password?: string;
+}
+export interface IUserContext extends IUserResponse {
   cards: ICardContext[];
 }
 
@@ -48,10 +51,14 @@ export interface ISignInRequest {
   email: string;
   password: string;
 }
+
 export interface ISignUpRequest extends ISignInRequest {
   username: string;
   name?: string;
   phone_number: string;
+}
+export interface ISignInResponse {
+  auth_token: string;
 }
 
 //NOTE: Owner is not confirmed

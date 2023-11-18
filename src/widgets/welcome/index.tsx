@@ -9,7 +9,7 @@ import { coverImgStyle, mainContainerStyle, paragraphStyle } from './styles';
 import { UserContext } from '~/app';
 
 export const Welcome = () => {
-  const user = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
   return (
     <Container component="main" sx={{ ...mainContainerStyle }}>
@@ -19,7 +19,7 @@ export const Welcome = () => {
         textAlign="left"
         sx={{ padding: '0 0 1.5rem', width: '100%' }}
       >
-        {`Привет, ${user.name || 'Приятель'}!`}
+        {`Привет, ${user ? user.username : 'Приятель'}!`}
       </Typography>
 
       <Box

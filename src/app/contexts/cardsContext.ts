@@ -1,5 +1,10 @@
-import { createContext } from 'react';
+import { Dispatch, SetStateAction, createContext } from 'react';
 import { ICardsContext } from '~/shared';
+
+interface ICardsContextValue {
+  cards: ICardsContext | undefined;
+  setCards?: Dispatch<SetStateAction<ICardsContext | undefined>>;
+}
 
 const defaultCards: ICardsContext = [
   {
@@ -9,4 +14,6 @@ const defaultCards: ICardsContext = [
     imageCard: '',
   },
 ];
-export const CardsContext = createContext<ICardsContext>(defaultCards);
+export const CardsContext = createContext<ICardsContextValue>({
+  cards: defaultCards,
+});
