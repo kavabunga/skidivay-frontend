@@ -10,7 +10,6 @@ interface IRequestOptions {
 interface IApiRequests {
   _url: string;
   _headers: HeadersInit;
-  _checkResponse: (res: Response) => void;
   _requestApi: (url: string, options: IRequestOptions) => void;
   signUp(data: ISignUpRequest): Promise<void>;
   signIn(data: ISignInRequest): Promise<void>;
@@ -37,16 +36,14 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
     this._url = url;
     this._headers = {
       'Content-Type': 'application/json',
+      authorization: `Token ${localStorage.getItem('token') || ''}`,
     };
   }
 
   _requestApi(url: string, options: IRequestOptions) {
-    console.log('reqApi - url: ', url, 'reqApi - options: ', options);
-    return fetch(`${url}`, options).then(this._checkResponse);
-  }
-
-  _checkResponse(res: Response) {
-    res.ok ? res.json() : Promise.reject(`${res.status}`);
+    return fetch(`${url}`, options).then((res) =>
+      res.ok ? res.json() : Promise.reject(`${res.status}`)
+    );
   }
 
   signUp(data: ISignUpRequest) {
@@ -54,7 +51,6 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
     const options: IRequestOptions = {
       method: 'POST',
       headers: this._headers,
-      credentials: 'include',
       body: JSON.stringify(data),
     };
     return this._requestApi(url, options);
@@ -65,7 +61,6 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
     const options: IRequestOptions = {
       method: 'POST',
       headers: this._headers,
-      credentials: 'include',
       body: JSON.stringify(data),
     };
     return this._requestApi(url, options);
@@ -76,7 +71,6 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
     const options: IRequestOptions = {
       method: 'POST',
       headers: this._headers,
-      credentials: 'include',
     };
     return this._requestApi(url, options);
   }
@@ -86,9 +80,7 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
     const options: IRequestOptions = {
       method: 'GET',
       headers: this._headers,
-      credentials: 'include',
     };
-    console.log('getUser - url: ', url, 'getUser - options: ', options);
     return this._requestApi(url, options);
   }
 
@@ -97,7 +89,6 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
     const options: IRequestOptions = {
       method: 'GET',
       headers: this._headers,
-      credentials: 'include',
     };
     return this._requestApi(url, options);
   }
@@ -107,7 +98,6 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
     const options: IRequestOptions = {
       method: 'GET',
       headers: this._headers,
-      credentials: 'include',
     };
     return this._requestApi(url, options);
   }
@@ -117,7 +107,6 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
     const options: IRequestOptions = {
       method: 'POST',
       headers: this._headers,
-      credentials: 'include',
       body: JSON.stringify(data),
     };
     return this._requestApi(url, options);
@@ -128,7 +117,6 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
     const options: IRequestOptions = {
       method: 'PATCH',
       headers: this._headers,
-      credentials: 'include',
       body: JSON.stringify(data),
     };
     return this._requestApi(url, options);
@@ -139,7 +127,6 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
     const options: IRequestOptions = {
       method: 'DELETE',
       headers: this._headers,
-      credentials: 'include',
     };
     return this._requestApi(url, options);
   }
