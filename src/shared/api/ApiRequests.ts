@@ -36,11 +36,16 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
     this._url = url;
     this._headers = {
       'Content-Type': 'application/json',
-      authorization: `Token ${localStorage.getItem('token') || ''}`,
     };
   }
 
   _requestApi(url: string, options: IRequestOptions) {
+    if (localStorage.getItem('token')) {
+      options.headers = {
+        ...options.headers,
+        authorization: `Token ${localStorage.getItem('token') || ''}`,
+      };
+    }
     return fetch(`${url}`, options).then((res) =>
       res.ok ? res.json() : Promise.reject(`${res.status}`)
     );
