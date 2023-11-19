@@ -7,3 +7,4 @@ export * from './back-button';
 export * from './input-selector';
 export * from './promo-slider';
 export * from './user';
+export * from './liker';

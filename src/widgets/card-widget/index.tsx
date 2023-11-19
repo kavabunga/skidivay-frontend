@@ -1,23 +1,22 @@
 import { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button, Container, IconButton, Stack, Box } from '@mui/material';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import CreateIcon from '@mui/icons-material/Create';
 import { BackButton } from '~/features';
 import { CardFull, EditCardForm } from '~/entities';
-import { buttonStyle, topButtonsStyle } from './style';
-import { defaultCard } from '~/shared/mock/default-card';
+import { Liker } from '~/features';
+import { buttonStyle, topButtonsStyle, likerWrapperStyle } from './style';
 import { CardsContext } from '~/app';
 
 //NOTE: Getting Card ID as useParams().id through Router's dynamic route
 export const CardWidget = () => {
   const [isEditActive, setIsEditActive] = useState(false);
   const id = useParams().id;
-  const cards = useContext(CardsContext);
-  const card = cards.find((card) => card.id == id) || defaultCard;
-  const { cardNumber, barcodeNumber } = card;
-  const isLiked = false;
+  const { cards } = useContext(CardsContext);
+  const card = cards.find((item) => item.card.id.toString() == id);
+  const { cardNumber, barcodeNumber } = card.card;
+  const cardId = card.card.id;
+  const isLiked = card.favourite;
 
   const handleEditEnable = () => {
     setIsEditActive(true);
@@ -33,9 +32,9 @@ export const CardWidget = () => {
         <BackButton />
         {!isEditActive && (
           <Stack direction="row">
-            <IconButton sx={{ padding: 0.5 }}>
-              {isLiked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-            </IconButton>
+            <Box sx={{ ...likerWrapperStyle }}>
+              <Liker cardId={cardId} isLiked={isLiked} />
+            </Box>
             <IconButton onClick={handleEditEnable} sx={{ padding: 0.5 }}>
               <CreateIcon />
             </IconButton>

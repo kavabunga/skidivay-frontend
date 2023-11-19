@@ -29,6 +29,7 @@ interface IApiRequests {
   getCards(): Promise<ICardsContext>;
   postCard(data: IPostCard): Promise<ICardContext>;
   editCard(data: IPostCard, id: number): Promise<void>;
+  changeCardLikeStatus(id: number, hasLike: boolean): Promise<ICardContext>;
   deleteCard(id: number): Promise<void>;
 }
 
@@ -144,6 +145,16 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify(data),
+    };
+    return this._requestApi(url, options);
+  }
+
+  changeCardLikeStatus(id: number, hasLike: boolean) {
+    const url = `${this._url}/cards/${id.toString()}/favorite/`;
+    const method = hasLike ? 'POST' : 'DELETE';
+    const options: IRequestOptions = {
+      method: method,
+      headers: this._headers,
     };
     return this._requestApi(url, options);
   }

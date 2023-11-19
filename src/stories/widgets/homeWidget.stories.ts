@@ -3,7 +3,7 @@ import { Home } from '~/widgets';
 import { withRouter } from 'storybook-addon-react-router-v6';
 
 const meta = {
-  title: 'Components/Home Widget',
+  title: 'Widgets/Home Widget',
   component: Home,
   parameters: {
     layout: 'padded',

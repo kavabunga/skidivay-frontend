@@ -3,7 +3,7 @@ import { CardWidget } from '~/widgets/';
 import { withRouter } from 'storybook-addon-react-router-v6';
 
 const meta = {
-  title: 'Components/Card Widget',
+  title: 'Widgets/Card Widget',
   component: CardWidget,
   parameters: {
     layout: 'centered',
