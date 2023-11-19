@@ -11,12 +11,6 @@ const meta = {
     layout: 'fullscreen',
   },
   tags: ['autodocs'],
-  argTypes: {
-    isLoggedIn: {
-      type: 'boolean',
-      control: 'radio',
-    },
-  },
 } satisfies Meta<typeof PromoSlider>;
 
 export default meta;
@@ -25,6 +19,5 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     items: defaultPromoCards,
-    isLoggedIn: true,
   },
 };

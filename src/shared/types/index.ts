@@ -29,14 +29,15 @@ interface IGroupType {
   id: number;
   name: string;
 }
+[];
 
 export interface IShop {
   id: number;
+  group?: IGroupType[];
   name: string;
   logo?: string | null;
   color?: string;
   validation?: boolean;
-  group?: IGroupType;
 }
 
 export interface IShopListContext extends Array<IShop> {}
