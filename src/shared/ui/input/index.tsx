@@ -11,6 +11,8 @@ export interface FieldType {
   autoComplete?: string;
   defaultHelperText?: string;
   placeholder?: string;
+  hideAsterisk?: boolean;
+  required?: boolean;
 }
 
 export interface InputType extends FieldType {
@@ -24,25 +26,19 @@ export interface InputType extends FieldType {
 
 export const Input: FC<InputType> = ({
   name,
-  label,
-  type,
-  autoComplete,
   defaultHelperText,
-  placeholder,
   register,
   errors,
+  hideAsterisk,
   ...props
 }) => {
   return (
     <TextField
       key={name}
-      label={label}
-      placeholder={placeholder}
-      type={type}
       helperText={errors[name] ? errors[name]?.message : defaultHelperText}
       FormHelperTextProps={{ sx: helperTextStyle }}
       error={!!errors[name]}
-      autoComplete={autoComplete}
+      InputLabelProps={{ required: !hideAsterisk }}
       inputProps={{
         ...register(name),
       }}

@@ -12,7 +12,7 @@ export const SignUpForm = () => {
         .string({
           required_error: authFormErrors.required,
         })
-        .max(60, { message: authFormErrors.maxSixtySymbols })
+        .max(60)
         .regex(/^[[a-z\][A-Z\][а-я\][А-Я\]\s\-—_]*$/, {
           message: authFormErrors.wrongName,
         }),
@@ -20,23 +20,25 @@ export const SignUpForm = () => {
         .string({
           required_error: authFormErrors.required,
         })
-        .max(30, { message: authFormErrors.maxThirtySymbols })
+        .max(30)
         .email({ message: authFormErrors.wrongEmail }),
       phone: z
         .string({
           required_error: authFormErrors.required,
         })
-        .min(10, { message: authFormErrors.minTenSymbols })
-        .max(12, { message: authFormErrors.maxTwelveSymbols })
-        .regex(/^((8|\+7)[- ]?)?(\(?\d{3}\)?[- ]?)?[\d\- ]{7,10}$/, {
+        .min(10, { message: authFormErrors.wrongPhone })
+        .max(10, { message: authFormErrors.wrongPhone })
+
+        //NOTE: Previous option: /^((8|\+7)[- ]?)?(\(?\d{3}\)?[- ]?)?[\d\- ]{7,10}$/
+        .regex(/^\d+$/, {
           message: authFormErrors.wrongPhone,
         }),
       password: z
         .string({
           required_error: authFormErrors.required,
         })
-        .min(8, { message: authFormErrors.minEightSymbols })
-        .max(20, { message: authFormErrors.maxTwentySymbols })
+        .min(8, { message: authFormErrors.wrongPasswordCreated })
+        .max(20, { message: authFormErrors.wrongPasswordCreated })
         .regex(
           /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*()-_+=<>?]{1,}$/,
           {
@@ -65,14 +67,13 @@ export const SignUpForm = () => {
       defaultHelperText: 'Как к вам обращаться?',
       autoComplete: 'name',
       required: true,
-      placeholder: '',
     },
     {
       name: 'phone',
       label: 'Телефон',
       type: 'tel',
       defaultHelperText: ' ',
-      autoComplete: 'tel',
+      // autoComplete: 'tel',
       required: true,
       placeholder: '+7 (999) 999-99-99',
     },
@@ -83,7 +84,6 @@ export const SignUpForm = () => {
       defaultHelperText: ' ',
       autoComplete: 'email',
       required: true,
-      placeholder: '',
     },
     {
       name: 'password',
@@ -92,16 +92,14 @@ export const SignUpForm = () => {
       defaultHelperText: ' ',
       autoComplete: 'new-password',
       required: true,
-      placeholder: '',
     },
     {
       name: 'passwordRepeat',
-      label: 'Пароль еще раз',
+      label: 'Повторный пароль',
       type: 'password',
       defaultHelperText: ' ',
       autoComplete: 'new-password',
       required: true,
-      placeholder: '',
     },
   ];
 
