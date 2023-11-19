@@ -1,8 +1,11 @@
+import { useNavigate } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import { Box, Stack } from '@mui/system';
 import Logo from '~/shared/assets/logo.svg';
 
 export const AppFooter = () => {
+  const navigate = useNavigate();
+
   return (
     <Box component={'footer'} height="7.5rem" bgcolor={'#313033'}>
       <Stack
@@ -15,6 +18,8 @@ export const AppFooter = () => {
           alignItems={'center'}
           padding={'1rem 0'}
           spacing={1}
+          onClick={() => navigate('/')}
+          sx={{ cursor: 'pointer' }}
         >
           <Box
             component={'img'}
