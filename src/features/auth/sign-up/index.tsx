@@ -96,7 +96,7 @@ export const SignUpForm = () => {
     },
     {
       name: 'passwordRepeat',
-      label: 'Пароль еще раз',
+      label: 'Повторный пароль',
       type: 'password',
       defaultHelperText: ' ',
       autoComplete: 'new-password',
