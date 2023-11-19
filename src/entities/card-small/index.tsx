@@ -6,8 +6,8 @@ import { ICardContext } from '~/shared/types';
 import { cardStyle, iconButtonStyle, titleStyle } from './style';
 
 export const CardSmall: FC<ICardContext> = (item) => {
-  const shopName = item.shop?.name || '';
-  const shopLogo = item.shop?.logo || '';
+  const shopName = item.card?.name || '';
+  const shopLogo = item.card?.image || '';
   const isLiked = false;
   return (
     <Card
