@@ -1,10 +1,9 @@
-import { Contexts } from '.';
+import { Contexts, ProtectedHomeRoute, ProtectedRoute } from '.';
 import { ThemeProvider } from '@emotion/react';
 import { CssBaseline } from '@mui/material';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AuthLayout, NotFound, RootLayout } from '~/pages';
 import {
-  Home,
   AuthWidget,
   CardWidget,
   AddCardWidget,
@@ -27,29 +26,19 @@ export function App() {
               <Route index Component={AuthWidget} />
             </Route>
             <Route path="/" Component={RootLayout}>
-              <Route index Component={Home} />
-              {/*
-              //NOTE: Main screen logic yet not active
-              <Route
-              index
-              element={
-                !isLoggedIn ? (
-                  <Home />
-                ) : isUserCards ? (
-                  <Navigate to="authorizedWithCards" replace />
-                ) : (
-                  <Navigate to="authorizedNoCards" replace />
-                )
-              }
-            /> */}
-              <Route path="authorizedNoCards" element={<Welcome />} />
-              <Route
-                path="authorizedWithCards"
-                element={<UserCards tags={chipsLabels} />}
-              />
-              <Route path="card">
-                <Route path="new" Component={AddCardWidget} />
-                <Route path=":id" Component={CardWidget} />
+              <Route index element={<ProtectedHomeRoute />} />
+              <Route element={<ProtectedRoute />}>
+                {/* //NOTE: Temporary demo routes from here */}
+                <Route path="authorizedNoCards" element={<Welcome />} />
+                <Route
+                  path="authorizedWithCards"
+                  element={<UserCards tags={chipsLabels} />}
+                />
+                {/* //NOTE: Temporary demo routes to here */}
+                <Route path="card">
+                  <Route path="new" Component={AddCardWidget} />
+                  <Route path=":id" Component={CardWidget} />
+                </Route>
               </Route>
             </Route>
             <Route path="*" Component={RootLayout}>
