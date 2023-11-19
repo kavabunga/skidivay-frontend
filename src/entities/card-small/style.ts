@@ -14,19 +14,7 @@ export const cardStyle: SxProps = {
   paddingTop: '3.25rem',
   paddingX: '.5rem',
   paddingBottom: '.5rem',
-};
-
-export const iconButtonStyle: SxProps = {
-  position: 'absolute',
-  right: '.5rem',
-  bottom: '.5rem',
-  padding: '.125rem',
-  color: 'primary.light',
-  filter: 'invert(0%)',
-  zIndex: '2',
-  '&:hover': {
-    filter: 'invert(100%)',
-  },
+  boxSizing: 'border-box',
 };
 
 export const titleStyle: SxProps = {
@@ -39,4 +27,11 @@ export const titleStyle: SxProps = {
   textOverflow: 'ellipsis',
   overflow: 'hidden',
   whiteSpace: 'nowrap',
+};
+
+export const likerWrapperStyle: SxProps = {
+  position: 'absolute',
+  right: '0',
+  bottom: '0',
+  padding: '.5rem',
 };
