@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import Barcode from 'react-barcode';
@@ -17,6 +17,8 @@ import {
   barcodeStyle,
 } from './style';
 import { AddCardFormModel } from './model';
+import { CardsContext } from '~/app';
+import { ICardContext } from '~/shared';
 
 //NOTE: In case of clearing the field with the built in close-button, the value becomes NULL, so react-hook-form fires type error. That's why we use 'required' error text as invalid type eroor text in shopName field
 const schema = z
@@ -91,6 +93,8 @@ export const AddCardForm: FC<AddCardFormType> = ({
     resolver: zodResolver(schema),
   });
 
+  const { setCards, cards } = useContext(CardsContext);
+
   const onSubmit: SubmitHandler<{ [key: string]: string }> = (data) => {
     const shop = shopList.find((element) => element.name === data.shopName);
     if (shop !== undefined) {
@@ -98,7 +102,12 @@ export const AddCardForm: FC<AddCardFormType> = ({
       new AddCardFormModel(data)
         .createNewCard()
         .then((res) => {
-          console.log(res);
+          const newCard: ICardContext = {
+            card: res,
+            owner: true,
+            favourite: false,
+          };
+          setCards && setCards([...cards, newCard]);
         })
         .catch((err) => {
           console.log(err);
