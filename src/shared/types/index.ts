@@ -28,7 +28,8 @@ export interface INewCardResponse {
 export interface IUserResponse {
   id: number;
   email: string;
-  username: string;
+  name: string;
+  username?: string;
   phoneNumber?: string;
   password?: string;
 }
@@ -60,8 +61,8 @@ export interface ISignInRequest {
 }
 
 export interface ISignUpRequest extends ISignInRequest {
-  username: string;
-  name?: string;
+  username?: string;
+  name: string;
   phone_number: string;
 }
 export interface ISignInResponse {

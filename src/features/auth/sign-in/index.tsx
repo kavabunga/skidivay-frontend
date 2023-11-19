@@ -53,7 +53,7 @@ export const SignInForm = () => {
       .then(() => {
         return getUser().then((res) => setUser && setUser(res));
       })
-      .then(() => navigate('/authorizedNoCards', { relative: 'path' }))
+      .then(() => navigate('/'))
       .catch((err) => console.log(err));
   };
 

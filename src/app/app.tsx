@@ -7,13 +7,13 @@ import {
   AuthWidget,
   CardWidget,
   AddCardWidget,
-  Welcome,
-  UserCards,
+  // Welcome,
+  // UserCards,
 } from '~/widgets';
 import { lightTheme } from '~/shared/lib';
 import 'typeface-roboto';
 import 'typeface-nunito';
-import { chipsLabels } from '~/shared/mock/';
+// import { chipsLabels } from '~/shared/mock/';
 
 export function App() {
   return (
@@ -29,11 +29,11 @@ export function App() {
               <Route index element={<ProtectedHomeRoute />} />
               <Route element={<ProtectedRoute />}>
                 {/* //NOTE: Temporary demo routes from here */}
-                <Route path="authorizedNoCards" element={<Welcome />} />
+                {/* <Route path="authorizedNoCards" element={<Welcome />} />
                 <Route
                   path="authorizedWithCards"
                   element={<UserCards tags={chipsLabels} />}
-                />
+                /> */}
                 {/* //NOTE: Temporary demo routes to here */}
                 <Route path="card">
                   <Route path="new" Component={AddCardWidget} />

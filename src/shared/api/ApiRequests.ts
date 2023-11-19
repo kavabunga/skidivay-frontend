@@ -57,11 +57,16 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
         authorization: `Token ${localStorage.getItem('token') || ''}`,
       };
     }
-    return fetch(`${url}`, options).then((res) =>
-      res.ok
-        ? res.json()
-        : res.json().then((res) => Promise.reject(new Error(res.message)))
-    );
+    return fetch(`${url}`, options)
+      .then((res) =>
+        res.ok
+          ? res.json()
+          : res.json().then((res) => Promise.reject(new Error(res.message)))
+      )
+      .then((res) => {
+        console.log(res);
+        return res;
+      });
   }
 
   signUp(data: ISignUpRequest) {
