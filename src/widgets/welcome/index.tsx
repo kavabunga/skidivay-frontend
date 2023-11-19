@@ -3,14 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Container, Typography } from '@mui/material';
 import { AccentButton } from '~/shared/ui';
 import { PromoSlider } from '~/features';
-import { defaultPromoCards } from '~/shared/mock';
+import { ShopListContext } from '~/app/contexts';
 import coverImage from '~/shared/assets/payment-bw-1.svg';
 import { coverImgStyle, mainContainerStyle, paragraphStyle } from './styles';
 import { UserContext } from '~/app';
 
 export const Welcome = () => {
   const { user } = useContext(UserContext);
+  const { shops } = useContext(ShopListContext);
   const navigate = useNavigate();
+
   return (
     <Container component="main" sx={{ ...mainContainerStyle }}>
       <Typography
@@ -56,7 +58,7 @@ export const Welcome = () => {
         Можно добавить
       </Typography>
 
-      <PromoSlider items={defaultPromoCards} isLoggedIn={true} />
+      <PromoSlider items={shops} />
     </Container>
   );
 };

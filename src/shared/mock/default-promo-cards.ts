@@ -1,43 +1,82 @@
-export const defaultPromoCards: {
-  _id: string;
-  category: string;
-  shopName: string;
-  shopLogo: string;
-}[] = [
+import { IShopListContext } from '~/shared';
+
+export const defaultPromoCards: IShopListContext = [
   {
-    _id: 'h54pk5j',
-    shopName: ' Лавка',
-    shopLogo: 'https://i.postimg.cc/zGHXvPqY/cloth-shoes-01.jpg',
-    category: 'cloth-shoes',
+    id: 9,
+    group: [
+      {
+        id: 11,
+        name: 'Развлечения',
+      },
+    ],
+    name: 'KASSIR',
+    logo: 'http://skidivay.acceleratorpracticum.ru/media/shop/04kassir.png',
+    color: '#f8cc0b',
+    validation: true,
   },
   {
-    _id: 'h54kpfg5j',
-    shopName: ' Лавка',
-    shopLogo: 'https://i.postimg.cc/X7xzRV5s/entertainments-01.jpg',
-    category: 'entertainments',
+    id: 10,
+    group: [
+      {
+        id: 1,
+        name: 'Продукты',
+      },
+    ],
+    name: 'METRO',
+    logo: 'http://skidivay.acceleratorpracticum.ru/media/shop/05metro.png',
+    color: '#003c82',
+    validation: true,
   },
   {
-    _id: 'h5spd5j',
-    shopName: ' Лавка',
-    shopLogo: 'https://i.postimg.cc/d3L2tnQj/food-01.png',
-    category: 'food',
+    id: 8,
+    group: [
+      {
+        id: 1,
+        name: 'Продукты',
+      },
+    ],
+    name: 'Лента',
+    logo: 'http://skidivay.acceleratorpracticum.ru/media/shop/03lenta_YYxkULC.png',
+    color: '#161c95',
+    validation: true,
   },
   {
-    _id: 'h54pshk5',
-    shopName: ' Лавка',
-    shopLogo: 'https://i.postimg.cc/Kzdpx79g/appliances-01.jpg',
-    category: 'appliances',
+    id: 11,
+    group: [
+      {
+        id: 1,
+        name: 'Продукты',
+      },
+    ],
+    name: 'Магнит',
+    logo: 'http://skidivay.acceleratorpracticum.ru/media/shop/06magnit.png',
+    color: '#fc0000',
+    validation: true,
   },
   {
-    _id: 'h5497p4k5j',
-    shopName: ' Лавка',
-    shopLogo: 'https://i.postimg.cc/PqBZ3S39/pharmacies-01.jpg',
-    category: 'pharmacies',
+    id: 1,
+    group: [
+      {
+        id: 1,
+        name: 'Продукты',
+      },
+    ],
+    name: 'Перекрёсток',
+    logo: 'http://skidivay.acceleratorpracticum.ru/media/shop/01perekrestok.png',
+    color: '#005b29',
+    validation: true,
   },
   {
-    _id: '677p4k5j',
-    shopName: ' Лавка',
-    shopLogo: 'https://i.postimg.cc/8PGw4zxD/household-products-01.jpg',
-    category: 'household-products',
+    id: 7,
+    group: [
+      {
+        id: 1,
+        name: 'Продукты',
+      },
+    ],
+    name: 'Пятёрочка',
+    logo: 'http://skidivay.acceleratorpracticum.ru/media/shop/02pyaterka_S8XgRwp.png',
+    color: '#d40304',
+    validation: true,
   },
 ];

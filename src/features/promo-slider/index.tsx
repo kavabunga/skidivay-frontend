@@ -2,26 +2,17 @@ import Slider from 'react-slick';
 import { FC } from 'react';
 import { Box } from '@mui/material';
 import { PromoCard } from '~/entities/promo-card';
-import { defaultPromoCards } from '~/shared/mock/default-promo-cards';
+import { IShopListContext } from '~/shared';
 import { slideStyle, sliderWindowStyle } from './style';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './style.css';
 
 interface PromoSliderProps {
-  items: {
-    _id: string;
-    category: string;
-    shopName: string;
-    shopLogo: string;
-  }[];
-  isLoggedIn: boolean;
+  items: IShopListContext | undefined;
 }
 
-export const PromoSlider: FC<PromoSliderProps> = ({
-  items = defaultPromoCards,
-  isLoggedIn,
-}) => {
+export const PromoSlider: FC<PromoSliderProps> = ({ items = [] }) => {
   interface SliderSettings {
     infinite: boolean;
     slidesToShow: number;
@@ -46,24 +37,11 @@ export const PromoSlider: FC<PromoSliderProps> = ({
 
   const children: JSX.Element[] = items.map((item) => {
     return (
-      <Box key={item._id} sx={{ ...slideStyle }}>
-        <PromoCard
-          item={item}
-          onCardClick={handleCardClick}
-          isLoggedIn={isLoggedIn}
-        />
+      <Box key={item.id} sx={{ ...slideStyle }}>
+        <PromoCard item={item} />
       </Box>
     );
   });
-
-  function handleCardClick(item: {
-    _id: string;
-    category: string;
-    shopName: string | null;
-    shopLogo: string | null;
-  }) {
-    return item;
-  }
 
   return (
     <Box sx={{ ...sliderWindowStyle }}>

@@ -6,14 +6,6 @@ interface IShopListContextValue {
   setShops?: Dispatch<SetStateAction<IShopListContext | undefined>>;
 }
 
-const defaultShopList: IShopListContext = [
-  {
-    name: 'Загрузка...',
-    id: 0,
-    logo: null,
-  },
-];
-
 export const ShopListContext = createContext<IShopListContextValue>({
-  shops: defaultShopList,
+  shops: [],
 });

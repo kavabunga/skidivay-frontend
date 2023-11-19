@@ -1,13 +1,16 @@
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ShopListContext } from '~/app/contexts';
 import { Box, Container, Typography } from '@mui/material';
 import { AccentButton } from '~/shared/ui';
 import { PromoSlider } from '~/features';
 import coverImage from '~/shared/assets/save-money-bw-1.svg';
-import { defaultPromoCards } from '~/shared/mock';
 import { coverImgStyle, mainContainerStyle, paragraphStyle } from './styles';
 
 export const Home = () => {
+  const { shops } = useContext(ShopListContext);
   const navigate = useNavigate();
+
   return (
     <Container component="main" sx={{ ...mainContainerStyle }}>
       <Typography
@@ -33,7 +36,7 @@ export const Home = () => {
         Добавьте в свой кошелёк
       </Typography>
 
-      <PromoSlider items={defaultPromoCards} isLoggedIn={false} />
+      <PromoSlider items={shops} />
 
       <AccentButton
         onClick={() => navigate('/auth', { relative: 'path' })}
