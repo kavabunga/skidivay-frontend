@@ -95,9 +95,14 @@ export const AddCardForm: FC<AddCardFormType> = ({
     const shop = shopList.find((element) => element.name === data.shopName);
     if (shop !== undefined) {
       data = { ...data, shopId: shop.id.toString() };
-      const newCard = new AddCardFormModel(data).createNewCard();
-      console.log(newCard);
-      // Нужно пофиксить контекст карточки
+      new AddCardFormModel(data)
+        .createNewCard()
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
       data = { ...data, shopId: '' };
     }

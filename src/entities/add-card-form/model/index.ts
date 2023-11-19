@@ -21,8 +21,6 @@ export class AddCardFormModel {
   }
 
   public createNewCard() {
-    return api.postCard(this.data).then((newCardData) => {
-      return newCardData;
-    });
+    return api.postCard(this.data);
   }
 }
