@@ -12,7 +12,7 @@ export type HeaderProps = {
 };
 
 export const Header: FC<HeaderProps> = ({ type }) => {
-  const user = useContext(UserContext);
+  const { user } = useContext(UserContext);
   return (
     <AppBar
       sx={{
