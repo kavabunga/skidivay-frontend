@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Box, Stack } from '@mui/material/';
+import { Box, Stack } from '@mui/material/';
 import { CardSmall } from '~/entities';
 import { CardsContext } from '~/app';
 import { AddCardButton } from '~/features';
@@ -18,13 +18,19 @@ export const CardsList = () => {
       {cards &&
         cards.map((item) => {
           return (
-            <Button
-              key={item.id}
+            // <Button
+            //   key={item.card.id}
+            //   sx={cardCellStyle}
+            //   onClick={() => navigate('/card/123', { relative: 'path' })}
+            // >
+            //   <CardSmall {...item} />
+            // </Button>
+            <CardSmall
+              {...item}
+              key={item.card.id}
               sx={cardCellStyle}
               onClick={() => navigate('/card/123', { relative: 'path' })}
-            >
-              <CardSmall {...item} />
-            </Button>
+            />
           );
         })}
     </Stack>

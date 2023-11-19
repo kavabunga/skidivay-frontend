@@ -31,6 +31,12 @@ export const Contexts: FC<IContexts> = ({ children }) => {
         setUserData(res);
       })
       .catch((err) => console.log(err.message));
+    api
+      .getCards()
+      .then((res) => {
+        setCardsData(res);
+      })
+      .catch((err) => console.log(err.message));
   }, []);
 
   return (
