@@ -26,23 +26,24 @@ const schema = z
         required_error: cardFormErrors.required,
         invalid_type_error: cardFormErrors.required,
       })
-      .max(30, { message: cardFormErrors.maxThirtySymbols })
+      .max(30)
       .regex(/^[A-Za-zА-Яа-я0-9+.\-_,!@=\s]*$/, {
         message: cardFormErrors.wrongShopName,
       }),
     cardNumber: z
       .string({})
-      .max(40, { message: cardFormErrors.maxFortySymbols })
+      .max(40, { message: cardFormErrors.wrongNumber })
       .regex(/^\d*$/, {
         message: cardFormErrors.wrongNumber,
       }),
     barcodeNumber: z
       .string({})
-      .max(40, { message: cardFormErrors.maxFortySymbols })
+      .max(40, { message: cardFormErrors.wrongNumber })
       .regex(/^\d*$/, {
         message: cardFormErrors.wrongNumber,
       }),
   })
+  .partial()
   .required({
     shopName: true,
   })
@@ -85,9 +86,9 @@ export const AddCardForm: FC<AddCardFormType> = ({
     setValue,
     watch,
     trigger,
-    formState: { errors, isDirty, isValid },
+    formState: { errors, isSubmitting },
   } = useForm<{ [key: string]: string }>({
-    mode: 'all',
+    mode: 'onTouched',
     resolver: zodResolver(schema),
   });
 
@@ -135,7 +136,7 @@ export const AddCardForm: FC<AddCardFormType> = ({
             freeSolo
             fullWidth
             autoSelect
-            value={value ?? null}
+            value={value || null}
             options={shopList.map((option) => option.name)}
             renderInput={(params) => (
               <TextField
@@ -202,7 +203,7 @@ export const AddCardForm: FC<AddCardFormType> = ({
       <Button
         type="submit"
         variant="contained"
-        disabled={!isDirty || !isValid}
+        disabled={isSubmitting}
         fullWidth
         sx={buttonStyle}
         {...buttonSave}
