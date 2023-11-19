@@ -67,7 +67,7 @@ export const EditCardForm: FC<EditCardFormProps> = ({
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<{ [key: string]: string }>({
-    mode: 'all',
+    mode: 'onTouched',
     resolver: zodResolver(schema),
     defaultValues: {
       cardNumber: cardNumberValue,

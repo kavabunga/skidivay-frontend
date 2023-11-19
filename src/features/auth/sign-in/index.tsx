@@ -31,7 +31,7 @@ export const SignInForm = () => {
       defaultHelperText: ' ',
       autoComplete: 'email',
       required: true,
-      placeholder: '',
+      hideAsterisk: true,
     },
     {
       name: 'password',
@@ -40,7 +40,7 @@ export const SignInForm = () => {
       defaultHelperText: ' ',
       autoComplete: 'current-password',
       required: true,
-      placeholder: '',
+      hideAsterisk: true,
     },
   ];
 
