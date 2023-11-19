@@ -15,15 +15,17 @@ export const Liker: FC<LikerProps> = ({ cardId, isLiked }) => {
   const { cards, setCards } = useContext(CardsContext);
 
   function handleClick() {
-    api
-      .changeCardLikeStatus(cardId, !isLiked)
-      .then((newCard) => {
-        const newCards = cards.map((item) =>
-          item.card.id === cardId ? newCard : item
-        );
-        setCards(newCards);
-      })
-      .catch((err) => console.log(err));
+    cards &&
+      setCards &&
+      api
+        .changeCardLikeStatus(cardId, !isLiked)
+        .then((newCard) => {
+          const newCards = cards.map((item) =>
+            item.card.id === cardId ? newCard : item
+          );
+          setCards(newCards);
+        })
+        .catch((err) => console.log(err));
   }
 
   return (

@@ -1,4 +1,5 @@
 import {
+  ICardContext,
   IPostCard,
   IShopListContext,
   ISignInRequest,
@@ -27,7 +28,7 @@ interface IApiRequests {
   getCards(): Promise<void>;
   postCard(data: IPostCard): Promise<void>;
   editCard(data: IPostCard, id: number): Promise<void>;
-  changeCardLikeStatus(id: number, hasLike: boolean): Promise<void>;
+  changeCardLikeStatus(id: number, hasLike: boolean): Promise<ICardContext>;
   deleteCard(id: number): Promise<void>;
 }
 
