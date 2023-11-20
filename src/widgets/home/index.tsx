@@ -8,7 +8,7 @@ import coverImage from '~/shared/assets/save-money-bw-1.svg';
 import { coverImgStyle, mainContainerStyle, paragraphStyle } from './styles';
 
 export const Home = () => {
-  const { shops } = useContext(ShopListContext);
+  const { shops = [] } = useContext(ShopListContext);
   const navigate = useNavigate();
 
   return (

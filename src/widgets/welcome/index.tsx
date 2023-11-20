@@ -10,7 +10,7 @@ import { UserContext } from '~/app';
 
 export const Welcome = () => {
   const { user } = useContext(UserContext);
-  const { shops } = useContext(ShopListContext);
+  const { shops = [] } = useContext(ShopListContext);
   const navigate = useNavigate();
 
   return (

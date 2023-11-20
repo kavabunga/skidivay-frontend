@@ -102,7 +102,8 @@ export const AddCardForm: FC<AddCardFormType> = ({
       new AddCardFormModel(data)
         .createNewCard()
         .then((res) => {
-          setCards([res, ...cards]);
+          const newCards = [res, ...cards];
+          setCards(newCards);
           console.log(res);
         })
         .catch((err) => {

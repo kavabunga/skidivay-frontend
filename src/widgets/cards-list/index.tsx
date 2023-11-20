@@ -25,7 +25,7 @@ export const CardsList: FC<CardsListProps> = ({ items = [] }) => {
             // >
             //   <CardSmall {...item} />
             // </Button>
-            <CardSmall key={item.card.id} item={item} sx={cardCellStyle} />
+            <CardSmall key={item.card.id} item={item} />
           );
         })}
     </Stack>

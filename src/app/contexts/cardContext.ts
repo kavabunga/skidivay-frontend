@@ -15,10 +15,12 @@ const defaultCard: ICardContext = {
       logo: null,
       color: '#625B71',
       validation: true,
-      group: {
-        id: 0,
-        name: 'другое',
-      },
+      group: [
+        {
+          id: 0,
+          name: 'другое',
+        },
+      ],
     },
     name: 'Загрузка...',
     pub_date: '01-01-2030',
