@@ -24,8 +24,7 @@ export const CardWidget = () => {
   const { card_number: cardNumber, barcode_number: barcodeNumber } = card.card;
   const cardId = card.card.id;
   const isLiked = card.favourite;
-  // eslint-disable-next-line no-debugger
-  debugger;
+
   const handleEditEnable = () => {
     setIsEditActive(true);
   };
