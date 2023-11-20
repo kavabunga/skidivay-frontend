@@ -109,7 +109,17 @@ export const AddCardForm: FC<AddCardFormType> = ({
           console.log(err);
         });
     } else {
-      data = { ...data, shopId: '' };
+      data = { ...data, shopId: '18' };
+      new AddCardFormModel(data)
+        .createNewCard()
+        .then((res) => {
+          const newCards = [res, ...cards];
+          setCards(newCards);
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
     navigate('../../authorizedWithCards', { relative: 'path' });
   };
