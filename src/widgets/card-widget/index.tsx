@@ -46,7 +46,7 @@ export const CardWidget = () => {
           paddingY: 1.5,
         }}
       >
-        <CardFull {...card} />
+        <CardFull item={card} />
       </Box>
 
       <EditCardForm
