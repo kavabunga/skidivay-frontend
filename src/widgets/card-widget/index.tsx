@@ -13,7 +13,14 @@ export const CardWidget = () => {
   const [isEditActive, setIsEditActive] = useState(false);
   const id = useParams().id;
   const { cards = [] } = useContext(CardsContext);
-  const card = cards.find((item) => item.card.id.toString() == id);
+  const card = cards.find((item) => item.card.id.toString() === id) || {
+    card: {
+      id: -1,
+      name: 'Загрузка',
+    },
+    owner: true,
+    favourite: false,
+  };
   const { card_number: cardNumber, barcode_number: barcodeNumber } = card.card;
   const cardId = card.card.id;
   const isLiked = card.favourite;

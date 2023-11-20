@@ -16,7 +16,7 @@ export const SignOut: FC<ISignOut> = ({ element: Component, ...props }) => {
     onSignOut()
       .then(() => {
         setUser && setUser(undefined);
-        setCards && setCards(undefined);
+        setCards && setCards([]);
       })
       .then(() => navigate('/'))
       .catch((err) => console.log(err));

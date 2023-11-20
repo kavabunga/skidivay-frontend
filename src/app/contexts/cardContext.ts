@@ -2,8 +2,8 @@ import { Dispatch, SetStateAction, createContext } from 'react';
 import { ICardContext } from '~/shared';
 
 interface ICardContextValue {
-  card: ICardContext | undefined;
-  setCard?: Dispatch<SetStateAction<ICardContext | undefined>>;
+  card: ICardContext;
+  setCard?: Dispatch<SetStateAction<ICardContext>>;
 }
 
 const defaultCard: ICardContext = {

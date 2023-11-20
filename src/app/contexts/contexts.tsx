@@ -15,8 +15,15 @@ interface IContexts {
 export const Contexts: FC<IContexts> = ({ children }) => {
   const [userData, setUserData] = useState<IUserContext>();
   const [shopsData, setShopsData] = useState<IShopListContext>();
-  const [cardsData, setCardsData] = useState<ICardsContext>();
-  const [cardData, setCardData] = useState<ICardContext>();
+  const [cardsData, setCardsData] = useState<ICardsContext>([]);
+  const [cardData, setCardData] = useState<ICardContext>({
+    card: {
+      id: -1,
+      name: 'Загрузка',
+    },
+    owner: true,
+    favourite: false,
+  });
 
   useEffect(() => {
     api

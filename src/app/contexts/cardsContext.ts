@@ -3,7 +3,7 @@ import { ICardsContext } from '~/shared';
 
 interface ICardsContextValue {
   cards: ICardsContext | [];
-  setCards?: Dispatch<SetStateAction<ICardsContext | undefined>>;
+  setCards?: Dispatch<SetStateAction<ICardsContext>>;
 }
 
 export const CardsContext = createContext<ICardsContextValue>({
