@@ -21,7 +21,7 @@ export const Welcome = () => {
         textAlign="left"
         sx={{ padding: '0 0 1.5rem', width: '100%' }}
       >
-        {`Привет, ${user ? user.username : 'Приятель'}!`}
+        {`Привет, ${user ? user.name : 'Приятель'}!`}
       </Typography>
 
       <Box

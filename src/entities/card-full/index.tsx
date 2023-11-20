@@ -4,10 +4,14 @@ import { Box, Card, Typography } from '@mui/material';
 import { ICardContext } from '~/shared';
 import { cardStyle, barcodeStyle, titleStyle } from './style';
 
-export const CardFull: FC<ICardContext> = (item) => {
-  const shopName = item.shop?.name || '';
-  const shopLogo = item.shop?.logo || '';
-  const barcodeNumber = item.barcodeNumber || '';
+interface CardFullProps {
+  item: ICardContext;
+}
+
+export const CardFull: FC<CardFullProps> = ({ item }) => {
+  const shopName = item.card.shop?.name || '';
+  const shopLogo = item.card.shop?.logo || '';
+  const barcodeNumber = item.card.barcode_number || '';
   return (
     <Card
       sx={{

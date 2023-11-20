@@ -1,6 +1,7 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { CardsContext } from '~/app';
 import Barcode from 'react-barcode';
 import { Box, TextField, Button, Autocomplete, Card } from '@mui/material';
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
@@ -27,7 +28,7 @@ const schema = z
         invalid_type_error: cardFormErrors.required,
       })
       .max(30)
-      .regex(/^[A-Za-zА-Яа-я0-9+.\-_,!@=\s]*$/, {
+      .regex(/^[A-Za-zА-Яа-я0-9+.\-_,!@=\sё]*$/, {
         message: cardFormErrors.wrongShopName,
       }),
     cardNumber: z
@@ -78,6 +79,7 @@ export const AddCardForm: FC<AddCardFormType> = ({
   },
   shopList = mockShopList,
 }) => {
+  const { cards, setCards } = useContext(CardsContext);
   const navigate = useNavigate();
   const {
     control,
@@ -94,11 +96,13 @@ export const AddCardForm: FC<AddCardFormType> = ({
 
   const onSubmit: SubmitHandler<{ [key: string]: string }> = (data) => {
     const shop = shopList.find((element) => element.name === data.shopName);
+
     if (shop !== undefined) {
       data = { ...data, shopId: shop.id.toString() };
       new AddCardFormModel(data)
         .createNewCard()
         .then((res) => {
+          setCards([res, ...cards]);
           console.log(res);
         })
         .catch((err) => {
