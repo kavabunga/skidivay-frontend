@@ -1,4 +1,5 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
+import { CardsContext } from '~/app/contexts';
 import { Container, Typography, Button } from '@mui/material';
 import { SearchChips, SignOut } from '~/features';
 import { CardsList } from '~/widgets';
@@ -11,6 +12,8 @@ type UserCardsProps = {
 };
 
 export const UserCards: FC<UserCardsProps> = ({ tags }) => {
+  const { cards } = useContext(CardsContext);
+
   return (
     <Container component="main" sx={{ ...mainContainerStyle }}>
       <Typography
@@ -24,7 +27,7 @@ export const UserCards: FC<UserCardsProps> = ({ tags }) => {
         {`Мои карты`}
       </Typography>
       <SearchChips items={tags} />
-      <CardsList />
+      <CardsList items={cards || []} />
       <SignOut
         element={Button}
         variant="text"

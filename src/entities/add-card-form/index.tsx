@@ -1,6 +1,7 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { CardsContext } from '~/app';
 import Barcode from 'react-barcode';
 import { Box, TextField, Button, Autocomplete, Card } from '@mui/material';
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
@@ -17,6 +18,7 @@ import {
   barcodeStyle,
 } from './style';
 import { AddCardFormModel } from './model';
+import { ICardContext } from '~/shared';
 
 //NOTE: In case of clearing the field with the built in close-button, the value becomes NULL, so react-hook-form fires type error. That's why we use 'required' error text as invalid type eroor text in shopName field
 const schema = z
@@ -27,7 +29,7 @@ const schema = z
         invalid_type_error: cardFormErrors.required,
       })
       .max(30)
-      .regex(/^[A-Za-zА-Яа-я0-9+.\-_,!@=\s]*$/, {
+      .regex(/^[A-Za-zА-Яа-я0-9+.\-_,!@=\sё]*$/, {
         message: cardFormErrors.wrongShopName,
       }),
     cardNumber: z
@@ -78,6 +80,7 @@ export const AddCardForm: FC<AddCardFormType> = ({
   },
   shopList = mockShopList,
 }) => {
+  const { cards, setCards } = useContext(CardsContext);
   const navigate = useNavigate();
   const {
     control,
@@ -94,18 +97,41 @@ export const AddCardForm: FC<AddCardFormType> = ({
 
   const onSubmit: SubmitHandler<{ [key: string]: string }> = (data) => {
     const shop = shopList.find((element) => element.name === data.shopName);
+
     if (shop !== undefined) {
       data = { ...data, shopId: shop.id.toString() };
       new AddCardFormModel(data)
         .createNewCard()
         .then((res) => {
+          const newCard: ICardContext = {
+            card: res,
+            owner: true,
+            favourite: false,
+          };
+          const newCards = [newCard, ...cards];
+          setCards && setCards(newCards);
           console.log(res);
         })
         .catch((err) => {
           console.log(err);
         });
     } else {
-      data = { ...data, shopId: '' };
+      data = { ...data, shopId: '18' };
+      new AddCardFormModel(data)
+        .createNewCard()
+        .then((res) => {
+          const newCard: ICardContext = {
+            card: res,
+            owner: true,
+            favourite: false,
+          };
+          const newCards = [newCard, ...cards];
+          setCards && setCards(newCards);
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
     navigate('../../authorizedWithCards', { relative: 'path' });
   };

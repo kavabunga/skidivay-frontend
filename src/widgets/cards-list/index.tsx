@@ -1,22 +1,22 @@
-import { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { FC } from 'react';
 import { Box, Stack } from '@mui/material/';
 import { CardSmall } from '~/entities';
-import { CardsContext } from '~/app';
+import { ICardsContext } from '~/shared';
 import { AddCardButton } from '~/features';
 import { cardCellStyle } from './style';
 
-export const CardsList = () => {
-  const navigate = useNavigate();
-  const { cards } = useContext(CardsContext);
+interface CardsListProps {
+  items: ICardsContext | [];
+}
 
+export const CardsList: FC<CardsListProps> = ({ items = [] }) => {
   return (
     <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
       <Box key={'add-new-card'} sx={cardCellStyle}>
         <AddCardButton text="Добавить новую карту" />
       </Box>
-      {cards &&
-        cards.map((item) => {
+      {items &&
+        items.map((item) => {
           return (
             // <Button
             //   key={item.card.id}
@@ -25,12 +25,7 @@ export const CardsList = () => {
             // >
             //   <CardSmall {...item} />
             // </Button>
-            <CardSmall
-              {...item}
-              key={item.card.id}
-              sx={cardCellStyle}
-              onClick={() => navigate('/card/123', { relative: 'path' })}
-            />
+            <CardSmall key={item.card.id} item={item} />
           );
         })}
     </Stack>

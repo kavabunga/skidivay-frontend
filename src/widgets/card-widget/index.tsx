@@ -12,12 +12,20 @@ import { CardsContext } from '~/app';
 export const CardWidget = () => {
   const [isEditActive, setIsEditActive] = useState(false);
   const id = useParams().id;
-  const { cards } = useContext(CardsContext);
-  const card = cards.find((item) => item.card.id.toString() == id);
-  const { cardNumber, barcodeNumber } = card.card;
+  const { cards = [] } = useContext(CardsContext);
+  const card = cards.find((item) => item.card.id.toString() === id) || {
+    card: {
+      id: -1,
+      name: 'Загрузка',
+    },
+    owner: true,
+    favourite: false,
+  };
+  const { card_number: cardNumber, barcode_number: barcodeNumber } = card.card;
   const cardId = card.card.id;
   const isLiked = card.favourite;
-
+  // eslint-disable-next-line no-debugger
+  debugger;
   const handleEditEnable = () => {
     setIsEditActive(true);
   };
@@ -46,7 +54,7 @@ export const CardWidget = () => {
           paddingY: 1.5,
         }}
       >
-        <CardFull {...card} />
+        <CardFull item={card} />
       </Box>
 
       <EditCardForm

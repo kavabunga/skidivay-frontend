@@ -10,10 +10,12 @@ export const defaultCards: ICardsContext = [
         logo: 'https://i.postimg.cc/zGHXvPqY/cloth-shoes-01.jpg',
         color: '#625B71',
         validation: true,
-        group: {
-          id: 1,
-          name: 'другое',
-        },
+        group: [
+          {
+            id: 1,
+            name: 'другое',
+          },
+        ],
       },
       name: 'Загрузка...',
       pub_date: '01-01-2030',
@@ -35,10 +37,12 @@ export const defaultCards: ICardsContext = [
         logo: 'https://i.postimg.cc/zGHXvPqY/cloth-shoes-01.jpg',
         color: '#625B71',
         validation: true,
-        group: {
-          id: 0,
-          name: 'другое',
-        },
+        group: [
+          {
+            id: 0,
+            name: 'другое',
+          },
+        ],
       },
       name: 'Загрузка...',
       pub_date: '01-01-2030',
@@ -60,10 +64,12 @@ export const defaultCards: ICardsContext = [
         logo: 'https://i.postimg.cc/zGHXvPqY/cloth-shoes-01.jpg',
         color: '#625B71',
         validation: true,
-        group: {
-          id: 0,
-          name: 'другое',
-        },
+        group: [
+          {
+            id: 0,
+            name: 'другое',
+          },
+        ],
       },
       name: 'Загрузка...',
       pub_date: '01-01-2030',
@@ -85,10 +91,12 @@ export const defaultCards: ICardsContext = [
         logo: 'https://i.postimg.cc/zGHXvPqY/cloth-shoes-01.jpg',
         color: '#625B71',
         validation: true,
-        group: {
-          id: 0,
-          name: 'другое',
-        },
+        group: [
+          {
+            id: 0,
+            name: 'другое',
+          },
+        ],
       },
       name: 'Загрузка...',
       pub_date: '01-01-2030',
@@ -110,10 +118,12 @@ export const defaultCards: ICardsContext = [
         logo: 'https://i.postimg.cc/zGHXvPqY/cloth-shoes-01.jpg',
         color: '#625B71',
         validation: true,
-        group: {
-          id: 0,
-          name: 'другое',
-        },
+        group: [
+          {
+            id: 0,
+            name: 'другое',
+          },
+        ],
       },
       name: 'Загрузка...',
       pub_date: '01-01-2030',
@@ -135,10 +145,12 @@ export const defaultCards: ICardsContext = [
         logo: 'https://i.postimg.cc/zGHXvPqY/cloth-shoes-01.jpg',
         color: '#625B71',
         validation: true,
-        group: {
-          id: 0,
-          name: 'другое',
-        },
+        group: [
+          {
+            id: 0,
+            name: 'другое',
+          },
+        ],
       },
       name: 'Загрузка...',
       pub_date: '01-01-2030',
@@ -160,10 +172,12 @@ export const defaultCards: ICardsContext = [
         logo: 'https://i.postimg.cc/zGHXvPqY/cloth-shoes-01.jpg',
         color: '#625B71',
         validation: true,
-        group: {
-          id: 0,
-          name: 'другое',
-        },
+        group: [
+          {
+            id: 0,
+            name: 'другое',
+          },
+        ],
       },
       name: 'Загрузка...',
       pub_date: '01-01-2030',
@@ -185,10 +199,12 @@ export const defaultCards: ICardsContext = [
         logo: 'https://i.postimg.cc/zGHXvPqY/cloth-shoes-01.jpg',
         color: '#625B71',
         validation: true,
-        group: {
-          id: 0,
-          name: 'другое',
-        },
+        group: [
+          {
+            id: 0,
+            name: 'другое',
+          },
+        ],
       },
       name: 'Загрузка...',
       pub_date: '01-01-2030',
@@ -210,85 +226,12 @@ export const defaultCards: ICardsContext = [
         logo: 'https://i.postimg.cc/zGHXvPqY/cloth-shoes-01.jpg',
         color: '#625B71',
         validation: true,
-        group: {
-          id: 0,
-          name: 'другое',
-        },
-      },
-      name: 'Загрузка...',
-      pub_date: '01-01-2030',
-      image: null,
-      card_number: '1234567890',
-      barcode_number: '123456789012',
-      encoding_type: 'code128',
-      usage_counter: 5,
-    },
-    owner: true,
-    favourite: true,
-  },
-  {
-    card: {
-      id: 10,
-      shop: {
-        id: 0,
-        name: 'Аэрофлот',
-        logo: 'https://i.postimg.cc/zGHXvPqY/cloth-shoes-01.jpg',
-        color: '#625B71',
-        validation: true,
-        group: {
-          id: 0,
-          name: 'другое',
-        },
-      },
-      name: 'Загрузка...',
-      pub_date: '01-01-2030',
-      image: null,
-      card_number: '1234567890',
-      barcode_number: '123456789012',
-      encoding_type: 'code128',
-      usage_counter: 5,
-    },
-    owner: true,
-    favourite: true,
-  },
-  {
-    card: {
-      id: 11,
-      shop: {
-        id: 0,
-        name: 'Глобус',
-        logo: 'https://i.postimg.cc/zGHXvPqY/cloth-shoes-01.jpg',
-        color: '#625B71',
-        validation: true,
-        group: {
-          id: 0,
-          name: 'другое',
-        },
-      },
-      name: 'Загрузка...',
-      pub_date: '01-01-2030',
-      image: null,
-      card_number: '1234567890',
-      barcode_number: '123456789012',
-      encoding_type: 'code128',
-      usage_counter: 5,
-    },
-    owner: true,
-    favourite: true,
-  },
-  {
-    card: {
-      id: 12,
-      shop: {
-        id: 0,
-        name: 'Фикс Прайс',
-        logo: 'https://i.postimg.cc/zGHXvPqY/cloth-shoes-01.jpg',
-        color: '#625B71',
-        validation: true,
-        group: {
-          id: 0,
-          name: 'другое',
-        },
+        group: [
+          {
+            id: 0,
+            name: 'другое',
+          },
+        ],
       },
       name: 'Загрузка...',
       pub_date: '01-01-2030',

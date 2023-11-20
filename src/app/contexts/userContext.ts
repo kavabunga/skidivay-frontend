@@ -9,7 +9,7 @@ interface IUserContextValue {
 const defaultUser: IUserContext = {
   id: 0,
   email: 'Загрузка...',
-  username: 'Загрузка...',
+  name: 'Загрузка...',
   cards: [],
 };
 

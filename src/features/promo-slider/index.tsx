@@ -1,5 +1,5 @@
-import Slider from 'react-slick';
 import { FC } from 'react';
+import Slider from 'react-slick';
 import { Box } from '@mui/material';
 import { PromoCard } from '~/entities/promo-card';
 import { IShopListContext } from '~/shared';
@@ -9,7 +9,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import './style.css';
 
 interface PromoSliderProps {
-  items: IShopListContext | undefined;
+  items: IShopListContext | [];
 }
 
 export const PromoSlider: FC<PromoSliderProps> = ({ items = [] }) => {

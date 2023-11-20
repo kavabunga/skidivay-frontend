@@ -13,7 +13,7 @@ export const SignUpForm = () => {
           required_error: authFormErrors.required,
         })
         .max(60)
-        .regex(/^[[a-z\][A-Z\][а-я\][А-Я\]\s\-—_]*$/, {
+        .regex(/^[a-zA-Zа-яА-Я\s-]{1,60}$/, {
           message: authFormErrors.wrongName,
         }),
       email: z
@@ -105,7 +105,7 @@ export const SignUpForm = () => {
 
   const submit = (data: { [key: string]: string }) => {
     const request: ISignUpRequest = {
-      username: data.name || '',
+      name: data.name || '',
       email: data.email || '',
       phone_number: data.phone || '',
       password: data.password || '',

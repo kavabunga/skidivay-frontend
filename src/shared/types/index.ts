@@ -14,13 +14,25 @@ export interface ICardContext {
   favourite: boolean;
 }
 
+export interface INewCardResponse {
+  id: number;
+  shop?: IShop;
+  name: string;
+  pub_date?: string;
+  image?: string | null;
+  card_number?: string;
+  barcode_number?: string;
+  encoding_type?: string;
+}
+
 export interface IUserResponse {
   id: number;
   email: string;
-  username: string;
+  name: string;
   phoneNumber?: string;
   password?: string;
 }
+
 export interface IUserContext extends IUserResponse {
   cards: ICardContext[];
 }
@@ -50,10 +62,10 @@ export interface ISignInRequest {
 }
 
 export interface ISignUpRequest extends ISignInRequest {
-  username: string;
-  name?: string;
+  name: string;
   phone_number: string;
 }
+
 export interface ISignInResponse {
   auth_token: string;
 }
