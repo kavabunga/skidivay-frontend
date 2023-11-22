@@ -23,7 +23,7 @@ npm run dev
 
 `[префикс]/[задача]`
 
-#### Примеры
+#### Пример
 
 - `feature/project-structure`
 - `refactor/default-button`

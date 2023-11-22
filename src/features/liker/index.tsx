@@ -14,7 +14,8 @@ interface LikerProps {
 export const Liker: FC<LikerProps> = ({ cardId, isLiked }) => {
   const { cards, setCards } = useContext(CardsContext);
 
-  function handleClick() {
+  function handleClick(event) {
+    event.stopPropagation();
     cards &&
       setCards &&
       api
