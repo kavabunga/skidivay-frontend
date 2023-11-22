@@ -1,13 +1,12 @@
-import { Link, List, ListItem } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import { AuthForm, onSignIn } from '..';
-import * as z from 'zod';
-import { authFormErrors } from '~/shared/lib';
-import { listStyle, linkStyle } from './style';
-import { ISignInRequest } from '~/shared';
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Link, List, ListItem } from '@mui/material';
+import * as z from 'zod';
 import { UserContext } from '~/app';
 import { getUser } from '~/features';
+import { ISignInRequest, authFormErrors } from '~/shared';
+import { AuthForm, onSignIn } from '..';
+import { listStyle, linkStyle } from './style';
 
 export const SignInForm = () => {
   const { setUser } = useContext(UserContext);
@@ -53,7 +52,7 @@ export const SignInForm = () => {
       .then(() => {
         return getUser().then((res) => setUser && setUser(res));
       })
-      .then(() => navigate('/authorizedNoCards', { relative: 'path' }))
+      .then(() => navigate('/'))
       .catch((err) => console.log(err));
   };
 

@@ -13,17 +13,10 @@ interface IContexts {
 }
 
 export const Contexts: FC<IContexts> = ({ children }) => {
-  const [userData, setUserData] = useState<IUserContext>();
-  const [shopsData, setShopsData] = useState<IShopListContext>();
+  const [userData, setUserData] = useState<IUserContext | null>(null);
+  const [shopsData, setShopsData] = useState<IShopListContext>([]);
   const [cardsData, setCardsData] = useState<ICardsContext>([]);
-  const [cardData, setCardData] = useState<ICardContext>({
-    card: {
-      id: -1,
-      name: 'Загрузка',
-    },
-    owner: true,
-    favourite: false,
-  });
+  const [cardData, setCardData] = useState<ICardContext>(Object);
 
   useEffect(() => {
     api
@@ -32,18 +25,20 @@ export const Contexts: FC<IContexts> = ({ children }) => {
         setShopsData(res);
       })
       .catch((err) => console.log(err.message));
-    api
-      .getUser()
-      .then((res) => {
-        setUserData(res);
-      })
-      .catch((err) => console.log(err.message));
-    api
-      .getCards()
-      .then((res) => {
-        setCardsData(res);
-      })
-      .catch((err) => console.log(err.message));
+    if (localStorage.getItem('token')) {
+      api
+        .getUser()
+        .then((res) => {
+          setUserData(res);
+        })
+        .catch((err) => console.log(err.message));
+      api
+        .getCards()
+        .then((res) => {
+          setCardsData(res);
+        })
+        .catch((err) => console.log(err.message));
+    }
   }, []);
 
   return (

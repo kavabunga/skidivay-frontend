@@ -8,24 +8,27 @@ import { Liker } from '~/features';
 import { buttonStyle, topButtonsStyle, likerWrapperStyle } from './style';
 import { CardsContext } from '~/app';
 
-//NOTE: Getting Card ID as useParams().id through Router's dynamic route
 export const CardWidget = () => {
+  const { cards } = useContext(CardsContext);
   const [isEditActive, setIsEditActive] = useState(false);
   const id = useParams().id;
-  const { cards = [] } = useContext(CardsContext);
   const card = cards.find((item) => item.card.id.toString() === id) || {
     card: {
-      id: -1,
-      name: 'Загрузка',
+      id: 0,
+      name: 'Карта не найдена',
+      card_number: '',
+      barcode_number: '',
     },
     owner: true,
     favourite: false,
   };
-  const { card_number: cardNumber, barcode_number: barcodeNumber } = card.card;
-  const cardId = card.card.id;
+  const {
+    card_number: cardNumber,
+    barcode_number: barcodeNumber,
+    id: cardId,
+  } = card.card;
   const isLiked = card.favourite;
-  // eslint-disable-next-line no-debugger
-  debugger;
+
   const handleEditEnable = () => {
     setIsEditActive(true);
   };

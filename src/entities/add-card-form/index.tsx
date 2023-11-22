@@ -1,15 +1,12 @@
 import { FC, useContext } from 'react';
-import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { CardsContext } from '~/app';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import Barcode from 'react-barcode';
 import { Box, TextField, Button, Autocomplete, Card } from '@mui/material';
-import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { mockShopList, ShopListType } from '~/shared/mock';
-import { cardFormErrors } from '~/shared/lib';
-import { Input } from '~/shared/ui';
+import { CardsContext, ShopListContext } from '~/app';
+import { ICardContext, IShop, cardFormErrors, Input } from '~/shared';
 import {
   formStyle,
   helperTextStyle,
@@ -18,7 +15,6 @@ import {
   barcodeStyle,
 } from './style';
 import { AddCardFormModel } from './model';
-import { ICardContext } from '~/shared';
 
 //NOTE: In case of clearing the field with the built in close-button, the value becomes NULL, so react-hook-form fires type error. That's why we use 'required' error text as invalid type eroor text in shopName field
 const schema = z
@@ -29,7 +25,7 @@ const schema = z
         invalid_type_error: cardFormErrors.required,
       })
       .max(30)
-      .regex(/^[A-Za-zА-Яа-я0-9+.\-_,!@=\sё]*$/, {
+      .regex(/^[A-Za-zА-Яа-яЁё0-9+.\-_,!@=\s]*$/, {
         message: cardFormErrors.wrongShopName,
       }),
     cardNumber: z
@@ -60,7 +56,6 @@ const schema = z
   });
 
 export interface AddCardFormType {
-  shopList?: ShopListType[];
   buttonAddBarcode?: React.ComponentProps<typeof Button> & {
     label: string;
   };
@@ -70,25 +65,19 @@ export interface AddCardFormType {
 }
 
 export const AddCardForm: FC<AddCardFormType> = ({
-  buttonAddBarcode = {
-    label: 'Добавить штрихкод',
-    onClick: () => {},
-  },
   buttonSave = {
     label: 'Сохранить',
     onClick: () => {},
   },
-  shopList = mockShopList,
 }) => {
+  const { shops } = useContext(ShopListContext);
   const { cards, setCards } = useContext(CardsContext);
   const navigate = useNavigate();
   const {
     control,
     register,
     handleSubmit,
-    setValue,
     watch,
-    trigger,
     formState: { errors, isSubmitting },
   } = useForm<{ [key: string]: string }>({
     mode: 'onTouched',
@@ -96,8 +85,7 @@ export const AddCardForm: FC<AddCardFormType> = ({
   });
 
   const onSubmit: SubmitHandler<{ [key: string]: string }> = (data) => {
-    const shop = shopList.find((element) => element.name === data.shopName);
-
+    const shop = shops.find((element: IShop) => element.name === data.shopName);
     if (shop !== undefined) {
       data = { ...data, shopId: shop.id.toString() };
       new AddCardFormModel(data)
@@ -108,15 +96,15 @@ export const AddCardForm: FC<AddCardFormType> = ({
             owner: true,
             favourite: false,
           };
-          const newCards = [newCard, ...cards];
-          setCards && setCards(newCards);
-          console.log(res);
+          return setCards && setCards([...cards, newCard]);
         })
+        .then(() => navigate('/'))
         .catch((err) => {
           console.log(err);
         });
     } else {
-      data = { ...data, shopId: '18' };
+      //TODO: Here to add new logic for new shop with new card
+      data = { ...data, shopId: '' };
       new AddCardFormModel(data)
         .createNewCard()
         .then((res) => {
@@ -125,21 +113,20 @@ export const AddCardForm: FC<AddCardFormType> = ({
             owner: true,
             favourite: false,
           };
-          const newCards = [newCard, ...cards];
-          setCards && setCards(newCards);
-          console.log(res);
+          return setCards && setCards([newCard, ...cards]);
         })
+        .then(() => navigate('/'))
         .catch((err) => {
           console.log(err);
         });
     }
-    navigate('../../authorizedWithCards', { relative: 'path' });
   };
 
-  const onBarcodeDetect = () => {
-    setValue('barcodeNumber', '123456789123', { shouldTouch: true });
-    trigger(['barcodeNumber', 'cardNumber']);
-  };
+  //NOTE: Code for barcode detection
+  // const onBarcodeDetect = () => {
+  //   setValue('barcodeNumber', '123456789123', { shouldTouch: true });
+  //   trigger(['barcodeNumber', 'cardNumber']);
+  // };
 
   return (
     <Box
@@ -163,7 +150,7 @@ export const AddCardForm: FC<AddCardFormType> = ({
             fullWidth
             autoSelect
             value={value || null}
-            options={shopList.map((option) => option.name)}
+            options={shops ? shops.map((option) => option.name) : ['']}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -189,6 +176,16 @@ export const AddCardForm: FC<AddCardFormType> = ({
         register={register}
         errors={errors}
       />
+      <Input
+        name="barcodeNumber"
+        label="Номер штрихкода"
+        type="text"
+        autoComplete="no"
+        defaultHelperText=" "
+        placeholder=""
+        register={register}
+        errors={errors}
+      />
       {watch('barcodeNumber') && (
         <Box sx={{ paddingBottom: '1.25rem' }}>
           <Card sx={{ ...barcodeStyle }} variant="outlined">
@@ -196,24 +193,15 @@ export const AddCardForm: FC<AddCardFormType> = ({
               displayValue={false}
               margin={0}
               value={watch('barcodeNumber')}
-              format={'EAN13'}
+              // format={'EAN13'}
             />
           </Card>
         </Box>
       )}
-      {watch('barcodeNumber') && (
-        <Input
-          name="barcodeNumber"
-          label="Номер штрихкода"
-          type="text"
-          autoComplete="no"
-          defaultHelperText=" "
-          placeholder=""
-          register={register}
-          errors={errors}
-        />
-      )}
-      {!watch('barcodeNumber') && (
+      {/* {watch('barcodeNumber') && (
+
+      )} */}
+      {/* {!watch('barcodeNumber') && (
         <Button
           variant="outlined"
           fullWidth
@@ -224,7 +212,7 @@ export const AddCardForm: FC<AddCardFormType> = ({
         >
           {buttonAddBarcode.label}
         </Button>
-      )}
+      )} */}
 
       <Button
         type="submit"

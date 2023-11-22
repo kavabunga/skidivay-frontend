@@ -1,11 +1,8 @@
-import { useNavigate } from 'react-router-dom';
 import { AuthForm, onSignUp } from '..';
-import { authFormErrors } from '~/shared/lib';
+import { ISignUpRequest, authFormErrors } from '~/shared';
 import * as z from 'zod';
-import { ISignUpRequest } from '~/shared';
 
 export const SignUpForm = () => {
-  const navigate = useNavigate();
   const schema = z
     .object({
       name: z
@@ -13,7 +10,7 @@ export const SignUpForm = () => {
           required_error: authFormErrors.required,
         })
         .max(60)
-        .regex(/^[a-zA-Zа-яА-Я\s-]{1,60}$/, {
+        .regex(/^[[a-z\][A-Z\][а-я\][А-Я\][Ёё\]\s\-—_]*$/, {
           message: authFormErrors.wrongName,
         }),
       email: z
@@ -111,10 +108,7 @@ export const SignUpForm = () => {
       password: data.password || '',
     };
     onSignUp(request)
-      .then((res) => {
-        console.log(res);
-        navigate('/authorizedNoCards', { relative: 'path' });
-      })
+      .then((res) => console.log(res || 'Успех'))
       .catch((err) => console.log(err));
   };
 

@@ -5,17 +5,12 @@ import { Liker } from '~/features';
 import { ICardContext } from '~/shared/types';
 import { cardStyle, titleStyle, likerWrapperStyle } from './style';
 
-interface CardSmallProps {
-  item: ICardContext;
-}
-
-export const CardSmall: FC<CardSmallProps> = ({ item }) => {
-  const navigate = useNavigate();
+export const CardSmall: FC<{ item: ICardContext }> = ({ item, ...props }) => {
   const shopName = item.card.shop?.name || '';
   const shopLogo = item.card.shop?.logo || '';
   const cardId = item.card.id;
   const isLiked = item.favourite;
-
+  const navigate = useNavigate();
   return (
     <Card
       variant="outlined"
@@ -24,10 +19,16 @@ export const CardSmall: FC<CardSmallProps> = ({ item }) => {
         backgroundColor: shopLogo ? '' : '#52358f',
         ...cardStyle,
       }}
-      onClick={() => navigate(`/card/${item.card.id.toString()}/`)}
+      onClick={() => navigate(`/card/${item.card.id}`, { relative: 'path' })}
+      {...props}
     >
       {!shopLogo && <Typography sx={{ ...titleStyle }}>{shopName}</Typography>}
-      <Box sx={{ ...likerWrapperStyle }}>
+      <Box
+        sx={{ ...likerWrapperStyle }}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
         <Liker cardId={cardId} isLiked={isLiked} />
       </Box>
     </Card>

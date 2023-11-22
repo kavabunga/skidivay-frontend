@@ -9,7 +9,7 @@ export const ProtectedHomeRoute = () => {
 
   if (!user) {
     return <Home />;
-  } else if (cards) {
+  } else if (cards[0]) {
     return <UserCards tags={chipsLabels} />;
   } else {
     return <Welcome />;

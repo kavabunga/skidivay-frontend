@@ -2,16 +2,11 @@ import { Dispatch, SetStateAction, createContext } from 'react';
 import { IUserContext } from '~/shared';
 
 interface IUserContextValue {
-  user: IUserContext | undefined;
-  setUser?: Dispatch<SetStateAction<IUserContext | undefined>>;
+  user: IUserContext | null;
+  setUser?: Dispatch<SetStateAction<IUserContext | null>>;
 }
 
-const defaultUser: IUserContext = {
-  id: 0,
-  email: 'Загрузка...',
-  name: 'Загрузка...',
-  cards: [],
-};
+const defaultUser = null;
 
 export const UserContext = createContext<IUserContextValue>({
   user: defaultUser,
