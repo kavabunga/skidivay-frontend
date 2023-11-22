@@ -15,6 +15,7 @@ export const cardStyle: SxProps = {
   paddingX: '.5rem',
   paddingBottom: '.5rem',
   boxSizing: 'border-box',
+  cursor: 'pointer',
 };
 
 export const titleStyle: SxProps = {

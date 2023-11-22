@@ -17,16 +17,7 @@ export const CardsList: FC<CardsListProps> = ({ items = [] }) => {
       </Box>
       {items &&
         items.map((item) => {
-          return (
-            // <Button
-            //   key={item.card.id}
-            //   sx={cardCellStyle}
-            //   onClick={() => navigate('/card/123', { relative: 'path' })}
-            // >
-            //   <CardSmall {...item} />
-            // </Button>
-            <CardSmall key={item.card.id} item={item} />
-          );
+          return <CardSmall key={item.card.id} item={item} />;
         })}
     </Stack>
   );

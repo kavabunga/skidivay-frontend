@@ -13,7 +13,6 @@ type UserCardsProps = {
 
 export const UserCards: FC<UserCardsProps> = ({ tags }) => {
   const { cards } = useContext(CardsContext);
-
   return (
     <Container component="main" sx={{ ...mainContainerStyle }}>
       <Typography
@@ -24,7 +23,7 @@ export const UserCards: FC<UserCardsProps> = ({ tags }) => {
           width: '100%',
         }}
       >
-        {`Мои карты`}
+        Мои карты
       </Typography>
       <SearchChips items={tags} />
       <CardsList items={cards || []} />

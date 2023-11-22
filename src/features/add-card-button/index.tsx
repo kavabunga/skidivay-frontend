@@ -12,7 +12,7 @@ export const AddCardButton: FC<AddCardButton> = ({ text }) => {
   const navigate = useNavigate();
 
   function handleClick() {
-    navigate('/card/new', { relative: 'path' });
+    navigate('/card/new');
   }
 
   return (
