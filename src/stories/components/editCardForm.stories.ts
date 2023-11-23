@@ -20,7 +20,20 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     isActive: true,
-    cardNumberValue: '1111 1383 0039 3838 49994',
-    barcodeNumberValue: '113839895849854',
+    card: {
+      card: {
+        id: 1,
+        shop: {
+          id: 1,
+          name: 'Пятерочка',
+          logo: 'https://i.postimg.cc/h42qWNnk/cloth-shoes-01.jpg',
+        },
+        name: 'Пятерочка',
+        barcode_number: '000000000000',
+        card_number: '12323423423423',
+      },
+      owner: true,
+      favourite: false,
+    },
   },
 };

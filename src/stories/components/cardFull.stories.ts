@@ -12,9 +12,23 @@ const meta = {
   },
   tags: ['autodocs'],
   argTypes: {
-    shopLogo: {
-      options: ['', 'https://i.postimg.cc/h42qWNnk/cloth-shoes-01.jpg'],
-      control: 'radio',
+    item: {
+      card: {
+        id: { type: 'number' },
+        shop: {
+          id: { type: 'number' },
+          name: 'string',
+          logo: {
+            type: 'string',
+            options: ['', 'https://i.postimg.cc/h42qWNnk/cloth-shoes-01.jpg'],
+            control: 'radio',
+          },
+        },
+        barcode_number: 'string',
+        card_number: 'string',
+      },
+      owner: { control: 'boolean' },
+      favourite: { control: 'boolean' },
     },
   },
 } satisfies Meta<typeof CardFull>;
@@ -25,31 +39,40 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    _id: '0',
-    shopName: 'Пятерочка',
-    shopLogo: 'https://i.postimg.cc/h42qWNnk/cloth-shoes-01.jpg',
-    isLiked: false,
-    barcodeNumber: '923238223892',
-    cardNumber: '',
+    item: {
+      card: {
+        id: 1,
+        shop: {
+          id: 1,
+          name: 'Пятерочка',
+          logo: 'https://i.postimg.cc/h42qWNnk/cloth-shoes-01.jpg',
+        },
+        name: 'Пятерочка',
+        barcode_number: '000000000000',
+        card_number: '12323423423423',
+      },
+      owner: true,
+      favourite: false,
+    },
   },
 };
 
 export const NoImg: Story = {
   args: {
-    _id: '0',
-    shopName: '24 часа',
-    isLiked: true,
-    barcodeNumber: '923238223892',
-    cardNumber: '13123123123123123',
-  },
-};
-
-export const NoImgLongName: Story = {
-  args: {
-    _id: '0',
-    shopName: 'Очень длинное название магазина включающее все подробности',
-    isLiked: true,
-    barcodeNumber: '923238223892',
-    cardNumber: '13123123123123123',
+    item: {
+      card: {
+        id: 1,
+        shop: {
+          id: 1,
+          name: 'Магазин 24 часа',
+          logo: '',
+        },
+        name: 'Магазин 24 часа',
+        barcode_number: '000000000000',
+        card_number: '12323423423423',
+      },
+      owner: true,
+      favourite: true,
+    },
   },
 };
