@@ -2,6 +2,7 @@ import {
   ICardContext,
   ICardsContext,
   INewCardResponse,
+  IPatchCard,
   IPostCard,
   IShop,
   IShopListContext,
@@ -32,7 +33,7 @@ interface IApiRequests {
   getShops(): Promise<IShopListContext>;
   getCards(): Promise<ICardsContext>;
   postCard(data: IPostCard): Promise<INewCardResponse>;
-  editCard(data: IPostCard, id: number): Promise<ICardContext>;
+  editCard(data: IPatchCard, id: number): Promise<ICardContext>;
   changeCardLikeStatus(id: number, hasLike: boolean): Promise<ICardContext>;
   deleteCard(id: number): Promise<Response>;
 }
@@ -156,7 +157,7 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
     });
   }
 
-  editCard(data: IPostCard, id: number) {
+  editCard(data: IPatchCard, id: number) {
     const url = `${this._url}/cards/${id.toString()}`;
     const options: IRequestOptions = {
       method: 'PATCH',

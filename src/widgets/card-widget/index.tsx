@@ -27,6 +27,7 @@ export const CardWidget = () => {
   const [isEditActive, setIsEditActive] = useState(false);
   const [isDeleteActive, setIsDeleteActive] = useState(false);
   const id = useParams().id;
+  const cardId = Number(id);
   const card = cards.find((item) => item.card.id.toString() === id) || {
     card: {
       id: 0,
@@ -37,11 +38,6 @@ export const CardWidget = () => {
     owner: true,
     favourite: false,
   };
-  const {
-    card_number: cardNumber,
-    barcode_number: barcodeNumber,
-    id: cardId,
-  } = card.card;
   const isLiked = card.favourite;
 
   const handleEditEnable = () => {
@@ -83,7 +79,12 @@ export const CardWidget = () => {
             <Box sx={{ ...likerWrapperStyle }}>
               <Liker cardId={cardId} isLiked={isLiked} />
             </Box>
-            <IconButton onClick={handleEditEnable} sx={{ padding: 0.5 }}>
+            {/* //NOTE: Button temporary disabled */}
+            <IconButton
+              onClick={handleEditEnable}
+              sx={{ padding: 0.5 }}
+              disabled
+            >
               <CreateIcon />
             </IconButton>
           </Stack>
@@ -97,11 +98,7 @@ export const CardWidget = () => {
         <CardFull item={card} />
       </Box>
 
-      <EditCardForm
-        isActive={isEditActive}
-        cardNumberValue={cardNumber ? cardNumber : ''}
-        barcodeNumberValue={barcodeNumber ? barcodeNumber : ''}
-      />
+      <EditCardForm isActive={isEditActive} card={card} />
       {!isEditActive && !isDeleteActive && (
         <Stack spacing={{ xs: 1, sm: 2 }} useFlexGap>
           <Button variant="contained" sx={buttonStyle}>

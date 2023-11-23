@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Box, Button, InputAdornment, IconButton } from '@mui/material';
 import { Input } from '~/shared/ui';
@@ -8,6 +8,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { cardFormErrors } from '~/shared/lib';
 import { formStyle, buttonStyle } from './style';
+import { ICardContext, IPatchCard, api } from '~/shared';
+import { CardsContext } from '~/app';
 
 const schema = z
   .object({
@@ -46,8 +48,7 @@ const schema = z
 
 export interface EditCardFormProps {
   isActive: boolean;
-  cardNumberValue: string;
-  barcodeNumberValue: string;
+  card: ICardContext;
   buttonSave?: React.ComponentProps<typeof Button> & {
     label: string;
   };
@@ -59,9 +60,9 @@ export const EditCardForm: FC<EditCardFormProps> = ({
     onClick: () => {},
   },
   isActive = true,
-  cardNumberValue = '1111 1383 0039 3838 49994',
-  barcodeNumberValue = '113839895849854',
+  card,
 }) => {
+  const { cards, setCards } = useContext(CardsContext);
   const {
     register,
     handleSubmit,
@@ -70,12 +71,31 @@ export const EditCardForm: FC<EditCardFormProps> = ({
     mode: 'onTouched',
     resolver: zodResolver(schema),
     defaultValues: {
-      cardNumber: cardNumberValue,
-      barcodeNumber: barcodeNumberValue,
+      cardNumber: card.card.card_number,
+      barcodeNumber: card.card.barcode_number,
     },
   });
 
-  const onSubmit: SubmitHandler<{ [key: string]: string }> = () => {};
+  const onSubmit: SubmitHandler<{ [key: string]: string }> = (data) => {
+    const request: IPatchCard = {
+      shop: card.card.shop?.id || 0,
+      name: card.card.shop?.name || '',
+      barcode_number: data.barcodeNumber,
+      card_number: data.cardNumber,
+    };
+    api
+      .editCard(request, card.card.id)
+      .then((res) => {
+        const newCards = cards.map((card) =>
+          res.card.id != card.card.id ? card : res
+        );
+        return setCards && setCards(newCards);
+      })
+      .then(() => console.log('success'))
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <Box
@@ -131,7 +151,7 @@ export const EditCardForm: FC<EditCardFormProps> = ({
       {isActive && (
         <Button
           type="submit"
-          variant="outlined"
+          variant="contained"
           disabled={!isValid}
           fullWidth
           sx={buttonStyle}
