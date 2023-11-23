@@ -52,6 +52,7 @@ export interface EditCardFormProps {
   buttonSave?: React.ComponentProps<typeof Button> & {
     label: string;
   };
+  handleSubmited: () => void;
 }
 
 export const EditCardForm: FC<EditCardFormProps> = ({
@@ -60,6 +61,7 @@ export const EditCardForm: FC<EditCardFormProps> = ({
     onClick: () => {},
   },
   isActive = true,
+  handleSubmited,
   card,
 }) => {
   const { cards, setCards } = useContext(CardsContext);
@@ -87,11 +89,11 @@ export const EditCardForm: FC<EditCardFormProps> = ({
       .editCard(request, card.card.id)
       .then((res) => {
         const newCards = cards.map((card) =>
-          res.card.id != card.card.id ? card : res
+          res.id != card.card.id ? card : { ...card, card: res }
         );
         return setCards && setCards(newCards);
       })
-      .then(() => console.log('success'))
+      .then(() => handleSubmited())
       .catch((err) => {
         console.log(err);
       });

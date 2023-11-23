@@ -44,6 +44,10 @@ export const CardWidget = () => {
     setIsEditActive(true);
   };
 
+  const handleEditDisable = () => {
+    setIsEditActive(false);
+  };
+
   const handleActivateRemoveCard = () => {
     setIsDeleteActive(true);
   };
@@ -79,12 +83,7 @@ export const CardWidget = () => {
             <Box sx={{ ...likerWrapperStyle }}>
               <Liker cardId={cardId} isLiked={isLiked} />
             </Box>
-            {/* //NOTE: Button temporary disabled */}
-            <IconButton
-              onClick={handleEditEnable}
-              sx={{ padding: 0.5 }}
-              disabled
-            >
+            <IconButton onClick={handleEditEnable} sx={{ padding: 0.5 }}>
               <CreateIcon />
             </IconButton>
           </Stack>
@@ -98,7 +97,11 @@ export const CardWidget = () => {
         <CardFull item={card} />
       </Box>
 
-      <EditCardForm isActive={isEditActive} card={card} />
+      <EditCardForm
+        isActive={isEditActive}
+        card={card}
+        handleSubmited={handleEditDisable}
+      />
       {!isEditActive && !isDeleteActive && (
         <Stack spacing={{ xs: 1, sm: 2 }} useFlexGap>
           <Button variant="contained" sx={buttonStyle}>

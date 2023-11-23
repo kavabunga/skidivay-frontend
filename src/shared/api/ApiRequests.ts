@@ -1,9 +1,11 @@
 import {
+  ICard,
   ICardContext,
   ICardsContext,
   INewCardResponse,
   IPatchCard,
   IPostCard,
+  IPostCardWithShop,
   IShop,
   IShopListContext,
   ISignInRequest,
@@ -33,7 +35,8 @@ interface IApiRequests {
   getShops(): Promise<IShopListContext>;
   getCards(): Promise<ICardsContext>;
   postCard(data: IPostCard): Promise<INewCardResponse>;
-  editCard(data: IPatchCard, id: number): Promise<ICardContext>;
+  postCardWithShop(data: IPostCardWithShop): Promise<INewCardResponse>;
+  editCard(data: IPatchCard, id: number): Promise<ICard>;
   changeCardLikeStatus(id: number, hasLike: boolean): Promise<ICardContext>;
   deleteCard(id: number): Promise<Response>;
 }
@@ -138,6 +141,7 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
     return this._requestApi(url, options).then((res) =>
       res.map((item: ICardContext) => {
         item.card.shop &&
+          item.card.shop.logo &&
           (item.card.shop.logo = MEDIA_URL + item.card.shop.logo);
         return item;
       })
@@ -152,20 +156,33 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
       body: JSON.stringify(data),
     };
     return this._requestApi(url, options).then((res: INewCardResponse) => {
-      res.shop && (res.shop.logo = MEDIA_URL + res.shop.logo);
+      res.shop && res.shop.logo && (res.shop.logo = MEDIA_URL + res.shop.logo);
+      return res;
+    });
+  }
+
+  postCardWithShop(data: IPostCardWithShop) {
+    const url = `${this._url}/cards/new-shop/`;
+    const options: IRequestOptions = {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify(data),
+    };
+    return this._requestApi(url, options).then((res: INewCardResponse) => {
+      res.shop && res.shop.logo && (res.shop.logo = MEDIA_URL + res.shop.logo);
       return res;
     });
   }
 
   editCard(data: IPatchCard, id: number) {
-    const url = `${this._url}/cards/${id.toString()}`;
+    const url = `${this._url}/cards/${id.toString()}/`;
     const options: IRequestOptions = {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify(data),
     };
-    return this._requestApi(url, options).then((res: ICardContext) => {
-      res.card.shop && (res.card.shop.logo = MEDIA_URL + res.card.shop.logo);
+    return this._requestApi(url, options).then((res: ICard) => {
+      res.shop && res.shop.logo && (res.shop.logo = MEDIA_URL + res.shop.logo);
       return res;
     });
   }
@@ -178,7 +195,9 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
       headers: this._headers,
     };
     return this._requestApi(url, options).then((res: ICardContext) => {
-      res.card.shop && (res.card.shop.logo = MEDIA_URL + res.card.shop.logo);
+      res.card.shop &&
+        res.card.shop.logo &&
+        (res.card.shop.logo = MEDIA_URL + res.card.shop.logo);
       return res;
     });
   }

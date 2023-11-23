@@ -14,7 +14,7 @@ import {
   buttonStyle,
   barcodeStyle,
 } from './style';
-import { AddCardFormModel } from './model';
+import { AddCardFormModel, AddCardWithShopFormModel } from './model';
 
 //NOTE: In case of clearing the field with the built in close-button, the value becomes NULL, so react-hook-form fires type error. That's why we use 'required' error text as invalid type eroor text in shopName field
 const schema = z
@@ -103,9 +103,7 @@ export const AddCardForm: FC<AddCardFormType> = ({
           console.log(err);
         });
     } else {
-      //TODO: Here to add new logic for new shop with new card
-      data = { ...data, shopId: '' };
-      new AddCardFormModel(data)
+      new AddCardWithShopFormModel(data)
         .createNewCard()
         .then((res) => {
           const newCard: ICardContext = {
