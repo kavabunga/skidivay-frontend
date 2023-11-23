@@ -16,3 +16,9 @@ export const likerWrapperStyle: SxProps = {
     color: 'surface.dark',
   },
 };
+
+export const deleteTitleStyle: SxProps = {
+  fs: 21,
+  fontWeight: 700,
+  lineHeight: 1.23,
+};

@@ -18,6 +18,7 @@ interface IRequestOptions {
   credentials?: RequestCredentials;
 }
 
+//NOTE: SignOut and Remove card have no body in response
 interface IApiRequests {
   _url: string;
   _headers: HeadersInit;
@@ -31,7 +32,7 @@ interface IApiRequests {
   postCard(data: IPostCard): Promise<INewCardResponse>;
   editCard(data: IPostCard, id: number): Promise<ICardContext>;
   changeCardLikeStatus(id: number, hasLike: boolean): Promise<ICardContext>;
-  deleteCard(id: number): Promise<void>;
+  deleteCard(id: number): Promise<Response>;
 }
 
 interface IApiRequestsConstructor {
@@ -161,11 +162,21 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
   }
 
   deleteCard(id: number) {
-    const url = `${this._url}/cards/${id.toString()}`;
+    const url = `${this._url}/cards/${id}`;
     const options: IRequestOptions = {
       method: 'DELETE',
       headers: this._headers,
     };
-    return this._requestApi(url, options);
+    if (localStorage.getItem('token')) {
+      options.headers = {
+        ...options.headers,
+        authorization: `Token ${localStorage.getItem('token') || ''}`,
+      };
+    }
+    return fetch(`${url}`, options).then((res) =>
+      res.ok
+        ? res
+        : res.json().then((res) => Promise.reject(new Error(res.message)))
+    );
   }
 };

@@ -1,16 +1,31 @@
 import { useContext, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { Button, Container, IconButton, Stack, Box } from '@mui/material';
+import { useNavigate, useParams } from 'react-router-dom';
+import {
+  Button,
+  Container,
+  IconButton,
+  Stack,
+  Box,
+  Typography,
+} from '@mui/material';
 import CreateIcon from '@mui/icons-material/Create';
 import { BackButton } from '~/features';
 import { CardFull, EditCardForm } from '~/entities';
 import { Liker } from '~/features';
-import { buttonStyle, topButtonsStyle, likerWrapperStyle } from './style';
+import {
+  buttonStyle,
+  topButtonsStyle,
+  likerWrapperStyle,
+  deleteTitleStyle,
+} from './style';
 import { CardsContext } from '~/app';
+import { api } from '~/shared';
 
 export const CardWidget = () => {
-  const { cards } = useContext(CardsContext);
+  const { cards, setCards } = useContext(CardsContext);
+  const navigate = useNavigate();
   const [isEditActive, setIsEditActive] = useState(false);
+  const [isDeleteActive, setIsDeleteActive] = useState(false);
   const id = useParams().id;
   const card = cards.find((item) => item.card.id.toString() === id) || {
     card: {
@@ -31,6 +46,28 @@ export const CardWidget = () => {
 
   const handleEditEnable = () => {
     setIsEditActive(true);
+  };
+
+  const handleActivateRemoveCard = () => {
+    setIsDeleteActive(true);
+  };
+
+  const handleCancelRemoveCard = () => {
+    setIsDeleteActive(false);
+  };
+
+  const handleRemoveCard = () => {
+    api
+      .deleteCard(cardId)
+      .then(() => {
+        const newCards = cards.filter((card) => card.card.id != cardId);
+        console.log(newCards);
+        return setCards && setCards(newCards);
+      })
+      .then(() => navigate('/'))
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -65,13 +102,36 @@ export const CardWidget = () => {
         cardNumberValue={cardNumber ? cardNumber : ''}
         barcodeNumberValue={barcodeNumber ? barcodeNumber : ''}
       />
-      {!isEditActive && (
+      {!isEditActive && !isDeleteActive && (
         <Stack spacing={{ xs: 1, sm: 2 }} useFlexGap>
           <Button variant="contained" sx={buttonStyle}>
             Поделиться картой
           </Button>
-          <Button variant="outlined" sx={buttonStyle}>
+          <Button
+            variant="outlined"
+            sx={buttonStyle}
+            onClick={handleActivateRemoveCard}
+          >
             Удалить карту
+          </Button>
+        </Stack>
+      )}
+      {isDeleteActive && (
+        <Stack spacing={{ xs: 1, sm: 2 }} useFlexGap>
+          <Typography sx={deleteTitleStyle}>Удалить карту?</Typography>
+          <Button
+            variant="contained"
+            sx={buttonStyle}
+            onClick={handleRemoveCard}
+          >
+            Да, удалить
+          </Button>
+          <Button
+            variant="outlined"
+            sx={buttonStyle}
+            onClick={handleCancelRemoveCard}
+          >
+            Нет, не удалять
           </Button>
         </Stack>
       )}
