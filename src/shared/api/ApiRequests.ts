@@ -1,14 +1,19 @@
 import {
+  ICard,
   ICardContext,
   ICardsContext,
   INewCardResponse,
+  IPatchCard,
   IPostCard,
+  IPostCardWithShop,
+  IShop,
   IShopListContext,
   ISignInRequest,
   ISignInResponse,
   ISignUpRequest,
   IUserContext,
   IUserResponse,
+  MEDIA_URL,
 } from '..';
 
 interface IRequestOptions {
@@ -18,6 +23,7 @@ interface IRequestOptions {
   credentials?: RequestCredentials;
 }
 
+//NOTE: SignOut and Remove card have no body in response
 interface IApiRequests {
   _url: string;
   _headers: HeadersInit;
@@ -29,9 +35,10 @@ interface IApiRequests {
   getShops(): Promise<IShopListContext>;
   getCards(): Promise<ICardsContext>;
   postCard(data: IPostCard): Promise<INewCardResponse>;
-  editCard(data: IPostCard, id: number): Promise<ICardContext>;
+  postCardWithShop(data: IPostCardWithShop): Promise<INewCardResponse>;
+  editCard(data: IPatchCard, id: number): Promise<ICard>;
   changeCardLikeStatus(id: number, hasLike: boolean): Promise<ICardContext>;
-  deleteCard(id: number): Promise<void>;
+  deleteCard(id: number): Promise<Response>;
 }
 
 interface IApiRequestsConstructor {
@@ -57,11 +64,20 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
         authorization: `Token ${localStorage.getItem('token') || ''}`,
       };
     }
-    return fetch(`${url}`, options).then((res) =>
-      res.ok
-        ? res.json()
-        : res.json().then((res) => Promise.reject(new Error(res.message)))
-    );
+    return fetch(`${url}`, options)
+      .then((res) =>
+        res.ok
+          ? res
+          : res.json().then((res) => Promise.reject(new Error(res.message)))
+      )
+      .then((res) => {
+        try {
+          return res.json();
+        } catch (err) {
+          console.log(err);
+          return res;
+        }
+      });
   }
 
   signUp(data: ISignUpRequest) {
@@ -90,17 +106,7 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
       method: 'POST',
       headers: this._headers,
     };
-    if (localStorage.getItem('token')) {
-      options.headers = {
-        ...options.headers,
-        authorization: `Token ${localStorage.getItem('token') || ''}`,
-      };
-    }
-    return fetch(`${url}`, options).then((res) =>
-      res.ok
-        ? res
-        : res.json().then((res) => Promise.reject(new Error(res.message)))
-    );
+    return this._requestApi(url, options);
   }
 
   getUser() {
@@ -118,7 +124,12 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
       method: 'GET',
       headers: this._headers,
     };
-    return this._requestApi(url, options);
+    return this._requestApi(url, options).then((res) =>
+      res.map((item: IShop) => {
+        item.logo = MEDIA_URL + item.logo;
+        return item;
+      })
+    );
   }
 
   getCards() {
@@ -127,7 +138,14 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
       method: 'GET',
       headers: this._headers,
     };
-    return this._requestApi(url, options);
+    return this._requestApi(url, options).then((res) =>
+      res.map((item: ICardContext) => {
+        item.card.shop &&
+          item.card.shop.logo &&
+          (item.card.shop.logo = MEDIA_URL + item.card.shop.logo);
+        return item;
+      })
+    );
   }
 
   postCard(data: IPostCard) {
@@ -137,17 +155,36 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
       headers: this._headers,
       body: JSON.stringify(data),
     };
-    return this._requestApi(url, options);
+    return this._requestApi(url, options).then((res: INewCardResponse) => {
+      res.shop && res.shop.logo && (res.shop.logo = MEDIA_URL + res.shop.logo);
+      return res;
+    });
   }
 
-  editCard(data: IPostCard, id: number) {
-    const url = `${this._url}/cards/${id.toString()}`;
+  postCardWithShop(data: IPostCardWithShop) {
+    const url = `${this._url}/cards/new-shop/`;
+    const options: IRequestOptions = {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify(data),
+    };
+    return this._requestApi(url, options).then((res: INewCardResponse) => {
+      res.shop && res.shop.logo && (res.shop.logo = MEDIA_URL + res.shop.logo);
+      return res;
+    });
+  }
+
+  editCard(data: IPatchCard, id: number) {
+    const url = `${this._url}/cards/${id.toString()}/`;
     const options: IRequestOptions = {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify(data),
     };
-    return this._requestApi(url, options);
+    return this._requestApi(url, options).then((res: ICard) => {
+      res.shop && res.shop.logo && (res.shop.logo = MEDIA_URL + res.shop.logo);
+      return res;
+    });
   }
 
   changeCardLikeStatus(id: number, hasLike: boolean) {
@@ -157,11 +194,16 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
       method: method,
       headers: this._headers,
     };
-    return this._requestApi(url, options);
+    return this._requestApi(url, options).then((res: ICardContext) => {
+      res.card.shop &&
+        res.card.shop.logo &&
+        (res.card.shop.logo = MEDIA_URL + res.card.shop.logo);
+      return res;
+    });
   }
 
   deleteCard(id: number) {
-    const url = `${this._url}/cards/${id.toString()}`;
+    const url = `${this._url}/cards/${id}`;
     const options: IRequestOptions = {
       method: 'DELETE',
       headers: this._headers,
