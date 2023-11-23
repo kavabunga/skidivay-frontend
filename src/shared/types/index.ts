@@ -1,3 +1,5 @@
+import { Type, Target } from '../enums';
+
 export interface ICardContext {
   card: {
     id: number;
@@ -78,4 +80,10 @@ export interface IPostCard {
   card_number: string;
   barcode_number: string;
   encoding_type: string;
+}
+
+export interface IMessageContext {
+  message: string;
+  type: Type;
+  target: Target;
 }

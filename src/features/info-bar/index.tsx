@@ -1,9 +1,11 @@
-import * as React from 'react';
-import { FC } from 'react';
+import React from 'react';
+import { FC, useState, useContext } from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import { MessageContext } from '~/app';
+import { Type } from '~/shared/enums';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
   function Alert(props, ref) {
@@ -12,13 +14,12 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
 );
 
 interface InfoBarProps {
-  message: string;
-  isError: boolean;
   isOpen: boolean;
 }
 
-export const InfoBar: FC<InfoBarProps> = ({ message, isError, isOpen }) => {
-  const [open, setOpen] = React.useState(isOpen);
+export const InfoBar: FC<InfoBarProps> = ({ isOpen }) => {
+  const { message } = useContext(MessageContext);
+  const [open, setOpen] = useState(isOpen);
 
   const handleClose = (
     _event: React.SyntheticEvent | Event,
@@ -47,14 +48,14 @@ export const InfoBar: FC<InfoBarProps> = ({ message, isError, isOpen }) => {
   return (
     <div>
       <Snackbar
-        key={message}
+        key={message.message}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         open={open}
         autoHideDuration={6000}
         onClose={handleClose}
         action={action}
       >
-        {isError ? (
+        {message.type === Type.error ? (
           <Alert
             onClose={handleClose}
             severity="error"
@@ -63,7 +64,18 @@ export const InfoBar: FC<InfoBarProps> = ({ message, isError, isOpen }) => {
               backgroundColor: 'error.main',
             }}
           >
-            {message || 'Ошибка!'}
+            {message.message || 'Ошибка!'}
+          </Alert>
+        ) : message.type === Type.info ? (
+          <Alert
+            onClose={handleClose}
+            severity="info"
+            sx={{
+              width: '100%',
+              backgroundColor: 'info.main',
+            }}
+          >
+            {message.message || 'Все ок!'}
           </Alert>
         ) : (
           <Alert
@@ -74,7 +86,7 @@ export const InfoBar: FC<InfoBarProps> = ({ message, isError, isOpen }) => {
               backgroundColor: 'secondary.main',
             }}
           >
-            {message || 'Все ок!'}
+            {message.message || 'Успех!'}
           </Alert>
         )}
       </Snackbar>
