@@ -1,10 +1,17 @@
 import { FC, ReactNode, useEffect, useState } from 'react';
-import { UserContext, CardContext, CardsContext, ShopListContext } from '.';
+import {
+  UserContext,
+  CardContext,
+  CardsContext,
+  ShopListContext,
+  MessageContext,
+} from '.';
 import {
   ICardContext,
   ICardsContext,
   IShopListContext,
   IUserContext,
+  IMessageContext,
   api,
 } from '~/shared';
 
@@ -17,6 +24,7 @@ export const Contexts: FC<IContexts> = ({ children }) => {
   const [shopsData, setShopsData] = useState<IShopListContext>([]);
   const [cardsData, setCardsData] = useState<ICardsContext>([]);
   const [cardData, setCardData] = useState<ICardContext>(Object);
+  const [messageData, setMessageData] = useState<IMessageContext>(Object);
 
   useEffect(() => {
     api
@@ -42,20 +50,24 @@ export const Contexts: FC<IContexts> = ({ children }) => {
   }, []);
 
   return (
-    <ShopListContext.Provider
-      value={{ shops: shopsData, setShops: setShopsData }}
+    <MessageContext.Provider
+      value={{ message: messageData, setMessage: setMessageData }}
     >
-      <UserContext.Provider value={{ user: userData, setUser: setUserData }}>
-        <CardsContext.Provider
-          value={{ cards: cardsData, setCards: setCardsData }}
-        >
-          <CardContext.Provider
-            value={{ card: cardData, setCard: setCardData }}
+      <ShopListContext.Provider
+        value={{ shops: shopsData, setShops: setShopsData }}
+      >
+        <UserContext.Provider value={{ user: userData, setUser: setUserData }}>
+          <CardsContext.Provider
+            value={{ cards: cardsData, setCards: setCardsData }}
           >
-            {children}
-          </CardContext.Provider>
-        </CardsContext.Provider>
-      </UserContext.Provider>
-    </ShopListContext.Provider>
+            <CardContext.Provider
+              value={{ card: cardData, setCard: setCardData }}
+            >
+              {children}
+            </CardContext.Provider>
+          </CardsContext.Provider>
+        </UserContext.Provider>
+      </ShopListContext.Provider>
+    </MessageContext.Provider>
   );
 };
