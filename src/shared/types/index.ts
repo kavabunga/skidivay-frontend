@@ -1,15 +1,17 @@
+export interface ICard {
+  id: number;
+  shop?: IShop;
+  name: string;
+  pub_date?: string;
+  image?: string | null;
+  card_number?: string;
+  barcode_number?: string;
+  encoding_type?: string;
+  usage_counter?: number;
+}
+
 export interface ICardContext {
-  card: {
-    id: number;
-    shop?: IShop;
-    name: string;
-    pub_date?: string;
-    image?: string | null;
-    card_number?: string;
-    barcode_number?: string;
-    encoding_type?: string;
-    usage_counter?: number;
-  };
+  card: ICard;
   owner: boolean;
   favourite: boolean;
 }
@@ -75,7 +77,24 @@ export interface ISignInResponse {
 export interface IPostCard {
   shop: number;
   name: string;
-  card_number: string;
-  barcode_number: string;
-  encoding_type: string;
+  card_number?: string;
+  barcode_number?: string;
+  encoding_type?: string;
+}
+export interface IPatchCard {
+  shop: number;
+  name: string;
+  card_number?: string;
+  barcode_number?: string;
+  encoding_type?: string;
+}
+
+export interface IPostCardWithShop {
+  shop: {
+    name: string;
+  };
+  name: string;
+  card_number?: string;
+  barcode_number?: string;
+  encoding_type?: string;
 }
