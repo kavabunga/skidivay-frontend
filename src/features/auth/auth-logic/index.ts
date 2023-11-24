@@ -12,6 +12,5 @@ export function onSignIn(data: ISignInRequest) {
 }
 
 export function onSignOut() {
-  console.log('token removing');
   return api.signOut().then(() => localStorage.removeItem('token'));
 }

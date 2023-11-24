@@ -11,7 +11,6 @@ export const CardSmall: FC<{ item: ICardContext }> = ({ item, ...props }) => {
   const cardId = item.card.id;
   const isLiked = item.favourite;
   const navigate = useNavigate();
-  console.log('shopname', shopName, 'shoplogo', shopLogo);
   return (
     <Card
       variant="outlined"
