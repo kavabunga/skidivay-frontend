@@ -4,7 +4,7 @@ import { Type, Target } from '~/shared/enums';
 
 interface IMessageContextValue {
   message: IMessageContext;
-  setMessage?: Dispatch<SetStateAction<IMessageContext | null>>;
+  setMessage?: Dispatch<SetStateAction<IMessageContext>>;
 }
 
 const defaultMessage: IMessageContext = {

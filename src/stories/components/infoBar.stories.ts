@@ -17,17 +17,5 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Error: Story = {
-  args: {
-    message: 'Такая карта уже существует!',
-    isError: true,
-    isOpen: true,
-  },
-};
-
-export const Info: Story = {
-  args: {
-    message: 'Данные обновлены!',
-    isError: false,
-    isOpen: true,
-  },
+  args: { isOpen: true },
 };
