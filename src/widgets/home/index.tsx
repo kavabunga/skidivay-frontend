@@ -33,7 +33,7 @@ export const Home = () => {
         textAlign="left"
         sx={{ paddingTop: '1rem', ...paragraphStyle }}
       >
-        Добавьте в свой кошелёк
+        Добавьте в свой электронный кошелёк
       </Typography>
 
       <PromoSlider items={shops} />
