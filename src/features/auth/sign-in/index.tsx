@@ -2,14 +2,15 @@ import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link, List, ListItem } from '@mui/material';
 import * as z from 'zod';
-import { UserContext } from '~/app';
+import { CardsContext, UserContext } from '~/app';
 import { getUser } from '~/features';
-import { ISignInRequest, authFormErrors } from '~/shared';
+import { ISignInRequest, api, authFormErrors } from '~/shared';
 import { AuthForm, onSignIn } from '..';
 import { listStyle, linkStyle } from './style';
 
 export const SignInForm = () => {
   const { setUser } = useContext(UserContext);
+  const { setCards } = useContext(CardsContext);
   const navigate = useNavigate();
   const schema = z.object({
     email: z
@@ -50,7 +51,11 @@ export const SignInForm = () => {
     };
     onSignIn(request)
       .then(() => {
-        return getUser().then((res) => setUser && setUser(res));
+        const userPromise = getUser().then((res) => setUser && setUser(res));
+        const cardsPromise = api
+          .getCards()
+          .then((res) => setCards && setCards(res));
+        return Promise.all([userPromise, cardsPromise]);
       })
       .then(() => navigate('/'))
       .catch((err) => console.log(err));

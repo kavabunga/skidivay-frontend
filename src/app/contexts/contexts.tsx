@@ -39,7 +39,10 @@ export const Contexts: FC<IContexts> = ({ children }) => {
         .then((res) => {
           setUserData(res);
         })
-        .catch((err) => console.log(err.message));
+        .catch((err) => {
+          err.message.includes('401') && localStorage.removeItem('token');
+          console.log(err.message);
+        });
       api
         .getCards()
         .then((res) => {

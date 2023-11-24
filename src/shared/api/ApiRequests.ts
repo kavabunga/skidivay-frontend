@@ -68,7 +68,11 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
       .then((res) =>
         res.ok
           ? res
-          : res.json().then((res) => Promise.reject(new Error(res.message)))
+          : res.json().then((err) => {
+              return Promise.reject(
+                new Error(`Ошибка ${res.status}. ${err.detail}`)
+              );
+            })
       )
       .then((res) => {
         try {
