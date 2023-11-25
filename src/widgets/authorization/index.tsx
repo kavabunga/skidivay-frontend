@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Container, Typography, Box, Tabs, Tab } from '@mui/material';
 import { SignInForm, SignUpForm } from '~/features';
 import style from './style';
@@ -33,7 +34,12 @@ function a11yProps(index: number) {
 }
 
 export const AuthWidget = () => {
+  const location = useLocation();
   const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    setValue(location.state.tab);
+  }, [location.state.tab]);
 
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
