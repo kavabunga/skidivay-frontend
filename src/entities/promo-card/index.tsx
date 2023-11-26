@@ -3,7 +3,12 @@ import { Card, IconButton } from '@mui/material';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import { UserContext } from '~/app';
 import { IShop } from '~/shared';
-import { cardStyle, iconButtonStyle, addIconStyle } from './styles';
+import {
+  interactiveCardStyle,
+  nonInteractiveCardStyle,
+  iconButtonStyle,
+  addIconStyle,
+} from './styles';
 
 interface PromoCardProps {
   item: IShop;
@@ -19,10 +24,17 @@ export const PromoCard: FC<PromoCardProps> = ({ item }) => {
   return (
     <Card
       raised={false}
-      sx={{
-        backgroundImage: `url(${item.logo})`,
-        ...cardStyle,
-      }}
+      sx={
+        user
+          ? {
+              backgroundImage: `url(${item.logo})`,
+              ...interactiveCardStyle,
+            }
+          : {
+              backgroundImage: `url(${item.logo})`,
+              ...nonInteractiveCardStyle,
+            }
+      }
     >
       {user && (
         <IconButton onClick={handleClick} sx={{ ...iconButtonStyle }}>
