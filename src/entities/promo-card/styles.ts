@@ -6,7 +6,7 @@ export const cardStyle: SxProps = {
   width: '100%',
   minWidth: '8.5rem',
   minHeight: '5.875rem',
-  aspectRatio: '1 / 0.69',
+  aspectRatio: '1 / 0.6924',
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'cover',
   backgroundPosition: 'center',

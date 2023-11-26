@@ -4,7 +4,7 @@ import { Box, Container, Typography } from '@mui/material';
 import { AccentButton } from '~/shared/ui';
 import { PromoSlider } from '~/features';
 import { ShopListContext } from '~/app/contexts';
-import coverImage from '~/shared/assets/payment-bw-1.svg';
+import coverImage from '~/shared/assets/payment bw 1.svg';
 import { coverImgStyle, mainContainerStyle, paragraphStyle } from './styles';
 import { UserContext } from '~/app';
 
@@ -51,7 +51,7 @@ export const Welcome = () => {
         component="p"
         textAlign="left"
         sx={{
-          padding: '1.5rem 0 0',
+          padding: '1.5rem 0 0.5rem',
           ...paragraphStyle,
         }}
       >

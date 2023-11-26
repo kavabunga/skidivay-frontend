@@ -4,7 +4,7 @@ import { ShopListContext } from '~/app/contexts';
 import { Box, Container, Typography } from '@mui/material';
 import { AccentButton } from '~/shared/ui';
 import { PromoSlider } from '~/features';
-import coverImage from '~/shared/assets/save-money-bw-1.svg';
+import coverImage from '~/shared/assets/save money bw 1.svg';
 import { coverImgStyle, mainContainerStyle, paragraphStyle } from './styles';
 
 export const Home = () => {
@@ -13,11 +13,7 @@ export const Home = () => {
 
   return (
     <Container component="main" sx={{ ...mainContainerStyle }}>
-      <Typography
-        component="p"
-        textAlign="center"
-        sx={{ paddingBottom: '1rem', ...paragraphStyle }}
-      >
+      <Typography component="p" textAlign="center" sx={{ ...paragraphStyle }}>
         Удобный и быстрый доступ к вашим картам лояльности в любом месте
       </Typography>
 
@@ -31,7 +27,7 @@ export const Home = () => {
       <Typography
         component="p"
         textAlign="left"
-        sx={{ paddingTop: '1rem', ...paragraphStyle }}
+        sx={{ ...paragraphStyle, lineHeight: 1 }}
       >
         Добавьте в свой электронный кошелёк
       </Typography>
