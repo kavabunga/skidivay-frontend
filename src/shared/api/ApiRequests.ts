@@ -58,22 +58,8 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
   }
 
   _requestApi(url: string, options: IRequestOptions) {
-    if (localStorage.getItem('token')) {
-      options.headers = {
-        ...options.headers,
-        authorization: `Token ${localStorage.getItem('token') || ''}`,
-      };
-    }
     return fetch(`${url}`, options)
-      .then((res) =>
-        res.ok
-          ? res
-          : res.json().then((err) => {
-              return Promise.reject(
-                new Error(`Ошибка ${res.status}. ${err.detail}`)
-              );
-            })
-      )
+      .then((res) => (res.ok ? res : this._handleError(res)))
       .then((res) => {
         try {
           return res.json();
@@ -82,6 +68,40 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
           return res;
         }
       });
+  }
+
+  _requestAuthorizedApi(url: string, options: IRequestOptions) {
+    if (localStorage.getItem('token')) {
+      options.headers = {
+        ...options.headers,
+        authorization: `Token ${localStorage.getItem('token') || ''}`,
+      };
+    }
+    return this._requestApi(url, options);
+  }
+
+  _handleError(res: Response) {
+    let message: string;
+    switch (res.status) {
+      case 401:
+        {
+          localStorage.removeItem('token');
+          message = 'Ошибка авторизации';
+        }
+        break;
+      default: {
+        message = 'Что-то пошло не так';
+      }
+    }
+    return res
+      .json()
+      .then((err) =>
+        Promise.reject(
+          new Error(
+            `Ошибка ${res.status}. ${message}. Вот ответ сервера: ${err.detail}`
+          )
+        )
+      );
   }
 
   signUp(data: ISignUpRequest) {
@@ -119,7 +139,7 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
       method: 'GET',
       headers: this._headers,
     };
-    return this._requestApi(url, options);
+    return this._requestAuthorizedApi(url, options);
   }
 
   getShops() {
@@ -142,7 +162,7 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
       method: 'GET',
       headers: this._headers,
     };
-    return this._requestApi(url, options).then((res) =>
+    return this._requestAuthorizedApi(url, options).then((res) =>
       res.map((item: ICardContext) => {
         item.card.shop &&
           item.card.shop.logo &&
@@ -159,10 +179,14 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
       headers: this._headers,
       body: JSON.stringify(data),
     };
-    return this._requestApi(url, options).then((res: INewCardResponse) => {
-      res.shop && res.shop.logo && (res.shop.logo = MEDIA_URL + res.shop.logo);
-      return res;
-    });
+    return this._requestAuthorizedApi(url, options).then(
+      (res: INewCardResponse) => {
+        res.shop &&
+          res.shop.logo &&
+          (res.shop.logo = MEDIA_URL + res.shop.logo);
+        return res;
+      }
+    );
   }
 
   postCardWithShop(data: IPostCardWithShop) {
@@ -172,10 +196,14 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
       headers: this._headers,
       body: JSON.stringify(data),
     };
-    return this._requestApi(url, options).then((res: INewCardResponse) => {
-      res.shop && res.shop.logo && (res.shop.logo = MEDIA_URL + res.shop.logo);
-      return res;
-    });
+    return this._requestAuthorizedApi(url, options).then(
+      (res: INewCardResponse) => {
+        res.shop &&
+          res.shop.logo &&
+          (res.shop.logo = MEDIA_URL + res.shop.logo);
+        return res;
+      }
+    );
   }
 
   editCard(data: IPatchCard, id: number) {
@@ -185,7 +213,7 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
       headers: this._headers,
       body: JSON.stringify(data),
     };
-    return this._requestApi(url, options).then((res: ICard) => {
+    return this._requestAuthorizedApi(url, options).then((res: ICard) => {
       res.shop && res.shop.logo && (res.shop.logo = MEDIA_URL + res.shop.logo);
       return res;
     });
@@ -198,12 +226,14 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
       method: method,
       headers: this._headers,
     };
-    return this._requestApi(url, options).then((res: ICardContext) => {
-      res.card.shop &&
-        res.card.shop.logo &&
-        (res.card.shop.logo = MEDIA_URL + res.card.shop.logo);
-      return res;
-    });
+    return this._requestAuthorizedApi(url, options).then(
+      (res: ICardContext) => {
+        res.card.shop &&
+          res.card.shop.logo &&
+          (res.card.shop.logo = MEDIA_URL + res.card.shop.logo);
+        return res;
+      }
+    );
   }
 
   deleteCard(id: number) {
@@ -212,6 +242,6 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
       method: 'DELETE',
       headers: this._headers,
     };
-    return this._requestApi(url, options);
+    return this._requestAuthorizedApi(url, options);
   }
 };
