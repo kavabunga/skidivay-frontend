@@ -1,4 +1,4 @@
-import { FC, useContext } from 'react';
+import { FC, useContext, MouseEvent } from 'react';
 import { CardsContext } from '~/app/contexts';
 import { api } from '~/shared';
 import { IconButton } from '@mui/material';
@@ -14,7 +14,9 @@ interface LikerProps {
 export const Liker: FC<LikerProps> = ({ cardId, isLiked }) => {
   const { cards, setCards } = useContext(CardsContext);
 
-  function handleClick() {
+  function handleClick(e: MouseEvent) {
+    //NOTE: Cancelling event bubbling to prevent firing card click
+    e.stopPropagation();
     cards &&
       setCards &&
       api
@@ -29,7 +31,11 @@ export const Liker: FC<LikerProps> = ({ cardId, isLiked }) => {
   }
 
   return (
-    <IconButton size="small" sx={{ ...iconButtonStyle }} onClick={handleClick}>
+    <IconButton
+      size="small"
+      sx={{ ...iconButtonStyle }}
+      onClick={(e) => handleClick(e)}
+    >
       {isLiked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
     </IconButton>
   );

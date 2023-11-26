@@ -22,12 +22,7 @@ export const CardFull: FC<CardFullProps> = ({ item }) => {
     >
       {!shopLogo && <Typography sx={titleStyle}>{shopName}</Typography>}
       <Box sx={{ ...barcodeStyle }}>
-        <Barcode
-          displayValue={false}
-          margin={0}
-          value={barcodeNumber}
-          // format={'EAN13'}
-        />
+        <Barcode displayValue={false} margin={0} value={barcodeNumber} />
       </Box>
     </Card>
   );
