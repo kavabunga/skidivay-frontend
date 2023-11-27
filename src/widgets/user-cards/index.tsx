@@ -4,6 +4,7 @@ import { Container, Typography, Button } from '@mui/material';
 import { SearchChips, SignOut } from '~/features';
 import { CardsList } from '~/widgets';
 import { mainContainerStyle, linkStyle } from './styles';
+import { SearchLine } from '~/features/search-line/ui';
 
 type UserCardsProps = {
   tags: {
@@ -25,6 +26,7 @@ export const UserCards: FC<UserCardsProps> = ({ tags }) => {
       >
         Мои карты
       </Typography>
+      <SearchLine />
       <SearchChips items={tags} />
       <CardsList items={cards || []} />
       <SignOut
