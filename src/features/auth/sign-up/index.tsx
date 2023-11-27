@@ -1,4 +1,4 @@
-import { AuthForm, onSignUp } from '..';
+import { AuthForm, signUp } from '..';
 import { ISignUpRequest, authFormErrors } from '~/shared';
 import * as z from 'zod';
 
@@ -25,8 +25,6 @@ export const SignUpForm = () => {
         })
         .min(10, { message: authFormErrors.wrongPhone })
         .max(10, { message: authFormErrors.wrongPhone })
-
-        //NOTE: Previous option: /^((8|\+7)[- ]?)?(\(?\d{3}\)?[- ]?)?[\d\- ]{7,10}$/
         .regex(/^\d+$/, {
           message: authFormErrors.wrongPhone,
         }),
@@ -70,6 +68,7 @@ export const SignUpForm = () => {
       label: 'Телефон',
       type: 'tel',
       defaultHelperText: ' ',
+      //NOTE: When mask will be applied can turn on autocomplete
       // autoComplete: 'tel',
       required: true,
       placeholder: '+7 (999) 999-99-99',
@@ -107,7 +106,7 @@ export const SignUpForm = () => {
       phone_number: data.phone || '',
       password: data.password || '',
     };
-    onSignUp(request)
+    signUp(request)
       .then((res) => console.log(res || 'Успех'))
       .catch((err) => console.log(err));
   };

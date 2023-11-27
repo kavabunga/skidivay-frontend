@@ -15,7 +15,6 @@ export class AddCardFormModel {
       name: shopName,
       card_number: cardNumber,
       barcode_number: barcodeNumber,
-      //TODO: Это нужно менять
       encoding_type: 'ean-13',
     };
   }
@@ -35,7 +34,6 @@ export class AddCardWithShopFormModel {
       name: shopName,
       card_number: cardNumber,
       barcode_number: barcodeNumber,
-      //TODO: Это нужно менять
       encoding_type: 'ean-13',
     };
   }
