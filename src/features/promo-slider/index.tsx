@@ -28,7 +28,7 @@ export const PromoSlider: FC<PromoSliderProps> = ({ items = [] }) => {
     infinite: true,
     slidesToShow: 2,
     slidesToScroll: 2,
-    autoplay: false,
+    autoplay: true,
     speed: 2000,
     autoplaySpeed: 4000,
     pauseOnHover: true,
