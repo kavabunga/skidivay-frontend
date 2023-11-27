@@ -141,8 +141,8 @@ export const AddCardForm: FC<AddCardFormType> = ({
             freeSolo
             fullWidth
             autoSelect
-            value={value || null}
-            options={shops ? shops.map((option) => option.name) : ['']}
+            value={value}
+            options={shops.map((option) => option.name)}
             renderInput={(params) => (
               <TextField
                 {...params}
