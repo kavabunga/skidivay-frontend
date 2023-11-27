@@ -6,3 +6,4 @@ export * from './welcome';
 export * from './user-cards';
 export * from './home';
 export * from './add-card';
+export * from './registration-success';
