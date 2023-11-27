@@ -120,12 +120,6 @@ export const AddCardForm: FC<AddCardFormType> = ({
     }
   };
 
-  //NOTE: Code for barcode detection
-  // const onBarcodeDetect = () => {
-  //   setValue('barcodeNumber', '123456789123', { shouldTouch: true });
-  //   trigger(['barcodeNumber', 'cardNumber']);
-  // };
-
   return (
     <Box
       component="form"
@@ -147,8 +141,8 @@ export const AddCardForm: FC<AddCardFormType> = ({
             freeSolo
             fullWidth
             autoSelect
-            value={value || null}
-            options={shops ? shops.map((option) => option.name) : ['']}
+            value={value}
+            options={shops.map((option) => option.name)}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -187,31 +181,15 @@ export const AddCardForm: FC<AddCardFormType> = ({
       {watch('barcodeNumber') && (
         <Box sx={{ paddingBottom: '1.25rem' }}>
           <Card sx={{ ...barcodeStyle }} variant="outlined">
+            {/* //NOTE: Can also use "format" attribute to pass barcode format to the library */}
             <Barcode
               displayValue={false}
               margin={0}
               value={watch('barcodeNumber')}
-              // format={'EAN13'}
             />
           </Card>
         </Box>
       )}
-      {/* {watch('barcodeNumber') && (
-
-      )} */}
-      {/* {!watch('barcodeNumber') && (
-        <Button
-          variant="outlined"
-          fullWidth
-          sx={buttonStyle}
-          {...buttonAddBarcode}
-          onClick={onBarcodeDetect}
-          endIcon={<CameraAltOutlinedIcon />}
-        >
-          {buttonAddBarcode.label}
-        </Button>
-      )} */}
-
       <Button
         type="submit"
         variant="contained"

@@ -5,7 +5,7 @@ import * as z from 'zod';
 import { CardsContext, UserContext } from '~/app';
 import { getUser } from '~/features';
 import { ISignInRequest, api, authFormErrors } from '~/shared';
-import { AuthForm, onSignIn } from '..';
+import { AuthForm, signIn } from '..';
 import { listStyle, linkStyle } from './style';
 
 export const SignInForm = () => {
@@ -49,7 +49,7 @@ export const SignInForm = () => {
       email: data.email || '',
       password: data.password || '',
     };
-    onSignIn(request)
+    signIn(request)
       .then(() => {
         const userPromise = getUser().then((res) => setUser && setUser(res));
         const cardsPromise = api

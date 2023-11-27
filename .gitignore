@@ -30,3 +30,11 @@ storybook-static
 .env.test.local
 .env.production.local
 .env.local
+
+# Archive files
+*.jar
+*.rar
+*.zip
+*.gz
+*.gzip
+*.tgz
