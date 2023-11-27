@@ -40,7 +40,6 @@ export const Contexts: FC<IContexts> = ({ children }) => {
           setUserData(res);
         })
         .catch((err) => {
-          err.message.includes('401') && localStorage.removeItem('token');
           console.log(err.message);
         });
       api

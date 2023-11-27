@@ -34,33 +34,50 @@ export const ApiRequests = class ApiRequests {
   }
 
   _requestApi(url: string, options: IRequestOptions) {
+    return fetch(`${url}`, options)
+      .then((res) => (res.ok ? res : this._handleError(res)))
+      .then((res) => {
+        try {
+          return res.json();
+        } catch (err) {
+          console.log(err);
+          return res;
+        }
+      });
+  }
+
+  _requestAuthorizedApi(url: string, options: IRequestOptions) {
     if (localStorage.getItem('token')) {
       options.headers = {
         ...options.headers,
         authorization: `Token ${localStorage.getItem('token') || ''}`,
       };
     }
-    return (
-      fetch(`${url}`, options)
-        .then((res) =>
-          res.ok
-            ? res
-            : res.json().then((err) => {
-                return Promise.reject(
-                  new Error(`Ошибка ${res.status}. ${err.detail}`)
-                );
-              })
+    return this._requestApi(url, options);
+  }
+
+  _handleError(res: Response) {
+    let message: string;
+    switch (res.status) {
+      case 401:
+        {
+          localStorage.removeItem('token');
+          message = 'Ошибка авторизации';
+        }
+        break;
+      default: {
+        message = 'Что-то пошло не так';
+      }
+    }
+    return res
+      .json()
+      .then((err) =>
+        Promise.reject(
+          new Error(
+            `Ошибка ${res.status}. ${message}. Вот ответ сервера: ${err.detail}`
+          )
         )
-        //NOTE: Here we check if there is body in the response and trying to extract data
-        .then((res) => {
-          try {
-            return res.json();
-          } catch (err) {
-            console.log(err);
-            return res;
-          }
-        })
-    );
+      );
   }
 
   signUp(data: ISignUpRequest) {
@@ -98,7 +115,7 @@ export const ApiRequests = class ApiRequests {
       method: 'GET',
       headers: this._headers,
     };
-    return this._requestApi(url, options);
+    return this._requestAuthorizedApi(url, options);
   }
 
   getShops() {
@@ -121,7 +138,7 @@ export const ApiRequests = class ApiRequests {
       method: 'GET',
       headers: this._headers,
     };
-    return this._requestApi(url, options).then((res) =>
+    return this._requestAuthorizedApi(url, options).then((res) =>
       res.map((item: ICardContext) => {
         item.card?.shop?.logo &&
           (item.card.shop.logo = addBaseMediaUrl(item.card.shop.logo));
@@ -137,10 +154,11 @@ export const ApiRequests = class ApiRequests {
       headers: this._headers,
       body: JSON.stringify(data),
     };
-    return this._requestApi(url, options).then((res: INewCardResponse) => {
+    return this._requestAuthorizedApi(url, options).then((res: INewCardResponse) => {
       res.shop?.logo && (res.shop.logo = addBaseMediaUrl(res.shop.logo));
       return res;
     });
+
   }
 
   postCardWithShop(data: IPostCardWithShop) {
@@ -150,10 +168,11 @@ export const ApiRequests = class ApiRequests {
       headers: this._headers,
       body: JSON.stringify(data),
     };
-    return this._requestApi(url, options).then((res: INewCardResponse) => {
+    return this._requestAuthorizedApi(url, options).then((res: INewCardResponse) => {
       res.shop?.logo && (res.shop.logo = addBaseMediaUrl(res.shop.logo));
       return res;
     });
+
   }
 
   editCard(data: IPatchCard, id: number) {
@@ -163,8 +182,9 @@ export const ApiRequests = class ApiRequests {
       headers: this._headers,
       body: JSON.stringify(data),
     };
-    return this._requestApi(url, options).then((res: ICard) => {
+    return this._requestAuthorizedApi(url, options).then((res: ICard) => {
       res.shop?.logo && (res.shop.logo = addBaseMediaUrl(res.shop.logo));
+
       return res;
     });
   }
@@ -176,7 +196,7 @@ export const ApiRequests = class ApiRequests {
       method: method,
       headers: this._headers,
     };
-    return this._requestApi(url, options).then((res: ICardContext) => {
+    return this._requestAuthorizedApi(url, options).then((res: ICardContext) => {
       res.card?.shop?.logo &&
         (res.card.shop.logo = addBaseMediaUrl(res.card.shop.logo));
       return res;
@@ -189,6 +209,6 @@ export const ApiRequests = class ApiRequests {
       method: 'DELETE',
       headers: this._headers,
     };
-    return this._requestApi(url, options);
+    return this._requestAuthorizedApi(url, options);
   }
 };
