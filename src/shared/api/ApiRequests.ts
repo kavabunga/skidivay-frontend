@@ -1,20 +1,20 @@
 import {
   ICard,
   ICardContext,
-  ICardsContext,
   INewCardResponse,
   IPatchCard,
   IPostCard,
   IPostCardWithShop,
   IShop,
-  IShopListContext,
   ISignInRequest,
-  ISignInResponse,
   ISignUpRequest,
-  IUserContext,
-  IUserResponse,
   MEDIA_URL,
 } from '..';
+
+//NOTE: Function to add full url to images. MEDIA_URL value depends on .env variables and differs on build modes
+const addBaseMediaUrl = (url: string | null | undefined): string => {
+  return url ? MEDIA_URL + url : '';
+};
 
 interface IRequestOptions {
   headers: HeadersInit;
@@ -23,31 +23,7 @@ interface IRequestOptions {
   credentials?: RequestCredentials;
 }
 
-//NOTE: SignOut and Remove card have no body in response
-interface IApiRequests {
-  _url: string;
-  _headers: HeadersInit;
-  _requestApi: (url: string, options: IRequestOptions) => void;
-  signUp(data: ISignUpRequest): Promise<IUserResponse>;
-  signIn(data: ISignInRequest): Promise<ISignInResponse>;
-  signOut(): Promise<Response>;
-  getUser(): Promise<IUserContext>;
-  getShops(): Promise<IShopListContext>;
-  getCards(): Promise<ICardsContext>;
-  postCard(data: IPostCard): Promise<INewCardResponse>;
-  postCardWithShop(data: IPostCardWithShop): Promise<INewCardResponse>;
-  editCard(data: IPatchCard, id: number): Promise<ICard>;
-  changeCardLikeStatus(id: number, hasLike: boolean): Promise<ICardContext>;
-  deleteCard(id: number): Promise<Response>;
-}
-
-interface IApiRequestsConstructor {
-  new (url: string): IApiRequests;
-}
-
-export const ApiRequests: IApiRequestsConstructor = class ApiRequests
-  implements IApiRequests
-{
+export const ApiRequests = class ApiRequests {
   _url: string;
   _headers: HeadersInit;
   constructor(url: string) {
@@ -150,7 +126,7 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
     };
     return this._requestApi(url, options).then((res) =>
       res.map((item: IShop) => {
-        item.logo = MEDIA_URL + item.logo;
+        item.logo && (item.logo = addBaseMediaUrl(item.logo));
         return item;
       })
     );
@@ -164,9 +140,8 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
     };
     return this._requestAuthorizedApi(url, options).then((res) =>
       res.map((item: ICardContext) => {
-        item.card.shop &&
-          item.card.shop.logo &&
-          (item.card.shop.logo = MEDIA_URL + item.card.shop.logo);
+        item.card?.shop?.logo &&
+          (item.card.shop.logo = addBaseMediaUrl(item.card.shop.logo));
         return item;
       })
     );
@@ -179,14 +154,11 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
       headers: this._headers,
       body: JSON.stringify(data),
     };
-    return this._requestAuthorizedApi(url, options).then(
-      (res: INewCardResponse) => {
-        res.shop &&
-          res.shop.logo &&
-          (res.shop.logo = MEDIA_URL + res.shop.logo);
-        return res;
-      }
-    );
+    return this._requestAuthorizedApi(url, options).then((res: INewCardResponse) => {
+      res.shop?.logo && (res.shop.logo = addBaseMediaUrl(res.shop.logo));
+      return res;
+    });
+
   }
 
   postCardWithShop(data: IPostCardWithShop) {
@@ -196,14 +168,11 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
       headers: this._headers,
       body: JSON.stringify(data),
     };
-    return this._requestAuthorizedApi(url, options).then(
-      (res: INewCardResponse) => {
-        res.shop &&
-          res.shop.logo &&
-          (res.shop.logo = MEDIA_URL + res.shop.logo);
-        return res;
-      }
-    );
+    return this._requestAuthorizedApi(url, options).then((res: INewCardResponse) => {
+      res.shop?.logo && (res.shop.logo = addBaseMediaUrl(res.shop.logo));
+      return res;
+    });
+
   }
 
   editCard(data: IPatchCard, id: number) {
@@ -214,7 +183,8 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
       body: JSON.stringify(data),
     };
     return this._requestAuthorizedApi(url, options).then((res: ICard) => {
-      res.shop && res.shop.logo && (res.shop.logo = MEDIA_URL + res.shop.logo);
+      res.shop?.logo && (res.shop.logo = addBaseMediaUrl(res.shop.logo));
+
       return res;
     });
   }
@@ -226,14 +196,11 @@ export const ApiRequests: IApiRequestsConstructor = class ApiRequests
       method: method,
       headers: this._headers,
     };
-    return this._requestAuthorizedApi(url, options).then(
-      (res: ICardContext) => {
-        res.card.shop &&
-          res.card.shop.logo &&
-          (res.card.shop.logo = MEDIA_URL + res.card.shop.logo);
-        return res;
-      }
-    );
+    return this._requestAuthorizedApi(url, options).then((res: ICardContext) => {
+      res.card?.shop?.logo &&
+        (res.card.shop.logo = addBaseMediaUrl(res.card.shop.logo));
+      return res;
+    });
   }
 
   deleteCard(id: number) {
