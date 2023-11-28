@@ -1,10 +1,10 @@
-export enum Type {
+export enum ApiMessageTypes {
   info = 'info',
   error = 'error',
   success = 'success',
 }
 
-export enum Target {
+export enum ApiMessageTargets {
   snack = 'snack',
   email = 'email',
 }
