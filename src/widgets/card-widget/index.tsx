@@ -1,18 +1,12 @@
 import { useContext, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import {
-  Button,
-  Container,
-  IconButton,
-  Stack,
-  Box,
-  Typography,
-} from '@mui/material';
+import { Button, IconButton, Stack, Box, Typography } from '@mui/material';
 import CreateIcon from '@mui/icons-material/Create';
 import { BackButton } from '~/features';
 import { CardFull, EditCardForm } from '~/entities';
 import { Liker } from '~/features';
 import {
+  containerStyle,
   buttonStyle,
   topButtonsStyle,
   likerWrapperStyle,
@@ -71,7 +65,7 @@ export const CardWidget = () => {
   };
 
   return (
-    <Container sx={{ display: 'flex', flexDirection: 'column' }}>
+    <Stack useFlexGap sx={containerStyle}>
       <Stack
         direction="row"
         justifyContent="space-between"
@@ -135,6 +129,6 @@ export const CardWidget = () => {
           </Button>
         </Stack>
       )}
-    </Container>
+    </Stack>
   );
 };
