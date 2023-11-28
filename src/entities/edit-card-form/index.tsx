@@ -1,15 +1,16 @@
 import { FC, useContext } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Box, Button, InputAdornment, IconButton } from '@mui/material';
-import { Input } from '~/shared/ui';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import ErrorIcon from '@mui/icons-material/Error';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { cardFormErrors } from '~/shared/lib';
-import { formStyle, buttonStyle } from './style';
-import { ICardContext, IPatchCard, api } from '~/shared';
+import copy from 'copy-to-clipboard';
 import { CardsContext } from '~/app';
+import { Input } from '~/shared/ui';
+import { cardFormErrors } from '~/shared/lib';
+import { ICardContext, IPatchCard, api } from '~/shared';
+import { formStyle, buttonStyle } from './style';
 
 const schema = z
   .object({
@@ -68,6 +69,7 @@ export const EditCardForm: FC<EditCardFormProps> = ({
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isValid },
   } = useForm<{ [key: string]: string }>({
     mode: 'onTouched',
@@ -125,6 +127,10 @@ export const EditCardForm: FC<EditCardFormProps> = ({
             <InputAdornment position="end">
               <IconButton
                 aria-label="Кнопка копирования номера карты"
+                onClick={() => {
+                  copy(watch('cardNumber'));
+                  console.log('Скопировано');
+                }}
                 sx={{
                   padding: 0.2,
                   borderRadius: 0,
