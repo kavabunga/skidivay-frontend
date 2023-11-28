@@ -4,7 +4,7 @@ import { Box, Container, Typography } from '@mui/material';
 import { AccentButton } from '~/shared/ui';
 import { PromoSlider } from '~/features';
 import { ShopListContext } from '~/app/contexts';
-import coverImage from '~/shared/assets/payment bw 1.svg';
+import coverImage from '~/shared/assets/payment_bw_1.svg';
 import { coverImgStyle, mainContainerStyle, paragraphStyle } from './styles';
 import { UserContext } from '~/app';
 
