@@ -1,25 +1,19 @@
 import { Autocomplete, TextField } from '@mui/material';
 import React, { useContext } from 'react';
-import { CardsContext, ShopListContext } from '~/app';
-import { api } from '~/shared';
+import { CardsContext, ShopListContext, SortedCardsContext } from '~/app';
 
 export const SearchLine = () => {
   const { shops } = useContext(ShopListContext);
-  const { cards, setCards } = useContext(CardsContext);
-
+  const { cards } = useContext(CardsContext);
+  const { setSortedCards } = useContext(SortedCardsContext);
   function onChange(e: React.SyntheticEvent) {
     const newCards = cards.filter((card) => {
       return card.card.shop?.name === e.currentTarget.textContent;
     });
     if (newCards.length) {
-      return setCards && setCards(newCards);
+      return setSortedCards && setSortedCards(newCards);
     } else {
-      api
-        .getCards()
-        .then((res) => {
-          return setCards && setCards(res);
-        })
-        .catch((err) => console.log(err.message));
+      return setSortedCards && setSortedCards(cards);
     }
   }
 

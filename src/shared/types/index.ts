@@ -1,4 +1,3 @@
-
 import { Type, Target } from '../enums';
 
 export interface ICard {
@@ -12,7 +11,6 @@ export interface ICard {
   encoding_type?: string;
   usage_counter?: number;
 }
-
 
 export interface ICardContext {
   card: ICard;

@@ -1,5 +1,5 @@
 import { FC, useContext } from 'react';
-import { CardsContext } from '~/app/contexts';
+import { SortedCardsContext } from '~/app/contexts';
 import { Container, Typography, Button } from '@mui/material';
 import { SearchChips, SignOut } from '~/features';
 import { CardsList } from '~/widgets';
@@ -13,7 +13,7 @@ type UserCardsProps = {
 };
 
 export const UserCards: FC<UserCardsProps> = ({ tags }) => {
-  const { cards } = useContext(CardsContext);
+  const { cards } = useContext(SortedCardsContext);
   return (
     <Container component="main" sx={{ ...mainContainerStyle }}>
       <Typography
