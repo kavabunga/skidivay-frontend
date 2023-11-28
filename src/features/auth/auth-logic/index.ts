@@ -1,16 +1,16 @@
 import { ISignInRequest, ISignUpRequest, api } from '~/shared';
 
-export function onSignUp(data: ISignUpRequest) {
+export function signUp(data: ISignUpRequest) {
   return api.signUp(data);
 }
 
-export function onSignIn(data: ISignInRequest) {
+export function signIn(data: ISignInRequest) {
   return api.signIn(data).then((res) => {
     localStorage.setItem('token', res.auth_token);
     return res;
   });
 }
 
-export function onSignOut() {
+export function signOut() {
   return api.signOut().then(() => localStorage.removeItem('token'));
 }
