@@ -21,13 +21,6 @@ export function App() {
             <Route path="/" Component={RootLayout}>
               <Route index element={<ProtectedHomeRoute />} />
               <Route element={<ProtectedRoute />}>
-                {/* //NOTE: Temporary demo routes from here */}
-                {/* <Route path="authorizedNoCards" element={<Welcome />} />
-                <Route
-                  path="authorizedWithCards"
-                  element={<UserCards tags={chipsLabels} />}
-                /> */}
-                {/* //NOTE: Temporary demo routes to here */}
                 <Route path="card">
                   <Route path="new" Component={AddCardWidget} />
                   <Route path=":id" Component={CardWidget} />

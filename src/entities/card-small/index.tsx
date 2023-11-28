@@ -23,12 +23,7 @@ export const CardSmall: FC<{ item: ICardContext }> = ({ item, ...props }) => {
       {...props}
     >
       {!shopLogo && <Typography sx={{ ...titleStyle }}>{shopName}</Typography>}
-      <Box
-        sx={{ ...likerWrapperStyle }}
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-      >
+      <Box sx={{ ...likerWrapperStyle }}>
         <Liker cardId={cardId} isLiked={isLiked} />
       </Box>
     </Card>
