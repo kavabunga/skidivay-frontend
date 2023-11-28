@@ -1,12 +1,11 @@
+import { useNavigate } from 'react-router-dom';
 import { AuthForm, signUp } from '..';
 import { ISignUpRequest, authFormErrors } from '~/shared';
 import * as z from 'zod';
-import { Dispatch, FC, SetStateAction } from 'react';
 
-export const SignUpForm: FC<{
-  defaultValues?: object;
-  setRegistredEmail: Dispatch<SetStateAction<string>>;
-}> = ({ defaultValues, setRegistredEmail }) => {
+export const SignUpForm = () => {
+  const navigate = useNavigate();
+
   const schema = z
     .object({
       name: z
@@ -110,10 +109,13 @@ export const SignUpForm: FC<{
       phone_number: data.phone || '',
       password: data.password || '',
     };
-    return signUp(request).then((res) => {
-      console.log('Регистрация успешна');
-      return setRegistredEmail(res.email);
-    });
+    signUp(request)
+      .then((res) => {
+        console.log(res || 'Успех');
+        navigate('/auth', { relative: 'path', state: { tab: 0 } });
+      })
+
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -122,7 +124,6 @@ export const SignUpForm: FC<{
       schema={schema}
       button={{ label: 'Далее', fullWidth: true }}
       submit={submit}
-      defaultValues={defaultValues}
     />
   );
 };

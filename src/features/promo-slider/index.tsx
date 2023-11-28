@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import Slider from 'react-slick';
+import { Settings as SliderSettings } from 'react-slick';
 import { Box } from '@mui/material';
 import { PromoCard } from '~/entities/promo-card';
 import { IShopListContext } from '~/shared';
@@ -13,17 +14,6 @@ interface PromoSliderProps {
 }
 
 export const PromoSlider: FC<PromoSliderProps> = ({ items = [] }) => {
-  interface SliderSettings {
-    infinite: boolean;
-    slidesToShow: number;
-    slidesToScroll: number;
-    autoplay: boolean;
-    speed: number;
-    autoplaySpeed: number;
-    pauseOnHover: boolean;
-    cssEase: string;
-  }
-
   const settings: SliderSettings = {
     infinite: true,
     slidesToShow: 2,
