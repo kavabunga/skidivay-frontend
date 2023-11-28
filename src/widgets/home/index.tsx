@@ -4,7 +4,7 @@ import { ShopListContext } from '~/app/contexts';
 import { Box, Container, Typography } from '@mui/material';
 import { AccentButton } from '~/shared/ui';
 import { PromoSlider } from '~/features';
-import coverImage from '~/shared/assets/save_money_bw_1.svg';
+import coverImage from '~/shared/assets/save-money-bw-1.svg';
 import { coverImgStyle, mainContainerStyle, paragraphStyle } from './styles';
 
 export const Home = () => {
