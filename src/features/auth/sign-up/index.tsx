@@ -1,8 +1,11 @@
+import { useNavigate } from 'react-router-dom';
 import { AuthForm, signUp } from '..';
 import { ISignUpRequest, authFormErrors } from '~/shared';
 import * as z from 'zod';
 
 export const SignUpForm = () => {
+  const navigate = useNavigate();
+
   const schema = z
     .object({
       name: z
@@ -107,7 +110,11 @@ export const SignUpForm = () => {
       password: data.password || '',
     };
     signUp(request)
-      .then((res) => console.log(res || 'Успех'))
+      .then((res) => {
+        console.log(res || 'Успех');
+        navigate('/auth', { relative: 'path', state: { tab: 0 } });
+      })
+
       .catch((err) => console.log(err));
   };
 

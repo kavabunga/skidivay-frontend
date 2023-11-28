@@ -29,13 +29,15 @@ export const Home = () => {
         textAlign="left"
         sx={{ ...paragraphStyle, lineHeight: 1 }}
       >
-        Добавьте в свой электронный кошелёк
+        Добавьте в свой кошелёк
       </Typography>
 
       <PromoSlider items={shops} />
 
       <AccentButton
-        onClick={() => navigate('/auth', { relative: 'path' })}
+        onClick={() =>
+          navigate('/auth', { relative: 'path', state: { tab: 1 } })
+        }
         children={'Попробовать'}
       />
     </Container>
