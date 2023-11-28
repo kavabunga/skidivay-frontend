@@ -154,12 +154,11 @@ export const ApiRequests = class ApiRequests {
       headers: this._headers,
       body: JSON.stringify(data),
     };
-    return this._requestAuthorizedApi(url, options).then(
-      (res: INewCardResponse) => {
-        res.shop?.logo && (res.shop.logo = addBaseMediaUrl(res.shop.logo));
-        return res;
-      }
-    );
+    return this._requestAuthorizedApi(url, options).then((res: INewCardResponse) => {
+      res.shop?.logo && (res.shop.logo = addBaseMediaUrl(res.shop.logo));
+      return res;
+    });
+
   }
 
   postCardWithShop(data: IPostCardWithShop) {
@@ -169,12 +168,11 @@ export const ApiRequests = class ApiRequests {
       headers: this._headers,
       body: JSON.stringify(data),
     };
-    return this._requestAuthorizedApi(url, options).then(
-      (res: INewCardResponse) => {
-        res.shop?.logo && (res.shop.logo = addBaseMediaUrl(res.shop.logo));
-        return res;
-      }
-    );
+    return this._requestAuthorizedApi(url, options).then((res: INewCardResponse) => {
+      res.shop?.logo && (res.shop.logo = addBaseMediaUrl(res.shop.logo));
+      return res;
+    });
+
   }
 
   editCard(data: IPatchCard, id: number) {
@@ -198,13 +196,11 @@ export const ApiRequests = class ApiRequests {
       method: method,
       headers: this._headers,
     };
-    return this._requestAuthorizedApi(url, options).then(
-      (res: ICardContext) => {
-        res.card?.shop?.logo &&
-          (res.card.shop.logo = addBaseMediaUrl(res.card.shop.logo));
-        return res;
-      }
-    );
+    return this._requestAuthorizedApi(url, options).then((res: ICardContext) => {
+      res.card?.shop?.logo &&
+        (res.card.shop.logo = addBaseMediaUrl(res.card.shop.logo));
+      return res;
+    });
   }
 
   deleteCard(id: number) {
@@ -212,16 +208,6 @@ export const ApiRequests = class ApiRequests {
     const options: IRequestOptions = {
       method: 'DELETE',
       headers: this._headers,
-    };
-    return this._requestAuthorizedApi(url, options);
-  }
-
-  activateEmail(uid: string, token: string) {
-    const url = `${this._url}/users/activate/`;
-    const options: IRequestOptions = {
-      method: 'POST',
-      headers: this._headers,
-      body: JSON.stringify({ uid, token }),
     };
     return this._requestAuthorizedApi(url, options);
   }
