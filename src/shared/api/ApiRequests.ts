@@ -106,7 +106,7 @@ export const ApiRequests = class ApiRequests {
       method: 'POST',
       headers: this._headers,
     };
-    return this._requestApi(url, options);
+    return this._requestAuthorizedApi(url, options);
   }
 
   getUser() {
