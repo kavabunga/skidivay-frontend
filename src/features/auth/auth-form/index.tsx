@@ -15,7 +15,8 @@ export interface AuthFormType {
     label: string;
     width?: number;
   };
-  submit: (data: { [key: string]: string }) => void;
+  defaultValues?: object;
+  submit: (data: { [key: string]: string }) => Promise<void>;
 }
 
 export const AuthForm: FC<AuthFormType> = ({
@@ -23,6 +24,7 @@ export const AuthForm: FC<AuthFormType> = ({
   children,
   schema,
   button,
+  defaultValues,
   submit,
 }) => {
   const {
@@ -32,9 +34,10 @@ export const AuthForm: FC<AuthFormType> = ({
   } = useForm<{ [key: string]: string }>({
     mode: 'onTouched',
     resolver: zodResolver(schema),
+    defaultValues: defaultValues,
   });
   const onSubmit: SubmitHandler<{ [key: string]: string }> = (data) => {
-    submit(data);
+    submit(data).catch((err) => console.log(err));
   };
 
   return (
@@ -49,6 +52,7 @@ export const AuthForm: FC<AuthFormType> = ({
         fields.map((field) => (
           <InputSelector
             {...field}
+            disabled={isSubmitting}
             key={field.name}
             register={register}
             errors={errors}
