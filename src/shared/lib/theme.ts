@@ -54,7 +54,7 @@ export const lightTheme = createTheme({
   },
 });
 
-//Add new color to the palette. Key "surface" is the name of the color added. Add new colors next.
+//NOTE: Add new color to the palette. Key "surface" is the name of the color added. Add new colors next.
 declare module '@mui/material/styles' {
   interface Palette {
     surface: Palette['primary'];
@@ -65,14 +65,14 @@ declare module '@mui/material/styles' {
   }
 }
 
-//Add the color to the component. If you need to use custom color in any components, they have to be added like this.
+//NOTE: Add the color to the component. If you need to use custom color in any components, they have to be added like this.
 declare module '@mui/material/Button' {
   interface ButtonPropsColorOverrides {
     surface: true;
   }
 }
 
-//Add new color token (the variant of the color, like 'main', 'light' and 'dark')
+//NOTE: Add new color token (the variant of the color, like 'main', 'light' and 'dark')
 declare module '@mui/material/styles' {
   interface PaletteColor {
     darker?: string;

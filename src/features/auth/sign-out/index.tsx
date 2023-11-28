@@ -1,7 +1,7 @@
 import { ButtonProps } from '@mui/material';
 import { ComponentType, FC, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { onSignOut } from '..';
+import { signOut } from '..';
 import { UserContext, CardsContext } from '~/app';
 
 interface ISignOut extends ButtonProps {
@@ -13,7 +13,7 @@ export const SignOut: FC<ISignOut> = ({ element: Component, ...props }) => {
   const { setCards } = useContext(CardsContext);
   const navigate = useNavigate();
   const handleSignOut = () => {
-    onSignOut()
+    signOut()
       .then(() => {
         setUser && setUser(null);
         setCards && setCards([]);
