@@ -23,7 +23,7 @@ export const PromoCard: FC<PromoCardProps> = ({ item }) => {
 
   return (
     <Card
-      raised={false}
+      elevation={0}
       sx={
         user
           ? {
