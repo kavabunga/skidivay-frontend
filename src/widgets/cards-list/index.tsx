@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Box, Stack } from '@mui/material/';
 import { CardSmall } from '~/entities';
 import { ICardsContext } from '~/shared';
-import { AddCardButton } from '~/features';
+import { AddCardButton, sortCards } from '~/features';
 import { cardCellStyle } from './style';
 
 interface CardsListProps {
@@ -16,7 +16,7 @@ export const CardsList: FC<CardsListProps> = ({ items = [] }) => {
         <AddCardButton text="Добавить новую карту" />
       </Box>
       {items &&
-        items.map((item) => {
+        sortCards(items).map((item) => {
           return <CardSmall key={item.card.id} item={item} />;
         })}
     </Stack>
