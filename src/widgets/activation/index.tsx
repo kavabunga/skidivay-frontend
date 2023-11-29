@@ -1,29 +1,52 @@
 import { Stack, Typography } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { UserContext } from '~/app';
+import { MessagesContext, UserContext } from '~/app';
 import { SignInForm } from '~/features';
 import { api } from '~/shared';
 import { stackStyle, titleStyle, paragraphStyle } from './style';
+import { IApiError } from '~/shared/errors';
+import { ApiMessageTargets, ApiMessageTypes } from '~/shared/enums';
 
 export const Activation = () => {
+  const { setMessages } = useContext(MessagesContext);
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const { uid, token } = useParams();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    const handleError = (err: IApiError) => {
+      setMessages((messages) => [
+        {
+          message: err.message,
+          type: ApiMessageTypes.error,
+          target: ApiMessageTargets.snack,
+        },
+        ...messages,
+      ]);
+    };
+    const handleSuccess = () => {
+      setMessages((messages) => [
+        {
+          message: 'Почта подтверждена',
+          type: ApiMessageTypes.success,
+          target: ApiMessageTargets.snack,
+        },
+        ...messages,
+      ]);
+    };
     if (user) {
       api
         .activateEmail(uid || '', token || '')
         .then(() => {
-          console.log('Запрос на активацию отправлен');
+          handleSuccess();
           navigate('/', { replace: true });
         })
-        .catch((err) => console.log(err));
+        .catch(handleError);
     }
     setIsLoading(false);
-  }, [navigate, user, token, uid]);
+  }, [user, uid, token, navigate, setMessages]);
 
   if (isLoading) {
     return <Typography sx={titleStyle}>Подождите, пожалуйста</Typography>;

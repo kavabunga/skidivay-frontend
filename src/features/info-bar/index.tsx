@@ -1,25 +1,31 @@
-import React from 'react';
-import { FC, useState, useContext } from 'react';
-import Snackbar from '@mui/material/Snackbar';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import MuiAlert, { AlertProps } from '@mui/material/Alert';
-import { MessageContext } from '~/app';
-import { ApiMessageTypes } from '~/shared/enums';
+import { useEffect, FC, useState, useContext } from 'react';
+import { Snackbar, Alert } from '@mui/material';
+import { AlertColor } from '@mui/material/Alert';
+import { MessagesContext } from '~/app';
+import { ApiMessageTargets, ApiMessageTypes } from '~/shared/enums';
+import { IMessageContext } from '~/shared';
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
-  function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  }
-);
-
-interface InfoBarProps {
-  isOpen: boolean;
+interface ISnackType {
+  severity: AlertColor;
+  backgroundColor: string;
+  defaultMessage: string;
+}
+interface ISnack {
+  message: IMessageContext;
+  type: ISnackType;
 }
 
-export const InfoBar: FC<InfoBarProps> = ({ isOpen }) => {
-  const { message } = useContext(MessageContext);
-  const [open, setOpen] = useState(isOpen);
+export const InfoBar: FC = () => {
+  const { messages } = useContext(MessagesContext);
+  const [open, setOpen] = useState(false);
+  const [snack, setSnack] = useState<ISnack>();
+
+  useEffect(() => {
+    if (messages[0] && messages[0].target === ApiMessageTargets.snack) {
+      setSnack({ message: messages[0], type: snackTypeSelector(messages[0]) });
+      setOpen(true);
+    }
+  }, [messages]);
 
   const handleClose = (
     _event: React.SyntheticEvent | Event,
@@ -32,64 +38,50 @@ export const InfoBar: FC<InfoBarProps> = ({ isOpen }) => {
     setOpen(false);
   };
 
-  const action = (
-    <>
-      <IconButton
-        size="small"
-        aria-label="Закрыть сообщение"
-        color="inherit"
-        onClick={handleClose}
-      >
-        <CloseIcon fontSize="small" />
-      </IconButton>
-    </>
-  );
+  const snackTypeSelector = (data: IMessageContext): ISnackType => {
+    let severity: AlertColor, backgroundColor, defaultMessage;
+    switch (data.type) {
+      case ApiMessageTypes.error:
+        severity = 'error';
+        backgroundColor = '#322F35';
+        defaultMessage = 'Ошибка!';
+        break;
+      case ApiMessageTypes.success:
+        severity = 'success';
+        backgroundColor = '#322F35';
+        defaultMessage = 'Успех!';
+        break;
+      default:
+        severity = 'info';
+        backgroundColor = '#322F35';
+        defaultMessage = '';
+        break;
+    }
+    return { severity, backgroundColor, defaultMessage };
+  };
 
   return (
-    <div>
+    snack && (
       <Snackbar
-        key={message.message}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         open={open}
-        autoHideDuration={6000}
+        autoHideDuration={3000}
         onClose={handleClose}
-        action={action}
       >
-        {message.type === ApiMessageTypes.error ? (
-          <Alert
-            onClose={handleClose}
-            severity="error"
-            sx={{
-              width: '100%',
-              backgroundColor: 'error.main',
-            }}
-          >
-            {message.message || 'Ошибка!'}
-          </Alert>
-        ) : message.type === ApiMessageTypes.info ? (
-          <Alert
-            onClose={handleClose}
-            severity="info"
-            sx={{
-              width: '100%',
-              backgroundColor: 'info.main',
-            }}
-          >
-            {message.message || 'Все ок!'}
-          </Alert>
-        ) : (
-          <Alert
-            onClose={handleClose}
-            severity="success"
-            sx={{
-              width: '100%',
-              backgroundColor: 'secondary.main',
-            }}
-          >
-            {message.message || 'Успех!'}
-          </Alert>
-        )}
+        <Alert
+          elevation={6}
+          variant="filled"
+          onClose={handleClose}
+          severity={snack.type.severity}
+          icon={false}
+          sx={{
+            width: '100%',
+            backgroundColor: snack.type.backgroundColor,
+          }}
+        >
+          {snack.message.message || snack.type.defaultMessage}
+        </Alert>
       </Snackbar>
-    </div>
+    )
   );
 };
