@@ -2,9 +2,9 @@ import { ApiMessageTypes, ApiMessageTargets } from '../enums';
 
 export interface ICard {
   id: number;
-  shop?: IShop;
+  shop: IShop;
   name: string;
-  pub_date?: string;
+  pub_date: string;
   image?: string | null;
   card_number?: string;
   barcode_number?: string;
