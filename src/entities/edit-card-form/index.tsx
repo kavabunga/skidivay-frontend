@@ -6,7 +6,6 @@ import ErrorIcon from '@mui/icons-material/Error';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import copy from 'copy-to-clipboard';
-import { CardsContext } from '~/app';
 import { Input } from '~/shared/ui';
 import { cardFormErrors } from '~/shared/lib';
 import { ICardContext, IPatchCard, api } from '~/shared';

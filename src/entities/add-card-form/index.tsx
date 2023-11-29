@@ -217,7 +217,8 @@ export const AddCardForm: FC<AddCardFormType> = ({
             freeSolo
             fullWidth
             autoSelect
-            value={value}
+            //NOTE: If undefined, on user input component would switch from uncontrolled to controlled
+            value={value || null}
             options={shops.map((option) => option.name)}
             renderInput={(params) => (
               <TextField

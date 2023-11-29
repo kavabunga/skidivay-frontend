@@ -43,17 +43,17 @@ export const InfoBar: FC = () => {
     switch (data.type) {
       case ApiMessageTypes.error:
         severity = 'error';
-        backgroundColor = '#322F35';
+        backgroundColor = 'surface.dark';
         defaultMessage = 'Ошибка!';
         break;
       case ApiMessageTypes.success:
         severity = 'success';
-        backgroundColor = '#322F35';
+        backgroundColor = 'surface.dark';
         defaultMessage = 'Успех!';
         break;
       default:
         severity = 'info';
-        backgroundColor = '#322F35';
+        backgroundColor = 'surface.dark';
         defaultMessage = '';
         break;
     }
