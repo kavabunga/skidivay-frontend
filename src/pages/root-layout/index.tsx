@@ -2,6 +2,7 @@ import { Stack, Box } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 import { Header } from '~/widgets';
 import { AppFooter } from '~/shared/ui';
+import { InfoBar } from '~/features';
 
 export const RootLayout = () => {
   return (
@@ -19,6 +20,7 @@ export const RootLayout = () => {
       >
         <AppFooter />
       </Stack>
+      <InfoBar />
     </Stack>
   );
 };

@@ -10,6 +10,9 @@ import { CardsContext } from '~/app';
 import { Input } from '~/shared/ui';
 import { cardFormErrors } from '~/shared/lib';
 import { ICardContext, IPatchCard, api } from '~/shared';
+import { CardsContext, MessagesContext } from '~/app';
+import { IApiError } from '~/shared/errors';
+import { ApiMessageTargets, ApiMessageTypes } from '~/shared/enums';
 import { formStyle, buttonStyle } from './style';
 
 const schema = z
@@ -65,10 +68,12 @@ export const EditCardForm: FC<EditCardFormProps> = ({
   handleSubmited,
   card,
 }) => {
+  const { messages, setMessages } = useContext(MessagesContext);
   const { cards, setCards } = useContext(CardsContext);
   const {
     register,
     handleSubmit,
+    setError,
     watch,
     formState: { errors, isValid },
   } = useForm<{ [key: string]: string }>({
@@ -95,9 +100,48 @@ export const EditCardForm: FC<EditCardFormProps> = ({
         );
         return setCards && setCards(newCards);
       })
-      .then(() => handleSubmited())
-      .catch((err) => {
-        console.log(err);
+      .then(() => {
+        setMessages([
+          {
+            message: 'Данные успешно изменены',
+            type: ApiMessageTypes.success,
+            target: ApiMessageTargets.snack,
+          },
+          ...messages,
+        ]);
+        handleSubmited();
+      })
+      .catch((err: IApiError) => {
+        if (err.status === 400 && err.detail) {
+          Object.entries(err.detail).forEach((entry) => {
+            const [key, value] = entry;
+            if (key in data) {
+              setError(key, {
+                type: 'server',
+                message: value.join('; '),
+              });
+            } else {
+              setMessages([
+                {
+                  message:
+                    key === 'non_field_errors' ? value.join('; ') : err.message,
+                  type: ApiMessageTypes.error,
+                  target: ApiMessageTargets.snack,
+                },
+                ...messages,
+              ]);
+            }
+          });
+        } else {
+          setMessages([
+            {
+              message: err.message,
+              type: ApiMessageTypes.error,
+              target: ApiMessageTargets.snack,
+            },
+            ...messages,
+          ]);
+        }
       });
   };
 

@@ -1,4 +1,4 @@
-import { Type, Target } from '../enums';
+import { ApiMessageTypes, ApiMessageTargets } from '../enums';
 
 export interface ICard {
   id: number;
@@ -103,6 +103,6 @@ export interface IPostCardWithShop {
 
 export interface IMessageContext {
   message: string;
-  type: Type;
-  target: Target;
+  type: ApiMessageTypes;
+  target: ApiMessageTargets;
 }

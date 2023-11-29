@@ -10,6 +10,7 @@ import {
   ISignUpRequest,
   MEDIA_URL,
 } from '..';
+import { ApiError } from '../errors';
 
 //NOTE: Function to add full url to images. MEDIA_URL value depends on .env variables and differs on build modes
 const addBaseMediaUrl = (url: string | null | undefined): string => {
@@ -57,26 +58,21 @@ export const ApiRequests = class ApiRequests {
   }
 
   _handleError(res: Response) {
-    let message: string;
+    // let message: string;
     switch (res.status) {
       case 401:
         {
           localStorage.removeItem('token');
-          message = 'Ошибка авторизации';
         }
         break;
-      default: {
-        message = 'Что-то пошло не так';
-      }
+      // default: {
+      //   message = 'Что-то пошло не так';
+      // }
     }
     return res
       .json()
       .then((err) =>
-        Promise.reject(
-          new Error(
-            `Ошибка ${res.status}. ${message}. Вот ответ сервера: ${err.detail}`
-          )
-        )
+        Promise.reject(new ApiError(err.message, res.status, err.detail))
       );
   }
 

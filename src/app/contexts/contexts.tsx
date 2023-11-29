@@ -4,7 +4,7 @@ import {
   CardContext,
   CardsContext,
   ShopListContext,
-  MessageContext,
+  MessagesContext,
 } from '.';
 import {
   ICardContext,
@@ -14,6 +14,8 @@ import {
   IMessageContext,
   api,
 } from '~/shared';
+import { IApiError } from '~/shared/errors';
+import { ApiMessageTargets, ApiMessageTypes } from '~/shared/enums';
 
 interface IContexts {
   children: ReactNode;
@@ -24,36 +26,44 @@ export const Contexts: FC<IContexts> = ({ children }) => {
   const [shopsData, setShopsData] = useState<IShopListContext>([]);
   const [cardsData, setCardsData] = useState<ICardsContext>([]);
   const [cardData, setCardData] = useState<ICardContext>(Object);
-  const [messageData, setMessageData] = useState<IMessageContext>(Object);
+  const [messagesData, setMessagesData] = useState<IMessageContext[]>([]);
 
   useEffect(() => {
+    const handleError = (err: IApiError) => {
+      setMessagesData((messagesData) => [
+        {
+          message: err.message,
+          type: ApiMessageTypes.error,
+          target: ApiMessageTargets.snack,
+        },
+        ...messagesData,
+      ]);
+    };
     api
       .getShops()
       .then((res) => {
         setShopsData(res);
       })
-      .catch((err) => console.log(err.message));
+      .catch(handleError);
     if (localStorage.getItem('token')) {
       api
         .getUser()
         .then((res) => {
           setUserData(res);
         })
-        .catch((err) => {
-          console.log(err.message);
-        });
+        .catch(handleError);
       api
         .getCards()
         .then((res) => {
           setCardsData(res);
         })
-        .catch((err) => console.log(err.message));
+        .catch(handleError);
     }
   }, []);
 
   return (
-    <MessageContext.Provider
-      value={{ message: messageData, setMessage: setMessageData }}
+    <MessagesContext.Provider
+      value={{ messages: messagesData, setMessages: setMessagesData }}
     >
       <ShopListContext.Provider
         value={{ shops: shopsData, setShops: setShopsData }}
@@ -70,6 +80,6 @@ export const Contexts: FC<IContexts> = ({ children }) => {
           </CardsContext.Provider>
         </UserContext.Provider>
       </ShopListContext.Provider>
-    </MessageContext.Provider>
+    </MessagesContext.Provider>
   );
 };

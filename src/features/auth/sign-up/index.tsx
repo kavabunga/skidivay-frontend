@@ -111,7 +111,6 @@ export const SignUpForm: FC<{
       password: data.password || '',
     };
     return signUp(request).then((res) => {
-      console.log('Регистрация успешна');
       return setRegistredEmail(res.email);
     });
   };
