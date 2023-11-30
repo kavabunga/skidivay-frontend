@@ -83,6 +83,7 @@ export interface IPostCard {
   barcode_number?: string;
   encoding_type?: string;
 }
+
 export interface IPatchCard {
   shop: number;
   name: string;

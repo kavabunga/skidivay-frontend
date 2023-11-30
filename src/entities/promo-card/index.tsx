@@ -1,4 +1,5 @@
 import { FC, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, IconButton } from '@mui/material';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import { UserContext } from '~/app';
@@ -16,9 +17,10 @@ interface PromoCardProps {
 
 export const PromoCard: FC<PromoCardProps> = ({ item }) => {
   const { user } = useContext(UserContext);
+  const navigate = useNavigate();
 
   function handleClick() {
-    return item;
+    navigate('/card/new', { relative: 'path', state: { shop: item } });
   }
 
   return (

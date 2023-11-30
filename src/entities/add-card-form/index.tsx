@@ -1,5 +1,5 @@
-import { FC, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { FC, useContext, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import Barcode from 'react-barcode';
 import { Box, TextField, Button, Autocomplete, Card } from '@mui/material';
@@ -82,6 +82,7 @@ export const AddCardForm: FC<AddCardFormType> = ({
     handleSubmit,
     watch,
     setError,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<{ [key: string]: string }>({
     mode: 'onTouched',
@@ -195,6 +196,14 @@ export const AddCardForm: FC<AddCardFormType> = ({
         });
     }
   };
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state.shop.name) {
+      setValue('shopName', location.state.shop.name);
+    }
+  }, [location.state.shop.name, setValue]);
 
   return (
     <Box
