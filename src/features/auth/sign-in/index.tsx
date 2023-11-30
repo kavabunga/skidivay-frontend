@@ -14,9 +14,13 @@ import { listStyle, linkStyle } from './style';
 
 interface ISignInForm {
   type?: 'activation' | 'signIn';
+  onResetPassword?: () => void;
 }
 
-export const SignInForm: FC<ISignInForm> = ({ type = 'signIn' }) => {
+export const SignInForm: FC<ISignInForm> = ({
+  type = 'signIn',
+  onResetPassword,
+}) => {
   const { setUser } = useContext(UserContext);
   const { setCards } = useContext(CardsContext);
   const navigate = useNavigate();
@@ -80,7 +84,9 @@ export const SignInForm: FC<ISignInForm> = ({ type = 'signIn' }) => {
     >
       <List sx={{ ...listStyle }} color="secondary" dense disablePadding>
         <ListItem disableGutters disablePadding dense>
-          <Link sx={{ ...linkStyle }}>Забыли пароль?</Link>
+          <Link onClick={onResetPassword} sx={{ ...linkStyle }}>
+            Забыли пароль?
+          </Link>
         </ListItem>
       </List>
     </AuthForm>

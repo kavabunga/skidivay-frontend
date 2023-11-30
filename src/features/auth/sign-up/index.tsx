@@ -1,12 +1,12 @@
+import { FC } from 'react';
+import * as z from 'zod';
 import { AuthForm, signUp } from '..';
 import { ISignUpRequest, authFormErrors } from '~/shared';
-import * as z from 'zod';
-import { Dispatch, FC, SetStateAction } from 'react';
 
 export const SignUpForm: FC<{
   defaultValues?: object;
-  setRegistredEmail: Dispatch<SetStateAction<string>>;
-}> = ({ defaultValues, setRegistredEmail }) => {
+  handleSetEmail: (data: string) => void;
+}> = ({ defaultValues, handleSetEmail }) => {
   const schema = z
     .object({
       name: z
@@ -23,7 +23,7 @@ export const SignUpForm: FC<{
         })
         .max(30)
         .email({ message: authFormErrors.wrongEmail }),
-      phone: z
+      phone_number: z
         .string({
           required_error: authFormErrors.required,
         })
@@ -66,7 +66,7 @@ export const SignUpForm: FC<{
       required: true,
     },
     {
-      name: 'phone',
+      name: 'phone_number',
       label: 'Телефон',
       type: 'text',
       defaultHelperText: ' ',
@@ -107,11 +107,13 @@ export const SignUpForm: FC<{
     const request: ISignUpRequest = {
       name: data.name || '',
       email: data.email || '',
-      phone_number: data.phone || '',
+      phone_number:
+        data.phone_number.replace(/\D/g, '').replace(/^7/, '') || '',
       password: data.password || '',
     };
+    console.log(request);
     return signUp(request).then((res) => {
-      return setRegistredEmail(res.email);
+      return handleSetEmail(res.email);
     });
   };
 

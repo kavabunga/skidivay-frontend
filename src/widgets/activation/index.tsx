@@ -41,9 +41,9 @@ export const Activation = () => {
         .activateEmail(uid || '', token || '')
         .then(() => {
           handleSuccess();
-          navigate('/', { replace: true });
         })
-        .catch(handleError);
+        .catch(handleError)
+        .finally(() => navigate('/', { replace: true }));
     }
     setIsLoading(false);
   }, [user, uid, token, navigate, setMessages]);
