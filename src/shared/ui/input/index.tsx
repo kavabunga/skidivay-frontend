@@ -1,6 +1,7 @@
-import { FC } from 'react';
+import { FC, forwardRef } from 'react';
 import { TextField, InputAdornment, InputProps } from '@mui/material';
 import ErrorIcon from '@mui/icons-material/Error';
+import { IMaskInput } from 'react-imask';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { helperTextStyle } from './style';
 
@@ -22,7 +23,18 @@ export interface InputType extends FieldType {
   onBlur?: () => void;
   disabled?: boolean;
   InputProps?: InputProps;
+  maskOptions?: IMask;
 }
+
+interface IMask {
+  mask?: string;
+  radix?: string;
+  unmask?: boolean | 'typed';
+}
+
+const Mask = forwardRef<HTMLInputElement, IMask>(function Mask(props, ref) {
+  return <IMaskInput {...props} inputRef={ref} overwrite />;
+});
 
 export const Input: FC<InputType> = ({
   name,
@@ -30,6 +42,7 @@ export const Input: FC<InputType> = ({
   register,
   errors,
   hideAsterisk,
+  maskOptions,
   ...props
 }) => {
   return (
@@ -41,6 +54,7 @@ export const Input: FC<InputType> = ({
       InputLabelProps={{ required: !hideAsterisk }}
       inputProps={{
         ...register(name),
+        ...maskOptions,
       }}
       InputProps={{
         endAdornment: !!errors[name] && (
@@ -48,6 +62,9 @@ export const Input: FC<InputType> = ({
             <ErrorIcon color="error" fontSize="small" />
           </InputAdornment>
         ),
+        ...(maskOptions?.mask && {
+          inputComponent: Mask as never,
+        }),
       }}
       variant="outlined"
       fullWidth
