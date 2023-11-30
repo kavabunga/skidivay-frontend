@@ -5,6 +5,7 @@ import { SearchChips, SignOut } from '~/features';
 import { CardsList } from '~/widgets';
 import { mainContainerStyle, linkStyle } from './styles';
 import { SearchLine } from '~/features/search-line/ui';
+import notFoundImg from '~/shared/assets/not-found.jpg';
 
 type UserCardsProps = {
   tags: {
@@ -28,7 +29,14 @@ export const UserCards: FC<UserCardsProps> = ({ tags }) => {
       </Typography>
       <SearchLine />
       <SearchChips items={tags} />
-      <CardsList items={cards || []} />
+      {cards.length ? (
+        <CardsList items={cards || []} />
+      ) : (
+        <>
+          <p>Ничего не найдено</p>
+          <img src={notFoundImg} alt="Ничего не найдено" />
+        </>
+      )}
       <SignOut
         element={Button}
         variant="text"
