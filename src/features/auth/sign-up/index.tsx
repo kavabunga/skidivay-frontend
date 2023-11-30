@@ -27,9 +27,7 @@ export const SignUpForm: FC<{
         .string({
           required_error: authFormErrors.required,
         })
-        .min(10, { message: authFormErrors.wrongPhone })
-        .max(10, { message: authFormErrors.wrongPhone })
-        .regex(/^\d+$/, {
+        .regex(/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/, {
           message: authFormErrors.wrongPhone,
         }),
       password: z
@@ -70,12 +68,14 @@ export const SignUpForm: FC<{
     {
       name: 'phone',
       label: 'Телефон',
-      type: 'tel',
+      type: 'text',
       defaultHelperText: ' ',
-      //NOTE: When mask will be applied can turn on autocomplete
-      // autoComplete: 'tel',
+      autoComplete: 'tel',
       required: true,
       placeholder: '+7 (999) 999-99-99',
+      maskOptions: {
+        mask: '+7 (000) 000-00-00',
+      },
     },
     {
       name: 'email',
