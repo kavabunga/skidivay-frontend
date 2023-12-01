@@ -1,10 +1,10 @@
-import { Type, Target } from '../enums';
+import { ApiMessageTypes, ApiMessageTargets } from '../enums';
 
 export interface ICard {
   id: number;
-  shop?: IShop;
+  shop: IShop;
   name: string;
-  pub_date?: string;
+  pub_date: string;
   image?: string | null;
   card_number?: string;
   barcode_number?: string;
@@ -83,6 +83,7 @@ export interface IPostCard {
   barcode_number?: string;
   encoding_type?: string;
 }
+
 export interface IPatchCard {
   shop: number;
   name: string;
@@ -103,6 +104,6 @@ export interface IPostCardWithShop {
 
 export interface IMessageContext {
   message: string;
-  type: Type;
-  target: Target;
+  type: ApiMessageTypes;
+  target: ApiMessageTargets;
 }

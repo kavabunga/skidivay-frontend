@@ -1,14 +1,22 @@
-import { useContext } from 'react';
+import { FC, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link, List, ListItem } from '@mui/material';
 import * as z from 'zod';
 import { CardsContext, UserContext } from '~/app';
 import { getUser } from '~/features';
 import { ISignInRequest, api, authFormErrors } from '~/shared';
-import { AuthForm, onSignIn } from '..';
+import { AuthForm, signIn } from '..';
 import { listStyle, linkStyle } from './style';
 
-export const SignInForm = () => {
+//NOTE: Sign In form types affect on submit behavior
+// "activation" doesn't redirect after signin
+// "signIn" and default do redirect to homepage
+
+interface ISignInForm {
+  type?: 'activation' | 'signIn';
+}
+
+export const SignInForm: FC<ISignInForm> = ({ type = 'signIn' }) => {
   const { setUser } = useContext(UserContext);
   const { setCards } = useContext(CardsContext);
   const navigate = useNavigate();
@@ -49,7 +57,7 @@ export const SignInForm = () => {
       email: data.email || '',
       password: data.password || '',
     };
-    onSignIn(request)
+    return signIn(request)
       .then(() => {
         const userPromise = getUser().then((res) => setUser && setUser(res));
         const cardsPromise = api
@@ -57,8 +65,10 @@ export const SignInForm = () => {
           .then((res) => setCards && setCards(res));
         return Promise.all([userPromise, cardsPromise]);
       })
-      .then(() => navigate('/'))
-      .catch((err) => console.log(err));
+      .then(() => {
+        type !== 'activation' && navigate('/');
+        return;
+      });
   };
 
   return (

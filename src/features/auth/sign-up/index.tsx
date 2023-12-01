@@ -1,8 +1,12 @@
-import { AuthForm, onSignUp } from '..';
+import { AuthForm, signUp } from '..';
 import { ISignUpRequest, authFormErrors } from '~/shared';
 import * as z from 'zod';
+import { Dispatch, FC, SetStateAction } from 'react';
 
-export const SignUpForm = () => {
+export const SignUpForm: FC<{
+  defaultValues?: object;
+  setRegistredEmail: Dispatch<SetStateAction<string>>;
+}> = ({ defaultValues, setRegistredEmail }) => {
   const schema = z
     .object({
       name: z
@@ -23,11 +27,7 @@ export const SignUpForm = () => {
         .string({
           required_error: authFormErrors.required,
         })
-        .min(10, { message: authFormErrors.wrongPhone })
-        .max(10, { message: authFormErrors.wrongPhone })
-
-        //NOTE: Previous option: /^((8|\+7)[- ]?)?(\(?\d{3}\)?[- ]?)?[\d\- ]{7,10}$/
-        .regex(/^\d+$/, {
+        .regex(/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/, {
           message: authFormErrors.wrongPhone,
         }),
       password: z
@@ -68,11 +68,14 @@ export const SignUpForm = () => {
     {
       name: 'phone',
       label: 'Телефон',
-      type: 'tel',
+      type: 'text',
       defaultHelperText: ' ',
-      // autoComplete: 'tel',
+      autoComplete: 'tel',
       required: true,
       placeholder: '+7 (999) 999-99-99',
+      maskOptions: {
+        mask: '+7 (000) 000-00-00',
+      },
     },
     {
       name: 'email',
@@ -107,9 +110,9 @@ export const SignUpForm = () => {
       phone_number: data.phone || '',
       password: data.password || '',
     };
-    onSignUp(request)
-      .then((res) => console.log(res || 'Успех'))
-      .catch((err) => console.log(err));
+    return signUp(request).then((res) => {
+      return setRegistredEmail(res.email);
+    });
   };
 
   return (
@@ -118,6 +121,7 @@ export const SignUpForm = () => {
       schema={schema}
       button={{ label: 'Далее', fullWidth: true }}
       submit={submit}
+      defaultValues={defaultValues}
     />
   );
 };

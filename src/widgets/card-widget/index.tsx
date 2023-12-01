@@ -1,27 +1,24 @@
 import { useContext, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import {
-  Button,
-  Container,
-  IconButton,
-  Stack,
-  Box,
-  Typography,
-} from '@mui/material';
+import { Button, IconButton, Stack, Box, Typography } from '@mui/material';
 import CreateIcon from '@mui/icons-material/Create';
 import { BackButton } from '~/features';
 import { CardFull, EditCardForm } from '~/entities';
 import { Liker } from '~/features';
 import {
+  containerStyle,
   buttonStyle,
   topButtonsStyle,
   likerWrapperStyle,
   deleteTitleStyle,
 } from './style';
-import { CardsContext } from '~/app';
+import { CardsContext, MessagesContext } from '~/app';
 import { api } from '~/shared';
+import { IApiError } from '~/shared/errors';
+import { ApiMessageTargets, ApiMessageTypes } from '~/shared/enums';
 
 export const CardWidget = () => {
+  const { messages, setMessages } = useContext(MessagesContext);
   const { cards, setCards } = useContext(CardsContext);
   const navigate = useNavigate();
   const [isEditActive, setIsEditActive] = useState(false);
@@ -61,17 +58,33 @@ export const CardWidget = () => {
       .deleteCard(cardId)
       .then(() => {
         const newCards = cards.filter((card) => card.card.id != cardId);
-        console.log(newCards);
         return setCards && setCards(newCards);
       })
-      .then(() => navigate('/'))
-      .catch((err) => {
-        console.log(err);
+      .then(() => {
+        setMessages([
+          {
+            message: 'Карта удалена',
+            type: ApiMessageTypes.success,
+            target: ApiMessageTargets.snack,
+          },
+          ...messages,
+        ]);
+        navigate('/');
+      })
+      .catch((err: IApiError) => {
+        setMessages([
+          {
+            message: err.message,
+            type: ApiMessageTypes.error,
+            target: ApiMessageTargets.snack,
+          },
+          ...messages,
+        ]);
       });
   };
 
   return (
-    <Container sx={{ display: 'flex', flexDirection: 'column' }}>
+    <Stack useFlexGap sx={containerStyle}>
       <Stack
         direction="row"
         justifyContent="space-between"
@@ -135,6 +148,6 @@ export const CardWidget = () => {
           </Button>
         </Stack>
       )}
-    </Container>
+    </Stack>
   );
 };

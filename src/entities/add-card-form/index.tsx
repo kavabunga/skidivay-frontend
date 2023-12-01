@@ -1,11 +1,11 @@
-import { FC, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { FC, useContext, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import Barcode from 'react-barcode';
 import { Box, TextField, Button, Autocomplete, Card } from '@mui/material';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { CardsContext, ShopListContext } from '~/app';
+import { CardsContext, MessagesContext, ShopListContext } from '~/app';
 import { ICardContext, IShop, cardFormErrors, Input } from '~/shared';
 import {
   formStyle,
@@ -15,6 +15,8 @@ import {
   barcodeStyle,
 } from './style';
 import { AddCardFormModel, AddCardWithShopFormModel } from './model';
+import { IApiError } from '~/shared/errors';
+import { ApiMessageTargets, ApiMessageTypes } from '~/shared/enums';
 
 //NOTE: In case of clearing the field with the built in close-button, the value becomes NULL, so react-hook-form fires type error. That's why we use 'required' error text as invalid type eroor text in shopName field
 const schema = z
@@ -70,6 +72,7 @@ export const AddCardForm: FC<AddCardFormType> = ({
     onClick: () => {},
   },
 }) => {
+  const { messages, setMessages } = useContext(MessagesContext);
   const { shops } = useContext(ShopListContext);
   const { cards, setCards } = useContext(CardsContext);
   const navigate = useNavigate();
@@ -78,6 +81,8 @@ export const AddCardForm: FC<AddCardFormType> = ({
     register,
     handleSubmit,
     watch,
+    setError,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<{ [key: string]: string }>({
     mode: 'onTouched',
@@ -98,9 +103,50 @@ export const AddCardForm: FC<AddCardFormType> = ({
           };
           return setCards && setCards([...cards, newCard]);
         })
-        .then(() => navigate('/'))
-        .catch((err) => {
-          console.log(err);
+        .then(() => {
+          setMessages([
+            {
+              message: 'Карта успешно добавлена',
+              type: ApiMessageTypes.success,
+              target: ApiMessageTargets.snack,
+            },
+            ...messages,
+          ]);
+          navigate('/');
+        })
+        .catch((err: IApiError) => {
+          if (err.status === 400 && err.detail) {
+            Object.entries(err.detail).forEach((entry) => {
+              const [key, value] = entry;
+              if (key in data) {
+                setError(key, {
+                  type: 'server',
+                  message: value.join('; '),
+                });
+              } else {
+                setMessages([
+                  {
+                    message:
+                      key === 'non_field_errors'
+                        ? value.join('; ')
+                        : err.message,
+                    type: ApiMessageTypes.error,
+                    target: ApiMessageTargets.snack,
+                  },
+                  ...messages,
+                ]);
+              }
+            });
+          } else {
+            setMessages([
+              {
+                message: err.message,
+                type: ApiMessageTypes.error,
+                target: ApiMessageTargets.snack,
+              },
+              ...messages,
+            ]);
+          }
         });
     } else {
       new AddCardWithShopFormModel(data)
@@ -114,17 +160,50 @@ export const AddCardForm: FC<AddCardFormType> = ({
           return setCards && setCards([newCard, ...cards]);
         })
         .then(() => navigate('/'))
-        .catch((err) => {
-          console.log(err);
+        .catch((err: IApiError) => {
+          if (err.status === 400 && err.detail) {
+            Object.entries(err.detail).forEach((entry) => {
+              const [key, value] = entry;
+              if (key in data) {
+                setError(key, {
+                  type: 'server',
+                  message: value.join('; '),
+                });
+              } else {
+                setMessages([
+                  {
+                    message:
+                      key === 'non_field_errors'
+                        ? value.join('; ')
+                        : err.message,
+                    type: ApiMessageTypes.error,
+                    target: ApiMessageTargets.snack,
+                  },
+                  ...messages,
+                ]);
+              }
+            });
+          } else {
+            setMessages([
+              {
+                message: err.message,
+                type: ApiMessageTypes.error,
+                target: ApiMessageTargets.snack,
+              },
+              ...messages,
+            ]);
+          }
         });
     }
   };
 
-  //NOTE: Code for barcode detection
-  // const onBarcodeDetect = () => {
-  //   setValue('barcodeNumber', '123456789123', { shouldTouch: true });
-  //   trigger(['barcodeNumber', 'cardNumber']);
-  // };
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state.shop.name) {
+      setValue('shopName', location.state.shop.name);
+    }
+  }, [location.state.shop.name, setValue]);
 
   return (
     <Box
@@ -147,8 +226,9 @@ export const AddCardForm: FC<AddCardFormType> = ({
             freeSolo
             fullWidth
             autoSelect
+            //NOTE: If undefined, on user input component would switch from uncontrolled to controlled
             value={value || null}
-            options={shops ? shops.map((option) => option.name) : ['']}
+            options={shops.map((option) => option.name)}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -187,31 +267,15 @@ export const AddCardForm: FC<AddCardFormType> = ({
       {watch('barcodeNumber') && (
         <Box sx={{ paddingBottom: '1.25rem' }}>
           <Card sx={{ ...barcodeStyle }} variant="outlined">
+            {/* //NOTE: Can also use "format" attribute to pass barcode format to the library */}
             <Barcode
               displayValue={false}
               margin={0}
               value={watch('barcodeNumber')}
-              // format={'EAN13'}
             />
           </Card>
         </Box>
       )}
-      {/* {watch('barcodeNumber') && (
-
-      )} */}
-      {/* {!watch('barcodeNumber') && (
-        <Button
-          variant="outlined"
-          fullWidth
-          sx={buttonStyle}
-          {...buttonAddBarcode}
-          onClick={onBarcodeDetect}
-          endIcon={<CameraAltOutlinedIcon />}
-        >
-          {buttonAddBarcode.label}
-        </Button>
-      )} */}
-
       <Button
         type="submit"
         variant="contained"

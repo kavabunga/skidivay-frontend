@@ -13,11 +13,7 @@ export const Home = () => {
 
   return (
     <Container component="main" sx={{ ...mainContainerStyle }}>
-      <Typography
-        component="p"
-        textAlign="center"
-        sx={{ paddingBottom: '1rem', ...paragraphStyle }}
-      >
+      <Typography component="p" textAlign="center" sx={{ ...paragraphStyle }}>
         Удобный и быстрый доступ к вашим картам лояльности в любом месте
       </Typography>
 
@@ -31,15 +27,17 @@ export const Home = () => {
       <Typography
         component="p"
         textAlign="left"
-        sx={{ paddingTop: '1rem', ...paragraphStyle }}
+        sx={{ ...paragraphStyle, lineHeight: 1 }}
       >
-        Добавьте в свой электронный кошелёк
+        Добавьте в свой кошелёк
       </Typography>
 
       <PromoSlider items={shops} />
 
       <AccentButton
-        onClick={() => navigate('/auth', { relative: 'path' })}
+        onClick={() =>
+          navigate('/auth', { relative: 'path', state: { tab: 1 } })
+        }
         children={'Попробовать'}
       />
     </Container>

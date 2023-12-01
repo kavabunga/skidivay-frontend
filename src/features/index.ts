@@ -8,3 +8,4 @@ export * from './input-selector';
 export * from './promo-slider';
 export * from './user';
 export * from './liker';
+export * from './cards';
