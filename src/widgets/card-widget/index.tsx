@@ -13,7 +13,7 @@ import {
   deleteTitleStyle,
 } from './style';
 import { CardsContext, MessagesContext } from '~/app';
-import { api } from '~/shared';
+import { ICardContext, api } from '~/shared';
 import { IApiError } from '~/shared/errors';
 import { ApiMessageTargets, ApiMessageTypes } from '~/shared/enums';
 
@@ -25,12 +25,19 @@ export const CardWidget = () => {
   const [isDeleteActive, setIsDeleteActive] = useState(false);
   const id = useParams().id;
   const cardId = Number(id);
-  const card = cards.find((item) => item.card.id.toString() === id) || {
+  const card: ICardContext = cards.find(
+    (item) => item.card.id.toString() === id
+  ) || {
     card: {
       id: 0,
+      shop: {
+        id: 0,
+        name: 'Карта не найдена',
+      },
       name: 'Карта не найдена',
       card_number: '',
       barcode_number: '',
+      pub_date: '',
     },
     owner: true,
     favourite: false,
