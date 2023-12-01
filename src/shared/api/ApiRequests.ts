@@ -1,7 +1,6 @@
 import {
   ICard,
   ICardContext,
-  INewCardResponse,
   IPatchCard,
   IPostCard,
   IPostCardWithShop,
@@ -150,12 +149,10 @@ export const ApiRequests = class ApiRequests {
       headers: this._headers,
       body: JSON.stringify(data),
     };
-    return this._requestAuthorizedApi(url, options).then(
-      (res: INewCardResponse) => {
-        res.shop?.logo && (res.shop.logo = addBaseMediaUrl(res.shop.logo));
-        return res;
-      }
-    );
+    return this._requestAuthorizedApi(url, options).then((res: ICard) => {
+      res.shop?.logo && (res.shop.logo = addBaseMediaUrl(res.shop.logo));
+      return res;
+    });
   }
 
   postCardWithShop(data: IPostCardWithShop) {
@@ -165,12 +162,10 @@ export const ApiRequests = class ApiRequests {
       headers: this._headers,
       body: JSON.stringify(data),
     };
-    return this._requestAuthorizedApi(url, options).then(
-      (res: INewCardResponse) => {
-        res.shop?.logo && (res.shop.logo = addBaseMediaUrl(res.shop.logo));
-        return res;
-      }
-    );
+    return this._requestAuthorizedApi(url, options).then((res: ICard) => {
+      res.shop?.logo && (res.shop.logo = addBaseMediaUrl(res.shop.logo));
+      return res;
+    });
   }
 
   editCard(data: IPatchCard, id: number) {

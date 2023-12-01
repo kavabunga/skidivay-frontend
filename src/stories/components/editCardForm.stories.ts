@@ -31,6 +31,7 @@ export const Default: Story = {
         name: 'Пятерочка',
         barcode_number: '000000000000',
         card_number: '12323423423423',
+        pub_date: '',
       },
       owner: true,
       favourite: false,
