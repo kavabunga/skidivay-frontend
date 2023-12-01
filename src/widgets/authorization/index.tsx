@@ -53,8 +53,8 @@ export const AuthWidget = () => {
   const [widgetScreen, setWidgetScreen] = useState('default');
 
   useEffect(() => {
-    setCurrentTab(location.state.tab);
-  }, [location.state.tab]);
+    setCurrentTab(location?.state?.tab ?? 0);
+  }, [location.state]);
 
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setCurrentTab(newValue);
