@@ -200,10 +200,8 @@ export const AddCardForm: FC<AddCardFormType> = ({
   const location = useLocation();
 
   useEffect(() => {
-    if (location.state.shop.name) {
-      setValue('shopName', location.state.shop.name || '');
-    }
-  }, [location.state.shop.name, setValue]);
+    setValue('shopName', location.state?.shop?.name ?? '');
+  }, [location.state, setValue]);
 
   return (
     <Box
