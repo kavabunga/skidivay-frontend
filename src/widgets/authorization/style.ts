@@ -1,23 +1,27 @@
-const style = {
-  authWidget: {
-    display: 'flex',
-    flexDirection: 'column',
-    paddingX: '30px',
-    paddingTop: '8px',
-    paddingBottom: '30px',
-  },
-  authTitle: {
-    fontSize: 32,
-    lineHeight: 1.25,
-    fontWeight: 700,
-    paddingTop: '40px',
-    paddingBottom: '20px',
-  },
-  tabs: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-  },
+import { SxProps } from '@mui/material';
+
+export const widgetStyle: SxProps = {
+  display: 'flex',
+  flexDirection: 'column',
+  paddingX: '30px',
+  paddingTop: '.5rem',
+  paddingBottom: '1.875rem',
 };
 
-export default style;
+export const titleStyle: SxProps = {
+  fontSize: 28,
+  lineHeight: 1.28,
+  fontWeight: 400,
+  paddingTop: '1.25rem',
+};
+
+export const paragraphStyle: SxProps = {
+  fontSize: '.875rem',
+  fontWeight: 400,
+  lineHeight: 1.42,
+  paddingTop: '.75rem',
+};
+
+export const topButtonsStyle: SxProps = {
+  paddingTop: '.625rem',
+};

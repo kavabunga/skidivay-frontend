@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosOutlined';
-import { backButtonStyle } from './style';
+import { backButtonStyle, iconStyle } from './style';
 
 export const BackButton = () => {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ export const BackButton = () => {
       onClick={() => navigate(-1)}
       variant="text"
       color="surface"
-      startIcon={<ArrowBackIosOutlinedIcon />}
+      startIcon={<ArrowBackIosOutlinedIcon sx={iconStyle} />}
       sx={backButtonStyle}
     >
       Назад

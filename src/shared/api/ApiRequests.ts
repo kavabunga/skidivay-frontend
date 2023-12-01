@@ -213,7 +213,7 @@ export const ApiRequests = class ApiRequests {
   }
 
   activateEmail(uid: string, token: string) {
-    const url = `${this._url}/users/activate/`;
+    const url = `${this._url}/users/activation/`;
     const options: IRequestOptions = {
       method: 'POST',
       headers: this._headers,
