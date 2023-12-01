@@ -4,7 +4,7 @@ import {
   CardContext,
   CardsContext,
   ShopListContext,
-  MessageContext,
+  MessagesContext,
   SortedCardsContext,
 } from '.';
 import {
