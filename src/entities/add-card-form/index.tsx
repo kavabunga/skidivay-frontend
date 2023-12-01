@@ -201,7 +201,7 @@ export const AddCardForm: FC<AddCardFormType> = ({
 
   useEffect(() => {
     if (location.state.shop.name) {
-      setValue('shopName', location.state.shop.name);
+      setValue('shopName', location.state.shop.name || '');
     }
   }, [location.state.shop.name, setValue]);
 
