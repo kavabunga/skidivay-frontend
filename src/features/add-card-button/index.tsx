@@ -12,7 +12,7 @@ export const AddCardButton: FC<AddCardButton> = ({ text }) => {
   const navigate = useNavigate();
 
   function handleClick() {
-    navigate('/card/new', { state: { shop: '' } });
+    navigate('/card/new');
   }
 
   return (
