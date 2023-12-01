@@ -4,7 +4,8 @@ import {
   CardContext,
   CardsContext,
   ShopListContext,
-  MessagesContext,
+  MessageContext,
+  SortedCardsContext,
 } from '.';
 import {
   ICardContext,
@@ -26,6 +27,7 @@ export const Contexts: FC<IContexts> = ({ children }) => {
   const [shopsData, setShopsData] = useState<IShopListContext>([]);
   const [cardsData, setCardsData] = useState<ICardsContext>([]);
   const [cardData, setCardData] = useState<ICardContext>(Object);
+  const [sortedCards, setSortedCards] = useState<ICardsContext>([]);
   const [messagesData, setMessagesData] = useState<IMessageContext[]>([]);
 
   useEffect(() => {
@@ -56,6 +58,7 @@ export const Contexts: FC<IContexts> = ({ children }) => {
         .getCards()
         .then((res) => {
           setCardsData(res);
+          setSortedCards(res);
         })
         .catch(handleError);
     }
@@ -75,7 +78,11 @@ export const Contexts: FC<IContexts> = ({ children }) => {
             <CardContext.Provider
               value={{ card: cardData, setCard: setCardData }}
             >
-              {children}
+              <SortedCardsContext.Provider
+                value={{ cards: sortedCards, setSortedCards: setSortedCards }}
+              >
+                {children}
+              </SortedCardsContext.Provider>
             </CardContext.Provider>
           </CardsContext.Provider>
         </UserContext.Provider>

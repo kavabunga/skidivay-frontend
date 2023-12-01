@@ -1,9 +1,11 @@
 import { FC, useContext } from 'react';
-import { CardsContext } from '~/app/contexts';
+import { SortedCardsContext } from '~/app/contexts';
 import { Container, Typography, Button } from '@mui/material';
 import { SearchChips, SignOut } from '~/features';
 import { CardsList } from '~/widgets';
 import { mainContainerStyle, linkStyle } from './styles';
+import { SearchLine } from '~/features/search-line/ui';
+import notFoundImg from '~/shared/assets/not-found.jpg';
 
 type UserCardsProps = {
   tags: {
@@ -12,7 +14,7 @@ type UserCardsProps = {
 };
 
 export const UserCards: FC<UserCardsProps> = ({ tags }) => {
-  const { cards } = useContext(CardsContext);
+  const { cards } = useContext(SortedCardsContext);
   return (
     <Container component="main" sx={{ ...mainContainerStyle }}>
       <Typography
@@ -25,8 +27,16 @@ export const UserCards: FC<UserCardsProps> = ({ tags }) => {
       >
         Мои карты
       </Typography>
+      <SearchLine />
       <SearchChips items={tags} />
-      <CardsList items={cards || []} />
+      {cards.length ? (
+        <CardsList items={cards || []} />
+      ) : (
+        <>
+          <p>Ничего не найдено</p>
+          <img src={notFoundImg} alt="Ничего не найдено" />
+        </>
+      )}
       <SignOut
         element={Button}
         variant="text"
