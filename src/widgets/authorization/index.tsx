@@ -7,7 +7,10 @@ import {
   SignUpForm,
   BackButton,
 } from '~/features';
-import { RegistrationSuccessWidget } from '~/widgets';
+import {
+  RegistrationSuccessWidget,
+  ResetPasswordRequestSuccessWidget,
+} from '~/widgets';
 import {
   widgetStyle,
   titleStyle,
@@ -76,6 +79,11 @@ export const AuthWidget = () => {
     setWidgetScreen('registrationSuccess');
   };
 
+  const handleShowPasswordResetSuccess = (data: string) => {
+    setRegistredEmail(data);
+    setWidgetScreen('resetPasswordRequestSuccess');
+  };
+
   switch (widgetScreen) {
     case 'registrationSuccess':
       return (
@@ -84,6 +92,8 @@ export const AuthWidget = () => {
           onClose={handleShowDefault}
         />
       );
+    case 'resetPasswordRequestSuccess':
+      return <ResetPasswordRequestSuccessWidget email={registredEmail} />;
     case 'passwordReset':
       return (
         <Stack component="section" sx={widgetStyle} spacing={2.5} useFlexGap>
@@ -97,7 +107,7 @@ export const AuthWidget = () => {
             Введите email и последние четыре цифры номера, который был указан
             при регистрации.
           </Typography>
-          <ResetPasswordForm handleSetEmail={handleShowRegistrationSuccess} />
+          <ResetPasswordForm handleSetEmail={handleShowPasswordResetSuccess} />
         </Stack>
       );
     case 'default':

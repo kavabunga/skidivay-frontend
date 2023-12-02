@@ -1,4 +1,9 @@
-import { ISignInRequest, ISignUpRequest, api } from '~/shared';
+import {
+  IRequestResetPassword,
+  ISignInRequest,
+  ISignUpRequest,
+  api,
+} from '~/shared';
 
 export function signUp(data: ISignUpRequest) {
   return api.signUp(data);
@@ -13,4 +18,8 @@ export function signIn(data: ISignInRequest) {
 
 export function signOut() {
   return api.signOut().then(() => localStorage.removeItem('token'));
+}
+
+export function requestResetPassword(data: IRequestResetPassword) {
+  return api.requestResetPassword(data);
 }
