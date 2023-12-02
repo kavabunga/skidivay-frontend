@@ -43,7 +43,7 @@ export const SignUpForm: FC<{
         .min(1, { message: authFormErrors.requiredPassword })
         .min(8, { message: authFormErrors.wrongPasswordCreated })
         .regex(
-          /^(?=.*[a-zа-яё])(?=.*[A-ZА-ЯЁ])(?=.*\d)[a-zA-Zа-яА-ЯёЁ\d\s!@#$%^&*()[]-_+=<>?]{1,}$/,
+          /^(?=.*[a-zа-яё])(?=.*[A-ZА-ЯЁ])(?=.*\d)[a-zA-Zа-яА-ЯёЁ\d\s!@#$%^&*()[\]\-_+=<>?]{1,}$/,
           {
             message: authFormErrors.wrongPasswordCreated,
           }
