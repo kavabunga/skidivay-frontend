@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, IconButton, Stack, Box, Typography } from '@mui/material';
-import CreateIcon from '@mui/icons-material/Create';
+import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 import { BackButton } from '~/features';
 import { CardFull, EditCardForm } from '~/entities';
 import { Liker } from '~/features';
@@ -15,10 +15,10 @@ import {
 import { CardsContext, MessagesContext } from '~/app';
 import { ICardContext, api } from '~/shared';
 import { IApiError } from '~/shared/errors';
-import { ApiMessageTargets, ApiMessageTypes } from '~/shared/enums';
+import { ApiMessageTypes } from '~/shared/enums';
 
 export const CardWidget = () => {
-  const { messages, setMessages } = useContext(MessagesContext);
+  const { setMessages } = useContext(MessagesContext);
   const { cards, setCards } = useContext(CardsContext);
   const navigate = useNavigate();
   const [isEditActive, setIsEditActive] = useState(false);
@@ -68,22 +68,20 @@ export const CardWidget = () => {
         return setCards && setCards(newCards);
       })
       .then(() => {
-        setMessages([
+        setMessages((messages) => [
           {
             message: 'Карта удалена',
             type: ApiMessageTypes.success,
-            target: ApiMessageTargets.snack,
           },
           ...messages,
         ]);
         navigate('/');
       })
       .catch((err: IApiError) => {
-        setMessages([
+        setMessages((messages) => [
           {
             message: err.message,
             type: ApiMessageTypes.error,
-            target: ApiMessageTargets.snack,
           },
           ...messages,
         ]);
@@ -95,16 +93,17 @@ export const CardWidget = () => {
       <Stack
         direction="row"
         justifyContent="space-between"
+        alignItems="center"
         sx={topButtonsStyle}
       >
         <BackButton />
         {!isEditActive && (
-          <Stack direction="row">
+          <Stack direction="row" spacing={1} useFlexGap>
             <Box sx={{ ...likerWrapperStyle }}>
               <Liker cardId={cardId} isLiked={isLiked} />
             </Box>
-            <IconButton onClick={handleEditEnable} sx={{ padding: 0.5 }}>
-              <CreateIcon />
+            <IconButton onClick={handleEditEnable} sx={{ padding: 0 }}>
+              <CreateOutlinedIcon />
             </IconButton>
           </Stack>
         )}
@@ -123,7 +122,11 @@ export const CardWidget = () => {
         handleSubmited={handleEditDisable}
       />
       {!isEditActive && !isDeleteActive && (
-        <Stack spacing={{ xs: 1, sm: 2 }} useFlexGap>
+        <Stack
+          spacing={{ xs: 1, sm: 2 }}
+          useFlexGap
+          sx={{ paddingTop: '.75rem' }}
+        >
           <Button variant="contained" sx={buttonStyle}>
             Поделиться картой
           </Button>
@@ -137,7 +140,11 @@ export const CardWidget = () => {
         </Stack>
       )}
       {isDeleteActive && (
-        <Stack spacing={{ xs: 1, sm: 2 }} useFlexGap>
+        <Stack
+          spacing={{ xs: 1, sm: 2 }}
+          useFlexGap
+          sx={{ paddingTop: '.75rem' }}
+        >
           <Typography sx={deleteTitleStyle}>Удалить карту?</Typography>
           <Button
             variant="contained"

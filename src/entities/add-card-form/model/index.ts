@@ -1,4 +1,4 @@
-import { IPostCard, IPostCardWithShop, api } from '~/shared';
+import { IPostCard, api } from '~/shared';
 
 interface IGettingData {
   [key: string]: string;
@@ -6,39 +6,23 @@ interface IGettingData {
 
 export class AddCardFormModel {
   data: IPostCard;
+  isNewShop: boolean;
 
   constructor(cardData: IGettingData) {
-    const { barcodeNumber, cardNumber, shopId, shopName } = cardData;
-
+    const { barcode_number, card_number, shop_id, shop_name } = cardData;
+    this.isNewShop = !shop_id;
     this.data = {
-      shop: Number(shopId),
-      name: shopName,
-      card_number: cardNumber,
-      barcode_number: barcodeNumber,
+      shop: shop_id ? Number(shop_id) : { name: shop_name },
+      name: shop_name,
+      card_number: card_number,
+      barcode_number: barcode_number,
       encoding_type: 'ean-13',
     };
   }
 
   public createNewCard() {
-    return api.postCard(this.data);
-  }
-}
-export class AddCardWithShopFormModel {
-  data: IPostCardWithShop;
-
-  constructor(cardData: IGettingData) {
-    const { barcodeNumber, cardNumber, shopName } = cardData;
-
-    this.data = {
-      shop: { name: shopName },
-      name: shopName,
-      card_number: cardNumber,
-      barcode_number: barcodeNumber,
-      encoding_type: 'ean-13',
-    };
-  }
-
-  public createNewCard() {
-    return api.postCardWithShop(this.data);
+    return this.isNewShop
+      ? api.postCardWithShop(this.data)
+      : api.postCard(this.data);
   }
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, SyntheticEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Typography, Box, Tabs, Tab, Stack } from '@mui/material';
 import {
@@ -56,7 +56,7 @@ export const AuthWidget = () => {
     setCurrentTab(location?.state?.tab ?? 0);
   }, [location.state]);
 
-  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_event: SyntheticEvent, newValue: number) => {
     setCurrentTab(newValue);
   };
 

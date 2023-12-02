@@ -27,11 +27,13 @@ export const SignInForm: FC<ISignInForm> = ({
   const schema = z.object({
     email: z
       .string({
-        required_error: authFormErrors.required,
+        required_error: authFormErrors.requiredEmail,
       })
+      .min(6, { message: authFormErrors.wrongEmail })
+      .max(256, { message: authFormErrors.wrongEmail })
       .email({ message: authFormErrors.wrongEmail }),
     password: z.string({
-      required_error: authFormErrors.required,
+      required_error: authFormErrors.requiredPassword,
     }),
   });
 

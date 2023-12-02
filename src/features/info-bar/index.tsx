@@ -2,7 +2,7 @@ import { useEffect, FC, useState, useContext } from 'react';
 import { Snackbar, Alert } from '@mui/material';
 import { AlertColor } from '@mui/material/Alert';
 import { MessagesContext } from '~/app';
-import { ApiMessageTargets, ApiMessageTypes } from '~/shared/enums';
+import { ApiMessageTypes } from '~/shared/enums';
 import { IMessageContext } from '~/shared';
 
 interface ISnackType {
@@ -21,7 +21,7 @@ export const InfoBar: FC = () => {
   const [snack, setSnack] = useState<ISnack>();
 
   useEffect(() => {
-    if (messages[0] && messages[0].target === ApiMessageTargets.snack) {
+    if (messages[0]) {
       setSnack({ message: messages[0], type: snackTypeSelector(messages[0]) });
       setOpen(true);
     }

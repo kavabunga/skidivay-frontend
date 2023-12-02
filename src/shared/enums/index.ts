@@ -3,8 +3,3 @@ export enum ApiMessageTypes {
   error = 'error',
   success = 'success',
 }
-
-export enum ApiMessageTargets {
-  snack = 'snack',
-  email = 'email',
-}

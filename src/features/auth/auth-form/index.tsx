@@ -7,8 +7,9 @@ import { FieldType } from '~/shared/ui';
 import { InputSelector } from '~/features';
 import { formStyle, buttonStyle } from './style';
 import { MessagesContext } from '~/app';
-import { ApiMessageTargets, ApiMessageTypes } from '~/shared/enums';
+import { ApiMessageTypes } from '~/shared/enums';
 import { IApiError } from '~/shared/errors';
+import { handleFormFieldsErrors } from '~/features/errors';
 
 export interface AuthFormType {
   fields: FieldType[];
@@ -30,50 +31,39 @@ export const AuthForm: FC<AuthFormType> = ({
   defaultValues,
   submit,
 }) => {
-  const { messages, setMessages } = useContext(MessagesContext);
+  const { setMessages } = useContext(MessagesContext);
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
     setError,
+    getValues,
+    formState: { errors, isSubmitting },
   } = useForm<{ [key: string]: string }>({
     mode: 'onTouched',
     resolver: zodResolver(schema),
     defaultValues: defaultValues,
   });
+
+  const handleError = (err: IApiError) => {
+    const fields = Object.keys(getValues());
+    if (err.status === 400 && err.detail && !err.detail.non_field_errors) {
+      handleFormFieldsErrors(err, fields, setError);
+    } else {
+      setMessages((messages) => [
+        {
+          message:
+            err.detail?.non_field_errors.join(' ') ||
+            err.message ||
+            'Ошибка сервера',
+          type: ApiMessageTypes.error,
+        },
+        ...messages,
+      ]);
+    }
+  };
+
   const onSubmit: SubmitHandler<{ [key: string]: string }> = (data) => {
-    submit(data).catch((err: IApiError) => {
-      if (err.status === 400 && err.detail) {
-        Object.entries(err.detail).forEach((entry) => {
-          const [key, value] = entry;
-          if (fields.some((field) => field.name === key)) {
-            setError(key, {
-              type: 'server',
-              message: value.join('; '),
-            });
-          } else {
-            setMessages([
-              {
-                message:
-                  key === 'non_field_errors' ? value.join('; ') : err.message,
-                type: ApiMessageTypes.error,
-                target: ApiMessageTargets.snack,
-              },
-              ...messages,
-            ]);
-          }
-        });
-      } else {
-        setMessages([
-          {
-            message: err.message,
-            type: ApiMessageTypes.error,
-            target: ApiMessageTargets.snack,
-          },
-          ...messages,
-        ]);
-      }
-    });
+    submit(data).catch(handleError);
   };
 
   return (

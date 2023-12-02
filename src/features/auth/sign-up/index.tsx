@@ -11,39 +11,41 @@ export const SignUpForm: FC<{
     .object({
       name: z
         .string({
-          required_error: authFormErrors.required,
+          required_error: authFormErrors.requiredName,
         })
-        .max(60)
-        .regex(/^[[a-z\][A-Z\][а-я\][А-Я\][Ёё\]\s\-—_]*$/, {
+        .max(60, {
+          message: authFormErrors.wrongName,
+        })
+        .regex(/^[A-Za-zА-Яа-яЁё\s!@#$%^&*()_+-=[\]{};:'",.<>?/\\|]*$/, {
           message: authFormErrors.wrongName,
         }),
       email: z
         .string({
-          required_error: authFormErrors.required,
+          required_error: authFormErrors.requiredEmail,
         })
-        .max(30)
+        .min(6, { message: authFormErrors.wrongEmail })
+        .max(256, { message: authFormErrors.wrongEmail })
         .email({ message: authFormErrors.wrongEmail }),
       phone_number: z
         .string({
-          required_error: authFormErrors.required,
+          required_error: authFormErrors.requiredPhone,
         })
         .regex(/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/, {
           message: authFormErrors.wrongPhone,
         }),
       password: z
         .string({
-          required_error: authFormErrors.required,
+          required_error: authFormErrors.requiredPassword,
         })
         .min(8, { message: authFormErrors.wrongPasswordCreated })
-        .max(20, { message: authFormErrors.wrongPasswordCreated })
         .regex(
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*()-_+=<>?]{1,}$/,
+          /^(?=.*[a-zа-яё])(?=.*[A-ZА-ЯЁ])(?=.*\d)[a-zA-Zа-яА-ЯёЁ\d\s!@#$%^&*()[]-_+=<>?]{1,}$/,
           {
             message: authFormErrors.wrongPasswordCreated,
           }
         ),
       passwordRepeat: z.string({
-        required_error: authFormErrors.required,
+        required_error: authFormErrors.requiredPassword,
       }),
     })
     .superRefine(({ passwordRepeat, password }, ctx) => {
@@ -64,6 +66,7 @@ export const SignUpForm: FC<{
       defaultHelperText: 'Как к вам обращаться?',
       autoComplete: 'name',
       required: true,
+      hideAsterisk: true,
     },
     {
       name: 'phone_number',
@@ -76,6 +79,7 @@ export const SignUpForm: FC<{
       maskOptions: {
         mask: '+7 (000) 000-00-00',
       },
+      hideAsterisk: true,
     },
     {
       name: 'email',
@@ -84,6 +88,7 @@ export const SignUpForm: FC<{
       defaultHelperText: ' ',
       autoComplete: 'email',
       required: true,
+      hideAsterisk: true,
     },
     {
       name: 'password',
@@ -92,6 +97,7 @@ export const SignUpForm: FC<{
       defaultHelperText: ' ',
       autoComplete: 'new-password',
       required: true,
+      hideAsterisk: true,
     },
     {
       name: 'passwordRepeat',
@@ -100,6 +106,7 @@ export const SignUpForm: FC<{
       defaultHelperText: ' ',
       autoComplete: 'new-password',
       required: true,
+      hideAsterisk: true,
     },
   ];
 

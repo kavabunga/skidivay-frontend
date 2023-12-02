@@ -1,14 +1,17 @@
+interface IDetail {
+  [key: string]: [string];
+}
 export interface IApiError {
   message: string;
   status: number;
-  detail?: object;
+  detail?: IDetail;
 }
 
 export class ApiError extends Error implements IApiError {
   status: number;
-  detail?: object;
+  detail?: IDetail;
 
-  constructor(message: string, status: number, detail?: object) {
+  constructor(message: string, status: number, detail?: IDetail) {
     super(message);
     this.name = 'ApiError';
     this.status = status;
