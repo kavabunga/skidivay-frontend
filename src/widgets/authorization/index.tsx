@@ -13,6 +13,7 @@ import {
   titleStyle,
   paragraphStyle,
   topButtonsStyle,
+  titleTabStyle,
 } from './style';
 
 interface TabPanelProps {
@@ -101,7 +102,7 @@ export const AuthWidget = () => {
       );
     case 'default':
       return (
-        <Stack component="section" sx={widgetStyle} spacing={2.5} useFlexGap>
+        <Stack component="section" sx={widgetStyle} useFlexGap>
           <Box>
             <Tabs
               indicatorColor="primary"
@@ -116,13 +117,13 @@ export const AuthWidget = () => {
             </Tabs>
           </Box>
           <CustomTabPanel value={currentTab} index={0}>
-            <Typography component="h1" sx={titleStyle}>
+            <Typography component="h1" sx={titleTabStyle}>
               Вход
             </Typography>
             <SignInForm onResetPassword={handleShowResetPassword} />
           </CustomTabPanel>
           <CustomTabPanel value={currentTab} index={1}>
-            <Typography component="h1" sx={titleStyle}>
+            <Typography component="h1" sx={titleTabStyle}>
               Регистрация
             </Typography>
             <SignUpForm handleSetEmail={handleShowRegistrationSuccess} />

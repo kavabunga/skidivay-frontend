@@ -29,12 +29,15 @@ export const SignInForm: FC<ISignInForm> = ({
       .string({
         required_error: authFormErrors.requiredEmail,
       })
+      .min(1, { message: authFormErrors.requiredEmail })
       .min(6, { message: authFormErrors.wrongEmail })
       .max(256, { message: authFormErrors.wrongEmail })
       .email({ message: authFormErrors.wrongEmail }),
-    password: z.string({
-      required_error: authFormErrors.requiredPassword,
-    }),
+    password: z
+      .string({
+        required_error: authFormErrors.requiredPassword,
+      })
+      .min(1, { message: authFormErrors.requiredPassword }),
   });
 
   const fields = [

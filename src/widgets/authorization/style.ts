@@ -15,6 +15,13 @@ export const titleStyle: SxProps = {
   paddingTop: '1.25rem',
 };
 
+export const titleTabStyle: SxProps = {
+  fontSize: 28,
+  lineHeight: 1.28,
+  fontWeight: 400,
+  paddingTop: '2.5rem',
+};
+
 export const paragraphStyle: SxProps = {
   fontSize: '.875rem',
   fontWeight: 400,

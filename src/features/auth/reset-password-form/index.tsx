@@ -13,13 +13,15 @@ export const ResetPasswordForm: FC<IResetPasswordForm> = ({
   const schema = z.object({
     email: z
       .string({
-        required_error: authFormErrors.required,
+        required_error: authFormErrors.requiredEmail,
       })
+      .min(1, { message: authFormErrors.requiredEmail })
       .email({ message: authFormErrors.wrongEmail }),
     phone_number: z
       .string({
-        required_error: authFormErrors.required,
+        required_error: authFormErrors.requiredPhone,
       })
+      .min(1, { message: authFormErrors.requiredPhone })
       .regex(/^\+7 \(XXX\) XXX-\d{2}-\d{2}$/, {
         message: authFormErrors.wrongPhone,
       }),

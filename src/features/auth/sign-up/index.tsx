@@ -13,6 +13,7 @@ export const SignUpForm: FC<{
         .string({
           required_error: authFormErrors.requiredName,
         })
+        .min(1, { message: authFormErrors.requiredName })
         .max(60, {
           message: authFormErrors.wrongName,
         })
@@ -23,6 +24,7 @@ export const SignUpForm: FC<{
         .string({
           required_error: authFormErrors.requiredEmail,
         })
+        .min(1, { message: authFormErrors.requiredEmail })
         .min(6, { message: authFormErrors.wrongEmail })
         .max(256, { message: authFormErrors.wrongEmail })
         .email({ message: authFormErrors.wrongEmail }),
@@ -30,6 +32,7 @@ export const SignUpForm: FC<{
         .string({
           required_error: authFormErrors.requiredPhone,
         })
+        .min(1, { message: authFormErrors.requiredPhone })
         .regex(/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/, {
           message: authFormErrors.wrongPhone,
         }),
@@ -37,6 +40,7 @@ export const SignUpForm: FC<{
         .string({
           required_error: authFormErrors.requiredPassword,
         })
+        .min(1, { message: authFormErrors.requiredPassword })
         .min(8, { message: authFormErrors.wrongPasswordCreated })
         .regex(
           /^(?=.*[a-zа-яё])(?=.*[A-ZА-ЯЁ])(?=.*\d)[a-zA-Zа-яА-ЯёЁ\d\s!@#$%^&*()[]-_+=<>?]{1,}$/,
@@ -44,9 +48,11 @@ export const SignUpForm: FC<{
             message: authFormErrors.wrongPasswordCreated,
           }
         ),
-      passwordRepeat: z.string({
-        required_error: authFormErrors.requiredPassword,
-      }),
+      passwordRepeat: z
+        .string({
+          required_error: authFormErrors.requiredPassword,
+        })
+        .min(1, { message: authFormErrors.requiredPassword }),
     })
     .superRefine(({ passwordRepeat, password }, ctx) => {
       if (passwordRepeat !== password) {

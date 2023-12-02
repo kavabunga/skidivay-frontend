@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect } from 'react';
+import { FC, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import Barcode from 'react-barcode';
@@ -27,6 +27,7 @@ const schema = z
         required_error: cardFormErrors.requiredShopName,
         invalid_type_error: cardFormErrors.requiredShopName,
       })
+      .min(1, { message: cardFormErrors.requiredShopName })
       .max(30)
       .regex(/^[A-Za-zА-Яа-яЁё\s\d!@#$%^&*()_+-=[\]{};:'",.<>?/\\|]+$/, {
         message: cardFormErrors.wrongShopName,
@@ -59,22 +60,25 @@ const schema = z
   });
 
 export const AddCardForm: FC = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const { setMessages } = useContext(MessagesContext);
   const { shops } = useContext(ShopListContext);
   const { cards, setCards } = useContext(CardsContext);
-  const navigate = useNavigate();
   const {
     control,
     register,
     handleSubmit,
     watch,
     setError,
-    setValue,
     getValues,
     formState: { errors, isSubmitting },
   } = useForm<{ [key: string]: string }>({
     mode: 'onTouched',
     resolver: zodResolver(schema),
+    defaultValues: {
+      shop_name: location.state?.shop?.name || null,
+    },
   });
 
   const handleError = (err: IApiError) => {
@@ -123,11 +127,9 @@ export const AddCardForm: FC = () => {
       .catch(handleError);
   };
 
-  const location = useLocation();
-
-  useEffect(() => {
-    setValue('shop_name', location.state?.shop?.name ?? '');
-  }, [location.state, setValue]);
+  // useEffect(() => {
+  //   setValue('shop_name', location.state?.shop?.name ?? '');
+  // }, [location.state, setValue]);
 
   return (
     <Box
