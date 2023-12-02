@@ -6,7 +6,7 @@ import { InfoBar } from '~/features';
 
 export const RootLayout = () => {
   return (
-    <Stack sx={{ minHeight: '100vh' }} direction="column">
+    <Stack sx={{ minHeight: '100vh', position: 'relative' }} direction="column">
       <Header type="standard" />
       <Box component="main">
         <Outlet />

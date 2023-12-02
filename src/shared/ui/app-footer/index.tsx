@@ -7,7 +7,7 @@ export const AppFooter = () => {
   const navigate = useNavigate();
 
   return (
-    <Box component={'footer'} height="7.5rem" bgcolor={'#313033'}>
+    <Box component={'footer'} height="7.5rem" bgcolor={'surface.inverse'}>
       <Stack
         direction={'column'}
         alignItems={'center'}
