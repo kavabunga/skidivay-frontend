@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect } from 'react';
+import { FC, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import Barcode from 'react-barcode';
@@ -6,7 +6,7 @@ import { Box, TextField, Button, Autocomplete, Card } from '@mui/material';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { CardsContext, MessagesContext, ShopListContext } from '~/app';
-import { ICardContext, IShop, cardFormErrors, Input } from '~/shared';
+import { ICardContext, IShop, Input, cardFormErrors } from '~/shared';
 import {
   formStyle,
   helperTextStyle,
@@ -14,194 +14,122 @@ import {
   buttonStyle,
   barcodeStyle,
 } from './style';
-import { AddCardFormModel, AddCardWithShopFormModel } from './model';
+import { AddCardFormModel } from './model';
 import { IApiError } from '~/shared/errors';
-import { ApiMessageTargets, ApiMessageTypes } from '~/shared/enums';
+import { ApiMessageTypes } from '~/shared/enums';
+import { handleFormFieldsErrors } from '~/features/errors';
 
 //NOTE: In case of clearing the field with the built in close-button, the value becomes NULL, so react-hook-form fires type error. That's why we use 'required' error text as invalid type eroor text in shopName field
 const schema = z
   .object({
-    shopName: z
+    shop_name: z
       .string({
-        required_error: cardFormErrors.required,
-        invalid_type_error: cardFormErrors.required,
+        required_error: cardFormErrors.requiredShopName,
+        invalid_type_error: cardFormErrors.requiredShopName,
       })
+      .min(1, { message: cardFormErrors.requiredShopName })
       .max(30)
-      .regex(/^[A-Za-zА-Яа-яЁё0-9+.\-_,!@=\s]*$/, {
+      .regex(/^[A-Za-zА-Яа-яЁё\s\d!@#$%^&*()_+-=[\]{};:'",.<>?/\\|]+$/, {
         message: cardFormErrors.wrongShopName,
       }),
-    cardNumber: z
+    card_number: z
       .string({})
       .max(40, { message: cardFormErrors.wrongNumber })
-      .regex(/^\d*$/, {
+      .regex(/^[A-Za-zА-Яа-яЁё\d\s_-]*$/, {
         message: cardFormErrors.wrongNumber,
       }),
-    barcodeNumber: z
+    barcode_number: z
       .string({})
       .max(40, { message: cardFormErrors.wrongNumber })
-      .regex(/^\d*$/, {
+      .regex(/^[A-Za-zА-Яа-яЁё\d\s_-]*$/, {
         message: cardFormErrors.wrongNumber,
       }),
   })
   .partial()
   .required({
-    shopName: true,
+    shop_name: true,
   })
-  .superRefine(({ barcodeNumber, cardNumber }, ctx) => {
-    if (!barcodeNumber && !cardNumber) {
+  .superRefine(({ barcode_number, card_number }, ctx) => {
+    if (!barcode_number && !card_number) {
       ctx.addIssue({
         code: 'custom',
         message: cardFormErrors.requiredBarcodeOrNumber,
-        path: ['cardNumber'],
+        path: ['card_number'],
       });
     }
   });
 
-export interface AddCardFormType {
-  buttonAddBarcode?: React.ComponentProps<typeof Button> & {
-    label: string;
-  };
-  buttonSave?: React.ComponentProps<typeof Button> & {
-    label: string;
-  };
-}
-
-export const AddCardForm: FC<AddCardFormType> = ({
-  buttonSave = {
-    label: 'Сохранить',
-    onClick: () => {},
-  },
-}) => {
-  const { messages, setMessages } = useContext(MessagesContext);
+export const AddCardForm: FC = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { setMessages } = useContext(MessagesContext);
   const { shops } = useContext(ShopListContext);
   const { cards, setCards } = useContext(CardsContext);
-  const navigate = useNavigate();
   const {
     control,
     register,
     handleSubmit,
     watch,
     setError,
-    setValue,
+    getValues,
     formState: { errors, isSubmitting },
   } = useForm<{ [key: string]: string }>({
     mode: 'onTouched',
     resolver: zodResolver(schema),
+    defaultValues: {
+      shop_name: location.state?.shop?.name || null,
+    },
   });
 
-  const onSubmit: SubmitHandler<{ [key: string]: string }> = (data) => {
-    const shop = shops.find((element: IShop) => element.name === data.shopName);
-    if (shop !== undefined) {
-      data = { ...data, shopId: shop.id.toString() };
-      new AddCardFormModel(data)
-        .createNewCard()
-        .then((res) => {
-          const newCard: ICardContext = {
-            card: res,
-            owner: true,
-            favourite: false,
-          };
-          return setCards && setCards([...cards, newCard]);
-        })
-        .then(() => {
-          setMessages([
-            {
-              message: 'Карта успешно добавлена',
-              type: ApiMessageTypes.success,
-              target: ApiMessageTargets.snack,
-            },
-            ...messages,
-          ]);
-          navigate('/');
-        })
-        .catch((err: IApiError) => {
-          if (err.status === 400 && err.detail) {
-            Object.entries(err.detail).forEach((entry) => {
-              const [key, value] = entry;
-              if (key in data) {
-                setError(key, {
-                  type: 'server',
-                  message: value.join('; '),
-                });
-              } else {
-                setMessages([
-                  {
-                    message:
-                      key === 'non_field_errors'
-                        ? value.join('; ')
-                        : err.message,
-                    type: ApiMessageTypes.error,
-                    target: ApiMessageTargets.snack,
-                  },
-                  ...messages,
-                ]);
-              }
-            });
-          } else {
-            setMessages([
-              {
-                message: err.message,
-                type: ApiMessageTypes.error,
-                target: ApiMessageTargets.snack,
-              },
-              ...messages,
-            ]);
-          }
-        });
+  const handleError = (err: IApiError) => {
+    const fields = Object.keys(getValues());
+    if (err.status === 400 && err.detail && !err.detail.non_field_errors) {
+      handleFormFieldsErrors(err, fields, setError);
     } else {
-      new AddCardWithShopFormModel(data)
-        .createNewCard()
-        .then((res) => {
-          const newCard: ICardContext = {
-            card: res,
-            owner: true,
-            favourite: false,
-          };
-          return setCards && setCards([newCard, ...cards]);
-        })
-        .then(() => navigate('/'))
-        .catch((err: IApiError) => {
-          if (err.status === 400 && err.detail) {
-            Object.entries(err.detail).forEach((entry) => {
-              const [key, value] = entry;
-              if (key in data) {
-                setError(key, {
-                  type: 'server',
-                  message: value.join('; '),
-                });
-              } else {
-                setMessages([
-                  {
-                    message:
-                      key === 'non_field_errors'
-                        ? value.join('; ')
-                        : err.message,
-                    type: ApiMessageTypes.error,
-                    target: ApiMessageTargets.snack,
-                  },
-                  ...messages,
-                ]);
-              }
-            });
-          } else {
-            setMessages([
-              {
-                message: err.message,
-                type: ApiMessageTypes.error,
-                target: ApiMessageTargets.snack,
-              },
-              ...messages,
-            ]);
-          }
-        });
+      setMessages((messages) => [
+        {
+          message:
+            err.detail?.non_field_errors.join(' ') ||
+            err.message ||
+            'Ошибка сервера',
+          type: ApiMessageTypes.error,
+        },
+        ...messages,
+      ]);
     }
   };
 
-  const location = useLocation();
+  const onSubmit: SubmitHandler<{ [key: string]: string }> = (data) => {
+    const shop = shops.find(
+      (element: IShop) => element.name === data.shop_name
+    );
+    data = { ...data, shop_id: shop?.id.toString() || '' };
+    new AddCardFormModel(data)
+      .createNewCard()
+      .then((res) => {
+        const newCard: ICardContext = {
+          card: res,
+          owner: true,
+          favourite: false,
+        };
+        return setCards && setCards([...cards, newCard]);
+      })
+      .then(() => {
+        setMessages((messages) => [
+          {
+            message: 'Карта успешно добавлена',
+            type: ApiMessageTypes.success,
+          },
+          ...messages,
+        ]);
+        navigate('/');
+      })
+      .catch(handleError);
+  };
 
-  useEffect(() => {
-    setValue('shopName', location.state?.shop?.name ?? '');
-  }, [location.state, setValue]);
+  // useEffect(() => {
+  //   setValue('shop_name', location.state?.shop?.name ?? '');
+  // }, [location.state, setValue]);
 
   return (
     <Box
@@ -211,7 +139,7 @@ export const AddCardForm: FC<AddCardFormType> = ({
       onSubmit={handleSubmit(onSubmit)}
     >
       <Controller
-        name="shopName"
+        name="shop_name"
         control={control}
         render={({
           field: { value, onChange, onBlur, ref },
@@ -243,7 +171,7 @@ export const AddCardForm: FC<AddCardFormType> = ({
         )}
       />
       <Input
-        name="cardNumber"
+        name="card_number"
         label="Номер карты"
         type="text"
         autoComplete="no"
@@ -251,9 +179,10 @@ export const AddCardForm: FC<AddCardFormType> = ({
         placeholder=""
         register={register}
         errors={errors}
+        hideAsterisk={true}
       />
       <Input
-        name="barcodeNumber"
+        name="barcode_number"
         label="Номер штрихкода"
         type="text"
         autoComplete="no"
@@ -261,15 +190,16 @@ export const AddCardForm: FC<AddCardFormType> = ({
         placeholder=""
         register={register}
         errors={errors}
+        hideAsterisk={true}
       />
-      {watch('barcodeNumber') && (
+      {watch('barcode_number') && (
         <Box sx={{ paddingBottom: '1.25rem' }}>
           <Card sx={{ ...barcodeStyle }} variant="outlined">
             {/* //NOTE: Can also use "format" attribute to pass barcode format to the library */}
             <Barcode
               displayValue={false}
               margin={0}
-              value={watch('barcodeNumber')}
+              value={watch('barcode_number')}
             />
           </Card>
         </Box>
@@ -280,9 +210,8 @@ export const AddCardForm: FC<AddCardFormType> = ({
         disabled={isSubmitting}
         fullWidth
         sx={buttonStyle}
-        {...buttonSave}
       >
-        {buttonSave.label}
+        Сохранить
       </Button>
     </Box>
   );

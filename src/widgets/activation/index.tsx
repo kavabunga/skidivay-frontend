@@ -6,7 +6,7 @@ import { SignInForm } from '~/features';
 import { api } from '~/shared';
 import { stackStyle, titleStyle, paragraphStyle } from './style';
 import { IApiError } from '~/shared/errors';
-import { ApiMessageTargets, ApiMessageTypes } from '~/shared/enums';
+import { ApiMessageTypes } from '~/shared/enums';
 
 export const Activation = () => {
   const { setMessages } = useContext(MessagesContext);
@@ -21,7 +21,6 @@ export const Activation = () => {
         {
           message: err.message,
           type: ApiMessageTypes.error,
-          target: ApiMessageTargets.snack,
         },
         ...messages,
       ]);
@@ -31,7 +30,6 @@ export const Activation = () => {
         {
           message: 'Почта подтверждена',
           type: ApiMessageTypes.success,
-          target: ApiMessageTargets.snack,
         },
         ...messages,
       ]);

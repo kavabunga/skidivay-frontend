@@ -12,12 +12,12 @@ export const buttonStyle: SxProps = {
 };
 
 export const topButtonsStyle: SxProps = {
+  minHeight: '3.56rem',
   paddingTop: 2.5,
   paddingBottom: 1.5,
 };
 
 export const likerWrapperStyle: SxProps = {
-  padding: '.5rem',
   '& > .css-prsw32-MuiButtonBase-root-MuiIconButton-root': {
     color: 'surface.dark',
   },

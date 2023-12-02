@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { signOut } from '..';
 import { UserContext, CardsContext, MessagesContext } from '~/app';
 import { IApiError } from '~/shared/errors';
-import { ApiMessageTargets, ApiMessageTypes } from '~/shared/enums';
+import { ApiMessageTypes } from '~/shared/enums';
 
 interface ISignOut extends ButtonProps {
   element: ComponentType<ButtonProps>;
@@ -13,7 +13,7 @@ interface ISignOut extends ButtonProps {
 export const SignOut: FC<ISignOut> = ({ element: Component, ...props }) => {
   const { setUser } = useContext(UserContext);
   const { setCards } = useContext(CardsContext);
-  const { messages, setMessages } = useContext(MessagesContext);
+  const { setMessages } = useContext(MessagesContext);
   const navigate = useNavigate();
   const handleSignOut = () => {
     signOut()
@@ -23,11 +23,10 @@ export const SignOut: FC<ISignOut> = ({ element: Component, ...props }) => {
       })
       .then(() => navigate('/'))
       .catch((err: IApiError) => {
-        setMessages([
+        setMessages((messages) => [
           {
             message: err.message,
             type: ApiMessageTypes.error,
-            target: ApiMessageTargets.snack,
           },
           ...messages,
         ]);

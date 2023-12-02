@@ -16,7 +16,7 @@ import {
   api,
 } from '~/shared';
 import { IApiError } from '~/shared/errors';
-import { ApiMessageTargets, ApiMessageTypes } from '~/shared/enums';
+import { ApiMessageTypes } from '~/shared/enums';
 
 interface IContexts {
   children: ReactNode;
@@ -36,7 +36,6 @@ export const Contexts: FC<IContexts> = ({ children }) => {
         {
           message: err.message,
           type: ApiMessageTypes.error,
-          target: ApiMessageTargets.snack,
         },
         ...messagesData,
       ]);

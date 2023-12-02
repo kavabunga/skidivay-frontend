@@ -3,7 +3,6 @@ import {
   ICardContext,
   IPatchCard,
   IPostCard,
-  IPostCardWithShop,
   IShop,
   ISignInRequest,
   ISignUpRequest,
@@ -57,16 +56,12 @@ export const ApiRequests = class ApiRequests {
   }
 
   _handleError(res: Response) {
-    // let message: string;
     switch (res.status) {
       case 401:
         {
           localStorage.removeItem('token');
         }
         break;
-      // default: {
-      //   message = 'Что-то пошло не так';
-      // }
     }
     return res
       .json()
@@ -155,7 +150,7 @@ export const ApiRequests = class ApiRequests {
     });
   }
 
-  postCardWithShop(data: IPostCardWithShop) {
+  postCardWithShop(data: IPostCard) {
     const url = `${this._url}/cards/new-shop/`;
     const options: IRequestOptions = {
       method: 'POST',
