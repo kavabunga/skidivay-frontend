@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 import { CardsContext, UserContext } from '..';
 import { Home, UserCards, Welcome } from '~/widgets';
-import { chipsLabels } from '~/shared';
 
 export const ProtectedHomeRoute = () => {
   const { user } = useContext(UserContext);
@@ -10,7 +9,7 @@ export const ProtectedHomeRoute = () => {
   if (!user) {
     return <Home />;
   } else if (cards[0]) {
-    return <UserCards tags={chipsLabels} />;
+    return <UserCards />;
   } else {
     return <Welcome />;
   }

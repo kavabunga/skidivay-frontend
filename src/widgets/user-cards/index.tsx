@@ -7,13 +7,7 @@ import { mainContainerStyle, linkStyle } from './styles';
 import { SearchLine } from '~/features/search-line/ui';
 import notFoundImg from '~/shared/assets/not-found.jpg';
 
-type UserCardsProps = {
-  tags: {
-    label: string;
-  }[];
-};
-
-export const UserCards: FC<UserCardsProps> = ({ tags }) => {
+export const UserCards: FC = () => {
   const { cards } = useContext(SortedCardsContext);
   return (
     <Container component="main" sx={{ ...mainContainerStyle }}>
@@ -28,7 +22,7 @@ export const UserCards: FC<UserCardsProps> = ({ tags }) => {
         Мои карты
       </Typography>
       <SearchLine />
-      <SearchChips items={tags} />
+      <SearchChips />
       {cards.length ? (
         <CardsList items={cards || []} />
       ) : (
