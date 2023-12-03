@@ -37,9 +37,7 @@ export const Activation = () => {
     if (user) {
       api
         .activateEmail(uid || '', token || '')
-        .then(() => {
-          handleSuccess();
-        })
+        .then(handleSuccess)
         .catch(handleError)
         .finally(() => navigate('/', { replace: true }));
     }

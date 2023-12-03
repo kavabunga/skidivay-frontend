@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import * as z from 'zod';
 import { authFormErrors } from '~/shared';
-import { AuthForm } from '..';
+import { AuthForm, requestResetPassword } from '..';
 
 interface IResetPasswordForm {
   handleSetEmail: (data: string) => void;
@@ -49,17 +49,15 @@ export const ResetPasswordForm: FC<IResetPasswordForm> = ({
     },
   ];
 
-  const submit = async (data: { [key: string]: string }) => {
+  const submit = (data: { [key: string]: string }) => {
     const request = {
-      phone_number:
+      phone_last_digits:
         data.phone_number.replace(/\D/g, '').replace(/^7/, '') || '',
       email: data.email,
     };
-    console.log(
-      'Запрос для восстановления пароля будет отправлен в виде: ',
-      request
+    return requestResetPassword(request).then(() =>
+      handleSetEmail(request.email)
     );
-    await handleSetEmail(request.email);
   };
 
   return (

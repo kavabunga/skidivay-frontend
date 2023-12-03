@@ -8,3 +8,4 @@ export * from './home';
 export * from './add-card';
 export * from './registration-success';
 export * from './activation';
+export * from './reset-password-request-success';

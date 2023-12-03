@@ -6,6 +6,7 @@ import {
   IShop,
   ISignInRequest,
   ISignUpRequest,
+  IRequestResetPassword,
   MEDIA_URL,
 } from '..';
 import { ApiError } from '../errors';
@@ -36,11 +37,14 @@ export const ApiRequests = class ApiRequests {
     return fetch(`${url}`, options)
       .then((res) => (res.ok ? res : this._handleError(res)))
       .then((res) => {
-        try {
-          return res.json();
-        } catch (err) {
-          console.log(err);
+        if (res.status === 204) {
           return res;
+        } else {
+          try {
+            return res.json();
+          } catch (err) {
+            return res;
+          }
         }
       });
   }
@@ -63,11 +67,9 @@ export const ApiRequests = class ApiRequests {
         }
         break;
     }
-    return res
-      .json()
-      .then((err) =>
-        Promise.reject(new ApiError(err.message, res.status, err.detail))
-      );
+    return res.json().then((err) => {
+      return Promise.reject(new ApiError(err.message, res.status, err.detail));
+    });
   }
 
   signUp(data: ISignUpRequest) {
@@ -210,5 +212,15 @@ export const ApiRequests = class ApiRequests {
       body: JSON.stringify({ uid, token }),
     };
     return this._requestAuthorizedApi(url, options);
+  }
+
+  requestResetPassword(data: IRequestResetPassword) {
+    const url = `${this._url}/users/reset_password/`;
+    const options: IRequestOptions = {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify(data),
+    };
+    return this._requestApi(url, options);
   }
 };

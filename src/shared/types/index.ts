@@ -99,3 +99,8 @@ export interface IMessageContext {
   message: string;
   type: ApiMessageTypes;
 }
+
+export interface IRequestResetPassword {
+  phone_last_digits: string;
+  email: string;
+}
