@@ -6,7 +6,7 @@ import {
   ShopListContext,
   MessagesContext,
   SortedCardsContext,
-  PreloaderContext,
+  LoadingContext,
 } from '.';
 import {
   ICardContext,
@@ -14,7 +14,6 @@ import {
   IShopListContext,
   IUserContext,
   IMessageContext,
-  IPreloaderContext,
   api,
 } from '~/shared';
 import { IApiError } from '~/shared/errors';
@@ -31,7 +30,7 @@ export const Contexts: FC<IContexts> = ({ children }) => {
   const [cardData, setCardData] = useState<ICardContext>(Object);
   const [sortedCards, setSortedCards] = useState<ICardsContext>([]);
   const [messagesData, setMessagesData] = useState<IMessageContext[]>([]);
-  const [preloaderData, setPreloaderData] = useState<IPreloaderContext>(Object);
+  const [isLoadingData, setIsLoadingData] = useState<boolean>(false);
 
   useEffect(() => {
     const handleError = (err: IApiError) => {
@@ -67,8 +66,8 @@ export const Contexts: FC<IContexts> = ({ children }) => {
   }, []);
 
   return (
-    <PreloaderContext.Provider
-      value={{ preloader: preloaderData, setPreloader: setPreloaderData }}
+    <LoadingContext.Provider
+      value={{ isLoading: isLoadingData, setIsLoading: setIsLoadingData }}
     >
       <MessagesContext.Provider
         value={{ messages: messagesData, setMessages: setMessagesData }}
@@ -95,6 +94,6 @@ export const Contexts: FC<IContexts> = ({ children }) => {
           </UserContext.Provider>
         </ShopListContext.Provider>
       </MessagesContext.Provider>
-    </PreloaderContext.Provider>
+    </LoadingContext.Provider>
   );
 };

@@ -4,10 +4,10 @@ import { Outlet } from 'react-router-dom';
 import { Header } from '~/widgets';
 import { AppFooter, Preloader } from '~/shared/ui';
 import { InfoBar } from '~/features';
-import { PreloaderContext } from '~/app';
+import { LoadingContext } from '~/app';
 
 export const RootLayout = () => {
-  const { preloader } = useContext(PreloaderContext);
+  const { isLoading } = useContext(LoadingContext);
 
   return (
     <Stack sx={{ minHeight: '100vh', position: 'relative' }} direction="column">
@@ -15,7 +15,7 @@ export const RootLayout = () => {
       <Box component="main">
         <Outlet />
       </Box>
-      {preloader.isOpen && <Preloader />}
+      {isLoading && <Preloader />}
       <Stack
         sx={{
           justifyContent: 'flex-end',

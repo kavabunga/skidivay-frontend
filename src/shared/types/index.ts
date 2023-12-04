@@ -99,7 +99,3 @@ export interface IMessageContext {
   message: string;
   type: ApiMessageTypes;
 }
-
-export interface IPreloaderContext {
-  isOpen: boolean;
-}
