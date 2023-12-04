@@ -6,6 +6,7 @@ import {
   ShopListContext,
   MessagesContext,
   SortedCardsContext,
+  PreloaderContext,
 } from '.';
 import {
   ICardContext,
@@ -13,6 +14,7 @@ import {
   IShopListContext,
   IUserContext,
   IMessageContext,
+  IPreloaderContext,
   api,
 } from '~/shared';
 import { IApiError } from '~/shared/errors';
@@ -29,6 +31,7 @@ export const Contexts: FC<IContexts> = ({ children }) => {
   const [cardData, setCardData] = useState<ICardContext>(Object);
   const [sortedCards, setSortedCards] = useState<ICardsContext>([]);
   const [messagesData, setMessagesData] = useState<IMessageContext[]>([]);
+  const [preloaderData, setPreloaderData] = useState<IPreloaderContext>(Object);
 
   useEffect(() => {
     const handleError = (err: IApiError) => {
@@ -64,28 +67,34 @@ export const Contexts: FC<IContexts> = ({ children }) => {
   }, []);
 
   return (
-    <MessagesContext.Provider
-      value={{ messages: messagesData, setMessages: setMessagesData }}
+    <PreloaderContext.Provider
+      value={{ preloader: preloaderData, setPreloader: setPreloaderData }}
     >
-      <ShopListContext.Provider
-        value={{ shops: shopsData, setShops: setShopsData }}
+      <MessagesContext.Provider
+        value={{ messages: messagesData, setMessages: setMessagesData }}
       >
-        <UserContext.Provider value={{ user: userData, setUser: setUserData }}>
-          <CardsContext.Provider
-            value={{ cards: cardsData, setCards: setCardsData }}
+        <ShopListContext.Provider
+          value={{ shops: shopsData, setShops: setShopsData }}
+        >
+          <UserContext.Provider
+            value={{ user: userData, setUser: setUserData }}
           >
-            <CardContext.Provider
-              value={{ card: cardData, setCard: setCardData }}
+            <CardsContext.Provider
+              value={{ cards: cardsData, setCards: setCardsData }}
             >
-              <SortedCardsContext.Provider
-                value={{ cards: sortedCards, setSortedCards: setSortedCards }}
+              <CardContext.Provider
+                value={{ card: cardData, setCard: setCardData }}
               >
-                {children}
-              </SortedCardsContext.Provider>
-            </CardContext.Provider>
-          </CardsContext.Provider>
-        </UserContext.Provider>
-      </ShopListContext.Provider>
-    </MessagesContext.Provider>
+                <SortedCardsContext.Provider
+                  value={{ cards: sortedCards, setSortedCards: setSortedCards }}
+                >
+                  {children}
+                </SortedCardsContext.Provider>
+              </CardContext.Provider>
+            </CardsContext.Provider>
+          </UserContext.Provider>
+        </ShopListContext.Provider>
+      </MessagesContext.Provider>
+    </PreloaderContext.Provider>
   );
 };
