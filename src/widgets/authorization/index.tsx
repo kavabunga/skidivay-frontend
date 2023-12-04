@@ -1,6 +1,9 @@
-import { useEffect, useState, SyntheticEvent } from 'react';
+import { useEffect, useState, useContext, SyntheticEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Typography, Box, Tabs, Tab, Stack } from '@mui/material';
+import { api, ISignInRequest } from '~/shared';
+import { signIn } from '~/features/auth/auth-logic';
+import { UserContext } from '~/app';
 import {
   ResetPasswordForm,
   SignInForm,
@@ -10,6 +13,7 @@ import {
 import {
   RegistrationSuccessWidget,
   ResetPasswordRequestSuccessWidget,
+  ChangeEmailWidget,
 } from '~/widgets';
 import {
   widgetStyle,
@@ -54,6 +58,7 @@ export const AuthWidget = () => {
   const location = useLocation();
   const [currentTab, setCurrentTab] = useState(0);
   const [registredEmail, setRegistredEmail] = useState('');
+  const { user, setUser } = useContext(UserContext);
   const [widgetScreen, setWidgetScreen] = useState('default');
 
   useEffect(() => {
@@ -70,13 +75,23 @@ export const AuthWidget = () => {
     setWidgetScreen('default');
   };
 
-  const handleShowResetPassword = () => {
-    setWidgetScreen('passwordReset');
+  const handleShowChangeEmail = () => {
+    setWidgetScreen('changeEmail');
   };
 
-  const handleShowRegistrationSuccess = (data: string) => {
-    setRegistredEmail(data);
+  const handleShowRegistrationSuccess = () => {
     setWidgetScreen('registrationSuccess');
+  };
+
+  const handleAutomaticSignIn = (userData: ISignInRequest) => {
+    const request: ISignInRequest = {
+      email: userData.email || '',
+      password: userData.password || '',
+    };
+    return signIn(request).then(() => {
+      api.getUser().then((res) => setUser && setUser(res));
+      handleShowRegistrationSuccess();
+    });
   };
 
   const handleShowPasswordResetSuccess = (data: string) => {
@@ -84,11 +99,16 @@ export const AuthWidget = () => {
     setWidgetScreen('resetPasswordRequestSuccess');
   };
 
+  const handleShowResetPassword = () => {
+    setWidgetScreen('passwordReset');
+  };
+
   switch (widgetScreen) {
     case 'registrationSuccess':
       return (
         <RegistrationSuccessWidget
-          email={registredEmail}
+          email={user?.email ?? ''}
+          handleShowChangeEmail={handleShowChangeEmail}
           onClose={handleShowDefault}
         />
       );
@@ -109,6 +129,12 @@ export const AuthWidget = () => {
           </Typography>
           <ResetPasswordForm handleSetEmail={handleShowPasswordResetSuccess} />
         </Stack>
+      );
+    case 'changeEmail':
+      return (
+        <ChangeEmailWidget
+          handleShowRegistrationSuccess={handleShowRegistrationSuccess}
+        />
       );
     case 'default':
       return (
@@ -136,7 +162,7 @@ export const AuthWidget = () => {
             <Typography component="h1" sx={titleTabStyle}>
               Регистрация
             </Typography>
-            <SignUpForm handleSetEmail={handleShowRegistrationSuccess} />
+            <SignUpForm automaticSignIn={handleAutomaticSignIn} />
           </CustomTabPanel>
         </Stack>
       );

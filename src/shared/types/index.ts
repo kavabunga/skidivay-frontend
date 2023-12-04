@@ -104,3 +104,13 @@ export interface IRequestResetPassword {
   phone_last_digits: string;
   email: string;
 }
+
+export interface IRequestSetNewPassword {
+  uid: string;
+  token: string;
+  new_password: string;
+}
+
+export interface IChangeEmailRequest {
+  email: string;
+}

@@ -1,12 +1,12 @@
 import { FC } from 'react';
 import * as z from 'zod';
 import { AuthForm, signUp } from '..';
-import { ISignUpRequest, authFormErrors } from '~/shared';
+import { ISignUpRequest, ISignInRequest, authFormErrors } from '~/shared';
 
 export const SignUpForm: FC<{
   defaultValues?: object;
-  handleSetEmail: (data: string) => void;
-}> = ({ defaultValues, handleSetEmail }) => {
+  automaticSignIn: (data: ISignInRequest) => void;
+}> = ({ defaultValues, automaticSignIn }) => {
   const schema = z
     .object({
       name: z
@@ -126,7 +126,10 @@ export const SignUpForm: FC<{
     };
     console.log(request);
     return signUp(request).then((res) => {
-      return handleSetEmail(res.email);
+      return automaticSignIn({
+        email: res.email || '',
+        password: data.password || '',
+      });
     });
   };
 

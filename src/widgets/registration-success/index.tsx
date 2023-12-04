@@ -11,10 +11,17 @@ import {
 
 export const RegistrationSuccessWidget: FC<{
   email: string;
+  handleShowChangeEmail: () => void;
   onClose: () => void;
-}> = ({ email, onClose }) => {
+}> = ({ email, handleShowChangeEmail, onClose }) => {
   useEffect(() => {
-    setTimeout(() => onClose(), 5000);
+    const timer: ReturnType<typeof setTimeout> = setTimeout(
+      () => onClose(),
+      6000
+    );
+    return () => {
+      clearTimeout(timer);
+    };
   }, [onClose]);
 
   return (
@@ -33,7 +40,7 @@ export const RegistrationSuccessWidget: FC<{
         alt="Робот"
         src={coverImage}
       />
-      <Link sx={linkStyle} onClick={() => console.log('Экран изменения почты')}>
+      <Link sx={linkStyle} onClick={handleShowChangeEmail}>
         Изменить почту
       </Link>
       <AccentButton
