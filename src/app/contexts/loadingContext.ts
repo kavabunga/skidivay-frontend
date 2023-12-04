@@ -6,6 +6,6 @@ interface ILoadingContextValue {
 }
 
 export const LoadingContext = createContext<ILoadingContextValue>({
-  isLoading: false,
+  isLoading: true,
   setIsLoading: () => {},
 });
