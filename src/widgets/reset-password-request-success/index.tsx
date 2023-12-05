@@ -14,7 +14,7 @@ export const ResetPasswordRequestSuccessWidget: FC<{
       sx={mainContainerStyle}
     >
       <Typography textAlign="center" sx={paragraphStyle}>
-        {`Мы отправили письмо на на адрес ${email} Перейдите по ссылке в письме, чтобы изменить пароль`}
+        {`Мы отправили письмо на адрес ${email} Перейдите по ссылке в письме, чтобы изменить пароль`}
       </Typography>
       <Box
         component="img"
