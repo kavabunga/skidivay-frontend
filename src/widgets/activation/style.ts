@@ -10,13 +10,14 @@ export const titleStyle: SxProps = {
   fontSize: 32,
   lineHeight: 1.25,
   fontWeight: 700,
-  paddingTop: '40px',
-  paddingBottom: '20px',
+  paddingTop: '.75rem',
+  paddingBottom: '1.25rem',
 };
 
 export const paragraphStyle: SxProps = {
   fontSize: '.875rem',
   fontWeight: 400,
   lineHeight: 1.42,
+  paddingTop: '4.875rem',
   paddingBottom: '1.25rem',
 };
