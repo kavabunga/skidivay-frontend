@@ -54,7 +54,7 @@ export const ResetPasswordForm: FC<IResetPasswordForm> = ({
   const submit = (data: { [key: string]: string }) => {
     const request = {
       phone_last_digits:
-        data.phone_number.replace(/\D/g, '').replace(/^7/, '') || '',
+        data.phone_last_digits.replace(/\D/g, '').replace(/^7/, '') || '',
       email: data.email,
     };
     return requestResetPassword(request).then(() =>
