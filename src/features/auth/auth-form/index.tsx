@@ -52,7 +52,7 @@ export const AuthForm: FC<AuthFormType> = ({
       setMessages((messages) => [
         {
           message:
-            err.detail?.non_field_errors.join(' ') ||
+            err.detail?.non_field_errors?.join(' ') ||
             err.message ||
             'Ошибка сервера',
           type: ApiMessageTypes.error,
@@ -93,7 +93,7 @@ export const AuthForm: FC<AuthFormType> = ({
         sx={{ ...buttonStyle, width: `${button.width}px` }}
         {...button}
       >
-        {button.label}
+        {isSubmitting ? 'Подождите...' : button.label}
       </Button>
     </Box>
   );

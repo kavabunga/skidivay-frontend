@@ -7,6 +7,8 @@ import {
   ISignInRequest,
   ISignUpRequest,
   IRequestResetPassword,
+  IRequestSetNewPassword,
+  IChangeEmailRequest,
   MEDIA_URL,
 } from '..';
 import { ApiError } from '../errors';
@@ -222,5 +224,25 @@ export const ApiRequests = class ApiRequests {
       body: JSON.stringify(data),
     };
     return this._requestApi(url, options);
+  }
+
+  setNewPassword(data: IRequestSetNewPassword) {
+    const url = `${this._url}/users/reset_password_confirm/`;
+    const options: IRequestOptions = {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify(data),
+    };
+    return this._requestApi(url, options);
+  }
+
+  changeEmail(data: IChangeEmailRequest) {
+    const url = `${this._url}/users/me/`;
+    const options: IRequestOptions = {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify(data),
+    };
+    return this._requestAuthorizedApi(url, options);
   }
 };

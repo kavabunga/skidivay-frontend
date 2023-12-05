@@ -1,12 +1,16 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import * as z from 'zod';
-import { AuthForm, signUp } from '..';
-import { ISignUpRequest, authFormErrors } from '~/shared';
+import { AuthForm, signIn, signUp } from '..';
+import { ISignUpRequest, api, authFormErrors } from '~/shared';
+import { CardsContext, UserContext } from '~/app';
 
 export const SignUpForm: FC<{
   defaultValues?: object;
-  handleSetEmail: (data: string) => void;
-}> = ({ defaultValues, handleSetEmail }) => {
+  handleShowRegistrationSuccess: () => void;
+}> = ({ defaultValues, handleShowRegistrationSuccess }) => {
+  const { setCards } = useContext(CardsContext);
+  const { setUser } = useContext(UserContext);
+
   const schema = z
     .object({
       name: z
@@ -124,10 +128,20 @@ export const SignUpForm: FC<{
         data.phone_number.replace(/\D/g, '').replace(/^7/, '') || '',
       password: data.password || '',
     };
-    console.log(request);
-    return signUp(request).then((res) => {
-      return handleSetEmail(res.email);
-    });
+    return signUp(request)
+      .then((res) =>
+        signIn({ email: request.email, password: request.password }).then(
+          () => res
+        )
+      )
+      .then((res) => {
+        const userPromise = setUser && setUser(res);
+        const cardsPromise = api
+          .getCards()
+          .then((res) => setCards && setCards(res));
+        return Promise.all([userPromise, cardsPromise]);
+      })
+      .then(() => handleShowRegistrationSuccess());
   };
 
   return (

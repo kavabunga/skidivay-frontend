@@ -1,7 +1,7 @@
 import { SxProps } from '@mui/material';
 
 export const backButtonStyle: SxProps = {
-  justifySelf: 'flex-start',
+  justifyContent: 'flex-start',
   fontSize: 12,
   fontWeight: 500,
   lineHeight: 1.33,

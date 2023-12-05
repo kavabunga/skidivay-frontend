@@ -89,7 +89,7 @@ export const AddCardForm: FC = () => {
       setMessages((messages) => [
         {
           message:
-            err.detail?.non_field_errors.join(' ') ||
+            err.detail?.non_field_errors?.join(' ') ||
             err.message ||
             'Ошибка сервера',
           type: ApiMessageTypes.error,

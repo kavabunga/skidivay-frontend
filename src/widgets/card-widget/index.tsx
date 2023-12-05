@@ -80,7 +80,7 @@ export const CardWidget = () => {
       .catch((err: IApiError) => {
         setMessages((messages) => [
           {
-            message: err.message,
+            message: err.detail?.non_field_errors?.join(' ') || err.message,
             type: ApiMessageTypes.error,
           },
           ...messages,

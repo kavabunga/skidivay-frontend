@@ -3,7 +3,13 @@ import { ThemeProvider } from '@emotion/react';
 import { CssBaseline } from '@mui/material';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AuthLayout, NotFound, RootLayout } from '~/pages';
-import { AuthWidget, CardWidget, AddCardWidget, Activation } from '~/widgets';
+import {
+  AuthWidget,
+  CardWidget,
+  AddCardWidget,
+  Activation,
+  SetNewPasswordWidget,
+} from '~/widgets';
 import { lightTheme } from '~/shared/lib';
 import 'typeface-roboto';
 import 'typeface-nunito';
@@ -20,6 +26,12 @@ export function App() {
             </Route>
             <Route path="/activate/:uid/:token" Component={AuthLayout}>
               <Route index Component={Activation} />
+            </Route>
+            <Route
+              path="/password_reset_confirm/:uid/:token"
+              Component={AuthLayout}
+            >
+              <Route index Component={SetNewPasswordWidget} />
             </Route>
             <Route path="/" Component={RootLayout}>
               <Route index element={<ProtectedHomeRoute />} />
