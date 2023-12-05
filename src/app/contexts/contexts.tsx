@@ -6,6 +6,7 @@ import {
   ShopListContext,
   MessagesContext,
   SortedCardsContext,
+  LoadingContext,
 } from '.';
 import {
   ICardContext,
@@ -29,6 +30,7 @@ export const Contexts: FC<IContexts> = ({ children }) => {
   const [cardData, setCardData] = useState<ICardContext>(Object);
   const [sortedCards, setSortedCards] = useState<ICardsContext>([]);
   const [messagesData, setMessagesData] = useState<IMessageContext[]>([]);
+  const [isLoadingData, setIsLoadingData] = useState<boolean>(true);
 
   useEffect(() => {
     const handleError = (err: IApiError) => {
@@ -45,47 +47,51 @@ export const Contexts: FC<IContexts> = ({ children }) => {
       .then((res) => {
         setShopsData(res);
       })
-      .catch(handleError);
-    if (localStorage.getItem('token')) {
-      api
-        .getUser()
-        .then((res) => {
-          setUserData(res);
-        })
-        .catch(handleError);
-      api
-        .getCards()
-        .then((res) => {
-          setCardsData(res);
-          setSortedCards(res);
-        })
-        .catch(handleError);
-    }
+      .then(() => {
+        if (localStorage.getItem('token')) {
+          const userPromise = api.getUser();
+          const cardsPromise = api.getCards();
+          return Promise.all([userPromise, cardsPromise]).then((res) => {
+            setUserData(res[0]);
+            setCardsData(res[1]);
+            setSortedCards(res[1]);
+          });
+        }
+        return;
+      })
+      .catch(handleError)
+      .finally(() => setIsLoadingData(false));
   }, []);
 
   return (
-    <MessagesContext.Provider
-      value={{ messages: messagesData, setMessages: setMessagesData }}
+    <LoadingContext.Provider
+      value={{ isLoading: isLoadingData, setIsLoading: setIsLoadingData }}
     >
-      <ShopListContext.Provider
-        value={{ shops: shopsData, setShops: setShopsData }}
+      <MessagesContext.Provider
+        value={{ messages: messagesData, setMessages: setMessagesData }}
       >
-        <UserContext.Provider value={{ user: userData, setUser: setUserData }}>
-          <CardsContext.Provider
-            value={{ cards: cardsData, setCards: setCardsData }}
+        <ShopListContext.Provider
+          value={{ shops: shopsData, setShops: setShopsData }}
+        >
+          <UserContext.Provider
+            value={{ user: userData, setUser: setUserData }}
           >
-            <CardContext.Provider
-              value={{ card: cardData, setCard: setCardData }}
+            <CardsContext.Provider
+              value={{ cards: cardsData, setCards: setCardsData }}
             >
-              <SortedCardsContext.Provider
-                value={{ cards: sortedCards, setSortedCards: setSortedCards }}
+              <CardContext.Provider
+                value={{ card: cardData, setCard: setCardData }}
               >
-                {children}
-              </SortedCardsContext.Provider>
-            </CardContext.Provider>
-          </CardsContext.Provider>
-        </UserContext.Provider>
-      </ShopListContext.Provider>
-    </MessagesContext.Provider>
+                <SortedCardsContext.Provider
+                  value={{ cards: sortedCards, setSortedCards: setSortedCards }}
+                >
+                  {children}
+                </SortedCardsContext.Provider>
+              </CardContext.Provider>
+            </CardsContext.Provider>
+          </UserContext.Provider>
+        </ShopListContext.Provider>
+      </MessagesContext.Provider>
+    </LoadingContext.Provider>
   );
 };

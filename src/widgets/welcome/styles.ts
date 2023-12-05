@@ -1,6 +1,7 @@
 import { SxProps } from '@mui/material';
 
 export const mainContainerStyle: SxProps = {
+  position: 'relative',
   display: 'flex',
   height: '100%',
   paddingBottom: '1rem',

@@ -31,6 +31,7 @@ export const lightTheme = createTheme({
       light: '#CAC4CF',
       dark: '#49454E',
       darker: '#1C1B1E',
+      inverse: '#313033',
       contrastText: '#fff',
     },
   },
@@ -76,9 +77,11 @@ declare module '@mui/material/Button' {
 declare module '@mui/material/styles' {
   interface PaletteColor {
     darker?: string;
+    inverse?: string;
   }
 
   interface SimplePaletteColorOptions {
     darker?: string;
+    inverse?: string;
   }
 }

@@ -6,3 +6,4 @@ export * from './chip-button';
 export * from './promo-card';
 export * from './accent-button';
 export * from './input';
+export * from './preloader';
