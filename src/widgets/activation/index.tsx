@@ -50,11 +50,11 @@ export const Activation = () => {
       useFlexGap={true}
       sx={stackStyle}
     >
+      <Typography component="p" sx={paragraphStyle}>
+        Для активации почты необходимо войти в свою учетную запись
+      </Typography>
       <Typography component="h1" sx={titleStyle}>
         Вход
-      </Typography>
-      <Typography component="p" sx={paragraphStyle}>
-        Для активации почты необходимо войти в аккаунт
       </Typography>
       <SignInForm type="activation" />
     </Stack>
