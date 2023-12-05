@@ -19,7 +19,12 @@ export const CardFull: FC<{ item: ICardContext }> = ({ item }) => {
       {!shopLogo && <Typography sx={titleStyle}>{shopName}</Typography>}
       {barcodeNumber && (
         <Box sx={{ ...barcodeStyle }}>
-          <Barcode displayValue={false} margin={0} value={barcodeNumber} />
+          <Barcode
+            displayValue={false}
+            margin={0}
+            value={barcodeNumber}
+            width={1.5}
+          />
         </Box>
       )}
     </Card>
