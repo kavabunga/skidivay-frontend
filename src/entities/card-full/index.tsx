@@ -23,7 +23,7 @@ export const CardFull: FC<{ item: ICardContext }> = ({ item }) => {
             displayValue={false}
             margin={0}
             value={barcodeNumber}
-            width={1.5}
+            width={1.3}
           />
         </Box>
       )}
