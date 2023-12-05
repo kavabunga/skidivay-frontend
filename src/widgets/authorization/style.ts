@@ -3,7 +3,7 @@ import { SxProps } from '@mui/material';
 export const widgetStyle: SxProps = {
   display: 'flex',
   flexDirection: 'column',
-  paddingX: '30px',
+  paddingX: '1rem',
   paddingTop: '.5rem',
   paddingBottom: '1.875rem',
 };

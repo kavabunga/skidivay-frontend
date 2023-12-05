@@ -105,7 +105,7 @@ export const AuthWidget = () => {
             <BackButton />
           </Stack>
           <Typography component="h1" sx={titleStyle}>
-            Забыли пароль?
+            Восстановление пароля
           </Typography>
           <Typography sx={paragraphStyle}>
             Введите email и последние четыре цифры номера, который был указан
