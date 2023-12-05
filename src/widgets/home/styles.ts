@@ -1,23 +1,19 @@
 import { SxProps } from '@mui/material';
 
 export const mainContainerStyle: SxProps = {
-  display: 'flex',
   height: '100%',
   paddingBottom: '1rem',
-  flexDirection: 'column',
-  justifyContent: 'flex-start',
-  alignItems: 'center',
-  gap: '1rem',
+  paddingX: '1rem',
 };
 
 export const paragraphStyle: SxProps = {
   width: '100%',
-  fontSize: '1rem',
-  fontWeight: 500,
-  lineHeight: 1.375,
+  fontSize: '1.125rem',
+  fontWeight: 400,
+  lineHeight: 1.5,
   letterSpacing: 0,
   '@media (max-width:600px)': {
-    fontSize: '1.125rem',
+    fontSize: '1rem',
   },
 };
 

@@ -23,7 +23,7 @@ export const Header: FC<HeaderProps> = ({ type }) => {
       color="inherit"
       position="static"
     >
-      <Logo type={type === 'standard' ? 'full' : 'image'} />
+      <Logo type={type === 'standard' ? 'full' : 'image'} color={'dark'} />
       {type === 'standard' &&
         (user ? (
           <IconButton color="primary" size="small" sx={style.iconButton}>
