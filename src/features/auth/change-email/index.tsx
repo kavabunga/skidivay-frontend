@@ -5,7 +5,7 @@ import * as z from 'zod';
 
 export const ChangeEmailForm: FC<{
   oldEmail: string;
-  handleSubmit: (arg0: IChangeEmailRequest) => void;
+  handleSubmit: (arg0: IChangeEmailRequest) => Promise<void>;
 }> = ({ oldEmail, handleSubmit }) => {
   const schema = z.object({
     email: z
@@ -24,6 +24,7 @@ export const ChangeEmailForm: FC<{
       defaultHelperText: ' ',
       autoComplete: 'email',
       required: true,
+      hideAsterisk: true,
     },
   ];
 
@@ -31,7 +32,7 @@ export const ChangeEmailForm: FC<{
     const request: IChangeEmailRequest = {
       email: data.email || '',
     };
-    return Promise.resolve(request).then(handleSubmit);
+    return handleSubmit(request);
   };
 
   return (

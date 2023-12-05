@@ -4,7 +4,7 @@ import { authFormErrors } from '~/shared';
 import * as z from 'zod';
 
 export const SetNewPasswordForm: FC<{
-  handleSubmit(newPassword: string): void;
+  handleSubmit(newPassword: string): Promise<void>;
 }> = ({ handleSubmit }) => {
   const schema = z
     .object({
@@ -58,7 +58,7 @@ export const SetNewPasswordForm: FC<{
   ];
 
   const submit = (data: { [key: string]: string }) => {
-    return Promise.resolve(data.password).then((res) => handleSubmit(res));
+    return handleSubmit(data.password);
   };
 
   return (

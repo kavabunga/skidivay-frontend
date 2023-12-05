@@ -243,6 +243,6 @@ export const ApiRequests = class ApiRequests {
       headers: this._headers,
       body: JSON.stringify(data),
     };
-    return this._requestApi(url, options);
+    return this._requestAuthorizedApi(url, options);
   }
 };

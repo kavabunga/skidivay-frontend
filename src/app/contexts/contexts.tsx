@@ -34,7 +34,7 @@ export const Contexts: FC<IContexts> = ({ children }) => {
     const handleError = (err: IApiError) => {
       setMessagesData((messagesData) => [
         {
-          message: err.message,
+          message: err.detail?.non_field_errors?.join(' ') || err.message,
           type: ApiMessageTypes.error,
         },
         ...messagesData,

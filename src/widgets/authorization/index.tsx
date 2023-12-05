@@ -1,9 +1,6 @@
-import { useEffect, useState, useContext, SyntheticEvent } from 'react';
+import { useEffect, useState, SyntheticEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Typography, Box, Tabs, Tab, Stack } from '@mui/material';
-import { api, ISignInRequest } from '~/shared';
-import { signIn } from '~/features/auth/auth-logic';
-import { UserContext } from '~/app';
 import {
   ResetPasswordForm,
   SignInForm,
@@ -58,7 +55,6 @@ export const AuthWidget = () => {
   const location = useLocation();
   const [currentTab, setCurrentTab] = useState(0);
   const [registredEmail, setRegistredEmail] = useState('');
-  const { user, setUser } = useContext(UserContext);
   const [widgetScreen, setWidgetScreen] = useState('default');
 
   useEffect(() => {
@@ -69,11 +65,12 @@ export const AuthWidget = () => {
     setCurrentTab(newValue);
   };
 
-  const handleShowDefault = () => {
-    setCurrentTab(0);
-    setRegistredEmail('');
-    setWidgetScreen('default');
-  };
+  //TODO: Use it in header close button
+  // const handleShowDefault = () => {
+  //   setCurrentTab(0);
+  //   setRegistredEmail('');
+  //   setWidgetScreen('default');
+  // };
 
   const handleShowChangeEmail = () => {
     setWidgetScreen('changeEmail');
@@ -81,17 +78,6 @@ export const AuthWidget = () => {
 
   const handleShowRegistrationSuccess = () => {
     setWidgetScreen('registrationSuccess');
-  };
-
-  const handleAutomaticSignIn = (userData: ISignInRequest) => {
-    const request: ISignInRequest = {
-      email: userData.email || '',
-      password: userData.password || '',
-    };
-    return signIn(request).then(() => {
-      api.getUser().then((res) => setUser && setUser(res));
-      handleShowRegistrationSuccess();
-    });
   };
 
   const handleShowPasswordResetSuccess = (data: string) => {
@@ -107,9 +93,7 @@ export const AuthWidget = () => {
     case 'registrationSuccess':
       return (
         <RegistrationSuccessWidget
-          email={user?.email ?? ''}
           handleShowChangeEmail={handleShowChangeEmail}
-          onClose={handleShowDefault}
         />
       );
     case 'resetPasswordRequestSuccess':
@@ -162,7 +146,9 @@ export const AuthWidget = () => {
             <Typography component="h1" sx={titleTabStyle}>
               Регистрация
             </Typography>
-            <SignUpForm automaticSignIn={handleAutomaticSignIn} />
+            <SignUpForm
+              handleShowRegistrationSuccess={handleShowRegistrationSuccess}
+            />
           </CustomTabPanel>
         </Stack>
       );
