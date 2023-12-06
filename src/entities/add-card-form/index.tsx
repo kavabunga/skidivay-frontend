@@ -150,6 +150,7 @@ export const AddCardForm: FC = () => {
               onChange(item);
             }}
             freeSolo
+            //NOTE: this property does not allow you to add a arrowdown
             fullWidth
             autoSelect
             //NOTE: If undefined, on user input component would switch from uncontrolled to controlled
