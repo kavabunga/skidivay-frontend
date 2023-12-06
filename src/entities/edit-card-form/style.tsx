@@ -14,3 +14,17 @@ export const buttonStyle: SxProps = {
   paddingY: 2.25,
   marginBottom: 4,
 };
+
+export const helperTextStyle: SxProps = {
+  fontSize: 12,
+  fontWeight: 400,
+  lineHeight: 1.3,
+  minHeight: '1.06rem',
+};
+
+export const listBoxStyle: SxProps = {
+  bgcolor: '#F3EDF7',
+  fontSize: 16,
+  fontWeight: 400,
+  lineHeight: 1.5,
+};

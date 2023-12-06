@@ -31,12 +31,9 @@ export const UserCards: FC = () => {
           <img src={notFoundImg} alt="Ничего не найдено" />
         </>
       )}
-      <SignOut
-        element={Button}
-        variant="text"
-        children={'Выйти из аккаунта'}
-        sx={{ ...linkStyle }}
-      />
+      <SignOut element={Button} variant="text" sx={{ ...linkStyle }}>
+        Выйти из аккаунта
+      </SignOut>
     </Container>
   );
 };

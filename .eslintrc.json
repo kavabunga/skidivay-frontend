@@ -6,6 +6,7 @@
   },
   "extends": [
     "eslint:recommended",
+    "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react-hooks/recommended",
     "plugin:storybook/recommended",
@@ -20,6 +21,7 @@
       {
         "allowConstantExport": true
       }
-    ]
+    ],
+    "react/react-in-jsx-scope": 0
   }
 }

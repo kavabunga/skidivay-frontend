@@ -42,10 +42,9 @@ export const Welcome = () => {
         Здесь пока нет добавленных карт
       </Typography>
 
-      <AccentButton
-        onClick={() => navigate('/card/new', { relative: 'path' })}
-        children={'Добавить карту'}
-      />
+      <AccentButton onClick={() => navigate('/card/new', { relative: 'path' })}>
+        Добавить карту
+      </AccentButton>
 
       <Typography
         component="p"

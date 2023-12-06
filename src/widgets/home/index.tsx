@@ -38,8 +38,9 @@ export const Home = () => {
         onClick={() =>
           navigate('/auth', { relative: 'path', state: { tab: 1 } })
         }
-        children={'Попробовать'}
-      />
+      >
+        Попробовать
+      </AccentButton>
     </Container>
   );
 };
