@@ -48,7 +48,7 @@ export const SearchChips = () => {
   useEffect(() => {
     onSort(selectedLabels);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedLabels]);
+  }, [selectedLabels, cards]);
 
   function onSort(labels: string[]) {
     const arr: ICardsContext = [];
