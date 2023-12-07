@@ -1,11 +1,8 @@
-const style = {
-  title: {
-    margin: 0,
-    padding: 0,
-    fontFamily: ['Nunito', 'Roboto', 'Arial', 'sans-serif'].join(),
-    fontSize: '18px',
-    fontWeight: 700,
-  },
-};
+import { SxProps } from '@mui/material';
 
-export default style;
+export const logoStyleFull: SxProps = {
+  cursor: 'pointer',
+};
+export const logoStyleSmall = {
+  cursor: 'pointer',
+};

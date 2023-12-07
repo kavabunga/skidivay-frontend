@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import { Box, Stack } from '@mui/system';
-import Logo from '~/shared/assets/logo.svg';
+import { Logo } from '..';
 
 export const AppFooter = () => {
   const navigate = useNavigate();
@@ -21,15 +21,7 @@ export const AppFooter = () => {
           onClick={() => navigate('/')}
           sx={{ cursor: 'pointer' }}
         >
-          <Box
-            component={'img'}
-            src={Logo}
-            alt="Логотип проекта"
-            sx={{ width: 55 }}
-          />
-          <Typography variant="body1" fontWeight={600} color={'#F4EFF4'}>
-            Скидывай
-          </Typography>
+          <Logo type="full" color="light" />
         </Stack>
         <Typography variant="body1" color={'#F4EFF4'}>
           {new Date().getUTCFullYear()}

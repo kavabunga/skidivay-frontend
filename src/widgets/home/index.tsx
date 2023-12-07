@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ShopListContext } from '~/app/contexts';
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import { AccentButton } from '~/shared/ui';
 import { PromoSlider } from '~/features';
 import coverImage from '~/shared/assets/save-money-bw-1.svg';
@@ -12,7 +12,12 @@ export const Home = () => {
   const navigate = useNavigate();
 
   return (
-    <Container component="main" sx={{ ...mainContainerStyle }}>
+    <Stack
+      component="main"
+      useFlexGap
+      spacing={2}
+      sx={{ ...mainContainerStyle }}
+    >
       <Typography component="p" textAlign="center" sx={{ ...paragraphStyle }}>
         Удобный и быстрый доступ к вашим картам лояльности в любом месте
       </Typography>
@@ -22,6 +27,12 @@ export const Home = () => {
         sx={{ ...coverImgStyle }}
         alt="Персонаж, несущий свинью-копилку"
         src={coverImage}
+      />
+      <AccentButton
+        onClick={() =>
+          navigate('/auth', { relative: 'path', state: { tab: 1 } })
+        }
+        children={'Попробовать'}
       />
 
       <Typography
@@ -33,13 +44,6 @@ export const Home = () => {
       </Typography>
 
       <PromoSlider items={shops} />
-
-      <AccentButton
-        onClick={() =>
-          navigate('/auth', { relative: 'path', state: { tab: 1 } })
-        }
-        children={'Попробовать'}
-      />
-    </Container>
+    </Stack>
   );
 };
