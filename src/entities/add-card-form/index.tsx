@@ -86,7 +86,7 @@ export const AddCardForm: FC = () => {
     setValue,
     setError,
     getValues,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, touchedFields },
   } = useForm<{ [key: string]: string }>({
     mode: 'onTouched',
     resolver: zodResolver(schema),
@@ -184,7 +184,9 @@ export const AddCardForm: FC = () => {
                 {...params}
                 label="Название магазина"
                 error={Boolean(error)}
-                helperText={error ? error.message : ' '}
+                helperText={
+                  error ? error.message : 'Выберите из списка или введите свой'
+                }
                 FormHelperTextProps={{ sx: helperTextStyle }}
                 onBlur={onBlur}
                 inputRef={ref}
@@ -231,7 +233,7 @@ export const AddCardForm: FC = () => {
         label="Номер карты"
         type="text"
         autoComplete="no"
-        defaultHelperText=" "
+        defaultHelperText="Введите номер карты или номер штрихкода"
         placeholder=""
         register={register}
         errors={errors}
@@ -242,7 +244,11 @@ export const AddCardForm: FC = () => {
         label="Номер штрихкода"
         type="text"
         autoComplete="no"
-        defaultHelperText=" "
+        defaultHelperText={
+          touchedFields['barcode_number']
+            ? 'Цифры, расположенные под черными штрихами'
+            : ' '
+        }
         placeholder=""
         register={register}
         errors={errors}
