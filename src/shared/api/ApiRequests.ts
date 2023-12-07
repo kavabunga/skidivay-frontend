@@ -126,6 +126,15 @@ export const ApiRequests = class ApiRequests {
     );
   }
 
+  getGroups() {
+    const url = `${this._url}/groups/`;
+    const options: IRequestOptions = {
+      method: 'GET',
+      headers: this._headers,
+    };
+    return this._requestApi(url, options);
+  }
+
   getCards() {
     const url = `${this._url}/cards/`;
     const options: IRequestOptions = {

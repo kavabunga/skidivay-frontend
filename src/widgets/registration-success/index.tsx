@@ -50,8 +50,9 @@ export const RegistrationSuccessWidget: FC<{
         onClick={() => {
           navigate('/');
         }}
-        children={'Войти'}
-      />
+      >
+        Войти
+      </AccentButton>
     </Stack>
   );
 };

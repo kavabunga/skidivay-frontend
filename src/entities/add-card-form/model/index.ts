@@ -9,10 +9,16 @@ export class AddCardFormModel {
   isNewShop: boolean;
 
   constructor(cardData: IGettingData) {
-    const { barcode_number, card_number, shop_id, shop_name } = cardData;
+    const { barcode_number, card_number, shop_id, shop_name, group_id } =
+      cardData;
     this.isNewShop = !shop_id;
     this.data = {
-      shop: shop_id ? Number(shop_id) : { name: shop_name },
+      shop: shop_id
+        ? Number(shop_id)
+        : {
+            name: shop_name,
+            ...(group_id && { group: [Number(group_id)] }),
+          },
       name: shop_name,
       card_number: card_number,
       barcode_number: barcode_number,

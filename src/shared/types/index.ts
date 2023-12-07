@@ -31,15 +31,21 @@ export interface IUserContext extends IUserResponse {
   cards: ICardContext[];
 }
 
-interface IGroupType {
+export interface IGroup {
   id: number;
   name: string;
 }
-[];
 
 export interface IShop {
   id: number;
-  group?: IGroupType[];
+  group?: Array<IGroup>;
+  name: string;
+  logo?: string | null;
+  color?: string;
+  validation?: boolean;
+}
+export interface IShopRequest {
+  group?: Array<number>;
   name: string;
   logo?: string | null;
   color?: string;
@@ -47,6 +53,8 @@ export interface IShop {
 }
 
 export interface IShopListContext extends Array<IShop> {}
+
+export interface IGroupListContext extends Array<IGroup> {}
 
 export interface ICardsContext extends Array<ICardContext> {}
 
@@ -66,11 +74,7 @@ export interface ISignInResponse {
 }
 
 export interface IPostCard {
-  shop:
-    | number
-    | {
-        name: string;
-      };
+  shop: number | IShopRequest;
   name: string;
   card_number?: string;
   barcode_number?: string;
@@ -85,15 +89,15 @@ export interface IPatchCard {
   encoding_type?: string;
 }
 
-export interface IPostCardWithShop {
-  shop: {
-    name: string;
-  };
-  name: string;
-  card_number?: string;
-  barcode_number?: string;
-  encoding_type?: string;
-}
+// export interface IPostCardWithShop {
+//   shop: {
+//     name: string;
+//   };
+//   name: string;
+//   card_number?: string;
+//   barcode_number?: string;
+//   encoding_type?: string;
+// }
 
 export interface IMessageContext {
   message: string;
