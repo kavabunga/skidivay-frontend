@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect } from 'react';
+import { FC, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import Barcode from 'react-barcode';
@@ -27,7 +27,6 @@ import { ApiMessageTypes } from '~/shared/enums';
 import { handleFormFieldsErrors } from '~/features/errors';
 
 const filter = createFilterOptions<IOption>();
-
 interface IOption extends IShop {
   inputValue?: string;
 }
@@ -35,19 +34,16 @@ interface IOption extends IShop {
 //NOTE: In case of clearing the field with the built in close-button, the value becomes NULL, so react-hook-form fires type error. That's why we use 'required' error text as invalid type eroor text in shopName field
 const schema = z
   .object({
-    shop_name: z.object({
-      name: z
-        .string({
-          required_error: cardFormErrors.requiredShopName,
-          invalid_type_error: cardFormErrors.requiredShopName,
-        })
-        .min(1, { message: cardFormErrors.requiredShopName })
-        .max(30)
-        .regex(/^[A-Za-zА-Яа-яЁё\s\d!@#$%^&*()_+-=[\]{};:'",.<>?/\\|]+$/, {
-          message: cardFormErrors.wrongShopName,
-        }),
-    }).shape.name,
-
+    shop_name: z
+      .string({
+        required_error: cardFormErrors.requiredShopName,
+        invalid_type_error: cardFormErrors.requiredShopName,
+      })
+      .min(1, { message: cardFormErrors.requiredShopName })
+      .max(30)
+      .regex(/^[A-Za-zА-Яа-яЁё\s\d!@#$%^&*()_+-=[\]{};:'",.<>?/\\|]+$/, {
+        message: cardFormErrors.wrongShopName,
+      }),
     card_number: z
       .string({})
       .max(40, { message: cardFormErrors.wrongNumber })
@@ -81,6 +77,8 @@ export const AddCardForm: FC = () => {
   const { setMessages } = useContext(MessagesContext);
   const { shops } = useContext(ShopListContext);
   const { cards, setCards } = useContext(CardsContext);
+  const options: readonly IOption[] = shops;
+
   const {
     control,
     register,
@@ -96,12 +94,6 @@ export const AddCardForm: FC = () => {
       shop_name: location.state?.shop?.name || null,
     },
   });
-
-  useEffect(() => {
-    console.log(errors);
-  }, [errors]);
-
-  const options: readonly IOption[] = shops;
 
   const handleError = (err: IApiError) => {
     const fields = Object.keys(getValues());
@@ -149,13 +141,6 @@ export const AddCardForm: FC = () => {
       .catch(handleError);
   };
 
-  // useEffect(() => {
-  //   setValue('shop_name', location.state?.shop?.name ?? '');
-  // }, [location.state, setValue]);
-
-  // const [value, setValue] = React.useState<IShopListContext | null>(null);
-  // console.log(value);
-
   return (
     <Box
       component="form"
@@ -171,37 +156,6 @@ export const AddCardForm: FC = () => {
           fieldState: { error },
         }) => (
           <Autocomplete
-            onChange={(_event, newValue) => {
-              if (typeof newValue === 'string') {
-                onChange({
-                  name: newValue,
-                });
-              } else if (newValue && newValue.inputValue) {
-                // Create a new value from the user input
-                onChange({
-                  name: newValue.inputValue,
-                });
-              } else {
-                onChange(newValue);
-              }
-            }}
-            filterOptions={(options, params) => {
-              const filtered = filter(options, params);
-
-              const { inputValue } = params;
-              // Suggest the creation of a new value
-              const isExisting = options.some(
-                (option) => inputValue === option.name
-              );
-              if (inputValue !== '' && !isExisting) {
-                filtered.push({
-                  id: 0,
-                  inputValue,
-                  name: `Добавить: "${inputValue}"`,
-                });
-              }
-              return filtered;
-            }}
             freeSolo
             fullWidth
             autoSelect
@@ -209,16 +163,40 @@ export const AddCardForm: FC = () => {
             value={value || null}
             options={options}
             renderOption={(props, option) => <li {...props}>{option.name}</li>}
+            onChange={(_event, newValue) => {
+              if (typeof newValue === 'string') {
+                onChange(newValue);
+              } else if (newValue && newValue.inputValue) {
+                onChange(newValue.inputValue);
+              }
+              onChange(newValue);
+            }}
+            filterOptions={(options, params) => {
+              const filtered = filter(options, params);
+              const { inputValue } = params;
+              //NOTE: Suggest the creation of a new value
+              const isExisting = options.some(
+                (option) => inputValue === option.name
+              );
+              if (inputValue !== '' && !isExisting) {
+                filtered.push({
+                  id: 0,
+                  inputValue,
+                  name: `Добавить: ${inputValue}`,
+                });
+              }
+              return filtered;
+            }}
             getOptionLabel={(option) => {
-              // Value selected with enter, right from the input
+              //NOTE: Value selected with enter, right from the input
               if (typeof option === 'string') {
                 return option;
               }
-              // Add "xxx" option created dynamically
+              //NOTE: Add "xxx" option created dynamically
               if (option.inputValue) {
                 return option.inputValue;
               }
-              // Regular option
+              //NOTE: Regular option
               return option.name;
             }}
             renderInput={(params) => (
