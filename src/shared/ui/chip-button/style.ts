@@ -4,6 +4,7 @@ export const style: SxProps = {
   fontSize: '0.875rem',
   fontWeight: '500',
   lineHeight: '2rem',
+  cursor: 'pointer',
   color: 'surface.dark',
   borderRadius: '0.5rem',
   borderColor: 'surface.main',

@@ -6,13 +6,11 @@ import 'slick-carousel/slick/slick-theme.css';
 import { sliderWindowStyle } from './style';
 import { useContext, useEffect, useState } from 'react';
 import { CardsContext, SortedCardsContext } from '~/app';
+import { ICardsContext } from '~/shared';
 
 export const SearchChips = () => {
-  const [chipsLabels, setChipsLabels] = useState<string[]>([
-    'Все',
-    'Избранное',
-  ]);
-  const [currentLabel, setCurrentLabel] = useState('Все');
+  const [chipsLabels, setChipsLabels] = useState<string[]>(['Избранное']);
+  const [selectedLabels, setSelectedLabels] = useState<string[]>([]);
 
   const { cards } = useContext(CardsContext);
   const { setSortedCards } = useContext(SortedCardsContext);
@@ -26,11 +24,6 @@ export const SearchChips = () => {
       });
     });
   }, [cards, chipsLabels]);
-
-  useEffect(() => {
-    onSort(currentLabel);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cards]);
 
   interface SliderSettings {
     infinite: boolean;
@@ -52,26 +45,39 @@ export const SearchChips = () => {
     variableWidth: true,
   };
 
-  function onSort(item: string) {
-    if (item === 'Избранное') {
-      setCurrentLabel(item);
-      const favouriteCards = cards.filter((card) => card.favourite);
-      return setSortedCards && setSortedCards(favouriteCards);
-    }
+  useEffect(() => {
+    onSort(selectedLabels);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedLabels, cards]);
 
-    if (item === 'Все') {
-      setCurrentLabel(item);
+  function onSort(labels: string[]) {
+    const arr: ICardsContext = [];
+    if (labels.length) {
+      labels.forEach((label) => {
+        const matchedCards = cards.filter((card) => {
+          let isReturn = false;
+          card.card.shop.group?.forEach((el) => {
+            if (el.name === label) {
+              isReturn = true;
+            }
+          });
+          if (labels.includes('Избранное')) {
+            if (!card.favourite) isReturn = false;
+          }
+          if (isReturn) return card;
+        });
+        matchedCards.forEach((card) => {
+          arr.push(card);
+        });
+      });
+      if (!arr.length && labels.includes('Избранное') && labels.length === 1) {
+        const arr1 = cards.filter((card) => card.favourite);
+        return setSortedCards && setSortedCards(arr1);
+      }
+      return setSortedCards && setSortedCards(arr);
+    } else {
       return setSortedCards && setSortedCards(cards);
     }
-
-    setCurrentLabel(item);
-    const sortedCards = cards.filter((card) => {
-      const sort = card.card.shop.group?.filter((group) => {
-        return group.name === item;
-      });
-      if (sort?.length) return card;
-    });
-    return setSortedCards && setSortedCards(sortedCards);
   }
 
   return (
@@ -79,7 +85,12 @@ export const SearchChips = () => {
       <Slider {...settings}>
         {chipsLabels.map((item) => {
           return (
-            <ChipButton key={item} label={item} onClick={() => onSort(item)} />
+            <ChipButton
+              key={item}
+              label={item}
+              setSelectedLabels={setSelectedLabels}
+              selectedLabels={selectedLabels}
+            />
           );
         })}
       </Slider>
