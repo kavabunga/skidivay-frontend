@@ -2,11 +2,24 @@ import { FC, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import Barcode from 'react-barcode';
-import { Box, TextField, Button, Autocomplete, Card } from '@mui/material';
+import {
+  Box,
+  TextField,
+  Button,
+  Autocomplete,
+  Card,
+  createFilterOptions,
+} from '@mui/material';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { CardsContext, MessagesContext, ShopListContext } from '~/app';
-import { ICardContext, IShop, Input, cardFormErrors } from '~/shared';
+import {
+  ICardContext,
+  IShop,
+  IShopListContext,
+  Input,
+  cardFormErrors,
+} from '~/shared';
 import {
   formStyle,
   helperTextStyle,
@@ -18,6 +31,8 @@ import { AddCardFormModel } from './model';
 import { IApiError } from '~/shared/errors';
 import { ApiMessageTypes } from '~/shared/enums';
 import { handleFormFieldsErrors } from '~/features/errors';
+import React from 'react';
+const filter = createFilterOptions<IShopListContext>();
 
 //NOTE: In case of clearing the field with the built in close-button, the value becomes NULL, so react-hook-form fires type error. That's why we use 'required' error text as invalid type eroor text in shopName field
 const schema = z
@@ -131,6 +146,9 @@ export const AddCardForm: FC = () => {
   //   setValue('shop_name', location.state?.shop?.name ?? '');
   // }, [location.state, setValue]);
 
+  const [value, setValue] = React.useState<IShopListContext | null>(null);
+  console.log(value);
+
   return (
     <Box
       component="form"
@@ -146,16 +164,59 @@ export const AddCardForm: FC = () => {
           fieldState: { error },
         }) => (
           <Autocomplete
-            onChange={(_event: unknown, item: string | null) => {
-              onChange(item);
+            // onChange={() => {
+            //   onChange(item);
+            // }}
+            onChange={(_event: unknown, newValue: string | null) => {
+              if (typeof newValue === 'string') {
+                setValue({
+                  name: newValue,
+                });
+              } else if (newValue && newValue.name) {
+                // Create a new value from the user input
+                setValue({
+                  name: newValue.name,
+                });
+              } else {
+                setValue(newValue);
+              }
+              onChange(newValue);
+            }}
+            filterOptions={(options, params) => {
+              const filtered = filter(options, params);
+
+              const { inputValue } = params;
+              // Suggest the creation of a new value
+              const isExisting = options.some(
+                (option) => inputValue === option.name
+              );
+              if (inputValue !== '' && !isExisting) {
+                filtered.push({
+                  name,
+                  title: inputValue,
+                });
+              }
+
+              return filtered;
             }}
             freeSolo
-            //NOTE: this property does not allow you to add a arrowdown
             fullWidth
             autoSelect
             //NOTE: If undefined, on user input component would switch from uncontrolled to controlled
             value={value || null}
             options={shops.map((option) => option.name)}
+            getOptionLabel={(option) => {
+              // Value selected with enter, right from the input
+              if (typeof option === 'string') {
+                return option;
+              }
+              // Add "xxx" option created dynamically
+              if (option.inputValue) {
+                return option.inputValue;
+              }
+              // Regular option
+              return `Добавить новый ${option.title}`;
+            }}
             renderInput={(params) => (
               <TextField
                 {...params}
