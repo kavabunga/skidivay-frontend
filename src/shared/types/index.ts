@@ -23,7 +23,7 @@ export interface IUserResponse {
   email: string;
   name: string;
   username?: string;
-  phoneNumber?: string;
+  phone_number?: string;
   password?: string;
 }
 
@@ -111,6 +111,22 @@ export interface IRequestSetNewPassword {
   new_password: string;
 }
 
+export interface IChangePasswordRequest {
+  new_password: string;
+  current_password: string;
+}
+
 export interface IChangeEmailRequest {
   email: string;
+}
+
+export interface IPatchUser {
+  name?: string;
+  username?: string;
+  email?: string;
+  phone_number?: string;
+}
+
+export interface IDeleteUserRequest {
+  current_password: string;
 }

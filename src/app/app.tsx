@@ -9,6 +9,7 @@ import {
   AddCardWidget,
   Activation,
   SetNewPasswordWidget,
+  UserProfileWidget,
 } from '~/widgets';
 import { lightTheme } from '~/shared/lib';
 import 'typeface-roboto';
@@ -33,6 +34,7 @@ export function App() {
             >
               <Route index Component={SetNewPasswordWidget} />
             </Route>
+
             <Route path="/" Component={RootLayout}>
               <Route index element={<ProtectedHomeRoute />} />
               <Route element={<ProtectedRoute />}>
@@ -40,7 +42,9 @@ export function App() {
                   <Route path="new" Component={AddCardWidget} />
                   <Route path=":id" Component={CardWidget} />
                 </Route>
+                <Route path="user" Component={UserProfileWidget}></Route>
               </Route>
+
               <Route path="*" Component={NotFound} />
             </Route>
           </Routes>

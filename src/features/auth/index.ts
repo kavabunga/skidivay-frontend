@@ -5,4 +5,7 @@ export * from './auth-form';
 export * from './auth-logic';
 export * from './reset-password-form';
 export * from './set-new-password-form';
-export * from './change-email';
+export * from './user-profile-form';
+export * from './change-email-form';
+export * from './change-password-form';
+export * from './delete-user-form';

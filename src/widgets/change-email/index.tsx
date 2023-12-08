@@ -23,9 +23,9 @@ export const ChangeEmailWidget: FC<{
     ]);
   };
 
-  function handleSubmit(newEmail: IChangeEmailRequest) {
+  function handleSubmit(data: IChangeEmailRequest) {
     return api
-      .changeEmail(newEmail)
+      .changeEmail(data)
       .then((res) => setUser && setUser(res))
       .then(() => {
         handleSuccess();

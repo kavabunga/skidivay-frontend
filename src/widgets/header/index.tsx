@@ -1,4 +1,5 @@
 import { FC, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AppBar, Button, IconButton } from '@mui/material';
 import { Logo, CloseButton } from '~/shared/ui';
 import { PermIdentity } from '@mui/icons-material';
@@ -13,6 +14,8 @@ export type HeaderProps = {
 
 export const Header: FC<HeaderProps> = ({ type }) => {
   const { user } = useContext(UserContext);
+  const navigate = useNavigate();
+
   return (
     <AppBar
       sx={{
@@ -26,7 +29,12 @@ export const Header: FC<HeaderProps> = ({ type }) => {
       <Logo type={type === 'standard' ? 'full' : 'image'} />
       {type === 'standard' &&
         (user ? (
-          <IconButton color="primary" size="small" sx={style.iconButton}>
+          <IconButton
+            onClick={() => navigate('/user')}
+            color="primary"
+            size="small"
+            sx={style.iconButton}
+          >
             <PermIdentity />
           </IconButton>
         ) : (
