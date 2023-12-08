@@ -7,20 +7,13 @@ import { mainContainerStyle, linkStyle } from './styles';
 import { SearchLine } from '~/features/search-line/ui';
 import notFoundImg from '~/shared/assets/not-found.jpg';
 
-type UserCardsProps = {
-  tags: {
-    label: string;
-  }[];
-};
-
-export const UserCards: FC<UserCardsProps> = ({ tags }) => {
+export const UserCards: FC = () => {
   const { cards } = useContext(SortedCardsContext);
   return (
     <Container component="main" sx={{ ...mainContainerStyle }}>
       <Typography
         component="h1"
-        variant="h1"
-        textAlign="left"
+        variant="h2"
         sx={{
           width: '100%',
         }}
@@ -28,7 +21,7 @@ export const UserCards: FC<UserCardsProps> = ({ tags }) => {
         Мои карты
       </Typography>
       <SearchLine />
-      <SearchChips items={tags} />
+      <SearchChips />
       {cards.length ? (
         <CardsList items={cards || []} />
       ) : (
@@ -37,12 +30,9 @@ export const UserCards: FC<UserCardsProps> = ({ tags }) => {
           <img src={notFoundImg} alt="Ничего не найдено" />
         </>
       )}
-      <SignOut
-        element={Button}
-        variant="text"
-        children={'Выйти из аккаунта'}
-        sx={{ ...linkStyle }}
-      />
+      <SignOut element={Button} variant="text" sx={{ ...linkStyle }}>
+        Выйти из аккаунта
+      </SignOut>
     </Container>
   );
 };

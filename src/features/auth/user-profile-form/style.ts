@@ -1,0 +1,40 @@
+import { SxProps } from '@mui/material';
+
+export const mainContainerStyle: SxProps = {
+  display: 'flex',
+  height: '100%',
+  flexDirection: 'column',
+  justifyContent: 'flex-start',
+  alignItems: 'center',
+  gap: '1rem',
+};
+
+export const linkStyle: SxProps = {
+  color: 'secondary.main',
+  padding: '0 0 1.25rem',
+  fontSize: '1rem',
+  fontWeight: '400',
+  lineHeight: '1.5rem',
+  textDecoration: 'underline',
+  alignSelf: 'flex-start',
+  cursor: 'pointer',
+  '&:hover': {
+    color: 'primary.main',
+    textDecoration: 'underline',
+    backgroundColor: 'transparent',
+  },
+};
+
+export const formStyle: SxProps = {
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '12px',
+  paddingTop: '12px',
+};
+
+export const buttonStyle: SxProps = {
+  fontSize: '.875rem',
+  fontWeight: 500,
+  lineHeight: 1.4,
+  paddingY: 2.25,
+};

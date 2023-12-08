@@ -17,7 +17,7 @@ export const ResetPasswordForm: FC<IResetPasswordForm> = ({
       })
       .min(1, { message: authFormErrors.requiredEmail })
       .email({ message: authFormErrors.wrongEmail }),
-    phone_number: z
+    phone_last_digits: z
       .string({
         required_error: authFormErrors.requiredPhone,
       })
@@ -35,9 +35,10 @@ export const ResetPasswordForm: FC<IResetPasswordForm> = ({
       defaultHelperText: ' ',
       autoComplete: 'email',
       required: true,
+      hideAsterisk: true,
     },
     {
-      name: 'phone_number',
+      name: 'phone_last_digits',
       label: 'Номер телефона',
       type: 'text',
       defaultHelperText: ' ',
@@ -46,13 +47,14 @@ export const ResetPasswordForm: FC<IResetPasswordForm> = ({
       maskOptions: {
         mask: '+7 (XXX) XXX-00-00',
       },
+      hideAsterisk: true,
     },
   ];
 
   const submit = (data: { [key: string]: string }) => {
     const request = {
       phone_last_digits:
-        data.phone_number.replace(/\D/g, '').replace(/^7/, '') || '',
+        data.phone_last_digits.replace(/\D/g, '').replace(/^7/, '') || '',
       email: data.email,
     };
     return requestResetPassword(request).then(() =>

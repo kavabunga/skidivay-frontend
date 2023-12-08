@@ -1,6 +1,13 @@
-import { FC, useContext } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { Box, Button, InputAdornment, IconButton } from '@mui/material';
+import { FC, useContext, useEffect, useState } from 'react';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import {
+  Box,
+  Button,
+  InputAdornment,
+  IconButton,
+  Autocomplete,
+  TextField,
+} from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import ErrorIcon from '@mui/icons-material/Error';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -8,14 +15,25 @@ import * as z from 'zod';
 import { Input } from '~/shared/ui';
 import { cardFormErrors } from '~/shared/lib';
 import { ICardContext, api } from '~/shared';
-import { CardsContext, MessagesContext } from '~/app';
+import {
+  CardsContext,
+  GroupListContext,
+  MessagesContext,
+  ShopListContext,
+} from '~/app';
 import { IApiError } from '~/shared/errors';
 import { ApiMessageTypes } from '~/shared/enums';
-import { formStyle, buttonStyle } from './style';
+import { formStyle, buttonStyle, helperTextStyle, listBoxStyle } from './style';
 import { handleFormFieldsErrors } from '~/features/errors';
 
 const schema = z
   .object({
+    shop_group: z
+      .string()
+      .max(20)
+      .regex(/^[A-Za-zА-Яа-яЁё\s\d!@#$%^&*()_+-=[\]{};:'",.<>?/\\|]*$/, {
+        message: cardFormErrors.wrongShopGroup,
+      }),
     card_number: z
       .string({})
       .max(40, { message: cardFormErrors.wrongNumber })
@@ -29,6 +47,7 @@ const schema = z
         message: cardFormErrors.wrongNumber,
       }),
   })
+  .partial()
   .superRefine(({ barcode_number, card_number }, ctx) => {
     if (!barcode_number && !card_number) {
       ctx.addIssue({
@@ -64,7 +83,20 @@ export const EditCardForm: FC<EditCardFormProps> = ({
 }) => {
   const { setMessages } = useContext(MessagesContext);
   const { cards, setCards } = useContext(CardsContext);
+  const { groups } = useContext(GroupListContext);
+
+  //NOTE: Use this to make field editable
+  const { shops } = useContext(ShopListContext);
+  const [isUserShop, setIsUserShop] = useState(true);
+  useEffect(
+    () =>
+      shops.find((shop) => shop.name === card.card.shop.name) &&
+      setIsUserShop(false),
+    [card.card.shop.name, shops]
+  );
+
   const {
+    control,
     register,
     handleSubmit,
     setError,
@@ -77,6 +109,7 @@ export const EditCardForm: FC<EditCardFormProps> = ({
     defaultValues: {
       card_number: card.card.card_number,
       barcode_number: card.card.barcode_number,
+      shop_group: card.card.shop.group?.[0]?.name ?? '',
     },
   });
 
@@ -111,7 +144,7 @@ export const EditCardForm: FC<EditCardFormProps> = ({
       setMessages((messages) => [
         {
           message:
-            err.detail?.non_field_errors.join(' ') ||
+            err.detail?.non_field_errors?.join(' ') ||
             err.message ||
             'Ошибка сервера',
           type: ApiMessageTypes.error,
@@ -122,6 +155,18 @@ export const EditCardForm: FC<EditCardFormProps> = ({
   };
 
   const onSubmit: SubmitHandler<{ [key: string]: string }> = (data) => {
+    if (
+      (data.shop_group && !card.card.shop.group?.[0]?.name) ||
+      data.shop_group !== card.card.shop.group?.[0]?.name
+    ) {
+      const newGroupId = groups.find((group) => group.name === data.shop_group)
+        ?.id;
+      const shopRequest = {
+        name: card.card.shop.name,
+        ...(newGroupId && { group: [newGroupId] }),
+      };
+      api.editShop(shopRequest, card.card.shop.id).catch(handleError);
+    }
     api
       .editCard(data, card.card.id)
       .then((res) => {
@@ -196,6 +241,41 @@ export const EditCardForm: FC<EditCardFormProps> = ({
         errors={errors}
         disabled={!isActive}
         hideAsterisk={true}
+      />
+      <Controller
+        name="shop_group"
+        control={control}
+        render={({
+          field: { value, onChange, onBlur, ref },
+          fieldState: { error },
+        }) => (
+          <Autocomplete
+            disablePortal
+            onChange={(_event: unknown, item: string | null) => {
+              onChange(item || '');
+            }}
+            fullWidth
+            //NOTE: If undefined, on user input component would switch from uncontrolled to controlled
+            value={value || null}
+            options={groups.map((option) => option.name)}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Категория магазина"
+                error={Boolean(error)}
+                helperText={error ? error.message : ' '}
+                FormHelperTextProps={{ sx: helperTextStyle }}
+                onBlur={onBlur}
+                inputRef={ref}
+              />
+            )}
+            ListboxProps={{ sx: listBoxStyle }}
+            //NOTE: Temporary disabling field
+            // disabled
+            //NOTE: Use this to make field editable
+            disabled={!(isActive && isUserShop)}
+          />
+        )}
       />
       {isActive && (
         <Button

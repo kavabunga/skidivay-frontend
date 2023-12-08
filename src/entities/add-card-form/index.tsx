@@ -1,4 +1,4 @@
-import { FC, useContext } from 'react';
+import { FC, useContext, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import Barcode from 'react-barcode';
@@ -12,8 +12,13 @@ import {
 } from '@mui/material';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { CardsContext, MessagesContext, ShopListContext } from '~/app';
-import { ICardContext, IShop, Input, cardFormErrors } from '~/shared';
+import {
+  CardsContext,
+  GroupListContext,
+  MessagesContext,
+  ShopListContext,
+} from '~/app';
+import { ICardContext, IGroup, IShop, Input, cardFormErrors } from '~/shared';
 import {
   formStyle,
   helperTextStyle,
@@ -41,8 +46,14 @@ const schema = z
       })
       .min(1, { message: cardFormErrors.requiredShopName })
       .max(30)
-      .regex(/^[A-Za-zА-Яа-яЁё\s\d!@#$%^&*()_+-=[\]{};:'",.<>?/\\|]+$/, {
+      .regex(/^[A-Za-zА-Яа-яЁё\s\d!@#$%^&*()_+-=[\]{};:'",.<>?/\\|]*$/, {
         message: cardFormErrors.wrongShopName,
+      }),
+    shop_group: z
+      .string()
+      .max(20)
+      .regex(/^[A-Za-zА-Яа-яЁё\s\d!@#$%^&*()_+-=[\]{};:'",.<>?/\\|]*$/, {
+        message: cardFormErrors.wrongShopGroup,
       }),
     card_number: z
       .string({})
@@ -74,8 +85,10 @@ const schema = z
 export const AddCardForm: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [isGroupInputBlocked, setIsGroupInputBlocked] = useState(true);
   const { setMessages } = useContext(MessagesContext);
   const { shops } = useContext(ShopListContext);
+  const { groups } = useContext(GroupListContext);
   const { cards, setCards } = useContext(CardsContext);
   const options: readonly IOption[] = shops;
 
@@ -84,9 +97,10 @@ export const AddCardForm: FC = () => {
     register,
     handleSubmit,
     watch,
+    setValue,
     setError,
     getValues,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, touchedFields },
   } = useForm<{ [key: string]: string }>({
     mode: 'onTouched',
     resolver: zodResolver(schema),
@@ -103,7 +117,7 @@ export const AddCardForm: FC = () => {
       setMessages((messages) => [
         {
           message:
-            err.detail?.non_field_errors.join(' ') ||
+            err.detail?.non_field_errors?.join(' ') ||
             err.message ||
             'Ошибка сервера',
           type: ApiMessageTypes.error,
@@ -117,7 +131,14 @@ export const AddCardForm: FC = () => {
     const shop = shops.find(
       (element: IShop) => element.name === data.shop_name
     );
-    data = { ...data, shop_id: shop?.id.toString() || '' };
+    const group = groups.find(
+      (element: IGroup) => element.name === data.shop_group
+    );
+    data = {
+      ...data,
+      shop_id: shop?.id.toString() || '',
+      group_id: group?.id.toString() || '',
+    };
     new AddCardFormModel(data)
       .createNewCard()
       .then((res) => {
@@ -164,12 +185,20 @@ export const AddCardForm: FC = () => {
             options={options}
             renderOption={(props, option) => <li {...props}>{option.name}</li>}
             onChange={(_event, newValue) => {
+              const shop = shops.find((shop) => shop.name === newValue);
+              if (shop?.group?.[0].name) {
+                setValue('shop_group', shop.group[0].name);
+                setIsGroupInputBlocked(true);
+              } else {
+                setIsGroupInputBlocked(false);
+              }
               if (typeof newValue === 'string') {
                 onChange(newValue);
               } else if (newValue && newValue.inputValue) {
                 onChange(newValue.inputValue);
+              } else {
+                onChange(newValue);
               }
-              onChange(newValue);
             }}
             filterOptions={(options, params) => {
               const filtered = filter(options, params);
@@ -204,7 +233,9 @@ export const AddCardForm: FC = () => {
                 {...params}
                 label="Название магазина"
                 error={Boolean(error)}
-                helperText={error ? error.message : ' '}
+                helperText={
+                  error ? error.message : 'Выберите из списка или введите свой'
+                }
                 FormHelperTextProps={{ sx: helperTextStyle }}
                 onBlur={onBlur}
                 inputRef={ref}
@@ -214,12 +245,44 @@ export const AddCardForm: FC = () => {
           />
         )}
       />
+      <Controller
+        name="shop_group"
+        control={control}
+        render={({
+          field: { value, onChange, onBlur, ref },
+          fieldState: { error },
+        }) => (
+          <Autocomplete
+            disablePortal
+            onChange={(_event: unknown, item: string | null) => {
+              onChange(item || '');
+            }}
+            fullWidth
+            //NOTE: If undefined, on user input component would switch from uncontrolled to controlled
+            value={value || null}
+            options={groups.map((option) => option.name)}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Категория магазина"
+                error={Boolean(error)}
+                helperText={error ? error.message : ' '}
+                FormHelperTextProps={{ sx: helperTextStyle }}
+                onBlur={onBlur}
+                inputRef={ref}
+              />
+            )}
+            ListboxProps={{ sx: listBoxStyle }}
+            disabled={isGroupInputBlocked}
+          />
+        )}
+      />
       <Input
         name="card_number"
         label="Номер карты"
         type="text"
         autoComplete="no"
-        defaultHelperText=" "
+        defaultHelperText="Введите номер карты или номер штрихкода"
         placeholder=""
         register={register}
         errors={errors}
@@ -230,7 +293,11 @@ export const AddCardForm: FC = () => {
         label="Номер штрихкода"
         type="text"
         autoComplete="no"
-        defaultHelperText=" "
+        defaultHelperText={
+          touchedFields['barcode_number']
+            ? 'Цифры, расположенные под черными штрихами'
+            : ' '
+        }
         placeholder=""
         register={register}
         errors={errors}

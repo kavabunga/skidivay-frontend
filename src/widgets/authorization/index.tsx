@@ -10,6 +10,7 @@ import {
 import {
   RegistrationSuccessWidget,
   ResetPasswordRequestSuccessWidget,
+  ChangeEmailWidget,
 } from '~/widgets';
 import {
   widgetStyle,
@@ -64,18 +65,18 @@ export const AuthWidget = () => {
     setCurrentTab(newValue);
   };
 
-  const handleShowDefault = () => {
-    setCurrentTab(0);
-    setRegistredEmail('');
-    setWidgetScreen('default');
+  //TODO: Use it in header close button
+  // const handleShowDefault = () => {
+  //   setCurrentTab(0);
+  //   setRegistredEmail('');
+  //   setWidgetScreen('default');
+  // };
+
+  const handleShowChangeEmail = () => {
+    setWidgetScreen('changeEmail');
   };
 
-  const handleShowResetPassword = () => {
-    setWidgetScreen('passwordReset');
-  };
-
-  const handleShowRegistrationSuccess = (data: string) => {
-    setRegistredEmail(data);
+  const handleShowRegistrationSuccess = () => {
     setWidgetScreen('registrationSuccess');
   };
 
@@ -84,12 +85,15 @@ export const AuthWidget = () => {
     setWidgetScreen('resetPasswordRequestSuccess');
   };
 
+  const handleShowResetPassword = () => {
+    setWidgetScreen('passwordReset');
+  };
+
   switch (widgetScreen) {
     case 'registrationSuccess':
       return (
         <RegistrationSuccessWidget
-          email={registredEmail}
-          onClose={handleShowDefault}
+          handleShowChangeEmail={handleShowChangeEmail}
         />
       );
     case 'resetPasswordRequestSuccess':
@@ -101,7 +105,7 @@ export const AuthWidget = () => {
             <BackButton />
           </Stack>
           <Typography component="h1" sx={titleStyle}>
-            Забыли пароль?
+            Восстановление пароля
           </Typography>
           <Typography sx={paragraphStyle}>
             Введите email и последние четыре цифры номера, который был указан
@@ -109,6 +113,12 @@ export const AuthWidget = () => {
           </Typography>
           <ResetPasswordForm handleSetEmail={handleShowPasswordResetSuccess} />
         </Stack>
+      );
+    case 'changeEmail':
+      return (
+        <ChangeEmailWidget
+          handleShowRegistrationSuccess={handleShowRegistrationSuccess}
+        />
       );
     case 'default':
       return (
@@ -136,7 +146,9 @@ export const AuthWidget = () => {
             <Typography component="h1" sx={titleTabStyle}>
               Регистрация
             </Typography>
-            <SignUpForm handleSetEmail={handleShowRegistrationSuccess} />
+            <SignUpForm
+              handleShowRegistrationSuccess={handleShowRegistrationSuccess}
+            />
           </CustomTabPanel>
         </Stack>
       );
