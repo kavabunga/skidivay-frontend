@@ -12,15 +12,8 @@ export const ChangePasswordForm: FC<{
         .string({
           required_error: authFormErrors.requiredPassword,
         })
-        .min(1, { message: authFormErrors.requiredPassword })
-        .min(8, { message: authFormErrors.wrongPasswordCreated })
-        .regex(
-          /^(?=.*[a-zа-яё])(?=.*[A-ZА-ЯЁ])(?=.*\d)[a-zA-Zа-яА-ЯёЁ\d\s!@#$%^&*()[\]\-_+=<>?]{1,}$/,
-          {
-            message: authFormErrors.wrongPasswordCreated,
-          }
-        ),
-      newPassword: z
+        .min(1, { message: authFormErrors.requiredPassword }),
+      new_password: z
         .string({
           required_error: authFormErrors.requiredPassword,
         })
@@ -32,25 +25,25 @@ export const ChangePasswordForm: FC<{
             message: authFormErrors.wrongPasswordCreated,
           }
         ),
-      newPasswordRepeat: z
+      new_password_repeat: z
         .string({
           required_error: authFormErrors.requiredPassword,
         })
         .min(1, { message: authFormErrors.requiredPassword }),
     })
-    .superRefine(({ newPasswordRepeat, newPassword }, ctx) => {
-      if (newPasswordRepeat !== newPassword) {
+    .superRefine(({ new_password_repeat, new_password }, ctx) => {
+      if (new_password_repeat !== new_password) {
         ctx.addIssue({
           code: 'custom',
           message: authFormErrors.wrongPasswordRepeat,
-          path: ['newPasswordRepeat'],
+          path: ['new_password_repeat'],
         });
       }
     });
 
   const fields = [
     {
-      name: 'currentPassword',
+      name: 'current_password',
       label: 'Старый пароль',
       type: 'password',
       defaultHelperText: ' ',
@@ -59,7 +52,7 @@ export const ChangePasswordForm: FC<{
       hideAsterisk: true,
     },
     {
-      name: 'newPassword',
+      name: 'new_password',
       label: 'Новый пароль',
       type: 'password',
       defaultHelperText: ' ',
@@ -68,7 +61,7 @@ export const ChangePasswordForm: FC<{
       hideAsterisk: true,
     },
     {
-      name: 'newPasswordRepeat',
+      name: 'new_password_repeat',
       label: 'Подтверждение пароля',
       type: 'password',
       defaultHelperText: ' ',
@@ -80,8 +73,8 @@ export const ChangePasswordForm: FC<{
 
   const submit = (data: { [key: string]: string }) => {
     return handleSubmit({
-      new_password: data.newPassword,
-      current_password: data.currentPassword,
+      new_password: data.new_password,
+      current_password: data.current_password,
     });
   };
 

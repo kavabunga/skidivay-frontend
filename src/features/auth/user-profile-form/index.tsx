@@ -1,13 +1,12 @@
 import { FC, useContext } from 'react';
-import * as z from 'zod';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Link } from '@mui/material';
-import { api, authFormErrors, IPatchUser } from '~/shared';
-import { UserContext } from '~/app';
+import { IMask } from 'react-imask';
+import { Box, Button, Stack, Link } from '@mui/material';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Box, Button, Stack } from '@mui/material';
+import * as z from 'zod';
+import { api, authFormErrors, IPatchUser } from '~/shared';
+import { UserContext, MessagesContext } from '~/app';
 import { InputSelector } from '~/features';
-import { MessagesContext } from '~/app';
 import { ApiMessageTypes } from '~/shared/enums';
 import { IApiError } from '~/shared/errors';
 import { handleFormFieldsErrors } from '~/features/errors';
@@ -92,23 +91,30 @@ export const UserProfileForm: FC<IUserProfileForm> = ({
 }) => {
   const { user, setUser } = useContext(UserContext);
   const { setMessages } = useContext(MessagesContext);
+  const masked = IMask.createMask({
+    mask: '+7 (000) 000-00-00',
+  });
+  masked.resolve(user?.phone_number || '');
+
   const {
     register,
     handleSubmit,
     setError,
     getValues,
-    formState: { errors, isValid, isSubmitting },
+    reset,
+    formState: { errors, isSubmitting },
   } = useForm<{ [key: string]: string }>({
     mode: 'onTouched',
     resolver: zodResolver(schema),
     defaultValues: {
       name: user?.name || '',
       email: user?.email || '',
-      phone_number: user?.phone_number || '',
+      phone_number: masked.value,
     },
   });
 
   const handleCancelChanges = () => {
+    reset();
     onEditDisable();
   };
 
@@ -137,6 +143,22 @@ export const UserProfileForm: FC<IUserProfileForm> = ({
       phone_number:
         data.phone_number.replace(/\D/g, '').replace(/^7/, '') || '',
     };
+
+    if (
+      request.name === user?.name &&
+      request.email === user?.email &&
+      request.phone_number === user?.phone_number
+    ) {
+      setMessages((messages) => [
+        {
+          message: 'Данные не поменялись, но мы все сохранили',
+          type: ApiMessageTypes.error,
+        },
+        ...messages,
+      ]);
+      onEditDisable();
+      return;
+    }
 
     api
       .editUser(request)
@@ -183,7 +205,7 @@ export const UserProfileForm: FC<IUserProfileForm> = ({
           <Button
             type="submit"
             variant="contained"
-            disabled={!isValid || isSubmitting}
+            disabled={isSubmitting}
             fullWidth
             sx={buttonStyle}
           >

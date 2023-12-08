@@ -60,8 +60,11 @@ export const UserProfileWidget = () => {
     case 'default':
       return (
         <Stack component="section" sx={containerStyle}>
-          {widgetScreen === 'default' && <BackButton />}
-          {widgetScreen !== 'default' && <BackButtonToUserProfile />}
+          {widgetScreen === 'default' ? (
+            <BackButton />
+          ) : (
+            <BackButtonToUserProfile />
+          )}
           <Stack
             direction="row"
             justifyContent="space-between"
