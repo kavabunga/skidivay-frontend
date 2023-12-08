@@ -1,9 +1,15 @@
 import { Chip } from '@mui/material';
 import { style } from './style';
 import './style.css';
-import { useState } from 'react';
+import { Dispatch, FC, SetStateAction, useState } from 'react';
 
-export const ChipButton = ({ ...props }) => {
+interface IChipButton {
+  selectedLabels: Array<string>;
+  setSelectedLabels: Dispatch<SetStateAction<Array<string>>>;
+  label: string;
+}
+
+export const ChipButton: FC<IChipButton> = ({ ...props }) => {
   const [isSelected, setIsSelected] = useState<boolean>(false);
 
   function onClick() {

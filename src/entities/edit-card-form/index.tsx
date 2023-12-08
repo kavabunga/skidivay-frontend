@@ -1,4 +1,4 @@
-import { FC, useContext } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import {
   Box,
@@ -15,7 +15,12 @@ import * as z from 'zod';
 import { Input } from '~/shared/ui';
 import { cardFormErrors } from '~/shared/lib';
 import { ICardContext, api } from '~/shared';
-import { CardsContext, GroupListContext, MessagesContext } from '~/app';
+import {
+  CardsContext,
+  GroupListContext,
+  MessagesContext,
+  ShopListContext,
+} from '~/app';
 import { IApiError } from '~/shared/errors';
 import { ApiMessageTypes } from '~/shared/enums';
 import { formStyle, buttonStyle, helperTextStyle, listBoxStyle } from './style';
@@ -81,14 +86,14 @@ export const EditCardForm: FC<EditCardFormProps> = ({
   const { groups } = useContext(GroupListContext);
 
   //NOTE: Use this to make field editable
-  // const { shops } = useContext(ShopListContext);
-  // const [isUserShop, setIsUserShop] = useState(true);
-  // useEffect(
-  //   () =>
-  //     shops.find((shop) => shop.name === card.card.shop.name) &&
-  //     setIsUserShop(false),
-  //   [card.card.shop.name, shops]
-  // );
+  const { shops } = useContext(ShopListContext);
+  const [isUserShop, setIsUserShop] = useState(true);
+  useEffect(
+    () =>
+      shops.find((shop) => shop.name === card.card.shop.name) &&
+      setIsUserShop(false),
+    [card.card.shop.name, shops]
+  );
 
   const {
     control,
@@ -104,6 +109,7 @@ export const EditCardForm: FC<EditCardFormProps> = ({
     defaultValues: {
       card_number: card.card.card_number,
       barcode_number: card.card.barcode_number,
+      shop_group: card.card.shop.group?.[0].name,
     },
   });
 
@@ -149,6 +155,19 @@ export const EditCardForm: FC<EditCardFormProps> = ({
   };
 
   const onSubmit: SubmitHandler<{ [key: string]: string }> = (data) => {
+    if (
+      (data.shop_group && !card.card.shop.group?.[0].name) ||
+      data.shop_group !== card.card.shop.group?.[0].name
+    ) {
+      console.log('here');
+      const newGroupId = groups.find((group) => group.name === data.shop_group)
+        ?.id;
+      const shopRequest = {
+        name: card.card.shop.name,
+        ...(newGroupId && { group: [newGroupId] }),
+      };
+      api.editShop(shopRequest, card.card.shop.id).catch(handleError);
+    }
     api
       .editCard(data, card.card.id)
       .then((res) => {
@@ -253,9 +272,9 @@ export const EditCardForm: FC<EditCardFormProps> = ({
             )}
             ListboxProps={{ sx: listBoxStyle }}
             //NOTE: Temporary disabling field
-            disabled
+            // disabled
             //NOTE: Use this to make field editable
-            // disabled={!(isActive && isUserShop)}
+            disabled={!(isActive && isUserShop)}
           />
         )}
       />

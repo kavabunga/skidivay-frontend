@@ -10,6 +10,7 @@ import {
   IRequestSetNewPassword,
   IChangeEmailRequest,
   MEDIA_URL,
+  IShopRequest,
 } from '..';
 import { ApiError } from '../errors';
 
@@ -186,6 +187,18 @@ export const ApiRequests = class ApiRequests {
     return this._requestAuthorizedApi(url, options).then((res: ICard) => {
       res.shop?.logo && (res.shop.logo = addBaseMediaUrl(res.shop.logo));
 
+      return res;
+    });
+  }
+  editShop(data: IShopRequest, id: number) {
+    const url = `${this._url}/shops/${id.toString()}/`;
+    const options: IRequestOptions = {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify(data),
+    };
+    return this._requestAuthorizedApi(url, options).then((res: IShop) => {
+      res.logo && (res.logo = addBaseMediaUrl(res.logo));
       return res;
     });
   }
