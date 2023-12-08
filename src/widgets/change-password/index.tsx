@@ -64,12 +64,9 @@ export const ChangePasswordWidget: FC<{
         Изменить пароль
       </Typography>
       <ChangePasswordForm handleSubmit={handleSubmit} />
-      <Button
-        variant="outlined"
-        children={'Не помню пароль'}
-        sx={buttonStyle}
-        onClick={handleResetPassword}
-      />
+      <Button variant="outlined" sx={buttonStyle} onClick={handleResetPassword}>
+        Не помню пароль
+      </Button>
     </Container>
   );
 };

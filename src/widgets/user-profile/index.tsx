@@ -89,18 +89,16 @@ export const UserProfileWidget = () => {
               useFlexGap
               sx={{ paddingTop: '.75rem' }}
             >
-              <SignOut
-                element={Button}
-                variant="contained"
-                children={'Выйти из аккаунта'}
-                sx={buttonStyle}
-              />
+              <SignOut element={Button} variant="contained" sx={buttonStyle}>
+                Выйти из аккаунта
+              </SignOut>
               <Button
                 variant="outlined"
-                children={'Удалить аккаунт'}
                 sx={buttonStyle}
                 onClick={handleDeleteUser}
-              />
+              >
+                Удалить аккаунт
+              </Button>
             </Stack>
           )}
         </Stack>
