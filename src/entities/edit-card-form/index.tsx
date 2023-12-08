@@ -109,7 +109,7 @@ export const EditCardForm: FC<EditCardFormProps> = ({
     defaultValues: {
       card_number: card.card.card_number,
       barcode_number: card.card.barcode_number,
-      shop_group: card.card.shop.group?.[0].name,
+      shop_group: card.card.shop.group?.[0]?.name ?? '',
     },
   });
 
@@ -156,10 +156,9 @@ export const EditCardForm: FC<EditCardFormProps> = ({
 
   const onSubmit: SubmitHandler<{ [key: string]: string }> = (data) => {
     if (
-      (data.shop_group && !card.card.shop.group?.[0].name) ||
-      data.shop_group !== card.card.shop.group?.[0].name
+      (data.shop_group && !card.card.shop.group?.[0]?.name) ||
+      data.shop_group !== card.card.shop.group?.[0]?.name
     ) {
-      console.log('here');
       const newGroupId = groups.find((group) => group.name === data.shop_group)
         ?.id;
       const shopRequest = {
