@@ -2,7 +2,14 @@ import { FC, useContext, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import Barcode from 'react-barcode';
-import { Box, TextField, Button, Autocomplete, Card } from '@mui/material';
+import {
+  Box,
+  TextField,
+  Button,
+  Autocomplete,
+  Card,
+  createFilterOptions,
+} from '@mui/material';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import {
@@ -23,6 +30,11 @@ import { AddCardFormModel } from './model';
 import { IApiError } from '~/shared/errors';
 import { ApiMessageTypes } from '~/shared/enums';
 import { handleFormFieldsErrors } from '~/features/errors';
+
+const filter = createFilterOptions<IOption>();
+interface IOption extends IShop {
+  inputValue?: string;
+}
 
 //NOTE: In case of clearing the field with the built in close-button, the value becomes NULL, so react-hook-form fires type error. That's why we use 'required' error text as invalid type eroor text in shopName field
 const schema = z
@@ -78,6 +90,8 @@ export const AddCardForm: FC = () => {
   const { shops } = useContext(ShopListContext);
   const { groups } = useContext(GroupListContext);
   const { cards, setCards } = useContext(CardsContext);
+  const options: readonly IOption[] = shops;
+
   const {
     control,
     register,
@@ -163,22 +177,57 @@ export const AddCardForm: FC = () => {
           fieldState: { error },
         }) => (
           <Autocomplete
-            onChange={(_event: unknown, item: string | null) => {
-              const shop = shops.find((shop) => shop.name === item);
+            freeSolo
+            fullWidth
+            autoSelect
+            //NOTE: If undefined, on user input component would switch from uncontrolled to controlled
+            value={value || null}
+            options={options}
+            renderOption={(props, option) => <li {...props}>{option.name}</li>}
+            onChange={(_event, newValue) => {
+              const shop = shops.find((shop) => shop.name === newValue);
               if (shop?.group?.[0].name) {
                 setValue('shop_group', shop.group[0].name);
                 setIsGroupInputBlocked(true);
               } else {
                 setIsGroupInputBlocked(false);
               }
-              onChange(item);
+              if (typeof newValue === 'string') {
+                onChange(newValue);
+              } else if (newValue && newValue.inputValue) {
+                onChange(newValue.inputValue);
+              } else {
+                onChange(newValue);
+              }
             }}
-            freeSolo
-            fullWidth
-            autoSelect
-            //NOTE: If undefined, on user input component would switch from uncontrolled to controlled
-            value={value || null}
-            options={shops.map((option) => option.name)}
+            filterOptions={(options, params) => {
+              const filtered = filter(options, params);
+              const { inputValue } = params;
+              //NOTE: Suggest the creation of a new value
+              const isExisting = options.some(
+                (option) => inputValue === option.name
+              );
+              if (inputValue !== '' && !isExisting) {
+                filtered.push({
+                  id: 0,
+                  inputValue,
+                  name: `Добавить: ${inputValue}`,
+                });
+              }
+              return filtered;
+            }}
+            getOptionLabel={(option) => {
+              //NOTE: Value selected with enter, right from the input
+              if (typeof option === 'string') {
+                return option;
+              }
+              //NOTE: Add "xxx" option created dynamically
+              if (option.inputValue) {
+                return option.inputValue;
+              }
+              //NOTE: Regular option
+              return option.name;
+            }}
             renderInput={(params) => (
               <TextField
                 {...params}
