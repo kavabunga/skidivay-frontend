@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Stack, Box } from '@mui/material';
+import { Stack } from '@mui/material';
 import { Outlet } from 'react-router-dom';
 import { Header } from '~/widgets';
 import { AppFooter, Preloader } from '~/shared/ui';
@@ -12,14 +12,13 @@ export const RootLayout = () => {
   return (
     <Stack sx={{ minHeight: '100vh', position: 'relative' }} direction="column">
       <Header type="standard" />
-      <Box component="main">
+      <Stack component="main" flexGrow={1}>
         <Outlet />
-      </Box>
+      </Stack>
       {isLoading && <Preloader />}
       <Stack
         sx={{
           justifyContent: 'flex-end',
-          flexGrow: 1,
         }}
         direction="column"
       >
