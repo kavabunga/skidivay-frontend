@@ -13,8 +13,7 @@ export const UserCards: FC = () => {
     <Container component="main" sx={{ ...mainContainerStyle }}>
       <Typography
         component="h1"
-        variant="h1"
-        textAlign="left"
+        variant="h2"
         sx={{
           width: '100%',
         }}

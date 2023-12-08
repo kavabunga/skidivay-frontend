@@ -8,7 +8,10 @@ import {
   ISignUpRequest,
   IRequestResetPassword,
   IRequestSetNewPassword,
+  IChangePasswordRequest,
   IChangeEmailRequest,
+  IDeleteUserRequest,
+  IPatchUser,
   MEDIA_URL,
   IShopRequest,
 } from '..';
@@ -220,7 +223,7 @@ export const ApiRequests = class ApiRequests {
   }
 
   deleteCard(id: number) {
-    const url = `${this._url}/cards/${id}`;
+    const url = `${this._url}/cards/${id}/`;
     const options: IRequestOptions = {
       method: 'DELETE',
       headers: this._headers,
@@ -262,6 +265,36 @@ export const ApiRequests = class ApiRequests {
     const url = `${this._url}/users/me/`;
     const options: IRequestOptions = {
       method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify(data),
+    };
+    return this._requestAuthorizedApi(url, options);
+  }
+
+  editUser(data: IPatchUser) {
+    const url = `${this._url}/users/me/`;
+    const options: IRequestOptions = {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify(data),
+    };
+    return this._requestAuthorizedApi(url, options);
+  }
+
+  changePassword(data: IChangePasswordRequest) {
+    const url = `${this._url}/users/set_password/`;
+    const options: IRequestOptions = {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify(data),
+    };
+    return this._requestAuthorizedApi(url, options);
+  }
+
+  deleteUser(data: IDeleteUserRequest, id: number) {
+    const url = `${this._url}/users/${id}/`;
+    const options: IRequestOptions = {
+      method: 'DELETE',
       headers: this._headers,
       body: JSON.stringify(data),
     };

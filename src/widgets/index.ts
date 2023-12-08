@@ -11,3 +11,6 @@ export * from './activation';
 export * from './reset-password-request-success';
 export * from './set-new-password';
 export * from './change-email';
+export * from './user-profile';
+export * from './change-password';
+export * from './delete-user';
