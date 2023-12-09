@@ -39,7 +39,7 @@ export const ChangeEmailForm: FC<{
     <AuthForm
       fields={fields}
       schema={schema}
-      button={{ label: 'Теперь верно', fullWidth: true }}
+      button={{ label: 'Подтвердить', fullWidth: true }}
       submit={submit}
       defaultValues={{ email: oldEmail }}
     />

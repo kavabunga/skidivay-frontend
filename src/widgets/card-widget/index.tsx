@@ -10,8 +10,8 @@ import {
   DialogContentText,
 } from '@mui/material';
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
-import { BackButton, CardSharePopup } from '~/features';
-import { CardFull, EditCardForm } from '~/entities';
+import { BackButton, CardShareForm } from '~/features';
+import { CardFull, CardSharePopup, EditCardForm } from '~/entities';
 import { Liker } from '~/features';
 import {
   containerStyle,
@@ -196,7 +196,9 @@ export const CardWidget = () => {
         open={isShareActive}
         onClose={handleCancelShareCard}
         cardId={cardId}
-      />
+      >
+        <CardShareForm card={card.card} afterSubmit={handleCancelShareCard} />
+      </CardSharePopup>
     </Stack>
   );
 };

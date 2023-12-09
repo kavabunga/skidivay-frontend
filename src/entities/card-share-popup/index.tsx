@@ -16,6 +16,7 @@ export const CardSharePopup: FC<ICardSharePopupProps> = ({
   open,
   onClose,
   cardId,
+  children,
 }) => {
   console.log(cardId);
   return (
@@ -26,7 +27,10 @@ export const CardSharePopup: FC<ICardSharePopupProps> = ({
           Введите Email пользователя, с которым хотите поделиться картой
         </DialogContentText>
       </DialogContent>
-      <Stack useFlexGap>{/* Here goes the form */}</Stack>
+      <Stack useFlexGap>
+        {/* Here goes the form */}
+        {children}
+      </Stack>
     </Popup>
   );
 };
