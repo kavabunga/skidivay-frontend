@@ -14,6 +14,7 @@ import {
   IPatchUser,
   MEDIA_URL,
   IShopRequest,
+  IShareCardRequest,
 } from '..';
 import { ApiError } from '../errors';
 
@@ -295,6 +296,16 @@ export const ApiRequests = class ApiRequests {
     const url = `${this._url}/users/${id}/`;
     const options: IRequestOptions = {
       method: 'DELETE',
+      headers: this._headers,
+      body: JSON.stringify(data),
+    };
+    return this._requestAuthorizedApi(url, options);
+  }
+
+  shareCard(data: IShareCardRequest, id: number) {
+    const url = `${this._url}/cards/${id}/share/`;
+    const options: IRequestOptions = {
+      method: 'POST',
       headers: this._headers,
       body: JSON.stringify(data),
     };

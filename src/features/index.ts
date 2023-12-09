@@ -9,3 +9,4 @@ export * from './input-selector';
 export * from './promo-slider';
 export * from './liker';
 export * from './cards';
+export * from './card-share-form';

@@ -8,10 +8,11 @@ export const containerStyle: SxProps = {
   paddingBottom: '30px',
 };
 
-export const titleStyle: SxProps = {
-  fontSize: 32,
-  lineHeight: 1.25,
+export const paragraphStyle: SxProps = {
+  paddingX: '1.5rem',
+  fontSize: '.875rem',
+  lineHeight: 1.43,
   fontWeight: 400,
-  paddingTop: '40px',
-  paddingBottom: '20px',
+  paddingTop: '3.5rem',
+  paddingBottom: '1.75rem',
 };

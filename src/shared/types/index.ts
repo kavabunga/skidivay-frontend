@@ -134,3 +134,7 @@ export interface IPatchUser {
 export interface IDeleteUserRequest {
   current_password: string;
 }
+
+export interface IShareCardRequest {
+  email: string;
+}

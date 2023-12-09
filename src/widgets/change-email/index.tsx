@@ -4,8 +4,7 @@ import { ChangeEmailForm } from '~/features';
 import { api, IChangeEmailRequest } from '~/shared';
 import { ApiMessageTypes } from '~/shared/enums';
 import { MessagesContext, UserContext } from '~/app';
-import { containerStyle, titleStyle } from './style';
-import { BackButton } from '~/features';
+import { containerStyle, paragraphStyle } from './style';
 
 export const ChangeEmailWidget: FC<{
   handleShowRegistrationSuccess: () => void;
@@ -24,20 +23,24 @@ export const ChangeEmailWidget: FC<{
   };
 
   function handleSubmit(data: IChangeEmailRequest) {
-    return api
-      .changeEmail(data)
-      .then((res) => setUser && setUser(res))
-      .then(() => {
-        handleSuccess();
-        handleShowRegistrationSuccess();
-      });
+    if (data.email !== user?.email) {
+      return api
+        .changeEmail(data)
+        .then((res) => setUser && setUser(res))
+        .then(() => {
+          handleSuccess();
+          handleShowRegistrationSuccess();
+        });
+    } else {
+      handleShowRegistrationSuccess();
+      return Promise.resolve();
+    }
   }
 
   return (
     <Container component="section" sx={containerStyle}>
-      <BackButton />
-      <Typography component="h1" sx={titleStyle}>
-        Изменить почту
+      <Typography textAlign="center" sx={paragraphStyle}>
+        Проверьте адрес, на который было отправлено письмо о подтверждении
       </Typography>
       <ChangeEmailForm
         oldEmail={user ? user.email : ''}
