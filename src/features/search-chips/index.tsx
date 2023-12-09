@@ -26,6 +26,7 @@ export const SearchChips = () => {
   }, [cards, chipsLabels]);
 
   interface SliderSettings {
+    arrows: boolean;
     infinite: boolean;
     slidesToShow: number;
     slidesToScroll: number;
@@ -36,6 +37,7 @@ export const SearchChips = () => {
   }
 
   const settings: SliderSettings = {
+    arrows: false,
     infinite: false,
     slidesToShow: 1,
     slidesToScroll: 3,
