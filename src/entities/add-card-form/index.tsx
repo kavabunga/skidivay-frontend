@@ -185,9 +185,7 @@ export const AddCardForm: FC = () => {
             options={options}
             renderOption={(props, option) => <li {...props}>{option.name}</li>}
             onChange={(_event, newValue) => {
-              console.log(newValue);
               if (typeof newValue === 'object') {
-                console.log('in seletor');
                 setValue('shop_group', newValue?.group?.[0].name || '');
                 setIsGroupInputBlocked(true);
               }
