@@ -100,7 +100,7 @@ export const AddCardForm: FC = () => {
     setValue,
     setError,
     getValues,
-    formState: { errors, isSubmitting, touchedFields },
+    formState: { errors, isSubmitting },
   } = useForm<{ [key: string]: string }>({
     mode: 'onTouched',
     resolver: zodResolver(schema),
@@ -185,19 +185,19 @@ export const AddCardForm: FC = () => {
             options={options}
             renderOption={(props, option) => <li {...props}>{option.name}</li>}
             onChange={(_event, newValue) => {
-              const shop = shops.find((shop) => shop.name === newValue);
-              if (shop?.group?.[0].name) {
-                setValue('shop_group', shop.group[0].name);
+              console.log(newValue);
+              if (typeof newValue === 'object') {
+                console.log('in seletor');
+                setValue('shop_group', newValue?.group?.[0].name || '');
                 setIsGroupInputBlocked(true);
-              } else {
-                setIsGroupInputBlocked(false);
               }
               if (typeof newValue === 'string') {
                 onChange(newValue);
               } else if (newValue && newValue.inputValue) {
+                setIsGroupInputBlocked(false);
                 onChange(newValue.inputValue);
               } else {
-                onChange(newValue);
+                onChange(newValue?.name || '');
               }
             }}
             filterOptions={(options, params) => {
@@ -266,7 +266,13 @@ export const AddCardForm: FC = () => {
                 {...params}
                 label="Категория магазина"
                 error={Boolean(error)}
-                helperText={error ? error.message : ' '}
+                helperText={
+                  error
+                    ? error.message
+                    : isGroupInputBlocked
+                    ? ' '
+                    : 'Добавьте категорию для удобства поиска карты'
+                }
                 FormHelperTextProps={{ sx: helperTextStyle }}
                 onBlur={onBlur}
                 inputRef={ref}
@@ -282,7 +288,7 @@ export const AddCardForm: FC = () => {
         label="Номер карты"
         type="text"
         autoComplete="no"
-        defaultHelperText="Введите номер карты или номер штрихкода"
+        defaultHelperText=" "
         placeholder=""
         register={register}
         errors={errors}
@@ -293,11 +299,7 @@ export const AddCardForm: FC = () => {
         label="Номер штрихкода"
         type="text"
         autoComplete="no"
-        defaultHelperText={
-          touchedFields['barcode_number']
-            ? 'Цифры, расположенные под черными штрихами'
-            : ' '
-        }
+        defaultHelperText="Цифры, расположенные под черными штрихами"
         placeholder=""
         register={register}
         errors={errors}
