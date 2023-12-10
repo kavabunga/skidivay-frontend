@@ -13,6 +13,6 @@ export const paperStyle: SxProps = {
 
 export const closeButtonStyle: SxProps = {
   position: 'absolute',
-  top: '.75rem',
-  right: '.25rem',
+  top: 0,
+  right: 0,
 };
