@@ -8,17 +8,11 @@ import { FC } from 'react';
 import { IPopupProps, Popup } from '~/shared';
 import { titleStyle, itemStyle, textStyle } from './style';
 
-interface ICardSharePopupProps extends IPopupProps {
-  cardId: number;
-}
-
-export const CardSharePopup: FC<ICardSharePopupProps> = ({
+export const CardSharePopup: FC<IPopupProps> = ({
   open,
   onClose,
-  cardId,
   children,
 }) => {
-  console.log(cardId);
   return (
     <Popup open={open} onClose={onClose} showCloseButton={true}>
       <DialogTitle sx={titleStyle}>Поделиться картой</DialogTitle>
@@ -27,10 +21,7 @@ export const CardSharePopup: FC<ICardSharePopupProps> = ({
           Введите Email пользователя, с которым хотите поделиться картой
         </DialogContentText>
       </DialogContent>
-      <Stack useFlexGap>
-        {/* Here goes the form */}
-        {children}
-      </Stack>
+      <Stack useFlexGap>{children}</Stack>
     </Popup>
   );
 };
