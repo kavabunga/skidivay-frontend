@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { AuthForm } from '..';
-import { authFormErrors } from '~/shared';
+import { authFormErrors, validationSchemes } from '~/shared';
 import * as z from 'zod';
 
 export const SetNewPasswordForm: FC<{
@@ -8,23 +8,8 @@ export const SetNewPasswordForm: FC<{
 }> = ({ handleSubmit }) => {
   const schema = z
     .object({
-      password: z
-        .string({
-          required_error: authFormErrors.requiredPassword,
-        })
-        .min(1, { message: authFormErrors.requiredPassword })
-        .min(8, { message: authFormErrors.wrongPasswordCreated })
-        .regex(
-          /^(?=.*[a-zа-яё])(?=.*[A-ZА-ЯЁ])(?=.*\d)[a-zA-Zа-яА-ЯёЁ\d\s!@#$%^&*()[\]\-_+=<>?]{1,}$/,
-          {
-            message: authFormErrors.wrongPasswordCreated,
-          }
-        ),
-      passwordRepeat: z
-        .string({
-          required_error: authFormErrors.requiredPassword,
-        })
-        .min(1, { message: authFormErrors.requiredPassword }),
+      password: validationSchemes.password_new,
+      passwordRepeat: validationSchemes.password_repeat,
     })
     .superRefine(({ passwordRepeat, password }, ctx) => {
       if (passwordRepeat !== password) {

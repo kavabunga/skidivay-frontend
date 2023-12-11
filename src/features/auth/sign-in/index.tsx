@@ -4,7 +4,7 @@ import { Link, List, ListItem } from '@mui/material';
 import * as z from 'zod';
 import { CardsContext, UserContext } from '~/app';
 import { getUser } from '~/features';
-import { ISignInRequest, api, authFormErrors } from '~/shared';
+import { ISignInRequest, api, validationSchemes } from '~/shared';
 import { AuthForm, signIn } from '..';
 import { listStyle, linkStyle } from './style';
 
@@ -25,19 +25,8 @@ export const SignInForm: FC<ISignInForm> = ({
   const { setCards } = useContext(CardsContext);
   const navigate = useNavigate();
   const schema = z.object({
-    email: z
-      .string({
-        required_error: authFormErrors.requiredEmail,
-      })
-      .min(1, { message: authFormErrors.requiredEmail })
-      .min(6, { message: authFormErrors.wrongEmail })
-      .max(256, { message: authFormErrors.wrongEmail })
-      .email({ message: authFormErrors.wrongEmail }),
-    password: z
-      .string({
-        required_error: authFormErrors.requiredPassword,
-      })
-      .min(1, { message: authFormErrors.requiredPassword }),
+    email: validationSchemes.email,
+    password: validationSchemes.password_old,
   });
 
   const fields = [

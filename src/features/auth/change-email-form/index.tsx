@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { AuthForm } from '..';
-import { IChangeEmailRequest, authFormErrors } from '~/shared';
+import { IChangeEmailRequest, validationSchemes } from '~/shared';
 import * as z from 'zod';
 
 export const ChangeEmailForm: FC<{
@@ -8,12 +8,7 @@ export const ChangeEmailForm: FC<{
   handleSubmit: (arg0: IChangeEmailRequest) => Promise<void>;
 }> = ({ oldEmail, handleSubmit }) => {
   const schema = z.object({
-    email: z
-      .string({
-        required_error: authFormErrors.required,
-      })
-      .max(30)
-      .email({ message: authFormErrors.wrongEmail }),
+    email: validationSchemes.email,
   });
 
   const fields = [

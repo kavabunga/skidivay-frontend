@@ -1,7 +1,12 @@
 import { FC, useContext } from 'react';
 import * as z from 'zod';
 import { AuthForm, signIn, signUp } from '..';
-import { ISignUpRequest, api, authFormErrors } from '~/shared';
+import {
+  ISignUpRequest,
+  api,
+  authFormErrors,
+  validationSchemes,
+} from '~/shared';
 import { CardsContext, UserContext } from '~/app';
 
 export const SignUpForm: FC<{
@@ -13,50 +18,11 @@ export const SignUpForm: FC<{
 
   const schema = z
     .object({
-      name: z
-        .string({
-          required_error: authFormErrors.requiredName,
-        })
-        .min(1, { message: authFormErrors.requiredName })
-        .max(60, {
-          message: authFormErrors.wrongName,
-        })
-        .regex(/^[A-Za-zА-Яа-яЁё\s!@#$%^&*()_+-=[\]{};:'",.<>?/\\|]*$/, {
-          message: authFormErrors.wrongName,
-        }),
-      email: z
-        .string({
-          required_error: authFormErrors.requiredEmail,
-        })
-        .min(1, { message: authFormErrors.requiredEmail })
-        .min(6, { message: authFormErrors.wrongEmail })
-        .max(256, { message: authFormErrors.wrongEmail })
-        .email({ message: authFormErrors.wrongEmail }),
-      phone_number: z
-        .string({
-          required_error: authFormErrors.requiredPhone,
-        })
-        .min(1, { message: authFormErrors.requiredPhone })
-        .regex(/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/, {
-          message: authFormErrors.wrongPhone,
-        }),
-      password: z
-        .string({
-          required_error: authFormErrors.requiredPassword,
-        })
-        .min(1, { message: authFormErrors.requiredPassword })
-        .min(8, { message: authFormErrors.wrongPasswordCreated })
-        .regex(
-          /^(?=.*[a-zа-яё])(?=.*[A-ZА-ЯЁ])(?=.*\d)[a-zA-Zа-яА-ЯёЁ\d\s!@#$%^&*()[\]\-_+=<>?]{1,}$/,
-          {
-            message: authFormErrors.wrongPasswordCreated,
-          }
-        ),
-      passwordRepeat: z
-        .string({
-          required_error: authFormErrors.requiredPassword,
-        })
-        .min(1, { message: authFormErrors.requiredPassword }),
+      name: validationSchemes.name,
+      email: validationSchemes.email,
+      phone_number: validationSchemes.phone_number,
+      password: validationSchemes.password_new,
+      passwordRepeat: validationSchemes.password_repeat,
     })
     .superRefine(({ passwordRepeat, password }, ctx) => {
       if (passwordRepeat !== password) {

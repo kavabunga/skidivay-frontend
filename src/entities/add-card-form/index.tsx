@@ -18,7 +18,14 @@ import {
   MessagesContext,
   ShopListContext,
 } from '~/app';
-import { ICardContext, IGroup, IShop, Input, cardFormErrors } from '~/shared';
+import {
+  ICardContext,
+  IGroup,
+  IShop,
+  Input,
+  cardFormErrors,
+  validationSchemes,
+} from '~/shared';
 import {
   formStyle,
   helperTextStyle,
@@ -39,34 +46,10 @@ interface IOption extends IShop {
 //NOTE: In case of clearing the field with the built in close-button, the value becomes NULL, so react-hook-form fires type error. That's why we use 'required' error text as invalid type eroor text in shopName field
 const schema = z
   .object({
-    shop_name: z
-      .string({
-        required_error: cardFormErrors.requiredShopName,
-        invalid_type_error: cardFormErrors.requiredShopName,
-      })
-      .min(1, { message: cardFormErrors.requiredShopName })
-      .max(30)
-      .regex(/^[A-Za-zА-Яа-яЁё\s\d!@#$%^&*()_+-=[\]{};:'",.<>?/\\|]*$/, {
-        message: cardFormErrors.wrongShopName,
-      }),
-    shop_group: z
-      .string()
-      .max(20)
-      .regex(/^[A-Za-zА-Яа-яЁё\s\d!@#$%^&*()_+-=[\]{};:'",.<>?/\\|]*$/, {
-        message: cardFormErrors.wrongShopGroup,
-      }),
-    card_number: z
-      .string({})
-      .max(40, { message: cardFormErrors.wrongNumber })
-      .regex(/^[A-Za-zА-Яа-яЁё\d\s_-]*$/, {
-        message: cardFormErrors.wrongNumber,
-      }),
-    barcode_number: z
-      .string({})
-      .max(40, { message: cardFormErrors.wrongNumber })
-      .regex(/^[A-Za-zА-Яа-яЁё\d\s_-]*$/, {
-        message: cardFormErrors.wrongNumber,
-      }),
+    shop_name: validationSchemes.shop_name,
+    shop_group: validationSchemes.shop_group,
+    card_number: validationSchemes.card_number,
+    barcode_number: validationSchemes.barcode_number,
   })
   .partial()
   .required({
