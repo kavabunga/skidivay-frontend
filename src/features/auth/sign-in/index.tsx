@@ -4,7 +4,13 @@ import { Link, List, ListItem } from '@mui/material';
 import * as z from 'zod';
 import { CardsContext, UserContext } from '~/app';
 import { getUser } from '~/features';
-import { ISignInRequest, api, validationSchemes } from '~/shared';
+import {
+  FieldType,
+  ISignInRequest,
+  api,
+  validationLengths,
+  validationSchemes,
+} from '~/shared';
 import { AuthForm, signIn } from '..';
 import { listStyle, linkStyle } from './style';
 
@@ -29,7 +35,7 @@ export const SignInForm: FC<ISignInForm> = ({
     password: validationSchemes.password_old,
   });
 
-  const fields = [
+  const fields: FieldType[] = [
     {
       name: 'email',
       label: 'Email',
@@ -38,6 +44,7 @@ export const SignInForm: FC<ISignInForm> = ({
       autoComplete: 'email',
       required: true,
       hideAsterisk: true,
+      maxLength: validationLengths.email,
     },
     {
       name: 'password',
@@ -47,6 +54,7 @@ export const SignInForm: FC<ISignInForm> = ({
       autoComplete: 'current-password',
       required: true,
       hideAsterisk: true,
+      maxLength: validationLengths.password_new,
     },
   ];
 

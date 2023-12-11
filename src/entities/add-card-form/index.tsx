@@ -24,6 +24,7 @@ import {
   IShop,
   Input,
   cardFormErrors,
+  validationLengths,
   validationSchemes,
 } from '~/shared';
 import {
@@ -220,10 +221,9 @@ export const AddCardForm: FC = () => {
                 FormHelperTextProps={{ sx: helperTextStyle }}
                 onBlur={onBlur}
                 inputRef={ref}
-                //не дает ввести больше символов чем задано в maxlength
-                InputProps={{
-                  ...params.InputProps,
-                  inputProps: { ...params.inputProps, maxLength: 30 },
+                inputProps={{
+                  ...params.inputProps,
+                  maxLength: validationLengths.shop_name,
                 }}
               />
             )}
@@ -262,6 +262,10 @@ export const AddCardForm: FC = () => {
                 FormHelperTextProps={{ sx: helperTextStyle }}
                 onBlur={onBlur}
                 inputRef={ref}
+                inputProps={{
+                  ...params.inputProps,
+                  maxLength: validationLengths.shop_group,
+                }}
               />
             )}
             ListboxProps={{ sx: listBoxStyle }}
@@ -279,11 +283,7 @@ export const AddCardForm: FC = () => {
         register={register}
         errors={errors}
         hideAsterisk={true}
-        // как передать в пропсы maxlength что бы для каждого поля определять его отдельно
-        //           InputProps={{
-        //  ...params.InputProps,
-        //  inputProps: { ...params.inputProps, maxLength: 40 }
-        // }}
+        maxLength={validationLengths.card_number}
       />
       <Input
         name="barcode_number"
@@ -295,8 +295,7 @@ export const AddCardForm: FC = () => {
         register={register}
         errors={errors}
         hideAsterisk={true}
-        // такой вариант не дает ввести больше смволов, но не передает значения при сабмите
-        // inputProps={{maxLength: 40}}
+        maxLength={validationLengths.barcode_number}
       />
       {watch('barcode_number') && (
         <Box sx={{ paddingBottom: '1.25rem' }}>

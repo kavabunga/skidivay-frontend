@@ -1,6 +1,11 @@
 import { FC } from 'react';
 import { AuthForm } from '..';
-import { IChangeEmailRequest, validationSchemes } from '~/shared';
+import {
+  FieldType,
+  IChangeEmailRequest,
+  validationLengths,
+  validationSchemes,
+} from '~/shared';
 import * as z from 'zod';
 
 export const ChangeEmailForm: FC<{
@@ -11,7 +16,7 @@ export const ChangeEmailForm: FC<{
     email: validationSchemes.email,
   });
 
-  const fields = [
+  const fields: FieldType[] = [
     {
       name: 'email',
       label: 'Email',
@@ -20,6 +25,7 @@ export const ChangeEmailForm: FC<{
       autoComplete: 'email',
       required: true,
       hideAsterisk: true,
+      maxLength: validationLengths.email,
     },
   ];
 

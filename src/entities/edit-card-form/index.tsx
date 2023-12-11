@@ -14,7 +14,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Input } from '~/shared/ui';
 import { cardFormErrors } from '~/shared/lib';
-import { ICardContext, api, validationSchemes } from '~/shared';
+import {
+  ICardContext,
+  api,
+  validationLengths,
+  validationSchemes,
+} from '~/shared';
 import {
   CardsContext,
   GroupListContext,
@@ -191,6 +196,7 @@ export const EditCardForm: FC<EditCardFormProps> = ({
         errors={errors}
         disabled={!isActive}
         hideAsterisk={true}
+        maxLength={validationLengths.card_number}
         InputProps={{
           endAdornment: errors['card_number'] ? (
             <InputAdornment position="end">
@@ -226,6 +232,7 @@ export const EditCardForm: FC<EditCardFormProps> = ({
         errors={errors}
         disabled={!isActive}
         hideAsterisk={true}
+        maxLength={validationLengths.barcode_number}
       />
       <Controller
         name="shop_group"
@@ -252,6 +259,10 @@ export const EditCardForm: FC<EditCardFormProps> = ({
                 FormHelperTextProps={{ sx: helperTextStyle }}
                 onBlur={onBlur}
                 inputRef={ref}
+                inputProps={{
+                  ...params.inputProps,
+                  maxLength: validationLengths.shop_group,
+                }}
               />
             )}
             ListboxProps={{ sx: listBoxStyle }}

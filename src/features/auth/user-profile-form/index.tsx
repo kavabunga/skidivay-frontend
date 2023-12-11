@@ -4,7 +4,13 @@ import { IMask } from 'react-imask';
 import { Box, Button, Stack, Link } from '@mui/material';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { api, IPatchUser, validationSchemes } from '~/shared';
+import {
+  api,
+  FieldType,
+  IPatchUser,
+  validationLengths,
+  validationSchemes,
+} from '~/shared';
 import { UserContext, MessagesContext } from '~/app';
 import { InputSelector } from '~/features';
 import { ApiMessageTypes } from '~/shared/enums';
@@ -18,7 +24,7 @@ const schema = z.object({
   phone_number: validationSchemes.phone_number,
 });
 
-const fields = [
+const fields: FieldType[] = [
   {
     name: 'name',
     label: 'Имя',
@@ -28,6 +34,7 @@ const fields = [
     autoComplete: 'name',
     required: true,
     hideAsterisk: true,
+    maxLength: validationLengths.name,
   },
   {
     name: 'phone_number',
@@ -51,6 +58,7 @@ const fields = [
     autoComplete: 'email',
     required: true,
     hideAsterisk: true,
+    maxLength: validationLengths.email,
   },
 ];
 

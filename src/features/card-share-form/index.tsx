@@ -5,6 +5,7 @@ import {
   IShareCardRequest,
   Input,
   api,
+  validationLengths,
   validationSchemes,
 } from '~/shared';
 import * as z from 'zod';
@@ -97,6 +98,7 @@ export const CardShareForm: FC<ICardShareFormProps> = ({
         type="email"
         autoComplete="no"
         required={true}
+        maxLength={validationLengths.email}
       />
       <Button
         type="submit"
