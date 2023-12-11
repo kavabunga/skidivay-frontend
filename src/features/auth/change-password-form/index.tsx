@@ -12,7 +12,7 @@ export const ChangePasswordForm: FC<{
 }> = ({ handleSubmit }) => {
   const schema = z
     .object({
-      currentPassword: validationSchemes.password_old,
+      current_password: validationSchemes.password_old,
       new_password: validationSchemes.password_new,
       new_password_repeat: validationSchemes.password_repeat,
     })
