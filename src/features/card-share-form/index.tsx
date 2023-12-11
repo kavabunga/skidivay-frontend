@@ -1,6 +1,12 @@
 import { FC, useContext } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { ICard, IShareCardRequest, Input, api, authFormErrors } from '~/shared';
+import {
+  ICard,
+  IShareCardRequest,
+  Input,
+  api,
+  validationSchemes,
+} from '~/shared';
 import * as z from 'zod';
 import { Button, Stack } from '@mui/material';
 import { IApiError } from '~/shared/errors';
@@ -21,13 +27,7 @@ export const CardShareForm: FC<ICardShareFormProps> = ({
 }) => {
   const { setMessages } = useContext(MessagesContext);
   const schema = z.object({
-    email: z
-      .string({
-        required_error: authFormErrors.requiredEmail,
-      })
-      .min(1, { message: authFormErrors.requiredEmail })
-      .max(30, { message: authFormErrors.wrongEmail })
-      .email({ message: authFormErrors.wrongEmail }),
+    email: validationSchemes.email,
   });
 
   const {

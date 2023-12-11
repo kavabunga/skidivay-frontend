@@ -4,7 +4,7 @@ import { IMask } from 'react-imask';
 import { Box, Button, Stack, Link } from '@mui/material';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { api, authFormErrors, IPatchUser } from '~/shared';
+import { api, IPatchUser, validationSchemes } from '~/shared';
 import { UserContext, MessagesContext } from '~/app';
 import { InputSelector } from '~/features';
 import { ApiMessageTypes } from '~/shared/enums';
@@ -13,33 +13,9 @@ import { handleFormFieldsErrors } from '~/features/errors';
 import { formStyle, buttonStyle, linkStyle } from './style';
 
 const schema = z.object({
-  name: z
-    .string({
-      required_error: authFormErrors.requiredName,
-    })
-    .min(1, { message: authFormErrors.requiredName })
-    .max(60, {
-      message: authFormErrors.wrongName,
-    })
-    .regex(/^[A-Za-zА-Яа-яЁё\s!@#$%^&*()_+-=[\]{};:'",.<>?/\\|]*$/, {
-      message: authFormErrors.wrongName,
-    }),
-  email: z
-    .string({
-      required_error: authFormErrors.requiredEmail,
-    })
-    .min(1, { message: authFormErrors.requiredEmail })
-    .min(6, { message: authFormErrors.wrongEmail })
-    .max(256, { message: authFormErrors.wrongEmail })
-    .email({ message: authFormErrors.wrongEmail }),
-  phone_number: z
-    .string({
-      required_error: authFormErrors.requiredPhone,
-    })
-    .min(1, { message: authFormErrors.requiredPhone })
-    .regex(/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/, {
-      message: authFormErrors.wrongPhone,
-    }),
+  name: validationSchemes.name,
+  email: validationSchemes.email,
+  phone_number: validationSchemes.phone_number,
 });
 
 const fields = [

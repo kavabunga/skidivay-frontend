@@ -14,7 +14,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Input } from '~/shared/ui';
 import { cardFormErrors } from '~/shared/lib';
-import { ICardContext, api } from '~/shared';
+import { ICardContext, api, validationSchemes } from '~/shared';
 import {
   CardsContext,
   GroupListContext,
@@ -28,24 +28,9 @@ import { handleFormFieldsErrors } from '~/features/errors';
 
 const schema = z
   .object({
-    shop_group: z
-      .string()
-      .max(20)
-      .regex(/^[A-Za-zА-Яа-яЁё\s\d!@#$%^&*()_+-=[\]{};:'",.<>?/\\|]*$/, {
-        message: cardFormErrors.wrongShopGroup,
-      }),
-    card_number: z
-      .string({})
-      .max(40, { message: cardFormErrors.wrongNumber })
-      .regex(/^[A-Za-zА-Яа-яЁё\d_-]*$/, {
-        message: cardFormErrors.wrongNumber,
-      }),
-    barcode_number: z
-      .string({})
-      .max(40, { message: cardFormErrors.wrongNumber })
-      .regex(/^[A-Za-zА-Яа-яЁё\d_-]*$/, {
-        message: cardFormErrors.wrongNumber,
-      }),
+    shop_group: validationSchemes.shop_group,
+    card_number: validationSchemes.card_number,
+    barcode_number: validationSchemes.barcode_number,
   })
   .partial()
   .superRefine(({ barcode_number, card_number }, ctx) => {
