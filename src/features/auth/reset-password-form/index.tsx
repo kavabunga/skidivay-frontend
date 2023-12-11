@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import * as z from 'zod';
-import { authFormErrors } from '~/shared';
+import { validationSchemes } from '~/shared';
 import { AuthForm, requestResetPassword } from '..';
 
 interface IResetPasswordForm {
@@ -11,20 +11,8 @@ export const ResetPasswordForm: FC<IResetPasswordForm> = ({
   handleSetEmail,
 }) => {
   const schema = z.object({
-    email: z
-      .string({
-        required_error: authFormErrors.requiredEmail,
-      })
-      .min(1, { message: authFormErrors.requiredEmail })
-      .email({ message: authFormErrors.wrongEmail }),
-    phone_last_digits: z
-      .string({
-        required_error: authFormErrors.requiredPhone,
-      })
-      .min(1, { message: authFormErrors.requiredPhone })
-      .regex(/^\+7 \(XXX\) XXX-\d{2}-\d{2}$/, {
-        message: authFormErrors.wrongPhone,
-      }),
+    email: validationSchemes.email,
+    phone_last_digits: validationSchemes.phone_last_digits,
   });
 
   const fields = [

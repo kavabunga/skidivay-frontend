@@ -1,6 +1,10 @@
 import { FC } from 'react';
 import { AuthForm } from '..';
-import { authFormErrors, IChangePasswordRequest } from '~/shared';
+import {
+  authFormErrors,
+  IChangePasswordRequest,
+  validationSchemes,
+} from '~/shared';
 import * as z from 'zod';
 
 export const ChangePasswordForm: FC<{
@@ -8,28 +12,9 @@ export const ChangePasswordForm: FC<{
 }> = ({ handleSubmit }) => {
   const schema = z
     .object({
-      currentPassword: z
-        .string({
-          required_error: authFormErrors.requiredPassword,
-        })
-        .min(1, { message: authFormErrors.requiredPassword }),
-      new_password: z
-        .string({
-          required_error: authFormErrors.requiredPassword,
-        })
-        .min(1, { message: authFormErrors.requiredPassword })
-        .min(8, { message: authFormErrors.wrongPasswordCreated })
-        .regex(
-          /^(?=.*[a-zа-яё])(?=.*[A-ZА-ЯЁ])(?=.*\d)[a-zA-Zа-яА-ЯёЁ\d\s!@#$%^&*()[\]\-_+=<>?]{1,}$/,
-          {
-            message: authFormErrors.wrongPasswordCreated,
-          }
-        ),
-      new_password_repeat: z
-        .string({
-          required_error: authFormErrors.requiredPassword,
-        })
-        .min(1, { message: authFormErrors.requiredPassword }),
+      currentPassword: validationSchemes.password_old,
+      new_password: validationSchemes.password_new,
+      new_password_repeat: validationSchemes.password_repeat,
     })
     .superRefine(({ new_password_repeat, new_password }, ctx) => {
       if (new_password_repeat !== new_password) {

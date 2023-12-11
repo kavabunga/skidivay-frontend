@@ -1,29 +1,18 @@
 import { FC } from 'react';
 import { AuthForm } from '~/features';
-import { authFormErrors, IDeleteUserRequest } from '~/shared';
+import { IDeleteUserRequest, validationSchemes } from '~/shared';
 import * as z from 'zod';
 
 export const DeleteUserForm: FC<{
   handleSubmit(data: IDeleteUserRequest): Promise<void>;
 }> = ({ handleSubmit }) => {
   const schema = z.object({
-    password: z
-      .string({
-        required_error: authFormErrors.requiredPassword,
-      })
-      .min(1, { message: authFormErrors.requiredPassword })
-      .min(8, { message: authFormErrors.wrongPasswordCreated })
-      .regex(
-        /^(?=.*[a-zа-яё])(?=.*[A-ZА-ЯЁ])(?=.*\d)[a-zA-Zа-яА-ЯёЁ\d\s!@#$%^&*()[\]\-_+=<>?]{1,}$/,
-        {
-          message: authFormErrors.wrongPasswordCreated,
-        }
-      ),
+    password: validationSchemes.password_old,
   });
 
   const fields = [
     {
-      name: 'currentPassword',
+      name: 'password',
       label: 'Пароль',
       type: 'password',
       defaultHelperText: ' ',
@@ -34,9 +23,8 @@ export const DeleteUserForm: FC<{
   ];
 
   const submit = (data: { [key: string]: string }) => {
-    console.log('здесь');
     return handleSubmit({
-      current_password: data.currentPassword,
+      current_password: data.password,
     });
   };
 
