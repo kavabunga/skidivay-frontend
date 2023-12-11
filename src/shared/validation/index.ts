@@ -20,7 +20,7 @@ export const validationSchemes = {
     .max(60, {
       message: authFormErrors.maxLengthName,
     })
-    .regex(/^[A-Za-zА-Яа-яЁё\s!@#$%^&*()_+-=[\]{};:'",.<>?/\\|]*$/, {
+    .regex(/^[A-Za-zА-Яа-яЁё\s!@#$%^&*()_+\-=[\]{};:'",.<>?/\\|]*$/, {
       message: authFormErrors.wrongName,
     }),
   phone_number: z

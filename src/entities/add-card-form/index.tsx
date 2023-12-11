@@ -88,7 +88,8 @@ export const AddCardForm: FC = () => {
     mode: 'onTouched',
     resolver: zodResolver(schema),
     defaultValues: {
-      shop_name: location.state?.shop?.name || null,
+      shop_name: location.state?.shop.name ?? null,
+      shop_group: location.state?.shop.group?.[0].name ?? null,
     },
   });
 
@@ -163,22 +164,23 @@ export const AddCardForm: FC = () => {
             freeSolo
             fullWidth
             autoSelect
-            //NOTE: If undefined, on user input component would switch from uncontrolled to controlled
-            value={value || null}
+            value={value}
             options={options}
             renderOption={(props, option) => <li {...props}>{option.name}</li>}
+            onInputChange={(_event, newInputValue) => onChange(newInputValue)}
             onChange={(_event, newValue) => {
-              if (typeof newValue === 'object') {
-                setValue('shop_group', newValue?.group?.[0].name || '');
-                setIsGroupInputBlocked(true);
-              }
               if (typeof newValue === 'string') {
                 onChange(newValue);
+                setValue('shop_group', '');
+                setIsGroupInputBlocked(false);
               } else if (newValue && newValue.inputValue) {
+                setValue('shop_group', '');
                 setIsGroupInputBlocked(false);
                 onChange(newValue.inputValue);
               } else {
                 onChange(newValue?.name || '');
+                setValue('shop_group', newValue?.group?.[0].name || '');
+                setIsGroupInputBlocked(true);
               }
             }}
             filterOptions={(options, params) => {
@@ -234,12 +236,11 @@ export const AddCardForm: FC = () => {
           fieldState: { error },
         }) => (
           <Autocomplete
-            disablePortal
-            onChange={(_event: unknown, item: string | null) => {
+            onChange={(_event, item) => {
               onChange(item || '');
             }}
             fullWidth
-            //NOTE: If undefined, on user input component would switch from uncontrolled to controlled
+            //NOTE: null is used when we empty this input via react-hook-form setValue()
             value={value || null}
             options={groups.map((option) => option.name)}
             renderInput={(params) => (
@@ -305,7 +306,7 @@ export const AddCardForm: FC = () => {
         fullWidth
         sx={buttonStyle}
       >
-        Сохранить
+        {isSubmitting ? 'Подождите...' : 'Сохранить'}
       </Button>
     </Box>
   );

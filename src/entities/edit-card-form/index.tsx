@@ -69,8 +69,6 @@ export const EditCardForm: FC<EditCardFormProps> = ({
   const { setMessages } = useContext(MessagesContext);
   const { cards, setCards } = useContext(CardsContext);
   const { groups } = useContext(GroupListContext);
-
-  //NOTE: Use this to make field editable
   const { shops } = useContext(ShopListContext);
   const [isUserShop, setIsUserShop] = useState(true);
   useEffect(
@@ -87,14 +85,14 @@ export const EditCardForm: FC<EditCardFormProps> = ({
     setError,
     watch,
     getValues,
-    formState: { errors, isValid },
+    formState: { errors, isSubmitting },
   } = useForm<{ [key: string]: string }>({
     mode: 'onTouched',
     resolver: zodResolver(schema),
     defaultValues: {
       card_number: card.card.card_number,
       barcode_number: card.card.barcode_number,
-      shop_group: card.card.shop.group?.[0]?.name ?? '',
+      shop_group: card.card.shop.group?.[0].name ?? '',
     },
   });
 
@@ -235,12 +233,11 @@ export const EditCardForm: FC<EditCardFormProps> = ({
           fieldState: { error },
         }) => (
           <Autocomplete
-            disablePortal
-            onChange={(_event: unknown, item: string | null) => {
+            onChange={(_event, item) => {
               onChange(item || '');
             }}
             fullWidth
-            //NOTE: If undefined, on user input component would switch from uncontrolled to controlled
+            //NOTE: null is used when we empty this input via react-hook-form setValue()
             value={value || null}
             options={groups.map((option) => option.name)}
             renderInput={(params) => (
@@ -255,9 +252,6 @@ export const EditCardForm: FC<EditCardFormProps> = ({
               />
             )}
             ListboxProps={{ sx: listBoxStyle }}
-            //NOTE: Temporary disabling field
-            // disabled
-            //NOTE: Use this to make field editable
             disabled={!(isActive && isUserShop)}
           />
         )}
@@ -266,12 +260,12 @@ export const EditCardForm: FC<EditCardFormProps> = ({
         <Button
           type="submit"
           variant="contained"
-          disabled={!isValid}
           fullWidth
           sx={buttonStyle}
+          disabled={isSubmitting}
           {...buttonSave}
         >
-          {buttonSave.label}
+          {isSubmitting ? 'Подождите...' : buttonSave.label}
         </Button>
       )}
     </Box>

@@ -192,11 +192,7 @@ export const CardWidget = () => {
           </Button>
         </Stack>
       </Popup>
-      <CardSharePopup
-        open={isShareActive}
-        onClose={handleCancelShareCard}
-        cardId={cardId}
-      >
+      <CardSharePopup open={isShareActive} onClose={handleCancelShareCard}>
         <CardShareForm card={card.card} afterSubmit={handleCancelShareCard} />
       </CardSharePopup>
     </Stack>
