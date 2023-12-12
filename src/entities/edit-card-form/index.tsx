@@ -67,7 +67,7 @@ export const EditCardForm: FC<EditCardFormProps> = ({
   card,
 }) => {
   const { setMessages } = useContext(MessagesContext);
-  const { cards, setCards } = useContext(CardsContext);
+  const { setCards } = useContext(CardsContext);
   const { groups } = useContext(GroupListContext);
   const { shops } = useContext(ShopListContext);
   const [isUserShop, setIsUserShop] = useState(true);
@@ -92,7 +92,7 @@ export const EditCardForm: FC<EditCardFormProps> = ({
     defaultValues: {
       card_number: card.card.card_number,
       barcode_number: card.card.barcode_number,
-      shop_group: card.card.shop.group?.[0].name ?? '',
+      shop_group: card.card.shop.group?.[0]?.name ?? '',
     },
   });
 
@@ -153,10 +153,14 @@ export const EditCardForm: FC<EditCardFormProps> = ({
     api
       .editCard(data, card.card.id)
       .then((res) => {
-        const newCards = cards.map((card) =>
-          res.id != card.card.id ? card : { ...card, card: res }
+        return (
+          setCards &&
+          setCards((cards) =>
+            cards.map((card) =>
+              res.id != card.card.id ? card : { ...card, card: res }
+            )
+          )
         );
-        return setCards && setCards(newCards);
       })
       .then(() => {
         setMessages((messages) => [
