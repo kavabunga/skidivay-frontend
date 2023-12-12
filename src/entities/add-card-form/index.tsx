@@ -25,6 +25,7 @@ import {
   IShop,
   Input,
   cardFormErrors,
+  validationLengths,
   validationSchemes,
 } from '~/shared';
 import {
@@ -141,6 +142,8 @@ export const AddCardForm: FC = () => {
           card: res,
           owner: true,
           favourite: false,
+          pub_date: '',
+          shared_by: null,
         };
         return setCards && setCards([...cards, newCard]);
       })
@@ -233,6 +236,10 @@ export const AddCardForm: FC = () => {
                 FormHelperTextProps={{ sx: helperTextStyle }}
                 onBlur={onBlur}
                 inputRef={ref}
+                inputProps={{
+                  ...params.inputProps,
+                  maxLength: validationLengths.shop_name,
+                }}
               />
             )}
             ListboxProps={{ sx: listBoxStyle }}
@@ -269,6 +276,10 @@ export const AddCardForm: FC = () => {
                 FormHelperTextProps={{ sx: helperTextStyle }}
                 onBlur={onBlur}
                 inputRef={ref}
+                inputProps={{
+                  ...params.inputProps,
+                  maxLength: validationLengths.shop_group,
+                }}
               />
             )}
             ListboxProps={{ sx: listBoxStyle }}
@@ -286,6 +297,7 @@ export const AddCardForm: FC = () => {
         register={register('card_number')}
         error={errors.card_number}
         hideAsterisk={true}
+        maxLength={validationLengths.card_number}
       />
       <Input
         name="barcode_number"
@@ -297,6 +309,7 @@ export const AddCardForm: FC = () => {
         register={register('barcode_number')}
         error={errors.barcode_number}
         hideAsterisk={true}
+        maxLength={validationLengths.barcode_number}
       />
       {watch('barcode_number') && (
         <Box sx={{ paddingBottom: '1.25rem' }}>

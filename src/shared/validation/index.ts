@@ -3,13 +3,23 @@
 import * as z from 'zod';
 import { authFormErrors, cardFormErrors } from '..';
 
+export const validationLengths = {
+  email: 256,
+  name: 60,
+  password_new: 256,
+  card_number: 40,
+  barcode_number: 256,
+  shop_name: 30,
+  shop_group: 30,
+};
+
 export const validationSchemes = {
   //NOTE: Sign Up, Sign In, User Profile Form, Change Email Form, Change Password Form, Delete User Form, Reset Password Form, Set New Password Form, Card Share Form
   email: z
     .string()
     .min(1, { message: authFormErrors.requiredEmail })
     .min(6, { message: authFormErrors.wrongEmail })
-    .max(256, { message: authFormErrors.maxLengthEmail })
+    .max(validationLengths.email, { message: authFormErrors.maxLengthEmail })
     .regex(
       /^(?!@)[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@([A-Za-z0-9-]+\.)+[A-Za-z]{2,}$/,
       { message: authFormErrors.wrongEmail }
@@ -17,7 +27,7 @@ export const validationSchemes = {
   name: z
     .string()
     .min(1, { message: authFormErrors.requiredName })
-    .max(60, {
+    .max(validationLengths.name, {
       message: authFormErrors.maxLengthName,
     })
     .regex(/^[A-Za-zА-Яа-яЁё\s!@#$%^&*()_+\-=[\]{};:'",.<>?/\\|]*$/, {
@@ -39,7 +49,9 @@ export const validationSchemes = {
     .string()
     .min(1, { message: authFormErrors.requiredPassword })
     .min(8, { message: authFormErrors.wrongPasswordNew })
-    .max(256, { message: authFormErrors.maxLengthPassword })
+    .max(validationLengths.password_new, {
+      message: authFormErrors.maxLengthPassword,
+    })
     .regex(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[\x20-\x7F]+$/, {
       message: authFormErrors.wrongPasswordNew,
     }),
@@ -51,13 +63,17 @@ export const validationSchemes = {
   //NOTE: Add Card Form, Edit Card Form
   card_number: z
     .string()
-    .max(40, { message: cardFormErrors.maxLengthCardNumber })
+    .max(validationLengths.card_number, {
+      message: cardFormErrors.maxLengthCardNumber,
+    })
     .regex(/^[A-Za-zА-Яа-яЁё\d\s_-]*$/, {
       message: cardFormErrors.wrongCardNumber,
     }),
   barcode_number: z
     .string({})
-    .max(256, { message: cardFormErrors.maxLengthBarcodeNumber })
+    .max(validationLengths.barcode_number, {
+      message: cardFormErrors.maxLengthBarcodeNumber,
+    })
     .regex(/^[A-Za-zА-Яа-яЁё\d\s_-]*$/, {
       message: cardFormErrors.wrongBarcodeNumber,
     }),
@@ -70,7 +86,9 @@ export const validationSchemes = {
       invalid_type_error: cardFormErrors.requiredShopName,
     })
     .min(1, { message: cardFormErrors.requiredShopName })
-    .max(30, { message: cardFormErrors.requiredShopName })
+    .max(validationLengths.shop_name, {
+      message: cardFormErrors.requiredShopName,
+    })
     .regex(/^[A-Za-zА-Яа-яЁё\s\d!@#$%^&*()_+-=[\]{};:'",.<>?/\\|]*$/, {
       message: cardFormErrors.wrongShopName,
     }),
@@ -78,7 +96,7 @@ export const validationSchemes = {
   shop_group: z.nullable(
     z
       .string()
-      .max(30)
+      .max(validationLengths.shop_group)
       .regex(/^[A-Za-zА-Яа-яЁё\s\d!@#$%^&*()_+-=[\]{};:'",.<>?/\\|]*$/, {
         message: cardFormErrors.wrongShopGroup,
       })

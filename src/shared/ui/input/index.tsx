@@ -13,6 +13,8 @@ export interface FieldType {
   placeholder?: string;
   hideAsterisk?: boolean;
   required?: boolean;
+  maxLength?: number;
+  maskOptions?: IMask;
 }
 
 export interface InputType extends FieldType {
@@ -22,7 +24,6 @@ export interface InputType extends FieldType {
   onBlur?: () => void;
   disabled?: boolean;
   InputProps?: InputProps;
-  maskOptions?: IMask;
 }
 
 interface IMask {
@@ -58,6 +59,7 @@ export const Input: FC<InputType> = ({
         onBlur: onBlur,
         name: name,
         ...maskOptions,
+        ...(props.maxLength && { maxLength: props.maxLength }),
       }}
       InputProps={{
         ...(maskOptions?.mask && {
