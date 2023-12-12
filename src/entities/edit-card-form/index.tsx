@@ -14,7 +14,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Input } from '~/shared/ui';
 import { cardFormErrors } from '~/shared/lib';
-import { ICardContext, api, validationSchemes } from '~/shared';
+import { IBasicField, ICardContext, api, validationSchemes } from '~/shared';
 import {
   CardsContext,
   GroupListContext,
@@ -47,6 +47,12 @@ const schema = z
       });
     }
   });
+
+interface IFields extends IBasicField {
+  shop_group: string | null;
+  card_number: string;
+  barcode_number: string;
+}
 
 export interface EditCardFormProps {
   isActive: boolean;
@@ -86,7 +92,7 @@ export const EditCardForm: FC<EditCardFormProps> = ({
     watch,
     getValues,
     formState: { errors, isSubmitting },
-  } = useForm<{ [key: string]: string }>({
+  } = useForm<IFields>({
     mode: 'onTouched',
     resolver: zodResolver(schema),
     defaultValues: {
@@ -137,7 +143,7 @@ export const EditCardForm: FC<EditCardFormProps> = ({
     }
   };
 
-  const onSubmit: SubmitHandler<{ [key: string]: string }> = (data) => {
+  const onSubmit: SubmitHandler<IFields> = (data) => {
     if (
       (data.shop_group && !card.card.shop.group?.[0]?.name) ||
       data.shop_group !== card.card.shop.group?.[0]?.name
@@ -189,8 +195,8 @@ export const EditCardForm: FC<EditCardFormProps> = ({
         autoComplete="no"
         defaultHelperText=" "
         placeholder=""
-        register={register}
-        errors={errors}
+        register={register('card_number')}
+        error={errors.card_number}
         disabled={!isActive}
         hideAsterisk={true}
         InputProps={{
@@ -224,8 +230,8 @@ export const EditCardForm: FC<EditCardFormProps> = ({
         autoComplete="no"
         defaultHelperText=" "
         placeholder=""
-        register={register}
-        errors={errors}
+        register={register('barcode_number')}
+        error={errors.barcode_number}
         disabled={!isActive}
         hideAsterisk={true}
       />

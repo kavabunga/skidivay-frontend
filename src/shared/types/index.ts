@@ -138,3 +138,7 @@ export interface IDeleteUserRequest {
 export interface IShareCardRequest {
   email: string;
 }
+
+export interface IBasicField {
+  [key: string]: string | number | null;
+}

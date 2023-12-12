@@ -19,6 +19,7 @@ import {
   ShopListContext,
 } from '~/app';
 import {
+  IBasicField,
   ICardContext,
   IGroup,
   IShop,
@@ -37,6 +38,13 @@ import { AddCardFormModel } from './model';
 import { IApiError } from '~/shared/errors';
 import { ApiMessageTypes } from '~/shared/enums';
 import { handleFormFieldsErrors } from '~/features/errors';
+
+interface IFields extends IBasicField {
+  shop_name: string | null;
+  shop_group: string | null;
+  card_number: string;
+  barcode_number: string;
+}
 
 const filter = createFilterOptions<IOption>();
 interface IOption extends IShop {
@@ -84,7 +92,7 @@ export const AddCardForm: FC = () => {
     setError,
     getValues,
     formState: { errors, isSubmitting },
-  } = useForm<{ [key: string]: string }>({
+  } = useForm<IFields>({
     mode: 'onTouched',
     resolver: zodResolver(schema),
     defaultValues: {
@@ -111,19 +119,22 @@ export const AddCardForm: FC = () => {
     }
   };
 
-  const onSubmit: SubmitHandler<{ [key: string]: string }> = (data) => {
+  const onSubmit: SubmitHandler<IFields> = (data) => {
     const shop = shops.find(
       (element: IShop) => element.name === data.shop_name
     );
     const group = groups.find(
       (element: IGroup) => element.name === data.shop_group
     );
-    data = {
-      ...data,
+    const request: { [key: string]: string } = {
+      shop_name: data.shop_name || '',
+      shop_group: data.shop_group || '',
+      card_number: data.card_number,
+      barcode_number: data.barcode_number,
       shop_id: shop?.id.toString() || '',
       group_id: group?.id.toString() || '',
     };
-    new AddCardFormModel(data)
+    new AddCardFormModel(request)
       .createNewCard()
       .then((res) => {
         const newCard: ICardContext = {
@@ -171,15 +182,15 @@ export const AddCardForm: FC = () => {
             onChange={(_event, newValue) => {
               if (typeof newValue === 'string') {
                 onChange(newValue);
-                setValue('shop_group', '');
+                setValue('shop_group', null);
                 setIsGroupInputBlocked(false);
               } else if (newValue && newValue.inputValue) {
-                setValue('shop_group', '');
+                setValue('shop_group', null);
                 setIsGroupInputBlocked(false);
                 onChange(newValue.inputValue);
               } else {
                 onChange(newValue?.name || '');
-                setValue('shop_group', newValue?.group?.[0].name || '');
+                setValue('shop_group', newValue?.group?.[0].name || null);
                 setIsGroupInputBlocked(true);
               }
             }}
@@ -237,11 +248,11 @@ export const AddCardForm: FC = () => {
         }) => (
           <Autocomplete
             onChange={(_event, item) => {
-              onChange(item || '');
+              onChange(item);
             }}
             fullWidth
             //NOTE: null is used when we empty this input via react-hook-form setValue()
-            value={value || null}
+            value={value}
             options={groups.map((option) => option.name)}
             renderInput={(params) => (
               <TextField
@@ -272,8 +283,8 @@ export const AddCardForm: FC = () => {
         autoComplete="no"
         defaultHelperText=" "
         placeholder=""
-        register={register}
-        errors={errors}
+        register={register('card_number')}
+        error={errors.card_number}
         hideAsterisk={true}
       />
       <Input
@@ -283,8 +294,8 @@ export const AddCardForm: FC = () => {
         autoComplete="no"
         defaultHelperText="Цифры, расположенные под черными штрихами"
         placeholder=""
-        register={register}
-        errors={errors}
+        register={register('barcode_number')}
+        error={errors.barcode_number}
         hideAsterisk={true}
       />
       {watch('barcode_number') && (
