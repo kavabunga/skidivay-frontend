@@ -17,9 +17,16 @@ export const SignOut: FC<ISignOut> = ({ element: Component, ...props }) => {
   const navigate = useNavigate();
   const handleSignOut = () => {
     signOut()
-      .then(() => {
+      .then((res) => {
         setUser && setUser(null);
         setCards && setCards([]);
+        setMessages((messages) => [
+          {
+            message: res.message,
+            type: ApiMessageTypes.info,
+          },
+          ...messages,
+        ]);
       })
       .then(() => navigate('/'))
       .catch((err: IApiError) => {

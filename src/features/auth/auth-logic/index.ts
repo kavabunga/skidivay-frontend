@@ -22,7 +22,10 @@ export function signIn(data: ISignInRequest) {
 }
 
 export function signOut() {
-  return api.signOut().then(() => localStorage.removeItem('token'));
+  return api.signOut().then((res) => {
+    localStorage.removeItem('token');
+    return res;
+  });
 }
 
 export function requestResetPassword(data: IRequestResetPassword) {
