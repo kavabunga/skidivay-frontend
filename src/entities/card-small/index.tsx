@@ -26,8 +26,8 @@ export const CardSmall: FC<{ item: ICardContext }> = ({ item, ...props }) => {
     >
       {!shopLogo && <Typography sx={{ ...titleStyle }}>{shopName}</Typography>}
       <Box sx={{ ...labelsWrapper }}>
-        <FriendCardLabel isSharied={!isOwner} />
         <Liker cardId={cardId} isLiked={isLiked} isDark={false} />
+        {!isOwner && <FriendCardLabel />}
       </Box>
     </Card>
   );

@@ -32,9 +32,9 @@ export const titleStyle: SxProps = {
 export const labelsWrapper: SxProps = {
   position: 'relative',
   display: 'flex',
+  flexDirection: 'row-reverse',
   width: '100%',
   height: 'auto',
-  flexFlow: 'row nowrap',
   justifyContent: 'space-between',
   alignItems: 'center',
   paddingLeft: '.125rem',
