@@ -24,8 +24,6 @@ export const DeleteUserWidget = () => {
   };
 
   function handleSubmit(data: IDeleteUserRequest) {
-    // eslint-disable-next-line no-debugger
-    debugger;
     return deleteUser(data, user?.id || 0).then(() => {
       handleSuccess();
       setTimeout(() => navigate('/auth', { replace: true }), 3000);

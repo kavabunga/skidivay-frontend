@@ -3,19 +3,27 @@ import { ApiMessageTypes } from '../enums';
 export interface ICard {
   id: number;
   shop: IShop;
+  image?: string | null;
   name: string;
   pub_date: string;
-  image?: string | null;
   card_number?: string;
   barcode_number?: string;
   encoding_type?: string;
-  usage_counter?: number;
+}
+
+export interface IShared {
+  id: number;
+  name: string;
+  email: string;
 }
 
 export interface ICardContext {
   card: ICard;
+  shared_by: IShared | null;
   owner: boolean;
   favourite: boolean;
+  pub_date: string;
+  usage_counter?: number;
 }
 
 export interface IUserResponse {
@@ -44,6 +52,7 @@ export interface IShop {
   color?: string;
   validation?: boolean;
 }
+
 export interface IShopRequest {
   group?: Array<number>;
   name: string;

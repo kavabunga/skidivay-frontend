@@ -65,10 +65,12 @@ export const CardShareForm: FC<ICardShareFormProps> = ({
     };
     api
       .shareCard(request, card.id)
-      .then(() => {
+      .then((res) => {
         setMessages((messages) => [
           {
-            message: `Карта ${card.shop.name} отправлена на адрес ${request.email}`,
+            message:
+              res.message ||
+              `Карта ${card.shop.name} отправлена на адрес ${request.email}`,
             type: ApiMessageTypes.success,
           },
           ...messages,

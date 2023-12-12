@@ -5,6 +5,7 @@ import {
   IconButton,
   Stack,
   Box,
+  Typography,
   DialogTitle,
   DialogContent,
   DialogContentText,
@@ -17,13 +18,13 @@ import {
   containerStyle,
   buttonStyle,
   topButtonsStyle,
-  likerWrapperStyle,
+  paragraphStyle,
   deleteTitleStyle,
   deleteTextStyle,
   deleteItemStyle,
 } from './style';
 import { CardsContext, MessagesContext } from '~/app';
-import { ICardContext, Popup, api } from '~/shared';
+import { ICardContext, Popup, FriendIcon, api } from '~/shared';
 import { IApiError } from '~/shared/errors';
 import { ApiMessageTypes } from '~/shared/enums';
 
@@ -43,15 +44,32 @@ export const CardWidget = () => {
       id: 0,
       shop: {
         id: 0,
+        group: [
+          {
+            id: 0,
+            name: '',
+          },
+        ],
         name: 'Карта не найдена',
+        logo: null,
+        color: '#594D71',
+        validation: false,
       },
       name: 'Карта не найдена',
       card_number: '',
       barcode_number: '',
+      encoding_type: '',
       pub_date: '',
+    },
+    shared_by: {
+      id: 0,
+      name: '',
+      email: '',
     },
     owner: true,
     favourite: false,
+    pub_date: '',
+    usage_counter: 0,
   };
   const isLiked = card.favourite;
 
@@ -118,22 +136,34 @@ export const CardWidget = () => {
         <BackButton />
         {!isEditActive && (
           <Stack direction="row" spacing={1} useFlexGap>
-            <Box sx={{ ...likerWrapperStyle }}>
-              <Liker cardId={cardId} isLiked={isLiked} />
-            </Box>
+            <Liker cardId={cardId} isLiked={isLiked} isDark={true} />
             <IconButton onClick={handleEditEnable} sx={{ padding: 0 }}>
               <CreateOutlinedIcon />
             </IconButton>
           </Stack>
         )}
       </Stack>
-      <Box
-        sx={{
-          paddingY: 1.5,
-        }}
-      >
+      <Box sx={{ paddingY: 1.5 }}>
         <CardFull item={card} />
       </Box>
+
+      {!card.owner && (
+        <Stack
+          direction="row"
+          spacing={1.5}
+          justifyContent="space-between"
+          alignItems="center"
+          useFlexGap
+          sx={{ paddingY: 1.25 }}
+        >
+          <FriendIcon />
+          <Typography component="p" sx={{ ...paragraphStyle }}>
+            {`Этой картой с вами поделился пользователь ${
+              card.shared_by?.name ?? ''
+            } (${card.shared_by?.email ?? ''})`}
+          </Typography>
+        </Stack>
+      )}
 
       <EditCardForm
         isActive={isEditActive}

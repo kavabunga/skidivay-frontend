@@ -2,7 +2,7 @@ import { FC } from 'react';
 import Barcode from 'react-barcode';
 import { Box, Card, Typography } from '@mui/material';
 import { ICardContext } from '~/shared';
-import { cardStyle, barcodeStyle, titleStyle } from './style';
+import { titleStyle, cardStyle, barcodeStyle } from './style';
 
 export const CardFull: FC<{ item: ICardContext }> = ({ item }) => {
   const shopName = item.card.shop.name;
@@ -12,7 +12,7 @@ export const CardFull: FC<{ item: ICardContext }> = ({ item }) => {
     <Card
       sx={{
         backgroundImage: shopLogo ? `url(${shopLogo})` : '',
-        backgroundColor: shopLogo ? '' : '#52358f',
+        backgroundColor: shopLogo ? '' : '#594D71',
         ...cardStyle,
       }}
     >

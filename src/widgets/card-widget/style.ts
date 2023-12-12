@@ -18,12 +18,6 @@ export const topButtonsStyle: SxProps = {
   paddingBottom: 1.5,
 };
 
-export const likerWrapperStyle: SxProps = {
-  '& > .css-prsw32-MuiButtonBase-root-MuiIconButton-root': {
-    color: 'surface.dark',
-  },
-};
-
 export const deleteTitleStyle: SxProps = {
   padding: 0,
   fontSize: '1.5rem',
@@ -44,4 +38,12 @@ export const deleteTextStyle: SxProps = {
   fontSize: '1rem',
   fontWeight: 400,
   lineHeight: 1.5,
+};
+
+export const paragraphStyle: SxProps = {
+  fontSize: '.875rem',
+  fontWeight: 400,
+  lineHeight: '1.125rem',
+  textAlign: 'left',
+  color: 'surface.darker',
 };

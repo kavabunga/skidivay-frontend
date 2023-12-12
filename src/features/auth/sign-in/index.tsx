@@ -2,10 +2,12 @@ import { FC, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link, List, ListItem } from '@mui/material';
 import * as z from 'zod';
-import { CardsContext, UserContext } from '~/app';
+import { CardsContext, UserContext, MessagesContext } from '~/app';
 import { getUser } from '~/features';
 import { ISignInRequest, api, validationSchemes } from '~/shared';
 import { AuthForm, signIn } from '..';
+import { IApiError } from '~/shared/errors';
+import { ApiMessageTypes } from '~/shared/enums';
 import { listStyle, linkStyle } from './style';
 
 //NOTE: Sign In form types affect on submit behavior
@@ -23,6 +25,7 @@ export const SignInForm: FC<ISignInForm> = ({
 }) => {
   const { setUser } = useContext(UserContext);
   const { setCards } = useContext(CardsContext);
+  const { setMessages } = useContext(MessagesContext);
   const navigate = useNavigate();
   const schema = z.object({
     email: validationSchemes.email,
@@ -66,6 +69,15 @@ export const SignInForm: FC<ISignInForm> = ({
       .then(() => {
         type !== 'activation' && navigate('/');
         return;
+      })
+      .catch((err: IApiError) => {
+        setMessages((messages) => [
+          {
+            message: err.message,
+            type: ApiMessageTypes.error,
+          },
+          ...messages,
+        ]);
       });
   };
 
