@@ -2,9 +2,11 @@ import { FC, useContext } from 'react';
 import * as z from 'zod';
 import { AuthForm, signIn, signUp } from '..';
 import {
+  FieldType,
   ISignUpRequest,
   api,
   authFormErrors,
+  validationLengths,
   validationSchemes,
 } from '~/shared';
 import { CardsContext, UserContext } from '~/app';
@@ -34,7 +36,7 @@ export const SignUpForm: FC<{
       }
     });
 
-  const fields = [
+  const fields: FieldType[] = [
     {
       name: 'name',
       label: 'Имя',
@@ -43,6 +45,7 @@ export const SignUpForm: FC<{
       autoComplete: 'name',
       required: true,
       hideAsterisk: true,
+      maxLength: validationLengths.name,
     },
     {
       name: 'phone_number',
@@ -65,6 +68,7 @@ export const SignUpForm: FC<{
       autoComplete: 'email',
       required: true,
       hideAsterisk: true,
+      maxLength: validationLengths.email,
     },
     {
       name: 'password',
@@ -74,6 +78,7 @@ export const SignUpForm: FC<{
       autoComplete: 'new-password',
       required: true,
       hideAsterisk: true,
+      maxLength: validationLengths.password_new,
     },
     {
       name: 'passwordRepeat',

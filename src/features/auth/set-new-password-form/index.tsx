@@ -1,6 +1,11 @@
 import { FC } from 'react';
 import { AuthForm } from '..';
-import { authFormErrors, validationSchemes } from '~/shared';
+import {
+  FieldType,
+  authFormErrors,
+  validationLengths,
+  validationSchemes,
+} from '~/shared';
 import * as z from 'zod';
 
 export const SetNewPasswordForm: FC<{
@@ -21,7 +26,7 @@ export const SetNewPasswordForm: FC<{
       }
     });
 
-  const fields = [
+  const fields: FieldType[] = [
     {
       name: 'password',
       label: 'Пароль',
@@ -30,6 +35,7 @@ export const SetNewPasswordForm: FC<{
       autoComplete: 'new-password',
       required: true,
       hideAsterisk: true,
+      maxLength: validationLengths.password_new,
     },
     {
       name: 'passwordRepeat',

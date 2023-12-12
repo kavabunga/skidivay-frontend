@@ -2,7 +2,9 @@ import { FC } from 'react';
 import { AuthForm } from '..';
 import {
   authFormErrors,
+  FieldType,
   IChangePasswordRequest,
+  validationLengths,
   validationSchemes,
 } from '~/shared';
 import * as z from 'zod';
@@ -26,7 +28,7 @@ export const ChangePasswordForm: FC<{
       }
     });
 
-  const fields = [
+  const fields: FieldType[] = [
     {
       name: 'current_password',
       label: 'Старый пароль',
@@ -44,6 +46,7 @@ export const ChangePasswordForm: FC<{
       autoComplete: 'new-password',
       required: true,
       hideAsterisk: true,
+      maxLength: validationLengths.password_new,
     },
     {
       name: 'new_password_repeat',

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { AuthForm } from '~/features';
-import { IDeleteUserRequest, validationSchemes } from '~/shared';
+import { FieldType, IDeleteUserRequest, validationSchemes } from '~/shared';
 import * as z from 'zod';
 
 export const DeleteUserForm: FC<{
@@ -10,7 +10,7 @@ export const DeleteUserForm: FC<{
     password: validationSchemes.password_old,
   });
 
-  const fields = [
+  const fields: FieldType[] = [
     {
       name: 'password',
       label: 'Пароль',

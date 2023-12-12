@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import * as z from 'zod';
-import { validationSchemes } from '~/shared';
+import { FieldType, validationLengths, validationSchemes } from '~/shared';
 import { AuthForm, requestResetPassword } from '..';
 
 interface IResetPasswordForm {
@@ -15,7 +15,7 @@ export const ResetPasswordForm: FC<IResetPasswordForm> = ({
     phone_last_digits: validationSchemes.phone_last_digits,
   });
 
-  const fields = [
+  const fields: FieldType[] = [
     {
       name: 'email',
       label: 'Email',
@@ -24,6 +24,7 @@ export const ResetPasswordForm: FC<IResetPasswordForm> = ({
       autoComplete: 'email',
       required: true,
       hideAsterisk: true,
+      maxLength: validationLengths.email,
     },
     {
       name: 'phone_last_digits',
