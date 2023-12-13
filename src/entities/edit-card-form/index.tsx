@@ -15,6 +15,7 @@ import * as z from 'zod';
 import { Input } from '~/shared/ui';
 import { cardFormErrors } from '~/shared/lib';
 import {
+  IBasicField,
   ICardContext,
   api,
   validationLengths,
@@ -52,6 +53,12 @@ const schema = z
       });
     }
   });
+
+interface IFields extends IBasicField {
+  shop_group: string | null;
+  card_number: string;
+  barcode_number: string;
+}
 
 export interface EditCardFormProps {
   isActive: boolean;
@@ -91,13 +98,13 @@ export const EditCardForm: FC<EditCardFormProps> = ({
     watch,
     getValues,
     formState: { errors, isSubmitting },
-  } = useForm<{ [key: string]: string }>({
+  } = useForm<IFields>({
     mode: 'onTouched',
     resolver: zodResolver(schema),
     defaultValues: {
       card_number: card.card.card_number,
       barcode_number: card.card.barcode_number,
-      shop_group: card.card.shop.group?.[0]?.name ?? '',
+      shop_group: card.card.shop.group?.[0]?.name ?? null,
     },
   });
 
@@ -142,7 +149,7 @@ export const EditCardForm: FC<EditCardFormProps> = ({
     }
   };
 
-  const onSubmit: SubmitHandler<{ [key: string]: string }> = (data) => {
+  const onSubmit: SubmitHandler<IFields> = (data) => {
     if (
       (data.shop_group && !card.card.shop.group?.[0]?.name) ||
       data.shop_group !== card.card.shop.group?.[0]?.name
@@ -194,8 +201,8 @@ export const EditCardForm: FC<EditCardFormProps> = ({
         autoComplete="no"
         defaultHelperText=" "
         placeholder=""
-        register={register}
-        errors={errors}
+        register={register('card_number')}
+        error={errors.card_number}
         disabled={!isActive}
         hideAsterisk={true}
         maxLength={validationLengths.card_number}
@@ -230,8 +237,8 @@ export const EditCardForm: FC<EditCardFormProps> = ({
         autoComplete="no"
         defaultHelperText=" "
         placeholder=""
-        register={register}
-        errors={errors}
+        register={register('barcode_number')}
+        error={errors.barcode_number}
         disabled={!isActive}
         hideAsterisk={true}
         maxLength={validationLengths.barcode_number}
@@ -244,12 +251,12 @@ export const EditCardForm: FC<EditCardFormProps> = ({
           fieldState: { error },
         }) => (
           <Autocomplete
+            autoHighlight
             onChange={(_event, item) => {
-              onChange(item || '');
+              onChange(item);
             }}
             fullWidth
-            //NOTE: null is used when we empty this input via react-hook-form setValue()
-            value={value || null}
+            value={value}
             options={groups.map((option) => option.name)}
             renderInput={(params) => (
               <TextField
@@ -268,6 +275,7 @@ export const EditCardForm: FC<EditCardFormProps> = ({
             )}
             ListboxProps={{ sx: listBoxStyle }}
             disabled={!(isActive && isUserShop)}
+            noOptionsText="Нет подходящих категорий"
           />
         )}
       />

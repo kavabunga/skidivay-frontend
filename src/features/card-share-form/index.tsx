@@ -1,6 +1,7 @@
 import { FC, useContext } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import {
+  IBasicField,
   ICard,
   IShareCardRequest,
   Input,
@@ -16,6 +17,10 @@ import { MessagesContext } from '~/app';
 import { buttonStyle } from './style';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ApiMessageTypes } from '~/shared/enums';
+
+interface IFields extends IBasicField {
+  email: string;
+}
 
 interface ICardShareFormProps {
   card: ICard;
@@ -37,7 +42,7 @@ export const CardShareForm: FC<ICardShareFormProps> = ({
     setError,
     getValues,
     formState: { errors, isSubmitting },
-  } = useForm<{ [key: string]: string }>({
+  } = useForm<IFields>({
     mode: 'onTouched',
     resolver: zodResolver(schema),
   });
@@ -60,7 +65,7 @@ export const CardShareForm: FC<ICardShareFormProps> = ({
     }
   };
 
-  const onSubmit: SubmitHandler<{ [key: string]: string }> = (data) => {
+  const onSubmit: SubmitHandler<IFields> = (data) => {
     const request: IShareCardRequest = {
       email: data.email || '',
     };
@@ -93,8 +98,8 @@ export const CardShareForm: FC<ICardShareFormProps> = ({
       <Input
         name="email"
         defaultHelperText=""
-        register={register}
-        errors={errors}
+        register={register('email')}
+        error={errors.email}
         hideAsterisk={true}
         label="Email"
         type="email"
