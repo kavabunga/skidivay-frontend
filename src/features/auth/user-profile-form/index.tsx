@@ -10,6 +10,7 @@ import {
   IPatchUser,
   validationLengths,
   validationSchemes,
+  IBasicField,
 } from '~/shared';
 import { UserContext, MessagesContext } from '~/app';
 import { InputSelector } from '~/features';
@@ -17,6 +18,12 @@ import { ApiMessageTypes } from '~/shared/enums';
 import { IApiError } from '~/shared/errors';
 import { handleFormFieldsErrors } from '~/features/errors';
 import { formStyle, buttonStyle, linkStyle } from './style';
+
+interface IFields extends IBasicField {
+  name: string;
+  phone_number: string;
+  email: string;
+}
 
 const schema = z.object({
   name: validationSchemes.name,
@@ -87,7 +94,7 @@ export const UserProfileForm: FC<IUserProfileForm> = ({
     getValues,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm<{ [key: string]: string }>({
+  } = useForm<IFields>({
     mode: 'onTouched',
     resolver: zodResolver(schema),
     defaultValues: {
@@ -120,7 +127,7 @@ export const UserProfileForm: FC<IUserProfileForm> = ({
     }
   };
 
-  const onSubmit: SubmitHandler<{ [key: string]: string }> = (data) => {
+  const onSubmit: SubmitHandler<IFields> = (data) => {
     const request: IPatchUser = {
       name: data.name || '',
       email: data.email || '',
@@ -175,8 +182,8 @@ export const UserProfileForm: FC<IUserProfileForm> = ({
             {...field}
             disabled={!isActive || isSubmitting}
             key={field.name}
-            register={register}
-            errors={errors}
+            register={register(field.name)}
+            error={errors[field.name]}
           />
         ))}
 

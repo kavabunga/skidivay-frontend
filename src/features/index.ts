@@ -11,3 +11,4 @@ export * from './liker';
 export * from './cards';
 export * from './card-share-form';
 export * from './user-delete';
+export * from './friend-card-label';

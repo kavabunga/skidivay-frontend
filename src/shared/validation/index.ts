@@ -92,10 +92,13 @@ export const validationSchemes = {
     .regex(/^[A-Za-zА-Яа-яЁё\s\d!@#$%^&*()_+-=[\]{};:'",.<>?/\\|]*$/, {
       message: cardFormErrors.wrongShopName,
     }),
-  shop_group: z
-    .string()
-    .max(validationLengths.shop_group)
-    .regex(/^[A-Za-zА-Яа-яЁё\s\d!@#$%^&*()_+-=[\]{};:'",.<>?/\\|]*$/, {
-      message: cardFormErrors.wrongShopGroup,
-    }),
+  //NOTE: This one is not required, so it is nullable
+  shop_group: z.nullable(
+    z
+      .string()
+      .max(validationLengths.shop_group)
+      .regex(/^[A-Za-zА-Яа-яЁё\s\d!@#$%^&*()_+-=[\]{};:'",.<>?/\\|]*$/, {
+        message: cardFormErrors.wrongShopGroup,
+      })
+  ),
 };

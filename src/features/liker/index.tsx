@@ -11,9 +11,10 @@ import { ApiMessageTypes } from '~/shared/enums';
 interface LikerProps {
   cardId: number;
   isLiked: boolean;
+  isDark: boolean;
 }
 
-export const Liker: FC<LikerProps> = ({ cardId, isLiked }) => {
+export const Liker: FC<LikerProps> = ({ cardId, isLiked, isDark }) => {
   const { cards, setCards } = useContext(CardsContext);
   const { setMessages } = useContext(MessagesContext);
 
@@ -47,7 +48,10 @@ export const Liker: FC<LikerProps> = ({ cardId, isLiked }) => {
   return (
     <IconButton
       size="small"
-      sx={{ ...iconButtonStyle }}
+      sx={{
+        color: `${isDark ? 'surface.dark' : '#FFFBFF'}`,
+        ...iconButtonStyle,
+      }}
       onClick={(e) => handleClick(e)}
     >
       {isLiked ? <FavoriteIcon /> : <FavoriteBorderIcon />}

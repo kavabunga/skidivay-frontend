@@ -10,6 +10,7 @@ import { MessagesContext } from '~/app';
 import { ApiMessageTypes } from '~/shared/enums';
 import { IApiError } from '~/shared/errors';
 import { handleFormFieldsErrors } from '~/features/errors';
+import { IBasicField } from '~/shared';
 
 export interface AuthFormType {
   fields: FieldType[];
@@ -20,7 +21,7 @@ export interface AuthFormType {
     width?: number;
   };
   defaultValues?: object;
-  submit: (data: { [key: string]: string }) => Promise<void>;
+  submit: (data: IBasicField) => Promise<void>;
 }
 
 export const AuthForm: FC<AuthFormType> = ({
@@ -38,7 +39,7 @@ export const AuthForm: FC<AuthFormType> = ({
     setError,
     getValues,
     formState: { errors, isSubmitting },
-  } = useForm<{ [key: string]: string }>({
+  } = useForm<IBasicField>({
     mode: 'onTouched',
     resolver: zodResolver(schema),
     defaultValues: defaultValues,
@@ -62,7 +63,7 @@ export const AuthForm: FC<AuthFormType> = ({
     }
   };
 
-  const onSubmit: SubmitHandler<{ [key: string]: string }> = (data) => {
+  const onSubmit: SubmitHandler<IBasicField> = (data) => {
     submit(data).catch(handleError);
   };
 
@@ -80,8 +81,8 @@ export const AuthForm: FC<AuthFormType> = ({
             {...field}
             disabled={isSubmitting}
             key={field.name}
-            register={register}
-            errors={errors}
+            register={register(field.name)}
+            error={errors[field.name]}
           />
         ))}
 

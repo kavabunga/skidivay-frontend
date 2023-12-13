@@ -1,7 +1,7 @@
 import { FC, forwardRef } from 'react';
 import { TextField, InputProps } from '@mui/material';
 import { IMaskInput } from 'react-imask';
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
+import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 import { helperTextStyle } from './style';
 
 export interface FieldType {
@@ -18,8 +18,8 @@ export interface FieldType {
 }
 
 export interface InputType extends FieldType {
-  register: UseFormRegister<{ [key: string]: string }>;
-  errors: FieldErrors<{ [key: string]: string }>;
+  register: UseFormRegisterReturn;
+  error?: FieldError;
   onFocus?: () => void;
   onBlur?: () => void;
   disabled?: boolean;
@@ -40,18 +40,18 @@ export const Input: FC<InputType> = ({
   name,
   defaultHelperText,
   register,
-  errors,
+  error,
   hideAsterisk,
   maskOptions,
   ...props
 }) => {
-  const { onChange, onBlur, ref } = register(name);
+  const { onChange, onBlur, ref } = register;
   return (
     <TextField
       key={name}
-      helperText={errors[name] ? errors[name]?.message : defaultHelperText}
+      helperText={error ? error?.message : defaultHelperText}
       FormHelperTextProps={{ sx: helperTextStyle }}
-      error={!!errors[name]}
+      error={Boolean(error)}
       InputLabelProps={{ required: !hideAsterisk }}
       inputRef={ref}
       inputProps={{
