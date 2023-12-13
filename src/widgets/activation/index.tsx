@@ -1,7 +1,7 @@
 import { Stack, Typography } from '@mui/material';
 import { useContext, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { MessagesContext, UserContext } from '~/app';
+import { LoadingContext, MessagesContext, UserContext } from '~/app';
 import { SignInForm } from '~/features';
 import { api } from '~/shared';
 import { stackStyle, titleStyle, paragraphStyle } from './style';
@@ -9,6 +9,7 @@ import { IApiError } from '~/shared/errors';
 import { ApiMessageTypes } from '~/shared/enums';
 
 export const Activation = () => {
+  const { setIsLoading } = useContext(LoadingContext);
   const { setMessages } = useContext(MessagesContext);
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ export const Activation = () => {
 
   useEffect(() => {
     //TODO: Add here PreLoader for check for login
+    setIsLoading && setIsLoading(true);
     const handleError = (err: IApiError) => {
       setMessages((messages) => [
         {
@@ -28,20 +30,30 @@ export const Activation = () => {
     const handleSuccess = () => {
       setMessages((messages) => [
         {
-          message: 'Почта подтверждена',
+          message: 'Ваш Email успешно подтвержден',
           type: ApiMessageTypes.success,
         },
         ...messages,
       ]);
     };
-    if (user && user?.email !== '') {
+    if (user?.email !== '' && !user?.is_active) {
       api
         .activateEmail(uid || '', token || '')
         .then(handleSuccess)
         .catch(handleError)
-        .finally(() => navigate('/', { replace: true }));
+        .finally(() => {
+          navigate('/', { replace: true });
+          setIsLoading && setIsLoading(false);
+        });
+    } else if (user?.is_active) {
+      handleSuccess();
+      setIsLoading && setIsLoading(false);
+    } else {
+      setIsLoading && setIsLoading(false);
     }
-  }, [user, uid, token, navigate, setMessages]);
+    //NOTE: Disabling deps check to use useEffect only on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Stack

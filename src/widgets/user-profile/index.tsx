@@ -9,10 +9,12 @@ import {
   BackButtonToUserProfile,
   SignOut,
   DeleteUser,
+  ReactivateEmail,
 } from '~/features';
 import {
   ResetPasswordRequestSuccessWidget,
   ChangePasswordWidget,
+  ReactivationSuccessWidget,
 } from '~/widgets';
 import { containerStyle, topButtonsStyle, buttonStyle } from './style';
 
@@ -21,7 +23,9 @@ export const UserProfileWidget = () => {
   const { user } = useContext(UserContext);
   const [widgetScreen, setWidgetScreen] = useState('default');
   const [isEditActive, setIsEditActive] = useState(false);
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isByeByePopupOpen, setIsByeByePopupOpen] = useState(false);
+  const [isActivateEmailPopupOpen, setIsActivateEmailPopupOpen] =
+    useState(false);
 
   useEffect(() => {
     setWidgetScreen(location?.state?.widgetScreen ?? 'default');
@@ -35,6 +39,10 @@ export const UserProfileWidget = () => {
     setIsEditActive(false);
   };
 
+  const handleShowDefault = () => {
+    setWidgetScreen('default');
+  };
+
   const handleChangePassword = () => {
     setWidgetScreen('changePassword');
   };
@@ -43,12 +51,25 @@ export const UserProfileWidget = () => {
     setWidgetScreen('resetPasswordRequestSuccess');
   };
 
+  const handleShowReactivationSuccess = () => {
+    handleHideActivateEmailPopup();
+    setWidgetScreen('reactivationSuccess');
+  };
+
   const handleShowDeleteUserPopup = () => {
-    setIsPopupOpen(true);
+    setIsByeByePopupOpen(true);
   };
 
   const handleHideDeleteUserPopup = () => {
-    setIsPopupOpen(false);
+    setIsByeByePopupOpen(false);
+  };
+
+  const handleShowActivateEmailPopup = () => {
+    setIsActivateEmailPopupOpen(true);
+  };
+
+  const handleHideActivateEmailPopup = () => {
+    setIsActivateEmailPopupOpen(false);
   };
 
   switch (widgetScreen) {
@@ -60,6 +81,8 @@ export const UserProfileWidget = () => {
       );
     case 'resetPasswordRequestSuccess':
       return <ResetPasswordRequestSuccessWidget email={user?.email || ''} />;
+    case 'reactivationSuccess':
+      return <ReactivationSuccessWidget onClose={handleShowDefault} />;
     case 'default':
       return (
         <Stack component="section" sx={containerStyle}>
@@ -88,6 +111,7 @@ export const UserProfileWidget = () => {
             isActive={isEditActive}
             onChangePassword={handleChangePassword}
             onEditDisable={handleEditDisable}
+            onActivateEmail={handleShowActivateEmailPopup}
           />
           {!isEditActive && (
             <Stack
@@ -107,7 +131,15 @@ export const UserProfileWidget = () => {
               </Button>
             </Stack>
           )}
-          <DeleteUser open={isPopupOpen} onClose={handleHideDeleteUserPopup} />
+          <DeleteUser
+            open={isByeByePopupOpen}
+            onClose={handleHideDeleteUserPopup}
+          />
+          <ReactivateEmail
+            open={isActivateEmailPopupOpen}
+            onClose={handleHideActivateEmailPopup}
+            afterSubmit={handleShowReactivationSuccess}
+          />
         </Stack>
       );
   }
