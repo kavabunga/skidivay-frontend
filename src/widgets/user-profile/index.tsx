@@ -8,11 +8,11 @@ import {
   BackButton,
   BackButtonToUserProfile,
   SignOut,
+  DeleteUser,
 } from '~/features';
 import {
   ResetPasswordRequestSuccessWidget,
   ChangePasswordWidget,
-  DeleteUserWidget,
 } from '~/widgets';
 import { containerStyle, topButtonsStyle, buttonStyle } from './style';
 
@@ -21,6 +21,7 @@ export const UserProfileWidget = () => {
   const { user } = useContext(UserContext);
   const [widgetScreen, setWidgetScreen] = useState('default');
   const [isEditActive, setIsEditActive] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   useEffect(() => {
     setWidgetScreen(location?.state?.widgetScreen ?? 'default');
@@ -42,13 +43,15 @@ export const UserProfileWidget = () => {
     setWidgetScreen('resetPasswordRequestSuccess');
   };
 
-  const handleDeleteUser = () => {
-    setWidgetScreen('deleteUser');
+  const handleShowDeleteUserPopup = () => {
+    setIsPopupOpen(true);
+  };
+
+  const handleHideDeleteUserPopup = () => {
+    setIsPopupOpen(false);
   };
 
   switch (widgetScreen) {
-    case 'deleteUser':
-      return <DeleteUserWidget />;
     case 'changePassword':
       return (
         <ChangePasswordWidget
@@ -98,12 +101,13 @@ export const UserProfileWidget = () => {
               <Button
                 variant="outlined"
                 sx={buttonStyle}
-                onClick={handleDeleteUser}
+                onClick={handleShowDeleteUserPopup}
               >
                 Удалить аккаунт
               </Button>
             </Stack>
           )}
+          <DeleteUser open={isPopupOpen} onClose={handleHideDeleteUserPopup} />
         </Stack>
       );
   }
