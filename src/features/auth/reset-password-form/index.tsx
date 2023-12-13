@@ -1,6 +1,11 @@
 import { FC } from 'react';
 import * as z from 'zod';
-import { FieldType, validationLengths, validationSchemes } from '~/shared';
+import {
+  FieldType,
+  IBasicField,
+  validationLengths,
+  validationSchemes,
+} from '~/shared';
 import { AuthForm, requestResetPassword } from '..';
 
 interface IResetPasswordForm {
@@ -40,11 +45,13 @@ export const ResetPasswordForm: FC<IResetPasswordForm> = ({
     },
   ];
 
-  const submit = (data: { [key: string]: string }) => {
+  const submit = (data: IBasicField) => {
     const request = {
       phone_last_digits:
-        data.phone_last_digits.replace(/\D/g, '').replace(/^7/, '') || '',
-      email: data.email,
+        typeof data.phone_last_digits === 'string'
+          ? data.phone_last_digits.replace(/\D/g, '').replace(/^7/, '')
+          : '',
+      email: typeof data.email === 'string' ? data.email : '',
     };
     return requestResetPassword(request).then(() =>
       handleSetEmail(request.email)

@@ -1,6 +1,11 @@
 import { FC } from 'react';
 import { AuthForm } from '~/features';
-import { FieldType, IDeleteUserRequest, validationSchemes } from '~/shared';
+import {
+  FieldType,
+  IBasicField,
+  IDeleteUserRequest,
+  validationSchemes,
+} from '~/shared';
 import * as z from 'zod';
 
 export const DeleteUserForm: FC<{
@@ -22,9 +27,9 @@ export const DeleteUserForm: FC<{
     },
   ];
 
-  const submit = (data: { [key: string]: string }) => {
+  const submit = (data: IBasicField) => {
     return handleSubmit({
-      current_password: data.password,
+      current_password: typeof data.password === 'string' ? data.password : '',
     });
   };
 

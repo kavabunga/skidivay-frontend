@@ -54,6 +54,8 @@ export const Primary: Story = {
       },
       owner: true,
       favourite: false,
+      shared_by: null,
+      pub_date: '',
     },
   },
 };
@@ -73,8 +75,10 @@ export const NoImg: Story = {
         card_number: '12323423423423',
         pub_date: '',
       },
-      owner: true,
+      owner: false,
       favourite: true,
+      shared_by: { name: 'Василий', email: '123@321.com', id: 0 },
+      pub_date: '',
     },
   },
 };
