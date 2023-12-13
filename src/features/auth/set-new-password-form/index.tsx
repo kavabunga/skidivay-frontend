@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { AuthForm } from '..';
 import {
   FieldType,
+  IBasicField,
   authFormErrors,
   validationLengths,
   validationSchemes,
@@ -48,8 +49,9 @@ export const SetNewPasswordForm: FC<{
     },
   ];
 
-  const submit = (data: { [key: string]: string }) => {
-    return handleSubmit(data.password);
+  const submit = (data: IBasicField) => {
+    const request = typeof data.password === 'string' ? data.password : '';
+    return handleSubmit(request);
   };
 
   return (

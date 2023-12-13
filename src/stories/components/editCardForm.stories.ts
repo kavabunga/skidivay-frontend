@@ -35,6 +35,8 @@ export const Default: Story = {
       },
       owner: true,
       favourite: false,
+      shared_by: null,
+      pub_date: '',
     },
   },
 };

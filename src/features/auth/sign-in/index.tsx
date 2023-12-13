@@ -6,6 +6,7 @@ import { CardsContext, UserContext } from '~/app';
 import { getUser } from '~/features';
 import {
   FieldType,
+  IBasicField,
   ISignInRequest,
   api,
   validationLengths,
@@ -58,10 +59,10 @@ export const SignInForm: FC<ISignInForm> = ({
     },
   ];
 
-  const submit = (data: { [key: string]: string }) => {
+  const submit = (data: IBasicField) => {
     const request: ISignInRequest = {
-      email: data.email || '',
-      password: data.password || '',
+      email: typeof data.email === 'string' ? data.email : '',
+      password: typeof data.password === 'string' ? data.password : '',
     };
     return signIn(request)
       .then(() => {

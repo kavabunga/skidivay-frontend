@@ -23,10 +23,11 @@ export const defaultCards: ICardsContext = [
       card_number: '1234567890',
       barcode_number: '123456789012',
       encoding_type: 'code128',
-      usage_counter: 5,
     },
     owner: true,
     favourite: true,
+    shared_by: null,
+    pub_date: '01-01-2030',
   },
   {
     card: {
@@ -50,10 +51,11 @@ export const defaultCards: ICardsContext = [
       card_number: '1234567890',
       barcode_number: '123456789012',
       encoding_type: 'code128',
-      usage_counter: 5,
     },
     owner: true,
     favourite: true,
+    shared_by: null,
+    pub_date: '01-01-2030',
   },
   {
     card: {
@@ -77,10 +79,11 @@ export const defaultCards: ICardsContext = [
       card_number: '1234567890',
       barcode_number: '123456789012',
       encoding_type: 'code128',
-      usage_counter: 5,
     },
     owner: true,
     favourite: true,
+    shared_by: null,
+    pub_date: '01-01-2030',
   },
   {
     card: {
@@ -104,10 +107,11 @@ export const defaultCards: ICardsContext = [
       card_number: '1234567890',
       barcode_number: '123456789012',
       encoding_type: 'code128',
-      usage_counter: 5,
     },
     owner: true,
     favourite: true,
+    shared_by: null,
+    pub_date: '01-01-2030',
   },
   {
     card: {
@@ -131,10 +135,11 @@ export const defaultCards: ICardsContext = [
       card_number: '1234567890',
       barcode_number: '123456789012',
       encoding_type: 'code128',
-      usage_counter: 5,
     },
     owner: true,
     favourite: true,
+    shared_by: null,
+    pub_date: '01-01-2030',
   },
   {
     card: {
@@ -158,10 +163,11 @@ export const defaultCards: ICardsContext = [
       card_number: '1234567890',
       barcode_number: '123456789012',
       encoding_type: 'code128',
-      usage_counter: 5,
     },
     owner: true,
     favourite: true,
+    shared_by: null,
+    pub_date: '01-01-2030',
   },
   {
     card: {
@@ -185,10 +191,11 @@ export const defaultCards: ICardsContext = [
       card_number: '1234567890',
       barcode_number: '123456789012',
       encoding_type: 'code128',
-      usage_counter: 5,
     },
     owner: true,
     favourite: true,
+    shared_by: null,
+    pub_date: '01-01-2030',
   },
   {
     card: {
@@ -212,10 +219,11 @@ export const defaultCards: ICardsContext = [
       card_number: '1234567890',
       barcode_number: '123456789012',
       encoding_type: 'code128',
-      usage_counter: 5,
     },
     owner: true,
     favourite: true,
+    shared_by: null,
+    pub_date: '01-01-2030',
   },
   {
     card: {
@@ -239,9 +247,10 @@ export const defaultCards: ICardsContext = [
       card_number: '1234567890',
       barcode_number: '123456789012',
       encoding_type: 'code128',
-      usage_counter: 5,
     },
     owner: true,
     favourite: true,
+    shared_by: null,
+    pub_date: '01-01-2030',
   },
 ];
