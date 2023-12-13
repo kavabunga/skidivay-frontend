@@ -104,7 +104,7 @@ export const EditCardForm: FC<EditCardFormProps> = ({
     defaultValues: {
       card_number: card.card.card_number,
       barcode_number: card.card.barcode_number,
-      shop_group: card.card.shop.group?.[0]?.name ?? '',
+      shop_group: card.card.shop.group?.[0]?.name ?? null,
     },
   });
 
@@ -251,12 +251,12 @@ export const EditCardForm: FC<EditCardFormProps> = ({
           fieldState: { error },
         }) => (
           <Autocomplete
+            autoHighlight
             onChange={(_event, item) => {
-              onChange(item || '');
+              onChange(item);
             }}
             fullWidth
-            //NOTE: null is used when we empty this input via react-hook-form setValue()
-            value={value || null}
+            value={value}
             options={groups.map((option) => option.name)}
             renderInput={(params) => (
               <TextField
@@ -275,6 +275,7 @@ export const EditCardForm: FC<EditCardFormProps> = ({
             )}
             ListboxProps={{ sx: listBoxStyle }}
             disabled={!(isActive && isUserShop)}
+            noOptionsText="Нет подходящих категорий"
           />
         )}
       />

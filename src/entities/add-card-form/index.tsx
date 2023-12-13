@@ -181,20 +181,32 @@ export const AddCardForm: FC = () => {
             value={value}
             options={options}
             renderOption={(props, option) => <li {...props}>{option.name}</li>}
-            onInputChange={(_event, newInputValue) => onChange(newInputValue)}
+            //NOTE: To prevent form send on unfinished input
+            onKeyDown={(_event) => {
+              if (_event.key === 'Enter') {
+                onBlur();
+              }
+            }}
+            //NOTE: Input change and value change are fired separately.
+            // Here we track input change for validation and shop_group toggle.
+            onInputChange={(_event, newInputValue) => {
+              onChange(newInputValue);
+              setValue('shop_group', null);
+              setIsGroupInputBlocked(false);
+            }}
             onChange={(_event, newValue) => {
               if (typeof newValue === 'string') {
                 onChange(newValue);
                 setValue('shop_group', null);
                 setIsGroupInputBlocked(false);
-              } else if (newValue && newValue.inputValue) {
+              } else if (newValue?.inputValue) {
                 setValue('shop_group', null);
                 setIsGroupInputBlocked(false);
                 onChange(newValue.inputValue);
               } else {
-                onChange(newValue?.name || '');
                 setValue('shop_group', newValue?.group?.[0].name || null);
                 setIsGroupInputBlocked(true);
+                onChange(newValue?.name || null);
               }
             }}
             filterOptions={(options, params) => {
@@ -254,11 +266,11 @@ export const AddCardForm: FC = () => {
           fieldState: { error },
         }) => (
           <Autocomplete
+            autoHighlight
             onChange={(_event, item) => {
               onChange(item);
             }}
             fullWidth
-            //NOTE: null is used when we empty this input via react-hook-form setValue()
             value={value}
             options={groups.map((option) => option.name)}
             renderInput={(params) => (
@@ -284,6 +296,7 @@ export const AddCardForm: FC = () => {
             )}
             ListboxProps={{ sx: listBoxStyle }}
             disabled={isGroupInputBlocked}
+            noOptionsText="Нет подходящих категорий"
           />
         )}
       />
