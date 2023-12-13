@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { CardsContext, MessagesContext, UserContext } from '~/app';
 import { deleteUser } from '~/features';
-import { IDeleteUserRequest, IPopupProps } from '~/shared';
+import { IPopupProps } from '~/shared';
 import { ApiMessageTypes } from '~/shared/enums';
 import { buttonStyle } from './style';
 import { UserDeletePopup } from '~/entities';
@@ -24,22 +24,24 @@ export const DeleteUser: FC<IPopupProps> = ({ open, onClose }) => {
     ]);
   };
 
-  const handleSubmit = (data: IDeleteUserRequest) => {
-    deleteUser(data, user?.id || 0)
-      .then(() => {
-        setCards && setCards([]);
-        setMessages([]);
-        setUser && setUser(null);
-      })
-      .then(() => {
-        handleSuccess();
-        setTimeout(() => navigate('/', { replace: true }), 5000);
-      });
+  const handleSubmit = () => {
+    console.log(user);
+    user?.id &&
+      deleteUser(user?.id)
+        .then(() => {
+          setCards && setCards([]);
+          setMessages([]);
+          setUser && setUser(null);
+        })
+        .then(() => {
+          handleSuccess();
+          setTimeout(() => navigate('/', { replace: true }), 5000);
+        });
   };
 
   return (
     <UserDeletePopup open={open} onClose={onClose}>
-      <Button variant="text" sx={buttonStyle} onClick={() => handleSubmit}>
+      <Button variant="text" sx={buttonStyle} onClick={handleSubmit}>
         Да, все кончено
       </Button>
     </UserDeletePopup>

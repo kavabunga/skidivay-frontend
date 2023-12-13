@@ -10,7 +10,6 @@ import {
   IRequestSetNewPassword,
   IChangePasswordRequest,
   IChangeEmailRequest,
-  IDeleteUserRequest,
   IPatchUser,
   MEDIA_URL,
   IShopRequest,
@@ -292,12 +291,11 @@ export const ApiRequests = class ApiRequests {
     return this._requestAuthorizedApi(url, options);
   }
 
-  deleteUser(data: IDeleteUserRequest, id: number) {
+  deleteUser(id: number) {
     const url = `${this._url}/users/${id}/`;
     const options: IRequestOptions = {
       method: 'DELETE',
       headers: this._headers,
-      body: JSON.stringify(data),
     };
     return this._requestAuthorizedApi(url, options);
   }

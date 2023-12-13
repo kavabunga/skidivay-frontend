@@ -2,7 +2,6 @@ import {
   IRequestResetPassword,
   ISignInRequest,
   ISignUpRequest,
-  IDeleteUserRequest,
   api,
 } from '~/shared';
 
@@ -32,8 +31,6 @@ export function requestResetPassword(data: IRequestResetPassword) {
   return api.requestResetPassword(data);
 }
 
-export function deleteUser(data: IDeleteUserRequest, userId: number) {
-  return api
-    .deleteUser(data, userId)
-    .then(() => localStorage.removeItem('token'));
+export function deleteUser(userId: number) {
+  return api.deleteUser(userId).then(() => localStorage.removeItem('token'));
 }
