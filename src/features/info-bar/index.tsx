@@ -16,15 +16,22 @@ interface ISnack {
 }
 
 export const InfoBar: FC = () => {
-  const { messages } = useContext(MessagesContext);
+  const { messages, setMessages } = useContext(MessagesContext);
   const [open, setOpen] = useState(false);
-  const [snack, setSnack] = useState<ISnack>();
+  const [snack, setSnack] = useState<ISnack | null>(null);
 
   useEffect(() => {
-    if (messages[0]) {
+    if (messages?.[0]?.message && !messages?.[0]?.isShown) {
       setSnack({ message: messages[0], type: snackTypeSelector(messages[0]) });
+      setMessages((messages) => {
+        const neWmessages = messages;
+        neWmessages[0].isShown = true;
+        return neWmessages;
+      });
       setOpen(true);
     }
+    //NOTE: Need to update snackbar only on message updates
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
   const handleClose = (

@@ -112,6 +112,7 @@ export interface IPatchCard {
 export interface IMessageContext {
   message: string;
   type: ApiMessageTypes;
+  isShown?: boolean;
 }
 
 export interface IRequestResetPassword {
