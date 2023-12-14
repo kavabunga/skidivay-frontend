@@ -45,6 +45,7 @@ export const Contexts: FC<IContexts> = ({ children }) => {
         ...messagesData,
       ]);
     };
+    setMessagesData([]);
     const shopsPromise = api.getShops();
     const groupsPromise = api.getGroups();
     Promise.all([shopsPromise, groupsPromise])
