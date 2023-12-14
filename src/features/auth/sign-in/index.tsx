@@ -2,7 +2,7 @@ import { FC, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link, List, ListItem } from '@mui/material';
 import * as z from 'zod';
-import { CardsContext, UserContext } from '~/app';
+import { CardsContext, MessagesContext, UserContext } from '~/app';
 import { getUser } from '~/features';
 import {
   FieldType,
@@ -14,6 +14,7 @@ import {
 } from '~/shared';
 import { AuthForm, signIn } from '..';
 import { listStyle, linkStyle } from './style';
+import { ApiMessageTypes } from '~/shared/enums';
 
 //NOTE: Sign In form types affect on submit behavior
 // "activation" doesn't redirect after signin
@@ -28,6 +29,7 @@ export const SignInForm: FC<ISignInForm> = ({
   type = 'signIn',
   onResetPassword,
 }) => {
+  const { setMessages } = useContext(MessagesContext);
   const { setUser } = useContext(UserContext);
   const { setCards } = useContext(CardsContext);
   const navigate = useNavigate();
@@ -59,6 +61,16 @@ export const SignInForm: FC<ISignInForm> = ({
     },
   ];
 
+  const handleStartupMessage = (data: string) => {
+    setMessages((messages) => [
+      {
+        message: data,
+        type: ApiMessageTypes.info,
+      },
+      ...messages,
+    ]);
+  };
+
   const submit = (data: IBasicField) => {
     const request: ISignInRequest = {
       email: typeof data.email === 'string' ? data.email : '',
@@ -66,7 +78,16 @@ export const SignInForm: FC<ISignInForm> = ({
     };
     return signIn(request)
       .then(() => {
-        const userPromise = getUser().then((res) => setUser && setUser(res));
+        const userPromise = getUser()
+          .then((res) => {
+            if (!res?.is_active) {
+              handleStartupMessage('Email не подтвержден');
+              return res;
+            } else {
+              return res;
+            }
+          })
+          .then((res) => setUser && setUser(res));
         const cardsPromise = api
           .getCards()
           .then((res) => setCards && setCards(res));
