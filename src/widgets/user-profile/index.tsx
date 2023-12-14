@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Typography, Stack, Button, IconButton } from '@mui/material';
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
-import { UserContext } from '~/app';
+import { UserContext } from '~/entities';
 import {
   UserProfileForm,
   BackButton,

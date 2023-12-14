@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { CardsContext, UserContext } from '..';
+import { CardsContext, UserContext } from '~/entities';
 import { Home, UserCards, Welcome } from '~/widgets';
 
 export const ProtectedHomeRoute = () => {

@@ -17,7 +17,7 @@ import {
   GroupListContext,
   MessagesContext,
   ShopListContext,
-} from '~/app';
+} from '~/entities';
 import {
   IBasicField,
   ICardContext,

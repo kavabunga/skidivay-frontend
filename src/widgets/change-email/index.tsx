@@ -3,7 +3,7 @@ import { Container, Typography } from '@mui/material';
 import { ChangeEmailForm } from '~/features';
 import { api, IChangeEmailRequest } from '~/shared';
 import { ApiMessageTypes } from '~/shared/enums';
-import { MessagesContext, UserContext } from '~/app';
+import { MessagesContext, UserContext } from '~/entities';
 import { containerStyle, paragraphStyle } from './style';
 
 export const ChangeEmailWidget: FC<{

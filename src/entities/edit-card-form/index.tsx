@@ -25,7 +25,7 @@ import {
   GroupListContext,
   MessagesContext,
   ShopListContext,
-} from '~/app';
+} from '~/entities';
 import { IApiError } from '~/shared/errors';
 import { ApiMessageTypes } from '~/shared/enums';
 import { formStyle, buttonStyle, helperTextStyle, listBoxStyle } from './style';

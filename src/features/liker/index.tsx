@@ -1,5 +1,5 @@
 import { FC, useContext, MouseEvent } from 'react';
-import { CardsContext, MessagesContext } from '~/app/contexts';
+import { CardsContext, MessagesContext } from '~/entities';
 import { api } from '~/shared';
 import { IconButton } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';

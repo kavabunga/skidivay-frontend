@@ -1,5 +1,5 @@
 import { FC, useContext } from 'react';
-import { SortedCardsContext } from '~/app/contexts';
+import { SortedCardsContext } from '~/entities';
 import { Box, Stack, Typography } from '@mui/material';
 import { SearchChips } from '~/features';
 import { CardsList } from '~/widgets';

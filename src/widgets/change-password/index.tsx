@@ -9,7 +9,7 @@ import {
   DialogContentText,
   Stack,
 } from '@mui/material';
-import { UserContext, MessagesContext } from '~/app';
+import { UserContext, MessagesContext } from '~/entities';
 import {
   BackButtonToUserProfile,
   requestResetPassword,

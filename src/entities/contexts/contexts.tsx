@@ -1,7 +1,6 @@
 import { FC, ReactNode, useEffect, useState } from 'react';
 import {
   UserContext,
-  CardContext,
   CardsContext,
   ShopListContext,
   MessagesContext,
@@ -10,7 +9,6 @@ import {
   GroupListContext,
 } from '.';
 import {
-  ICardContext,
   ICardsContext,
   IShopListContext,
   IUserContext,
@@ -29,7 +27,6 @@ export const Contexts: FC<IContexts> = ({ children }) => {
   const [userData, setUserData] = useState<IUserContext | null>(null);
   const [shopsData, setShopsData] = useState<IShopListContext>([]);
   const [cardsData, setCardsData] = useState<ICardsContext>([]);
-  const [cardData, setCardData] = useState<ICardContext>(Object);
   const [sortedCards, setSortedCards] = useState<ICardsContext>([]);
   const [messagesData, setMessagesData] = useState<IMessageContext[]>([]);
   const [isLoadingData, setIsLoadingData] = useState<boolean>(true);
@@ -87,18 +84,14 @@ export const Contexts: FC<IContexts> = ({ children }) => {
               <CardsContext.Provider
                 value={{ cards: cardsData, setCards: setCardsData }}
               >
-                <CardContext.Provider
-                  value={{ card: cardData, setCard: setCardData }}
+                <SortedCardsContext.Provider
+                  value={{
+                    cards: sortedCards,
+                    setSortedCards: setSortedCards,
+                  }}
                 >
-                  <SortedCardsContext.Provider
-                    value={{
-                      cards: sortedCards,
-                      setSortedCards: setSortedCards,
-                    }}
-                  >
-                    {children}
-                  </SortedCardsContext.Provider>
-                </CardContext.Provider>
+                  {children}
+                </SortedCardsContext.Provider>
               </CardsContext.Provider>
             </UserContext.Provider>
           </ShopListContext.Provider>

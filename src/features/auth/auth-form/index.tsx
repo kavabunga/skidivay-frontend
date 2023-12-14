@@ -6,7 +6,7 @@ import { ZodType } from 'zod';
 import { FieldType } from '~/shared/ui';
 import { InputSelector } from '~/features';
 import { formStyle, buttonStyle } from './style';
-import { MessagesContext } from '~/app';
+import { MessagesContext } from '~/entities';
 import { ApiMessageTypes } from '~/shared/enums';
 import { IApiError } from '~/shared/errors';
 import { handleFormFieldsErrors } from '~/features/errors';

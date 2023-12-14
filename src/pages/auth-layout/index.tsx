@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom';
 import { Header } from '~/widgets';
 import { AppFooter, Preloader } from '~/shared/ui';
 import { InfoBar } from '~/features';
-import { LoadingContext } from '~/app';
+import { LoadingContext } from '~/entities';
 
 export const AuthLayout = () => {
   const { isLoading } = useContext(LoadingContext);

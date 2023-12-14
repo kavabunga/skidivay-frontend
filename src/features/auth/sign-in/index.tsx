@@ -2,7 +2,7 @@ import { FC, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link, List, ListItem } from '@mui/material';
 import * as z from 'zod';
-import { CardsContext, MessagesContext, UserContext } from '~/app';
+import { CardsContext, MessagesContext, UserContext } from '~/entities';
 import { getUser } from '~/features';
 import {
   FieldType,

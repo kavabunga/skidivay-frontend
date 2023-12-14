@@ -1,7 +1,7 @@
 import { useEffect, FC, useState, useContext } from 'react';
 import { Snackbar, Alert } from '@mui/material';
 import { AlertColor } from '@mui/material/Alert';
-import { MessagesContext } from '~/app';
+import { MessagesContext } from '~/entities';
 import { ApiMessageTypes } from '~/shared/enums';
 import { IMessageContext } from '~/shared';
 

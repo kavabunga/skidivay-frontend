@@ -8,7 +8,7 @@ import {
   paragraphStyle,
   linkStyle,
 } from './styles';
-import { UserContext } from '~/app';
+import { UserContext } from '~/entities';
 import { useNavigate } from 'react-router-dom';
 
 export const RegistrationSuccessWidget: FC<{

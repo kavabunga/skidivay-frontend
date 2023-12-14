@@ -1,7 +1,7 @@
 import { Stack, Typography } from '@mui/material';
 import { useContext, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { LoadingContext, MessagesContext, UserContext } from '~/app';
+import { LoadingContext, MessagesContext, UserContext } from '~/entities';
 import { SignInForm } from '~/features';
 import { api } from '~/shared';
 import { stackStyle, titleStyle, paragraphStyle } from './style';

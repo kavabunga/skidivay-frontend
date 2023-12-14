@@ -12,7 +12,7 @@ import {
   validationSchemes,
   IBasicField,
 } from '~/shared';
-import { UserContext, MessagesContext } from '~/app';
+import { UserContext, MessagesContext } from '~/entities';
 import { InputSelector } from '~/features';
 import { ApiMessageTypes } from '~/shared/enums';
 import { IApiError } from '~/shared/errors';

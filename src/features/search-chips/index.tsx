@@ -5,7 +5,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { sliderWindowStyle } from './style';
 import { useContext, useEffect, useState } from 'react';
-import { CardsContext, SortedCardsContext } from '~/app';
+import { CardsContext, SortedCardsContext } from '~/entities';
 import { ICardsContext } from '~/shared';
 
 export const SearchChips = () => {

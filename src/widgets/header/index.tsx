@@ -5,7 +5,7 @@ import { Logo, CloseButton } from '~/shared/ui';
 import { PermIdentity } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import style from './style';
-import { UserContext } from '~/app';
+import { UserContext } from '~/entities';
 
 //INFO: 'minimal' for logo only, like on authorization screen, 'standard' for full featured header
 export type HeaderProps = {

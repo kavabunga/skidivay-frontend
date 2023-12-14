@@ -10,7 +10,7 @@ import {
   validationLengths,
   validationSchemes,
 } from '~/shared';
-import { CardsContext, UserContext } from '~/app';
+import { CardsContext, UserContext } from '~/entities';
 
 export const SignUpForm: FC<{
   defaultValues?: object;

@@ -23,7 +23,7 @@ import {
   deleteTextStyle,
   deleteItemStyle,
 } from './style';
-import { CardsContext, MessagesContext } from '~/app';
+import { CardsContext, MessagesContext } from '~/entities';
 import { ICardContext, Popup, FriendIcon, api } from '~/shared';
 import { IApiError } from '~/shared/errors';
 import { ApiMessageTypes } from '~/shared/enums';

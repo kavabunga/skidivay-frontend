@@ -2,7 +2,7 @@ import { FC, useContext, useEffect } from 'react';
 import { Typography, Box, Stack } from '@mui/material';
 import coverImage from '~/shared/assets/chatbot-bw-1.svg';
 import { mainContainerStyle, coverImgStyle, paragraphStyle } from './styles';
-import { UserContext } from '~/app';
+import { UserContext } from '~/entities';
 
 interface IReactivationSuccessWidget {
   onClose: () => void;

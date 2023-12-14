@@ -1,6 +1,6 @@
 import { FC, useContext } from 'react';
 import { Button, Stack } from '@mui/material';
-import { MessagesContext, UserContext } from '~/app';
+import { MessagesContext, UserContext } from '~/entities';
 import {
   IBasicField,
   IPopupProps,

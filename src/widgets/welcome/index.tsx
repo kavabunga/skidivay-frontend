@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Container, Typography } from '@mui/material';
 import { AccentButton } from '~/shared/ui';
 import { PromoSlider } from '~/features';
-import { ShopListContext } from '~/app/contexts';
+import { ShopListContext } from '~/entities';
 import coverImage from '~/shared/assets/payment-bw-1.svg';
 import { coverImgStyle, mainContainerStyle, paragraphStyle } from './styles';
-import { UserContext } from '~/app';
+import { UserContext } from '~/entities';
 
 export const Welcome = () => {
   const { user } = useContext(UserContext);

@@ -2,7 +2,7 @@ import { FC, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, IconButton } from '@mui/material';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import { UserContext } from '~/app';
+import { UserContext } from '~/entities';
 import { IShop } from '~/shared';
 import {
   interactiveCardStyle,

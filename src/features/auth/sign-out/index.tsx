@@ -2,7 +2,7 @@ import { ButtonProps } from '@mui/material';
 import { ComponentType, FC, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signOut } from '..';
-import { UserContext, CardsContext, MessagesContext } from '~/app';
+import { UserContext, CardsContext, MessagesContext } from '~/entities';
 import { IApiError } from '~/shared/errors';
 import { ApiMessageTypes } from '~/shared/enums';
 

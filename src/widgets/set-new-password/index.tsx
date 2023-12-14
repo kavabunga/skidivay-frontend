@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Container, Typography } from '@mui/material';
-import { MessagesContext } from '~/app';
+import { MessagesContext } from '~/entities';
 import { SetNewPasswordForm } from '~/features';
 import { api } from '~/shared';
 import { ApiMessageTypes } from '~/shared/enums';

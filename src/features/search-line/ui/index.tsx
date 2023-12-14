@@ -1,6 +1,6 @@
 import { Autocomplete, TextField } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
-import { CardsContext, SortedCardsContext } from '~/app';
+import { CardsContext, SortedCardsContext } from '~/entities';
 
 export const SearchLine = () => {
   const [options, setOptions] = useState<string[]>([]);

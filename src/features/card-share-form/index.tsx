@@ -13,7 +13,7 @@ import * as z from 'zod';
 import { Button, Stack } from '@mui/material';
 import { IApiError } from '~/shared/errors';
 import { handleFormFieldsErrors } from '../errors';
-import { MessagesContext } from '~/app';
+import { MessagesContext } from '~/entities';
 import { buttonStyle } from './style';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ApiMessageTypes } from '~/shared/enums';

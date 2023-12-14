@@ -1,7 +1,7 @@
 import { FC, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
-import { CardsContext, MessagesContext, UserContext } from '~/app';
+import { CardsContext, MessagesContext, UserContext } from '~/entities';
 import { deleteUser } from '~/features';
 import { IDeleteUserRequest, IPopupProps } from '~/shared';
 import { ApiMessageTypes } from '~/shared/enums';
