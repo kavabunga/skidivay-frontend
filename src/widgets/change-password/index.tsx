@@ -62,7 +62,7 @@ export const ChangePasswordWidget: FC<{
   const handleSuccess = () => {
     setMessages((messages) => [
       {
-        message: 'Пароль изменён!',
+        message: 'Пароль успешно изменён',
         type: ApiMessageTypes.success,
       },
       ...messages,

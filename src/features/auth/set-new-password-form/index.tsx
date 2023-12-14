@@ -30,7 +30,7 @@ export const SetNewPasswordForm: FC<{
   const fields: FieldType[] = [
     {
       name: 'password',
-      label: 'Пароль',
+      label: 'Новый пароль',
       type: 'password',
       defaultHelperText: ' ',
       autoComplete: 'new-password',
@@ -40,7 +40,7 @@ export const SetNewPasswordForm: FC<{
     },
     {
       name: 'passwordRepeat',
-      label: 'Повторный пароль',
+      label: 'Подтверждение пароля',
       type: 'password',
       defaultHelperText: ' ',
       autoComplete: 'new-password',

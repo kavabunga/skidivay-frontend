@@ -52,7 +52,6 @@ interface IOption extends IShop {
   inputValue?: string;
 }
 
-//NOTE: In case of clearing the field with the built in close-button, the value becomes NULL, so react-hook-form fires type error. That's why we use 'required' error text as invalid type eroor text in shopName field
 const schema = z
   .object({
     shop_name: validationSchemes.shop_name,
@@ -71,6 +70,11 @@ const schema = z
         message: cardFormErrors.requiredBarcodeOrNumber,
         path: ['card_number'],
       });
+      ctx.addIssue({
+        code: 'custom',
+        message: cardFormErrors.requiredBarcodeOrNumber,
+        path: ['barcode_number'],
+      });
     }
   });
 
@@ -87,6 +91,7 @@ export const AddCardForm: FC = () => {
   const {
     control,
     register,
+    trigger,
     handleSubmit,
     watch,
     setValue,
@@ -101,6 +106,10 @@ export const AddCardForm: FC = () => {
       shop_group: location.state?.shop.group?.[0].name ?? null,
     },
   });
+
+  const crossValidationtrigger = () => {
+    trigger(['card_number', 'barcode_number']);
+  };
 
   const handleError = (err: IApiError) => {
     const fields = Object.keys(getValues());
@@ -308,6 +317,7 @@ export const AddCardForm: FC = () => {
         defaultHelperText=" "
         placeholder=""
         register={register('card_number')}
+        triggerOnChange={crossValidationtrigger}
         error={errors.card_number}
         hideAsterisk={true}
         maxLength={validationLengths.card_number}
@@ -320,6 +330,7 @@ export const AddCardForm: FC = () => {
         defaultHelperText="Цифры, расположенные под черными штрихами"
         placeholder=""
         register={register('barcode_number')}
+        triggerOnChange={crossValidationtrigger}
         error={errors.barcode_number}
         hideAsterisk={true}
         maxLength={validationLengths.barcode_number}

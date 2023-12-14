@@ -1,24 +1,14 @@
 import { useEffect, useState, SyntheticEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Typography, Box, Tabs, Tab, Stack } from '@mui/material';
-import {
-  ResetPasswordForm,
-  SignInForm,
-  SignUpForm,
-  BackButton,
-} from '~/features';
+import { SignInForm, SignUpForm } from '~/features';
 import {
   RegistrationSuccessWidget,
   ResetPasswordRequestSuccessWidget,
   ChangeEmailWidget,
+  PasswordResetRequestWidget,
 } from '~/widgets';
-import {
-  widgetStyle,
-  titleStyle,
-  paragraphStyle,
-  topButtonsStyle,
-  titleTabStyle,
-} from './style';
+import { widgetStyle, titleTabStyle } from './style';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -100,19 +90,9 @@ export const AuthWidget = () => {
       return <ResetPasswordRequestSuccessWidget email={registredEmail} />;
     case 'passwordReset':
       return (
-        <Stack component="section" sx={widgetStyle} spacing={2.5} useFlexGap>
-          <Stack direction="row" sx={topButtonsStyle}>
-            <BackButton />
-          </Stack>
-          <Typography component="h1" sx={titleStyle}>
-            Восстановление пароля
-          </Typography>
-          <Typography sx={paragraphStyle}>
-            Введите email и последние четыре цифры номера, который был указан
-            при регистрации.
-          </Typography>
-          <ResetPasswordForm handleSetEmail={handleShowPasswordResetSuccess} />
-        </Stack>
+        <PasswordResetRequestWidget
+          handleSetEmail={handleShowPasswordResetSuccess}
+        />
       );
     case 'changeEmail':
       return (

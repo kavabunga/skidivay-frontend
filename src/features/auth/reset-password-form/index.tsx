@@ -33,7 +33,7 @@ export const ResetPasswordForm: FC<IResetPasswordForm> = ({
     },
     {
       name: 'phone_last_digits',
-      label: 'Номер телефона',
+      label: 'Телефон',
       type: 'text',
       defaultHelperText: ' ',
       required: true,

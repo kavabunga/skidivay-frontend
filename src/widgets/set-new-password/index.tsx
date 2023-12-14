@@ -16,7 +16,7 @@ export const SetNewPasswordWidget = () => {
   const handleSuccess = () => {
     setMessages((messages) => [
       {
-        message: 'Пароль изменён!',
+        message: 'Пароль успешно изменён',
         type: ApiMessageTypes.success,
       },
       ...messages,

@@ -98,6 +98,7 @@ export const CardWidget = () => {
   };
 
   const handleRemoveCard = () => {
+    const removingCard = card;
     api
       .deleteCard(cardId)
       .then(() => {
@@ -107,7 +108,9 @@ export const CardWidget = () => {
       .then(() => {
         setMessages((messages) => [
           {
-            message: 'Карта удалена',
+            message: `Карта №${
+              removingCard.card.card_number || removingCard.card.barcode_number
+            } удалена`,
             type: ApiMessageTypes.success,
           },
           ...messages,
