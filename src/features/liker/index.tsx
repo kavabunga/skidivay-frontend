@@ -4,7 +4,7 @@ import { api } from '~/shared';
 import { IconButton } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { iconButtonStyle } from './style';
+import { iconButtonLightStyle, iconButtonDarkStyle } from './style';
 import { IApiError } from '~/shared/errors';
 import { ApiMessageTypes } from '~/shared/enums';
 
@@ -47,11 +47,7 @@ export const Liker: FC<LikerProps> = ({ cardId, isLiked, isDark }) => {
 
   return (
     <IconButton
-      size="small"
-      sx={{
-        color: `${isDark ? 'surface.dark' : '#FFFBFF'}`,
-        ...iconButtonStyle,
-      }}
+      sx={isDark ? iconButtonDarkStyle : iconButtonLightStyle}
       onClick={(e) => handleClick(e)}
     >
       {isLiked ? <FavoriteIcon /> : <FavoriteBorderIcon />}

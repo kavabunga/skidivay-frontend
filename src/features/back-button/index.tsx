@@ -10,7 +10,6 @@ export const BackButton = () => {
     <Button
       onClick={() => navigate(-1)}
       variant="text"
-      color="surface"
       startIcon={<ArrowBackIosOutlinedIcon sx={iconStyle} />}
       sx={backButtonStyle}
     >

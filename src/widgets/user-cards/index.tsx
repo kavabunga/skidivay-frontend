@@ -10,7 +10,7 @@ import {
   noResultsStackStyle,
 } from './styles';
 import { SearchLine } from '~/features/search-line/ui';
-import notFoundImg from '~/shared/assets/not-found.jpg';
+import notFoundImg from '~/shared/assets/not-found.svg';
 
 export const UserCards: FC = () => {
   const { cards } = useContext(SortedCardsContext);
