@@ -1,31 +1,27 @@
 import { FC, useContext, useEffect } from 'react';
-import { Typography, Box, Link, Stack } from '@mui/material';
+import { Typography, Box, Stack } from '@mui/material';
 import coverImage from '~/shared/assets/chatbot-bw-1.svg';
-import { AccentButton } from '~/shared/ui';
-import {
-  mainContainerStyle,
-  coverImgStyle,
-  paragraphStyle,
-  linkStyle,
-} from './styles';
+import { mainContainerStyle, coverImgStyle, paragraphStyle } from './styles';
 import { UserContext } from '~/app';
-import { useNavigate } from 'react-router-dom';
 
-export const RegistrationSuccessWidget: FC<{
-  handleShowChangeEmail?: () => void;
-}> = ({ handleShowChangeEmail }) => {
+interface IReactivationSuccessWidget {
+  onClose: () => void;
+}
+
+export const ReactivationSuccessWidget: FC<IReactivationSuccessWidget> = ({
+  onClose,
+}) => {
   const { user } = useContext(UserContext);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const timer: ReturnType<typeof setTimeout> = setTimeout(
-      () => navigate('/'),
-      8000
+      () => onClose(),
+      3000
     );
     return () => {
       clearTimeout(timer);
     };
-  }, [navigate]);
+  }, [onClose]);
 
   return (
     <Stack
@@ -43,18 +39,6 @@ export const RegistrationSuccessWidget: FC<{
         alt="Робот"
         src={coverImage}
       />
-      {handleShowChangeEmail && (
-        <Link sx={linkStyle} onClick={handleShowChangeEmail}>
-          Изменить почту
-        </Link>
-      )}
-      <AccentButton
-        onClick={() => {
-          navigate('/');
-        }}
-      >
-        Войти
-      </AccentButton>
     </Stack>
   );
 };
