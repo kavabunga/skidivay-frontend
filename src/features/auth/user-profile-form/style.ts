@@ -11,7 +11,6 @@ export const mainContainerStyle: SxProps = {
 
 export const linkStyle: SxProps = {
   color: 'secondary.main',
-  padding: '0 0 1.25rem',
   fontSize: '1rem',
   fontWeight: '400',
   lineHeight: '1.5rem',
@@ -37,4 +36,8 @@ export const buttonStyle: SxProps = {
   fontWeight: 500,
   lineHeight: 1.4,
   paddingY: 2.25,
+};
+
+export const linkGroupStyle: SxProps = {
+  paddingBottom: '1.25rem',
 };

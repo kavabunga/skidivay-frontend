@@ -8,9 +8,27 @@ export const widgetStyle: SxProps = {
   paddingBottom: '1.875rem',
 };
 
+export const titleStyle: SxProps = {
+  fontSize: 28,
+  lineHeight: 1.28,
+  fontWeight: 400,
+  paddingTop: '1.25rem',
+};
+
 export const titleTabStyle: SxProps = {
   fontSize: 28,
   lineHeight: 1.28,
   fontWeight: 400,
   paddingTop: '2.5rem',
+};
+
+export const paragraphStyle: SxProps = {
+  fontSize: '.875rem',
+  fontWeight: 400,
+  lineHeight: 1.42,
+  paddingTop: '.75rem',
+};
+
+export const topButtonsStyle: SxProps = {
+  paddingTop: '.625rem',
 };

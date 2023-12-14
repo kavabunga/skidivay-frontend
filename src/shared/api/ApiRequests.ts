@@ -309,4 +309,13 @@ export const ApiRequests = class ApiRequests {
     };
     return this._requestAuthorizedApi(url, options);
   }
+
+  reactivateEmail() {
+    const url = `${this._url}/users/resend_activation/`;
+    const options: IRequestOptions = {
+      method: 'POST',
+      headers: this._headers,
+    };
+    return this._requestAuthorizedApi(url, options);
+  }
 };

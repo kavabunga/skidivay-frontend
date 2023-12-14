@@ -17,7 +17,7 @@ import { InputSelector } from '~/features';
 import { ApiMessageTypes } from '~/shared/enums';
 import { IApiError } from '~/shared/errors';
 import { handleFormFieldsErrors } from '~/features/errors';
-import { formStyle, buttonStyle, linkStyle } from './style';
+import { formStyle, buttonStyle, linkStyle, linkGroupStyle } from './style';
 
 interface IFields extends IBasicField {
   name: string;
@@ -25,60 +25,18 @@ interface IFields extends IBasicField {
   email: string;
 }
 
-const schema = z.object({
-  name: validationSchemes.name,
-  email: validationSchemes.email,
-  phone_number: validationSchemes.phone_number,
-});
-
-const fields: FieldType[] = [
-  {
-    name: 'name',
-    label: 'Имя',
-    type: 'text',
-    defaultHelperText: ' ',
-    placeholder: '',
-    autoComplete: 'name',
-    required: true,
-    hideAsterisk: true,
-    maxLength: validationLengths.name,
-  },
-  {
-    name: 'phone_number',
-    label: 'Телефон',
-    type: 'text',
-    defaultHelperText: ' ',
-    autoComplete: 'tel',
-    required: true,
-    placeholder: '+7 (999) 999-99-99',
-    maskOptions: {
-      mask: '+7 (000) 000-00-00',
-    },
-    hideAsterisk: true,
-  },
-  {
-    name: 'email',
-    label: 'Email',
-    type: 'email',
-    defaultHelperText: ' ',
-    placeholder: '',
-    autoComplete: 'email',
-    required: true,
-    hideAsterisk: true,
-    maxLength: validationLengths.email,
-  },
-];
-
 interface IUserProfileForm {
   isActive: boolean;
   onChangePassword: () => void;
+  onActivateEmail: () => void;
   onEditDisable: () => void;
 }
 
 export const UserProfileForm: FC<IUserProfileForm> = ({
-  isActive = true,
+  isActive,
   onEditDisable,
   onChangePassword,
+  onActivateEmail,
 }) => {
   const { user, setUser } = useContext(UserContext);
   const { setMessages } = useContext(MessagesContext);
@@ -86,6 +44,50 @@ export const UserProfileForm: FC<IUserProfileForm> = ({
     mask: '+7 (000) 000-00-00',
   });
   masked.resolve(user?.phone_number || '');
+
+  const schema = z.object({
+    name: validationSchemes.name,
+    email: validationSchemes.email,
+    phone_number: validationSchemes.phone_number,
+  });
+
+  const fields: FieldType[] = [
+    {
+      name: 'name',
+      label: 'Имя',
+      type: 'text',
+      defaultHelperText: ' ',
+      placeholder: '',
+      autoComplete: 'name',
+      required: true,
+      hideAsterisk: true,
+      maxLength: validationLengths.name,
+    },
+    {
+      name: 'phone_number',
+      label: 'Телефон',
+      type: 'text',
+      defaultHelperText: ' ',
+      autoComplete: 'tel',
+      required: true,
+      placeholder: '+7 (999) 999-99-99',
+      maskOptions: {
+        mask: '+7 (000) 000-00-00',
+      },
+      hideAsterisk: true,
+    },
+    {
+      name: 'email',
+      label: 'Email',
+      type: 'email',
+      defaultHelperText: user?.is_active ? ' ' : 'Ваш Email не подтвержден',
+      placeholder: '',
+      autoComplete: 'email',
+      required: true,
+      hideAsterisk: true,
+      maxLength: validationLengths.email,
+    },
+  ];
 
   const {
     register,
@@ -186,10 +188,16 @@ export const UserProfileForm: FC<IUserProfileForm> = ({
             error={errors[field.name]}
           />
         ))}
-
-      <Link onClick={onChangePassword} sx={{ ...linkStyle }}>
-        Изменить пароль
-      </Link>
+      <Stack sx={linkGroupStyle} useFlexGap spacing={2}>
+        {!user?.is_active && (
+          <Link onClick={onActivateEmail} sx={{ ...linkStyle }}>
+            Подтвердить Email
+          </Link>
+        )}
+        <Link onClick={onChangePassword} sx={{ ...linkStyle }}>
+          Изменить пароль
+        </Link>
+      </Stack>
 
       {isActive && (
         <Stack spacing={{ xs: 1, sm: 2 }} useFlexGap>

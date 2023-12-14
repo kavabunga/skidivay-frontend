@@ -3,6 +3,7 @@ import * as z from 'zod';
 import { AuthForm, signIn, signUp } from '..';
 import {
   FieldType,
+  IBasicField,
   ISignUpRequest,
   api,
   authFormErrors,
@@ -91,13 +92,15 @@ export const SignUpForm: FC<{
     },
   ];
 
-  const submit = (data: { [key: string]: string }) => {
+  const submit = (data: IBasicField) => {
     const request: ISignUpRequest = {
-      name: data.name || '',
-      email: data.email || '',
+      name: typeof data.name === 'string' ? data.name : '',
+      email: typeof data.email === 'string' ? data.email : '',
       phone_number:
-        data.phone_number.replace(/\D/g, '').replace(/^7/, '') || '',
-      password: data.password || '',
+        typeof data.phone_number === 'string'
+          ? data.phone_number.replace(/\D/g, '').replace(/^7/, '')
+          : '',
+      password: typeof data.password === 'string' ? data.password : '',
     };
     return signUp(request)
       .then((res) =>

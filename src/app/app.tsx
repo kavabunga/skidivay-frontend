@@ -42,7 +42,7 @@ export function App() {
                   <Route path="new" Component={AddCardWidget} />
                   <Route path=":id" Component={CardWidget} />
                 </Route>
-                <Route path="user" Component={UserProfileWidget}></Route>
+                <Route path="user" Component={UserProfileWidget} />
               </Route>
 
               <Route path="*" Component={NotFound} />

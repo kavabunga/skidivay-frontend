@@ -22,6 +22,8 @@ export interface InputType extends FieldType {
   error?: FieldError;
   onFocus?: () => void;
   onBlur?: () => void;
+  triggerOnChange?: () => void;
+  triggerOnBlur?: () => void;
   disabled?: boolean;
   InputProps?: InputProps;
 }
@@ -43,6 +45,8 @@ export const Input: FC<InputType> = ({
   error,
   hideAsterisk,
   maskOptions,
+  triggerOnChange,
+  triggerOnBlur,
   ...props
 }) => {
   const { onChange, onBlur, ref } = register;
@@ -55,8 +59,14 @@ export const Input: FC<InputType> = ({
       InputLabelProps={{ required: !hideAsterisk }}
       inputRef={ref}
       inputProps={{
-        onChange: onChange,
-        onBlur: onBlur,
+        onChange: (e) => {
+          triggerOnChange && triggerOnChange();
+          onChange(e);
+        },
+        onBlur: (e) => {
+          triggerOnBlur && triggerOnBlur();
+          onBlur(e);
+        },
         name: name,
         ...maskOptions,
         ...(props.maxLength && { maxLength: props.maxLength }),

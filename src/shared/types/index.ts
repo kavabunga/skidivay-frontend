@@ -33,6 +33,7 @@ export interface IUserResponse {
   username?: string;
   phone_number?: string;
   password?: string;
+  is_active?: boolean;
 }
 
 export interface IUserContext extends IUserResponse {

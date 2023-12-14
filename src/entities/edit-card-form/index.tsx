@@ -9,7 +9,6 @@ import {
   TextField,
 } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import ErrorIcon from '@mui/icons-material/Error';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Input } from '~/shared/ui';
@@ -31,6 +30,20 @@ import { IApiError } from '~/shared/errors';
 import { ApiMessageTypes } from '~/shared/enums';
 import { formStyle, buttonStyle, helperTextStyle, listBoxStyle } from './style';
 import { handleFormFieldsErrors } from '~/features/errors';
+interface IFields extends IBasicField {
+  shop_group: string | null;
+  card_number: string;
+  barcode_number: string;
+}
+
+export interface EditCardFormProps {
+  isActive: boolean;
+  card: ICardContext;
+  buttonSave?: React.ComponentProps<typeof Button> & {
+    label: string;
+  };
+  handleSubmited: () => void;
+}
 
 const schema = z
   .object({
@@ -53,21 +66,6 @@ const schema = z
       });
     }
   });
-
-interface IFields extends IBasicField {
-  shop_group: string | null;
-  card_number: string;
-  barcode_number: string;
-}
-
-export interface EditCardFormProps {
-  isActive: boolean;
-  card: ICardContext;
-  buttonSave?: React.ComponentProps<typeof Button> & {
-    label: string;
-  };
-  handleSubmited: () => void;
-}
 
 export const EditCardForm: FC<EditCardFormProps> = ({
   buttonSave = {
@@ -93,6 +91,7 @@ export const EditCardForm: FC<EditCardFormProps> = ({
   const {
     control,
     register,
+    trigger,
     handleSubmit,
     setError,
     watch,
@@ -107,6 +106,10 @@ export const EditCardForm: FC<EditCardFormProps> = ({
       shop_group: card.card.shop.group?.[0]?.name ?? null,
     },
   });
+
+  const crossValidationtrigger = () => {
+    trigger(['card_number', 'barcode_number']);
+  };
 
   const onCopy = (text: string) => {
     navigator.clipboard
@@ -202,21 +205,19 @@ export const EditCardForm: FC<EditCardFormProps> = ({
         defaultHelperText=" "
         placeholder=""
         register={register('card_number')}
+        triggerOnChange={crossValidationtrigger}
         error={errors.card_number}
         disabled={!isActive}
         hideAsterisk={true}
         maxLength={validationLengths.card_number}
         InputProps={{
-          endAdornment: errors['card_number'] ? (
-            <InputAdornment position="end">
-              <ErrorIcon color="error" fontSize="small" />
-            </InputAdornment>
-          ) : (
+          endAdornment: !!watch('card_number') && (
             <InputAdornment position="end">
               <IconButton
                 aria-label="Кнопка копирования номера карты"
-                onClick={() => onCopy(watch('card_number'))}
+                onClick={() => onCopy(getValues('card_number'))}
                 sx={{
+                  color: 'black',
                   padding: 0.2,
                   borderRadius: 0,
                   '&:hover': {
@@ -238,6 +239,7 @@ export const EditCardForm: FC<EditCardFormProps> = ({
         defaultHelperText=" "
         placeholder=""
         register={register('barcode_number')}
+        triggerOnChange={crossValidationtrigger}
         error={errors.barcode_number}
         disabled={!isActive}
         hideAsterisk={true}
