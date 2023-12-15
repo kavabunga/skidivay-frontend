@@ -318,6 +318,7 @@ export const AddCardForm: FC = () => {
         placeholder=""
         register={register('card_number')}
         triggerOnChange={crossValidationtrigger}
+        triggerOnBlur={crossValidationtrigger}
         error={errors.card_number}
         hideAsterisk={true}
         maxLength={validationLengths.card_number}
@@ -331,6 +332,7 @@ export const AddCardForm: FC = () => {
         placeholder=""
         register={register('barcode_number')}
         triggerOnChange={crossValidationtrigger}
+        triggerOnBlur={crossValidationtrigger}
         error={errors.barcode_number}
         hideAsterisk={true}
         maxLength={validationLengths.barcode_number}
