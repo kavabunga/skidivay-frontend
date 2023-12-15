@@ -31,10 +31,6 @@ export const cardStyle: SxProps = {
   },
   '@media (max-width:480px)': {
     borderRadius: '.5rem',
-    paddingX: '.75rem',
-    paddingY: '.75rem',
-  },
-  '@media (max-width:360px)': {
     paddingX: '.625rem',
     paddingY: '.625rem',
   },
