@@ -10,11 +10,11 @@ import {
   IRequestSetNewPassword,
   IChangePasswordRequest,
   IChangeEmailRequest,
-  IDeleteUserRequest,
   IPatchUser,
   MEDIA_URL,
   IShopRequest,
   IShareCardRequest,
+  IDeleteUserRequest,
 } from '..';
 import { ApiError } from '../errors';
 

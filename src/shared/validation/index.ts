@@ -59,6 +59,7 @@ export const validationSchemes = {
     .string()
     .min(1, { message: authFormErrors.requiredPassword }),
   password_old: z.string().min(1, { message: authFormErrors.requiredPassword }),
+  password_old_not_required: z.string(),
 
   //NOTE: Add Card Form, Edit Card Form
   card_number: z

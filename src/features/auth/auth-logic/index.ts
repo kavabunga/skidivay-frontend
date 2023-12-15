@@ -1,8 +1,8 @@
 import {
+  IDeleteUserRequest,
   IRequestResetPassword,
   ISignInRequest,
   ISignUpRequest,
-  IDeleteUserRequest,
   api,
 } from '~/shared';
 

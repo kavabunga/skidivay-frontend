@@ -5,7 +5,7 @@ import {
   DialogTitle,
   Stack,
 } from '@mui/material';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { IPopupProps, Popup } from '~/shared';
 import { titleStyle, itemStyle, textStyle, buttonStyle } from './style';
 
@@ -14,20 +14,43 @@ export const UserDeletePopup: FC<IPopupProps> = ({
   onClose,
   children,
 }) => {
+  const [isDeleteConfirmed, setIsDeleteConfirmed] = useState(false);
+  const handleDeleteConfirm = () => {
+    setIsDeleteConfirmed(true);
+  };
+  const handleClose = () => {
+    onClose();
+    setIsDeleteConfirmed(false);
+  };
   return (
-    <Popup open={open} onClose={onClose} showCloseButton={true}>
+    <Popup open={open} onClose={handleClose} showCloseButton={true}>
       <DialogTitle sx={titleStyle}>Вы уверены?</DialogTitle>
       <DialogContent sx={itemStyle}>
         <DialogContentText sx={textStyle}>
           Наша общение было особенным и приносило радость...
         </DialogContentText>
       </DialogContent>
-      <Stack useFlexGap spacing={1}>
-        <Button variant="contained" sx={buttonStyle} onClick={onClose}>
-          Передумал, остаюсь
-        </Button>
-        {children}
-      </Stack>
+      {isDeleteConfirmed && <DialogTitle sx={titleStyle}>Точно?</DialogTitle>}
+      {isDeleteConfirmed && (
+        <DialogContent sx={itemStyle}>
+          <DialogContentText sx={textStyle}>
+            Введите свой пароль, чтобы мы поверили, что это вы
+          </DialogContentText>
+        </DialogContent>
+      )}
+
+      {!isDeleteConfirmed ? (
+        <Stack useFlexGap spacing={1}>
+          <Button variant="contained" sx={buttonStyle} onClick={onClose}>
+            Ладно, остаюсь
+          </Button>
+          <Button variant="text" sx={buttonStyle} onClick={handleDeleteConfirm}>
+            Да, все кончено
+          </Button>
+        </Stack>
+      ) : (
+        children
+      )}
     </Popup>
   );
 };

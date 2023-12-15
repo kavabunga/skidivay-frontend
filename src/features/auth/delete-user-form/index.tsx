@@ -12,15 +12,15 @@ export const DeleteUserForm: FC<{
   handleSubmit(data: IDeleteUserRequest): Promise<void>;
 }> = ({ handleSubmit }) => {
   const schema = z.object({
-    password: validationSchemes.password_old,
+    current_password: validationSchemes.password_old_not_required,
   });
 
   const fields: FieldType[] = [
     {
-      name: 'password',
+      name: 'current_password',
       label: 'Пароль',
       type: 'password',
-      defaultHelperText: ' ',
+      defaultHelperText: '',
       autoComplete: 'current-password',
       required: true,
       hideAsterisk: true,
@@ -29,7 +29,8 @@ export const DeleteUserForm: FC<{
 
   const submit = (data: IBasicField) => {
     return handleSubmit({
-      current_password: typeof data.password === 'string' ? data.password : '',
+      current_password:
+        typeof data.current_password === 'string' ? data.current_password : '',
     });
   };
 
@@ -37,7 +38,7 @@ export const DeleteUserForm: FC<{
     <AuthForm
       fields={fields}
       schema={schema}
-      button={{ label: 'Удалить', fullWidth: true }}
+      button={{ label: 'Подтвердить', fullWidth: true }}
       submit={submit}
     />
   );

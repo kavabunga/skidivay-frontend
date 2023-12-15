@@ -60,12 +60,12 @@ export const Input: FC<InputType> = ({
       inputRef={ref}
       inputProps={{
         onChange: (e) => {
-          triggerOnChange && triggerOnChange();
           onChange(e);
+          triggerOnChange && triggerOnChange();
         },
         onBlur: (e) => {
-          triggerOnBlur && triggerOnBlur();
           onBlur(e);
+          triggerOnBlur && triggerOnBlur();
         },
         name: name,
         ...maskOptions,
