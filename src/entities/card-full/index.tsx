@@ -15,6 +15,7 @@ export const CardFull: FC<{ item: ICardContext }> = ({ item }) => {
         backgroundColor: shopLogo ? '' : '#594D71',
         ...cardStyle,
       }}
+      elevation={0}
     >
       {!shopLogo && <Typography sx={titleStyle}>{shopName}</Typography>}
       {barcodeNumber && (

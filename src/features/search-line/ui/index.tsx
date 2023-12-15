@@ -1,6 +1,7 @@
 import { Autocomplete, TextField } from '@mui/material';
 import React, { useContext, useEffect, useState } from 'react';
 import { CardsContext, SortedCardsContext } from '~/app';
+import { searchLineStyle } from './style';
 
 export const SearchLine = () => {
   const [options, setOptions] = useState<string[]>([]);
@@ -74,6 +75,8 @@ export const SearchLine = () => {
           {...params}
           placeholder="Поиск"
           onChange={(e) => onInput(e)}
+          variant="filled"
+          sx={{ ...searchLineStyle }}
         />
       )}
     />

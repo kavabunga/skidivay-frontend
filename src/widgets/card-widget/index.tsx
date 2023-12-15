@@ -154,10 +154,10 @@ export const CardWidget = () => {
         <Stack
           direction="row"
           spacing={1.5}
-          justifyContent="space-between"
+          justifyContent="flex-start"
           alignItems="center"
           useFlexGap
-          sx={{ paddingY: 1.25 }}
+          sx={{ paddingY: 1.25, alignSelf: 'center' }}
         >
           <FriendIcon />
           <Typography component="p" sx={{ ...paragraphStyle }}>

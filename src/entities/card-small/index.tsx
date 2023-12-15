@@ -16,6 +16,7 @@ export const CardSmall: FC<{ item: ICardContext }> = ({ item, ...props }) => {
   return (
     <Card
       variant="outlined"
+      elevation={0}
       sx={{
         backgroundImage: shopLogo ? `url(${shopLogo})` : '',
         backgroundColor: shopLogo ? '' : '#594D71',

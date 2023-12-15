@@ -1,32 +1,29 @@
-import { useNavigate } from 'react-router-dom';
 import { Typography } from '@mui/material';
-import { Box, Stack } from '@mui/system';
+import { Stack } from '@mui/system';
 import { Logo } from '..';
 
 export const AppFooter = () => {
-  const navigate = useNavigate();
-
   return (
-    <Box component={'footer'} height="7.5rem" bgcolor={'surface.inverse'}>
+    <Stack
+      component={'footer'}
+      height="7.5rem"
+      bgcolor={'surface.inverse'}
+      direction={'row'}
+      alignItems={'center'}
+      justifyContent={'center'}
+    >
       <Stack
         direction={'column'}
         alignItems={'center'}
         justifyContent={'center'}
+        spacing={1}
+        useFlexGap
       >
-        <Stack
-          direction={'row'}
-          alignItems={'center'}
-          padding={'1rem 0'}
-          spacing={1}
-          onClick={() => navigate('/')}
-          sx={{ cursor: 'pointer' }}
-        >
-          <Logo type="full" color="light" />
-        </Stack>
-        <Typography variant="body1" color={'#F4EFF4'}>
+        <Logo type="full" color="light" />
+        <Typography variant="body1" color={'#F4EFF4'} textAlign="center">
           {new Date().getUTCFullYear()}
         </Typography>
       </Stack>
-    </Box>
+    </Stack>
   );
 };

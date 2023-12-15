@@ -28,7 +28,8 @@ export const lightTheme = createTheme({
     },
     surface: {
       main: '#7A757F',
-      light: '#CAC4CF',
+      light: '#F3EDF7',
+      lighter: '#FDF8FD',
       dark: '#49454E',
       darker: '#1C1B1E',
       inverse: '#313033',
@@ -63,6 +64,29 @@ export const lightTheme = createTheme({
       textTransform: 'none',
     },
   },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: (themeParam) => `
+        body {
+          background-color:  #e2dce5;
+        }
+        #root {
+          display: flex;
+          width: 100%;
+          min-width: 320px;
+          max-width: 760px;
+          margin: 0 auto;
+          flex-flow: row nowrap;
+          justify-content: center;
+          align-items: flex-start;
+          font-synthesis: none;
+          text-rendering: optimizeLegibility;
+          box-sizing: border-box;
+          background-color: ${themeParam.palette.surface.lighter};
+        }
+      `,
+    },
+  },
 });
 
 //NOTE: Add new color to the palette. Key "surface" is the name of the color added. Add new colors next.
@@ -88,10 +112,12 @@ declare module '@mui/material/styles' {
   interface PaletteColor {
     darker?: string;
     inverse?: string;
+    lighter?: string;
   }
 
   interface SimplePaletteColorOptions {
     darker?: string;
     inverse?: string;
+    lighter?: string;
   }
 }
