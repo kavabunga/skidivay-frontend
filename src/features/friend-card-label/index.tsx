@@ -6,11 +6,10 @@ import { labelWrapperStyle } from './style';
 export const FriendCardLabel: FC = () => {
   return (
     <Box
-      component="img"
       sx={{
+        backgroundImage: `url(${labelPath})`,
         ...labelWrapperStyle,
       }}
-      src={labelPath}
     />
   );
 };

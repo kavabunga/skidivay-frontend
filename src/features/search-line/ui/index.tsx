@@ -8,6 +8,7 @@ import {
 } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { useUser } from '~/shared/store/useUser';
+import { searchLineStyle } from './style';
 interface ISearchLine {
   onSearch: (value: 'search' | 'chips' | 'none') => void;
   filterBy: 'search' | 'chips' | 'none';
@@ -73,7 +74,14 @@ export const SearchLine: FC<ISearchLine> = ({ onSearch, filterBy }) => {
       onChange={(_e, newValue) => onChange(_e, newValue)}
       onInputChange={(_e, newInputValue) => onInput(_e, newInputValue)}
       options={options && optionValue ? options.map((option) => option) : ['']}
-      renderInput={(params) => <TextField {...params} placeholder="Поиск" />}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          placeholder="Поиск"
+          variant="filled"
+          sx={{ ...searchLineStyle }}
+        />
+      )}
     />
   );
 };

@@ -9,9 +9,9 @@ import {
   noResultsStackStyle,
 } from './styles';
 import { SearchLine } from '~/features/search-line/ui';
-import notFoundImg from '~/shared/assets/not-found.jpg';
 import { useUser } from '~/shared/store';
 import { useShallow } from 'zustand/react/shallow';
+import notFoundImg from '~/shared/assets/not-found.svg';
 
 export const UserCards: FC = () => {
   //NOTE: Using useShallow to check if cards have really changed (like between search inputs)

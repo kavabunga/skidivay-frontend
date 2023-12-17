@@ -9,7 +9,10 @@ export const RootLayout = () => {
   const isLoading = useLoading((state) => state.isLoading);
 
   return (
-    <Stack sx={{ minHeight: '100vh', position: 'relative' }} direction="column">
+    <Stack
+      sx={{ minHeight: '100vh', position: 'relative', width: '100%' }}
+      direction="column"
+    >
       <Header type="standard" />
       <Stack component="main" flexGrow={1}>
         <Outlet />

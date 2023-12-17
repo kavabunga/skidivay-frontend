@@ -9,7 +9,10 @@ export const AuthLayout = () => {
   const isLoading = useLoading((state) => state.isLoading);
 
   return (
-    <Stack sx={{ minHeight: '100vh' }} direction="column">
+    <Stack
+      sx={{ minHeight: '100vh', position: 'relative', width: '100%' }}
+      direction="column"
+    >
       <Header type="minimal" />
       <Box component="main">
         <Outlet />
