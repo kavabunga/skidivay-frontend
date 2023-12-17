@@ -18,6 +18,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    names: ['Дикси', 'Пятёрочка'],
+    filterBy: 'search',
+    onSearch: (value) => console.log(value),
   },
 };

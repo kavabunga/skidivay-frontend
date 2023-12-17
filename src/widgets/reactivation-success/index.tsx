@@ -1,8 +1,8 @@
-import { FC, useContext, useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { Typography, Box, Stack } from '@mui/material';
 import coverImage from '~/shared/assets/chatbot-bw-1.svg';
 import { mainContainerStyle, coverImgStyle, paragraphStyle } from './styles';
-import { UserContext } from '~/entities';
+import { useUser } from '~/shared/store/useUser';
 
 interface IReactivationSuccessWidget {
   onClose: () => void;
@@ -11,7 +11,7 @@ interface IReactivationSuccessWidget {
 export const ReactivationSuccessWidget: FC<IReactivationSuccessWidget> = ({
   onClose,
 }) => {
-  const { user } = useContext(UserContext);
+  const user = useUser((state) => state.user);
 
   useEffect(() => {
     const timer: ReturnType<typeof setTimeout> = setTimeout(

@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from 'react';
+import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Container,
@@ -9,14 +9,12 @@ import {
   DialogContentText,
   Stack,
 } from '@mui/material';
-import { UserContext, MessagesContext } from '~/entities';
 import {
   BackButtonToUserProfile,
   requestResetPassword,
   ChangePasswordForm,
 } from '~/features';
 import { IApiError } from '~/shared/errors';
-import { ApiMessageTypes } from '~/shared/enums';
 import {
   api,
   IRequestResetPassword,
@@ -31,13 +29,16 @@ import {
   textPopupStyle,
   itemPopupStyle,
 } from './style';
+import { useUser } from '~/shared/store/useUser';
+import { useMessages } from '~/shared/store';
 
 export const ChangePasswordWidget: FC<{
   onShowPasswordResetSuccess: () => void;
 }> = ({ onShowPasswordResetSuccess }) => {
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
-  const { setMessages } = useContext(MessagesContext);
+  const user = useUser((state) => state.user);
+  const addSuccessMessage = useMessages((state) => state.addSuccessMessage);
+  const addErrorMessage = useMessages((state) => state.addErrorMessage);
   const [isConfirmSendPasswordOpen, setIsConfirmSendPasswordOpen] =
     useState(false);
 
@@ -59,32 +60,16 @@ export const ChangePasswordWidget: FC<{
     );
   };
 
-  const handleSuccess = () => {
-    setMessages((messages) => [
-      {
-        message: 'Пароль успешно изменён',
-        type: ApiMessageTypes.success,
-      },
-      ...messages,
-    ]);
-  };
-
   function handleSubmit(data: IChangePasswordRequest) {
     return api
       .changePassword(data)
       .then(() => {
-        handleSuccess();
+        addSuccessMessage('Пароль успешно изменён');
         setTimeout(() => navigate('/', { replace: true }), 3000);
       })
-      .catch((err: IApiError) => {
-        setMessages((messages) => [
-          {
-            message: err.message,
-            type: ApiMessageTypes.error,
-          },
-          ...messages,
-        ]);
-      });
+      .catch((err: IApiError) =>
+        addErrorMessage(err.message || 'Ошибка сервера')
+      );
   }
 
   return (

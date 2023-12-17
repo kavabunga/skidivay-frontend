@@ -1,14 +1,13 @@
-import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ShopListContext } from '~/entities';
 import { Box, Stack, Typography } from '@mui/material';
 import { AccentButton } from '~/shared/ui';
 import { PromoSlider } from '~/features';
 import coverImage from '~/shared/assets/save-money-bw-1.svg';
 import { coverImgStyle, mainContainerStyle, paragraphStyle } from './styles';
+import { useShops } from '~/shared/store';
 
 export const Home = () => {
-  const { shops = [] } = useContext(ShopListContext);
+  const shops = useShops((state) => state.shops);
   const navigate = useNavigate();
 
   return (

@@ -4,16 +4,20 @@ import { ChipButton } from '~/shared/ui';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { sliderWindowStyle } from './style';
-import { useContext, useEffect, useState } from 'react';
-import { CardsContext, SortedCardsContext } from '~/entities';
-import { ICardsContext } from '~/shared';
+import { FC, useEffect, useState } from 'react';
+import { useUser } from '~/shared/store/useUser';
+import { useShallow } from 'zustand/react/shallow';
 
-export const SearchChips = () => {
+interface ISearchChips {
+  onFilter: (value: 'search' | 'chips' | 'none') => void;
+  filterBy: 'search' | 'chips' | 'none';
+}
+
+export const SearchChips: FC<ISearchChips> = ({ onFilter, filterBy }) => {
   const [chipsLabels, setChipsLabels] = useState<string[]>(['Избранное']);
   const [selectedLabels, setSelectedLabels] = useState<string[]>([]);
-
-  const { cards } = useContext(CardsContext);
-  const { setSortedCards } = useContext(SortedCardsContext);
+  const cards = useUser(useShallow((state) => state.cards));
+  const filterCards = useUser((state) => state.filterCards);
 
   useEffect(() => {
     cards.forEach((card) => {
@@ -24,6 +28,10 @@ export const SearchChips = () => {
       });
     });
   }, [cards, chipsLabels]);
+
+  useEffect(() => {
+    filterBy != 'chips' && setSelectedLabels([]);
+  }, [filterBy]);
 
   interface SliderSettings {
     arrows: boolean;
@@ -48,39 +56,9 @@ export const SearchChips = () => {
   };
 
   useEffect(() => {
-    onSort(selectedLabels);
+    filterCards(selectedLabels);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedLabels, cards]);
-
-  function onSort(labels: string[]) {
-    const arr: ICardsContext = [];
-    if (labels.length) {
-      labels.forEach((label) => {
-        const matchedCards = cards.filter((card) => {
-          let isReturn = false;
-          card.card.shop.group?.forEach((el) => {
-            if (el.name === label) {
-              isReturn = true;
-            }
-          });
-          if (labels.includes('Избранное')) {
-            if (!card.favourite) isReturn = false;
-          }
-          if (isReturn) return card;
-        });
-        matchedCards.forEach((card) => {
-          arr.push(card);
-        });
-      });
-      if (!arr.length && labels.includes('Избранное') && labels.length === 1) {
-        const arr1 = cards.filter((card) => card.favourite);
-        return setSortedCards && setSortedCards(arr1);
-      }
-      return setSortedCards && setSortedCards(arr);
-    } else {
-      return setSortedCards && setSortedCards(cards);
-    }
-  }
 
   return (
     <Box sx={{ ...sliderWindowStyle }}>
@@ -88,6 +66,8 @@ export const SearchChips = () => {
         {chipsLabels.map((item) => {
           return (
             <ChipButton
+              onFilter={onFilter}
+              filterBy={filterBy}
               key={item}
               label={item}
               setSelectedLabels={setSelectedLabels}

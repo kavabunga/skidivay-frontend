@@ -1,4 +1,4 @@
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 import * as z from 'zod';
 import { AuthForm, signIn, signUp } from '..';
 import {
@@ -10,14 +10,14 @@ import {
   validationLengths,
   validationSchemes,
 } from '~/shared';
-import { CardsContext, UserContext } from '~/entities';
+import { useUser } from '~/shared/store/useUser';
 
 export const SignUpForm: FC<{
   defaultValues?: object;
   handleShowRegistrationSuccess: () => void;
 }> = ({ defaultValues, handleShowRegistrationSuccess }) => {
-  const { setCards } = useContext(CardsContext);
-  const { setUser } = useContext(UserContext);
+  const setUser = useUser((state) => state.setUser);
+  const setCards = useUser((state) => state.setCards);
 
   const schema = z
     .object({
@@ -109,10 +109,8 @@ export const SignUpForm: FC<{
         )
       )
       .then((res) => {
-        const userPromise = setUser && setUser(res);
-        const cardsPromise = api
-          .getCards()
-          .then((res) => setCards && setCards(res));
+        const userPromise = setUser(res);
+        const cardsPromise = api.getCards().then((res) => setCards(res));
         return Promise.all([userPromise, cardsPromise]);
       })
       .then(() => handleShowRegistrationSuccess());

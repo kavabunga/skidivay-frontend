@@ -1,4 +1,4 @@
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { IMask } from 'react-imask';
 import { Box, Button, Stack, Link } from '@mui/material';
@@ -12,12 +12,12 @@ import {
   validationSchemes,
   IBasicField,
 } from '~/shared';
-import { UserContext, MessagesContext } from '~/entities';
 import { InputSelector } from '~/features';
-import { ApiMessageTypes } from '~/shared/enums';
 import { IApiError } from '~/shared/errors';
 import { handleFormFieldsErrors } from '~/features/errors';
 import { formStyle, buttonStyle, linkStyle, linkGroupStyle } from './style';
+import { useUser } from '~/shared/store/useUser';
+import { useMessages } from '~/shared/store';
 
 interface IFields extends IBasicField {
   name: string;
@@ -38,8 +38,12 @@ export const UserProfileForm: FC<IUserProfileForm> = ({
   onChangePassword,
   onActivateEmail,
 }) => {
-  const { user, setUser } = useContext(UserContext);
-  const { setMessages } = useContext(MessagesContext);
+  const setUser = useUser((state) => state.setUser);
+  const user = useUser((state) => state.user);
+  const addErrorMessage = useMessages((state) => state.addErrorMessage);
+  const addSuccessMessage = useMessages((state) => state.addSuccessMessage);
+
+  //TODO: Move to User Store
   const masked = IMask.createMask({
     mask: '+7 (000) 000-00-00',
   });
@@ -100,8 +104,8 @@ export const UserProfileForm: FC<IUserProfileForm> = ({
     mode: 'onTouched',
     resolver: zodResolver(schema),
     defaultValues: {
-      name: user?.name || '',
-      email: user?.email || '',
+      name: user?.name,
+      email: user?.email,
       phone_number: masked.value,
     },
   });
@@ -116,25 +120,21 @@ export const UserProfileForm: FC<IUserProfileForm> = ({
     if (err.status === 400 && err.detail && !err.detail.non_field_errors) {
       handleFormFieldsErrors(err, fields, setError);
     } else {
-      setMessages((messages) => [
-        {
-          message:
-            err.detail?.non_field_errors?.join(' ') ||
-            err.message ||
-            'Ошибка сервера',
-          type: ApiMessageTypes.error,
-        },
-        ...messages,
-      ]);
+      addErrorMessage(
+        err.detail?.non_field_errors?.join(' ') ||
+          err.message ||
+          'Ошибка сервера'
+      );
     }
   };
 
   const onSubmit: SubmitHandler<IFields> = (data) => {
     const request: IPatchUser = {
-      name: data.name || '',
-      email: data.email || '',
-      phone_number:
-        data.phone_number.replace(/\D/g, '').replace(/^7/, '') || '',
+      ...(data.name && { name: data.name }),
+      ...(data.email && { email: data.email }),
+      ...(data.phone_number && {
+        phone_number: data.phone_number.replace(/\D/g, '').replace(/^7/, ''),
+      }),
     };
 
     if (
@@ -142,13 +142,7 @@ export const UserProfileForm: FC<IUserProfileForm> = ({
       request.email === user?.email &&
       request.phone_number === user?.phone_number
     ) {
-      setMessages((messages) => [
-        {
-          message: 'Данные не поменялись, но мы все сохранили',
-          type: ApiMessageTypes.error,
-        },
-        ...messages,
-      ]);
+      addSuccessMessage('Данные не поменялись, но мы все сохранили');
       onEditDisable();
       return;
     }
@@ -156,16 +150,10 @@ export const UserProfileForm: FC<IUserProfileForm> = ({
     api
       .editUser(request)
       .then((res) => {
-        return setUser && setUser(res);
+        return setUser(res);
       })
       .then(() => {
-        setMessages((messages) => [
-          {
-            message: 'Данные успешно изменены',
-            type: ApiMessageTypes.success,
-          },
-          ...messages,
-        ]);
+        addSuccessMessage('Данные успешно изменены');
         onEditDisable();
       })
       .catch(handleError);

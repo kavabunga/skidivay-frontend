@@ -1,8 +1,7 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Typography, Stack, Button, IconButton } from '@mui/material';
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
-import { UserContext } from '~/entities';
 import {
   UserProfileForm,
   BackButton,
@@ -17,10 +16,11 @@ import {
   ReactivationSuccessWidget,
 } from '~/widgets';
 import { containerStyle, topButtonsStyle, buttonStyle } from './style';
+import { useUser } from '~/shared/store/useUser';
 
 export const UserProfileWidget = () => {
   const location = useLocation();
-  const { user } = useContext(UserContext);
+  const user = useUser((state) => state.user);
   const [widgetScreen, setWidgetScreen] = useState('default');
   const [isEditActive, setIsEditActive] = useState(false);
   const [isByeByePopupOpen, setIsByeByePopupOpen] = useState(false);

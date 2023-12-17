@@ -1,27 +1,15 @@
-import { useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Container, Typography } from '@mui/material';
-import { MessagesContext } from '~/entities';
 import { SetNewPasswordForm } from '~/features';
 import { api } from '~/shared';
-import { ApiMessageTypes } from '~/shared/enums';
 import { containerStyle, titleStyle } from './style';
 import { BackButton } from '~/features';
+import { useMessages } from '~/shared/store';
 
 export const SetNewPasswordWidget = () => {
   const navigate = useNavigate();
-  const { setMessages } = useContext(MessagesContext);
   const { uid, token } = useParams();
-
-  const handleSuccess = () => {
-    setMessages((messages) => [
-      {
-        message: 'Пароль успешно изменён',
-        type: ApiMessageTypes.success,
-      },
-      ...messages,
-    ]);
-  };
+  const addSuccessMessage = useMessages((state) => state.addSuccessMessage);
 
   function handleSubmit(newPassword: string) {
     return api
@@ -31,7 +19,7 @@ export const SetNewPasswordWidget = () => {
         new_password: newPassword,
       })
       .then(() => {
-        handleSuccess();
+        addSuccessMessage('Пароль успешно изменён');
         setTimeout(() => navigate('/auth', { replace: true }), 5000);
       });
   }

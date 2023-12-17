@@ -1,11 +1,11 @@
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppBar, Button, IconButton } from '@mui/material';
 import { Logo, CloseButton } from '~/shared/ui';
 import { PermIdentity } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import style from './style';
-import { UserContext } from '~/entities';
+import { useUser } from '~/shared/store/useUser';
 
 //INFO: 'minimal' for logo only, like on authorization screen, 'standard' for full featured header
 export type HeaderProps = {
@@ -13,7 +13,7 @@ export type HeaderProps = {
 };
 
 export const Header: FC<HeaderProps> = ({ type }) => {
-  const { user } = useContext(UserContext);
+  const user = useUser((state) => state.user);
   const navigate = useNavigate();
 
   return (
