@@ -3,23 +3,14 @@ import { SxProps } from '@mui/material';
 export const containerStyle: SxProps = {
   display: 'flex',
   flexDirection: 'column',
-  paddingX: '16px',
-  paddingTop: '8px',
-  paddingBottom: '30px',
+  paddingX: { xs: '1rem', sm: '1.5rem' },
+  paddingTop: '.5rem',
+  paddingBottom: '2rem',
 };
 
 export const titleStyle: SxProps = {
   paddingTop: '2.5rem',
   paddingBottom: '1.25rem',
-};
-
-export const buttonStyle: SxProps = {
-  borderRadius: '.5rem',
-  fontSize: '.875rem',
-  fontWeight: 500,
-  lineHeight: 1.4,
-  paddingY: 2.25,
-  marginTop: '.5rem',
 };
 
 export const titlePopupStyle: SxProps = {

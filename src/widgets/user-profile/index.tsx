@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Typography, Stack, Button, IconButton } from '@mui/material';
+import { Typography, Stack, IconButton } from '@mui/material';
+import { AccentButton, OutlineButton } from '~/shared/ui';
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 import {
   UserProfileForm,
@@ -15,7 +16,7 @@ import {
   ChangePasswordWidget,
   ReactivationSuccessWidget,
 } from '~/widgets';
-import { containerStyle, topButtonsStyle, buttonStyle } from './style';
+import { containerStyle, topButtonsStyle } from './style';
 import { useUser } from '~/shared/store/useUser';
 
 export const UserProfileWidget = () => {
@@ -119,16 +120,10 @@ export const UserProfileWidget = () => {
               useFlexGap
               sx={{ paddingTop: '.75rem' }}
             >
-              <SignOut element={Button} variant="contained" sx={buttonStyle}>
-                Выйти из аккаунта
-              </SignOut>
-              <Button
-                variant="outlined"
-                sx={buttonStyle}
-                onClick={handleShowDeleteUserPopup}
-              >
+              <SignOut element={AccentButton}>Выйти из аккаунта</SignOut>
+              <OutlineButton onClick={handleShowDeleteUserPopup}>
                 Удалить аккаунт
-              </Button>
+              </OutlineButton>
             </Stack>
           )}
           <DeleteUser

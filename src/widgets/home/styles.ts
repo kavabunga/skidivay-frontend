@@ -3,7 +3,7 @@ import { SxProps } from '@mui/material';
 export const mainContainerStyle: SxProps = {
   height: '100%',
   paddingBottom: '1rem',
-  paddingX: '1rem',
+  paddingX: { xs: '1rem', sm: '1.5rem' },
 };
 
 export const paragraphStyle: SxProps = {
