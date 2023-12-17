@@ -15,21 +15,21 @@ interface IuseMessages {
 export const useMessages = create<IuseMessages>()((set) => ({
   messages: [],
   addMessage: (message) =>
-    set((state) => ({ messages: [...state.messages, message] })),
+    set((state) => ({ messages: [message, ...state.messages] })),
   addErrorMessage: (text) =>
     set((state) => {
       const newMessage = { message: text, type: ApiMessageTypes.error };
-      return { messages: [...state.messages, newMessage] };
+      return { messages: [newMessage, ...state.messages] };
     }),
   addInfoMessage: (text) =>
     set((state) => {
       const newMessage = { message: text, type: ApiMessageTypes.info };
-      return { messages: [...state.messages, newMessage] };
+      return { messages: [newMessage, ...state.messages] };
     }),
   addSuccessMessage: (text) =>
     set((state) => {
       const newMessage = { message: text, type: ApiMessageTypes.success };
-      return { messages: [...state.messages, newMessage] };
+      return { messages: [newMessage, ...state.messages] };
     }),
   setLastShown: () =>
     set((state) => {
