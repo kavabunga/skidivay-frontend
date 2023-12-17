@@ -46,7 +46,12 @@ export const ReactivateEmail: FC<IReactivateEmail> = ({
       (!invalid ||
         error?.message === 'Пользователь с таким email уже существует.') &&
       isDirty &&
-      checkEmail(email).catch(handleError);
+      checkEmail(email).catch(
+        (err) =>
+          err?.detail?.email?.[0] ===
+            'Пользователь с таким email уже существует.' &&
+          setError('email', { type: 'exists', message: err.detail.email[0] })
+      );
   };
 
   const {
