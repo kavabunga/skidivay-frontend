@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import {
   Box,
@@ -20,22 +20,16 @@ import {
   validationLengths,
   validationSchemes,
 } from '~/shared';
-import {
-  CardsContext,
-  GroupListContext,
-  MessagesContext,
-  ShopListContext,
-} from '~/app';
 import { IApiError } from '~/shared/errors';
-import { ApiMessageTypes } from '~/shared/enums';
 import { formStyle, buttonStyle, helperTextStyle, listBoxStyle } from './style';
 import { handleFormFieldsErrors } from '~/features/errors';
+import { useUser } from '~/shared/store/useUser';
+import { useMessages, useShops } from '~/shared/store';
 interface IFields extends IBasicField {
   shop_group: string | null;
   card_number: string;
   barcode_number: string;
 }
-
 export interface EditCardFormProps {
   isActive: boolean;
   card: ICardContext;
@@ -76,10 +70,11 @@ export const EditCardForm: FC<EditCardFormProps> = ({
   handleSubmited,
   card,
 }) => {
-  const { setMessages } = useContext(MessagesContext);
-  const { setCards } = useContext(CardsContext);
-  const { groups } = useContext(GroupListContext);
-  const { shops } = useContext(ShopListContext);
+  const addErrorMessage = useMessages((state) => state.addErrorMessage);
+  const addSuccessMessage = useMessages((state) => state.addSuccessMessage);
+  const editCard = useUser((state) => state.editCard);
+  const shops = useShops((state) => state.shops);
+  const groups = useShops((state) => state.groups);
   const [isUserShop, setIsUserShop] = useState(true);
   useEffect(
     () =>
@@ -114,23 +109,11 @@ export const EditCardForm: FC<EditCardFormProps> = ({
   const onCopy = (text: string) => {
     navigator.clipboard
       .writeText(text)
-      .then(() =>
-        setMessages((messages) => [
-          {
-            message: 'Номер скопирован в буфер обмена',
-            type: ApiMessageTypes.success,
-          },
-          ...messages,
-        ])
-      )
+      .then(() => addSuccessMessage('Номер скопирован в буфер обмена'))
       .catch(() =>
-        setMessages((messages) => [
-          {
-            message: 'Ошибка копирования. Попробуйте скопировать номер вручную',
-            type: ApiMessageTypes.error,
-          },
-          ...messages,
-        ])
+        addErrorMessage(
+          'Ошибка копирования. Попробуйте скопировать номер вручную'
+        )
       );
   };
 
@@ -139,16 +122,11 @@ export const EditCardForm: FC<EditCardFormProps> = ({
     if (err.status === 400 && err.detail && !err.detail.non_field_errors) {
       handleFormFieldsErrors(err, fields, setError);
     } else {
-      setMessages((messages) => [
-        {
-          message:
-            err.detail?.non_field_errors?.join(' ') ||
-            err.message ||
-            'Ошибка сервера',
-          type: ApiMessageTypes.error,
-        },
-        ...messages,
-      ]);
+      addErrorMessage(
+        err.detail?.non_field_errors?.join(' ') ||
+          err.message ||
+          'Ошибка сервера'
+      );
     }
   };
 
@@ -167,24 +145,9 @@ export const EditCardForm: FC<EditCardFormProps> = ({
     }
     api
       .editCard(data, card.card.id)
-      .then((res) => {
-        return (
-          setCards &&
-          setCards((cards) =>
-            cards.map((card) =>
-              res.id != card.card.id ? card : { ...card, card: res }
-            )
-          )
-        );
-      })
+      .then((res) => editCard(res))
       .then(() => {
-        setMessages((messages) => [
-          {
-            message: 'Данные успешно изменены',
-            type: ApiMessageTypes.success,
-          },
-          ...messages,
-        ]);
+        addSuccessMessage('Данные успешно изменены');
         handleSubmited();
       })
       .catch(handleError);

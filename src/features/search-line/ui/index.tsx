@@ -1,39 +1,43 @@
 import { Autocomplete, TextField } from '@mui/material';
-import React, { useContext, useEffect, useState } from 'react';
-import { CardsContext, SortedCardsContext } from '~/app';
+import {
+  useEffect,
+  useState,
+  SyntheticEvent,
+  BaseSyntheticEvent,
+  FC,
+} from 'react';
+import { useShallow } from 'zustand/react/shallow';
+import { useUser } from '~/shared/store/useUser';
 import { searchLineStyle } from './style';
+interface ISearchLine {
+  onSearch: (value: 'search' | 'chips' | 'none') => void;
+  filterBy: 'search' | 'chips' | 'none';
+}
 
-export const SearchLine = () => {
+export const SearchLine: FC<ISearchLine> = ({ onSearch, filterBy }) => {
   const [options, setOptions] = useState<string[]>([]);
-  const [optionValue, setOptionValue] = useState('');
+  const [optionValue, setOptionValue] = useState<string | null>('');
+  const [inputValue, setInputValue] = useState('');
+  const searchCards = useUser((state) => state.searchCards);
+  const setSortedCards = useUser((state) => state.setSortedCards);
+  const cards = useUser(useShallow((state) => state.cards));
 
-  const { cards } = useContext(CardsContext);
-  const { setSortedCards } = useContext(SortedCardsContext);
-  function onChange(e: React.SyntheticEvent) {
-    e.currentTarget.textContent && setOptionValue(e.currentTarget.textContent);
-    const newCards = cards.filter((card) => {
-      return card.card.shop?.name === e.currentTarget.textContent;
-    });
-    if (newCards.length) {
-      return setSortedCards && setSortedCards(newCards);
+  function onChange(_e: SyntheticEvent, newValue: string | null) {
+    onSearch('search');
+    // const input = e.currentTarget.textContent;
+    if (newValue) {
+      searchCards(newValue);
     } else {
-      return setSortedCards && setSortedCards(cards);
+      setSortedCards(cards);
     }
+    setOptionValue(newValue);
   }
 
-  function onInput(e: React.BaseSyntheticEvent) {
-    setOptionValue(e.target.value);
-    const newCards = cards.filter((card) => {
-      return card.card.shop?.name
-        .toLowerCase()
-        .startsWith(e.target.value.toLowerCase().trim());
-    });
-
-    if (newCards.length) {
-      return setSortedCards && setSortedCards(newCards);
-    } else {
-      return setSortedCards && setSortedCards([]);
-    }
+  function onInput(_e: BaseSyntheticEvent, newInputValue: string) {
+    onSearch('search');
+    setInputValue(newInputValue);
+    setOptionValue(newInputValue);
+    newInputValue ? searchCards(newInputValue) : setSortedCards(cards);
   }
 
   useEffect(() => {
@@ -45,36 +49,35 @@ export const SearchLine = () => {
         }
       }
     });
-
     setOptions(optionsArray);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    const newCards = cards.filter((card) => {
-      return card.card.shop?.name
-        .toLowerCase()
-        .startsWith(optionValue.toLowerCase().trim());
-    });
-
-    if (newCards.length) {
-      return setSortedCards && setSortedCards(newCards);
-    } else {
-      return setSortedCards && setSortedCards(cards);
-    }
+    optionValue && searchCards(optionValue);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cards]);
 
+  useEffect(() => {
+    if (filterBy !== 'search') {
+      setOptionValue(null);
+      setInputValue('');
+    }
+  }, [filterBy]);
+
   return (
     <Autocomplete
+      freeSolo
       fullWidth
-      onChange={(e) => onChange(e)}
+      value={optionValue}
+      inputValue={inputValue}
+      onChange={(_e, newValue) => onChange(_e, newValue)}
+      onInputChange={(_e, newInputValue) => onInput(_e, newInputValue)}
       options={options && optionValue ? options.map((option) => option) : ['']}
       renderInput={(params) => (
         <TextField
           {...params}
           placeholder="Поиск"
-          onChange={(e) => onInput(e)}
           variant="filled"
           sx={{ ...searchLineStyle }}
         />

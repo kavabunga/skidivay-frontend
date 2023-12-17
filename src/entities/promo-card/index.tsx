@@ -1,8 +1,7 @@
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, IconButton } from '@mui/material';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
-import { UserContext } from '~/app';
 import { IShop } from '~/shared';
 import {
   interactiveCardStyle,
@@ -10,13 +9,14 @@ import {
   iconButtonStyle,
   addIconStyle,
 } from './styles';
+import { useUser } from '~/shared/store/useUser';
 
 interface PromoCardProps {
   item: IShop;
 }
 
 export const PromoCard: FC<PromoCardProps> = ({ item }) => {
-  const { user } = useContext(UserContext);
+  const user = useUser((state) => state.user);
   const navigate = useNavigate();
 
   function handleClick() {

@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { Typography, Box, Link, Stack } from '@mui/material';
 import coverImage from '~/shared/assets/chatbot-bw-1.svg';
 import { AccentButton } from '~/shared/ui';
@@ -8,19 +8,19 @@ import {
   paragraphStyle,
   linkStyle,
 } from './styles';
-import { UserContext } from '~/app';
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '~/shared/store/useUser';
 
 export const RegistrationSuccessWidget: FC<{
   handleShowChangeEmail?: () => void;
 }> = ({ handleShowChangeEmail }) => {
-  const { user } = useContext(UserContext);
+  const user = useUser((state) => state.user);
   const navigate = useNavigate();
 
   useEffect(() => {
     const timer: ReturnType<typeof setTimeout> = setTimeout(
       () => navigate('/'),
-      8000
+      10000
     );
     return () => {
       clearTimeout(timer);

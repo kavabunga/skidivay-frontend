@@ -1,37 +1,31 @@
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CardsContext, MessagesContext, UserContext } from '~/app';
 import { DeleteUserForm, deleteUser } from '~/features';
 import { IDeleteUserRequest, IPopupProps } from '~/shared';
-import { ApiMessageTypes } from '~/shared/enums';
 import { UserDeletePopup } from '~/entities';
+import { useUser } from '~/shared/store/useUser';
+import { useMessages } from '~/shared/store';
 
 export const DeleteUser: FC<IPopupProps> = ({ open, onClose }) => {
   const navigate = useNavigate();
-  const { setMessages } = useContext(MessagesContext);
-  const { user, setUser } = useContext(UserContext);
-  const { setCards } = useContext(CardsContext);
-
-  const handleSuccess = () => {
-    setMessages((messages) => [
-      {
-        message: 'Ваш аккаунт удалён! Но мы всегда будем рады вам снова.',
-        type: ApiMessageTypes.success,
-      },
-      ...messages,
-    ]);
-  };
+  const user = useUser((state) => state.user);
+  const addSuccessMessage = useMessages((state) => state.addSuccessMessage);
+  const clearMessages = useMessages((state) => state.clearMessages);
+  const clearUser = useUser((state) => state.clearUser);
+  const clearCards = useUser((state) => state.clearCards);
 
   const handleSubmit = (data: IDeleteUserRequest) => {
     return user?.id
       ? deleteUser(data, user?.id)
           .then(() => {
-            setCards && setCards([]);
-            setMessages([]);
-            setUser && setUser(null);
+            clearCards();
+            clearMessages();
+            clearUser();
           })
           .then(() => {
-            handleSuccess();
+            addSuccessMessage(
+              'Ваш аккаунт удалён! Но мы всегда будем рады вам снова.'
+            );
             setTimeout(() => navigate('/', { replace: true }), 5000);
           })
       : Promise.resolve();

@@ -38,7 +38,8 @@
     "storybook-addon-react-router-v6": "^2.0.9",
     "typeface-nunito": "^1.1.13",
     "typeface-roboto": "^1.1.13",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "zustand": "^4.4.7"
   },
   "devDependencies": {
     "@emotion/react": "^11.11.1",

@@ -137,7 +137,6 @@ export interface IChangeEmailRequest {
 
 export interface IPatchUser {
   name?: string;
-  username?: string;
   email?: string;
   phone_number?: string;
 }

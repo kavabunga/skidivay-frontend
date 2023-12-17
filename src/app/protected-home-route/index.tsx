@@ -1,14 +1,14 @@
-import { useContext } from 'react';
-import { CardsContext, UserContext } from '..';
+import { useShallow } from 'zustand/react/shallow';
+import { useUser } from '~/shared/store/useUser';
 import { Home, UserCards, Welcome } from '~/widgets';
 
 export const ProtectedHomeRoute = () => {
-  const { user } = useContext(UserContext);
-  const { cards } = useContext(CardsContext);
+  const user = useUser((state) => state.user);
+  const cards = useUser(useShallow((state) => state.cards));
 
   if (!user) {
     return <Home />;
-  } else if (cards[0]) {
+  } else if (cards) {
     return <UserCards />;
   } else {
     return <Welcome />;

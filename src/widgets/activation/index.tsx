@@ -1,57 +1,46 @@
 import { Stack, Typography } from '@mui/material';
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { LoadingContext, MessagesContext, UserContext } from '~/app';
 import { SignInForm } from '~/features';
 import { api } from '~/shared';
 import { stackStyle, titleStyle, paragraphStyle } from './style';
 import { IApiError } from '~/shared/errors';
-import { ApiMessageTypes } from '~/shared/enums';
+import { useUser } from '~/shared/store/useUser';
+import { useLoading, useMessages } from '~/shared/store';
 
 export const Activation = () => {
-  const { setIsLoading } = useContext(LoadingContext);
-  const { setMessages } = useContext(MessagesContext);
-  const { user } = useContext(UserContext);
+  const loading = useLoading((state) => state.loading);
+  const loaded = useLoading((state) => state.loaded);
+  const addErrorMessage = useMessages((state) => state.addErrorMessage);
+  const addSuccessMessage = useMessages((state) => state.addSuccessMessage);
+  const user = useUser((state) => state.user);
   const navigate = useNavigate();
   const { uid, token } = useParams();
 
   useEffect(() => {
-    //TODO: Add here PreLoader for check for login
-    setIsLoading && setIsLoading(true);
+    loading();
     const handleError = (err: IApiError) => {
-      setMessages((messages) => [
-        {
-          message: err.detail?.non_field_errors?.join(' ') || err.message,
-          type: ApiMessageTypes.error,
-        },
-        ...messages,
-      ]);
+      addErrorMessage(
+        err.detail?.non_field_errors?.join(' ') ||
+          err.message ||
+          'Ошибка сервера'
+      );
     };
     const handleSuccess = () => {
-      setMessages((messages) => [
-        {
-          message: 'Ваш Email успешно подтвержден',
-          type: ApiMessageTypes.success,
-        },
-        ...messages,
-      ]);
+      addSuccessMessage('Ваш Email успешно подтвержден');
     };
-    if (user?.email !== '' && !user?.is_active) {
+    if (user?.email && !user?.is_active) {
       api
         .activateEmail(uid || '', token || '')
         .then(handleSuccess)
         .catch(handleError)
         .finally(() => {
           navigate('/', { replace: true });
-          setIsLoading && setIsLoading(false);
         });
     } else if (user?.is_active) {
       handleSuccess();
-      setIsLoading && setIsLoading(false);
-    } else {
-      setIsLoading && setIsLoading(false);
     }
-    //NOTE: Disabling deps check to use useEffect only on mount
+    loaded();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

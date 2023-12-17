@@ -1,4 +1,4 @@
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import {
   IBasicField,
@@ -13,10 +13,9 @@ import * as z from 'zod';
 import { Button, Stack } from '@mui/material';
 import { IApiError } from '~/shared/errors';
 import { handleFormFieldsErrors } from '../errors';
-import { MessagesContext } from '~/app';
 import { buttonStyle } from './style';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ApiMessageTypes } from '~/shared/enums';
+import { useMessages } from '~/shared/store';
 
 interface IFields extends IBasicField {
   email: string;
@@ -31,7 +30,9 @@ export const CardShareForm: FC<ICardShareFormProps> = ({
   card,
   afterSubmit,
 }) => {
-  const { setMessages } = useContext(MessagesContext);
+  const addErrorMessage = useMessages((state) => state.addErrorMessage);
+  const addSuccessMessage = useMessages((state) => state.addSuccessMessage);
+
   const schema = z.object({
     email: validationSchemes.email,
   });
@@ -52,16 +53,11 @@ export const CardShareForm: FC<ICardShareFormProps> = ({
     if (err.status === 400 && err.detail && !err.detail.non_field_errors) {
       handleFormFieldsErrors(err, fields, setError);
     } else {
-      setMessages((messages) => [
-        {
-          message:
-            err.detail?.non_field_errors?.join(' ') ||
-            err.message ||
-            'Ошибка сервера',
-          type: ApiMessageTypes.error,
-        },
-        ...messages,
-      ]);
+      addErrorMessage(
+        err.detail?.non_field_errors?.join(' ') ||
+          err.message ||
+          'Ошибка сервера'
+      );
     }
   };
 
@@ -72,15 +68,10 @@ export const CardShareForm: FC<ICardShareFormProps> = ({
     api
       .shareCard(request, card.id)
       .then((res) => {
-        setMessages((messages) => [
-          {
-            message:
-              res.message ||
-              `Карта ${card.shop.name} отправлена на адрес ${request.email}`,
-            type: ApiMessageTypes.success,
-          },
-          ...messages,
-        ]);
+        addSuccessMessage(
+          res.message ||
+            `Карта ${card.shop.name} отправлена на адрес ${request.email}`
+        );
         afterSubmit();
       })
       .catch(handleError);

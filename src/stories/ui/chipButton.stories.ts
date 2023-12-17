@@ -19,5 +19,7 @@ export const Primary: Story = {
   args: {
     selectedLabels: ['category'],
     label: 'category',
+    filterBy: 'chips',
+    onFilter: (value) => console.log(value),
   },
 };

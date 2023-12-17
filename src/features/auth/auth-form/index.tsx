@@ -1,4 +1,4 @@
-import { FC, ReactNode, useContext } from 'react';
+import { FC, ReactNode } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Box, Button } from '@mui/material';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -6,11 +6,10 @@ import { ZodType } from 'zod';
 import { FieldType } from '~/shared/ui';
 import { InputSelector } from '~/features';
 import { formStyle, buttonStyle } from './style';
-import { MessagesContext } from '~/app';
-import { ApiMessageTypes } from '~/shared/enums';
 import { IApiError } from '~/shared/errors';
 import { handleFormFieldsErrors } from '~/features/errors';
 import { IBasicField } from '~/shared';
+import { useMessages } from '~/shared/store';
 
 export interface AuthFormType {
   fields: FieldType[];
@@ -32,7 +31,7 @@ export const AuthForm: FC<AuthFormType> = ({
   defaultValues,
   submit,
 }) => {
-  const { setMessages } = useContext(MessagesContext);
+  const addErrorMessage = useMessages((state) => state.addErrorMessage);
   const {
     register,
     handleSubmit,
@@ -50,16 +49,11 @@ export const AuthForm: FC<AuthFormType> = ({
     if (err.status === 400 && err.detail && !err.detail.non_field_errors) {
       handleFormFieldsErrors(err, fields, setError);
     } else {
-      setMessages((messages) => [
-        {
-          message:
-            err.detail?.non_field_errors?.join(' ') ||
-            err.message ||
-            'Ошибка сервера',
-          type: ApiMessageTypes.error,
-        },
-        ...messages,
-      ]);
+      addErrorMessage(
+        err.detail?.non_field_errors?.join(' ') ||
+          err.message ||
+          'Ошибка сервера'
+      );
     }
   };
 

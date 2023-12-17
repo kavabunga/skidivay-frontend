@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { SearchChips } from '~/features';
 import { withRouter } from 'storybook-addon-react-router-v6';
-import { chipsLabels } from '~/shared/mock/chips-labels';
 
 const meta = {
   title: 'Components/Search Chips',
@@ -19,6 +18,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    items: chipsLabels,
+    filterBy: 'chips',
+    onFilter: (value) => console.log(value),
   },
 };

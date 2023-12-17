@@ -1,6 +1,5 @@
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 import { Button, Stack } from '@mui/material';
-import { MessagesContext, UserContext } from '~/app';
 import {
   IBasicField,
   IPopupProps,
@@ -9,7 +8,6 @@ import {
   validationLengths,
   validationSchemes,
 } from '~/shared';
-import { ApiMessageTypes } from '~/shared/enums';
 import { buttonStyle } from './style';
 import { ActivateEmailPopup } from '~/entities';
 import * as z from 'zod';
@@ -17,6 +15,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { IApiError } from '~/shared/errors';
 import { handleFormFieldsErrors } from '../errors';
+import { useUser } from '~/shared/store/useUser';
+import { useMessages } from '~/shared/store';
 
 interface IReactivateEmail extends IPopupProps {
   afterSubmit: () => void;
@@ -31,9 +31,9 @@ export const ReactivateEmail: FC<IReactivateEmail> = ({
   onClose,
   afterSubmit,
 }) => {
-  const { user, setUser } = useContext(UserContext);
-  const { setMessages } = useContext(MessagesContext);
-
+  const setUser = useUser((state) => state.setUser);
+  const user = useUser((state) => state.user);
+  const addErrorMessage = useMessages((state) => state.addErrorMessage);
   const schema = z.object({
     email: validationSchemes.email,
   });
@@ -57,16 +57,11 @@ export const ReactivateEmail: FC<IReactivateEmail> = ({
     if (err.status === 400 && err.detail && !err.detail.non_field_errors) {
       handleFormFieldsErrors(err, fields, setError);
     } else {
-      setMessages((messages) => [
-        {
-          message:
-            err.detail?.non_field_errors?.join(' ') ||
-            err.message ||
-            'Ошибка сервера',
-          type: ApiMessageTypes.error,
-        },
-        ...messages,
-      ]);
+      addErrorMessage(
+        err.detail?.non_field_errors?.join(' ') ||
+          err.message ||
+          'Ошибка сервера'
+      );
     }
   };
 
@@ -77,7 +72,7 @@ export const ReactivateEmail: FC<IReactivateEmail> = ({
     const promise =
       request.email === user?.email
         ? api.reactivateEmail()
-        : api.editUser(request).then((res) => setUser && setUser(res));
+        : api.editUser(request).then((res) => setUser(res));
     promise
       .then(() => {
         afterSubmit();

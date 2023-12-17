@@ -1,34 +1,26 @@
-import { FC, useContext } from 'react';
+import { FC } from 'react';
 import { Container, Typography } from '@mui/material';
 import { ChangeEmailForm } from '~/features';
 import { api, IChangeEmailRequest } from '~/shared';
-import { ApiMessageTypes } from '~/shared/enums';
-import { MessagesContext, UserContext } from '~/app';
 import { containerStyle, paragraphStyle } from './style';
+import { useUser } from '~/shared/store/useUser';
+import { useMessages } from '~/shared/store';
 
 export const ChangeEmailWidget: FC<{
   handleShowRegistrationSuccess: () => void;
 }> = ({ handleShowRegistrationSuccess }) => {
-  const { setMessages } = useContext(MessagesContext);
-  const { user, setUser } = useContext(UserContext);
-
-  const handleSuccess = () => {
-    setMessages((messages) => [
-      {
-        message: 'Email изменён!',
-        type: ApiMessageTypes.success,
-      },
-      ...messages,
-    ]);
-  };
+  const user = useUser((state) => state.user);
+  const setUser = useUser((state) => state.setUser);
+  const addSuccessMessage = useMessages((state) => state.addSuccessMessage);
 
   function handleSubmit(data: IChangeEmailRequest) {
+    //NOTE: Check if email in the form is not the same as current one
     if (data.email !== user?.email) {
       return api
         .changeEmail(data)
-        .then((res) => setUser && setUser(res))
+        .then((res) => setUser(res))
         .then(() => {
-          handleSuccess();
+          addSuccessMessage('Email изменён!');
           handleShowRegistrationSuccess();
         });
     } else {

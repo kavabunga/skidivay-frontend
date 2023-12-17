@@ -1,4 +1,5 @@
-import { Contexts, ProtectedHomeRoute, ProtectedRoute } from '.';
+import { Contexts } from '~/entities';
+import { ProtectedHomeRoute, ProtectedRoute } from '.';
 import { ThemeProvider } from '@emotion/react';
 import { CssBaseline } from '@mui/material';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';

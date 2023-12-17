@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from 'react';
+import { FC, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import Barcode from 'react-barcode';
@@ -13,15 +13,8 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import {
-  CardsContext,
-  GroupListContext,
-  MessagesContext,
-  ShopListContext,
-} from '~/app';
-import {
   IBasicField,
   ICardContext,
-  IGroup,
   IShop,
   Input,
   cardFormErrors,
@@ -37,8 +30,9 @@ import {
 } from './style';
 import { AddCardFormModel } from './model';
 import { IApiError } from '~/shared/errors';
-import { ApiMessageTypes } from '~/shared/enums';
 import { handleFormFieldsErrors } from '~/features/errors';
+import { useUser } from '~/shared/store/useUser';
+import { useMessages, useShops } from '~/shared/store';
 
 interface IFields extends IBasicField {
   shop_name: string | null;
@@ -82,10 +76,11 @@ export const AddCardForm: FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [isGroupInputBlocked, setIsGroupInputBlocked] = useState(true);
-  const { setMessages } = useContext(MessagesContext);
-  const { shops } = useContext(ShopListContext);
-  const { groups } = useContext(GroupListContext);
-  const { cards, setCards } = useContext(CardsContext);
+  const addErrorMessage = useMessages((state) => state.addErrorMessage);
+  const addSuccessMessage = useMessages((state) => state.addSuccessMessage);
+  const shops = useShops((state) => state.shops);
+  const groups = useShops((state) => state.groups);
+  const addCard = useUser((state) => state.addCard);
   const options: readonly IOption[] = shops;
 
   const {
@@ -116,26 +111,17 @@ export const AddCardForm: FC = () => {
     if (err.status === 400 && err.detail && !err.detail.non_field_errors) {
       handleFormFieldsErrors(err, fields, setError);
     } else {
-      setMessages((messages) => [
-        {
-          message:
-            err.detail?.non_field_errors?.join(' ') ||
-            err.message ||
-            'Ошибка сервера',
-          type: ApiMessageTypes.error,
-        },
-        ...messages,
-      ]);
+      addErrorMessage(
+        err.detail?.non_field_errors?.join(' ') ||
+          err.message ||
+          'Ошибка сервера'
+      );
     }
   };
 
   const onSubmit: SubmitHandler<IFields> = (data) => {
-    const shop = shops.find(
-      (element: IShop) => element.name === data.shop_name
-    );
-    const group = groups.find(
-      (element: IGroup) => element.name === data.shop_group
-    );
+    const shop = shops.find((element) => element.name === data.shop_name);
+    const group = groups.find((element) => element.name === data.shop_group);
     const request: { [key: string]: string } = {
       shop_name: data.shop_name || '',
       shop_group: data.shop_group || '',
@@ -154,16 +140,10 @@ export const AddCardForm: FC = () => {
           pub_date: '',
           shared_by: null,
         };
-        return setCards && setCards([...cards, newCard]);
+        return addCard(newCard);
       })
       .then(() => {
-        setMessages((messages) => [
-          {
-            message: 'Карта успешно добавлена',
-            type: ApiMessageTypes.success,
-          },
-          ...messages,
-        ]);
+        addSuccessMessage('Карта успешно добавлена');
         navigate('/');
       })
       .catch(handleError);
