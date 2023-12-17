@@ -91,8 +91,8 @@ export const SearchLine: FC<ISearchLine> = ({ onSearch, filterBy }) => {
         <TextField
           {...params}
           placeholder="Поиск"
-          variant="filled"
-          sx={{ ...searchLineStyle }}
+          variant="outlined"
+          sx={searchLineStyle}
         />
       )}
     />

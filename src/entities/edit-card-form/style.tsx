@@ -7,14 +7,6 @@ export const formStyle: SxProps = {
   paddingTop: '12px',
 };
 
-export const buttonStyle: SxProps = {
-  fontSize: 14,
-  fontWeight: 500,
-  lineHeight: 1.4,
-  paddingY: 2.25,
-  marginBottom: 4,
-};
-
 export const helperTextStyle: SxProps = {
   fontSize: 12,
   fontWeight: 400,

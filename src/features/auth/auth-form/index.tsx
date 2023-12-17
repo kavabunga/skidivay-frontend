@@ -1,11 +1,12 @@
 import { FC, ReactNode } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Box, Button } from '@mui/material';
+import { AccentButton } from '~/shared/ui';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ZodType } from 'zod';
 import { FieldType } from '~/shared/ui';
 import { InputSelector, checkEmail } from '~/features';
-import { formStyle, buttonStyle } from './style';
+import { formStyle } from './style';
 import { IApiError } from '~/shared/errors';
 import { handleFormFieldsErrors } from '~/features/errors';
 import { IBasicField } from '~/shared';
@@ -93,15 +94,14 @@ export const AuthForm: FC<AuthFormType> = ({
         ))}
 
       {children}
-      <Button
+      <AccentButton
         type="submit"
-        variant="contained"
         disabled={isSubmitting}
-        sx={{ ...buttonStyle, width: `${button.width}px` }}
+        sx={{ width: `${button.width}px` }}
         {...button}
       >
         {isSubmitting ? 'Подождите...' : button.label}
-      </Button>
+      </AccentButton>
     </Box>
   );
 };

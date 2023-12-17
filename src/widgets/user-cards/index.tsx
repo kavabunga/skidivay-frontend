@@ -4,7 +4,6 @@ import { SearchChips } from '~/features';
 import { CardsList } from '~/widgets';
 import {
   mainContainerStyle,
-  contentStackStyle,
   paragraphStyle,
   noResultsStackStyle,
 } from './styles';
@@ -23,25 +22,26 @@ export const UserCards: FC = () => {
   };
 
   return (
-    <Stack component="main" useFlexGap spacing={2} sx={mainContainerStyle}>
-      <Stack spacing={2} useFlexGap sx={contentStackStyle}>
-        <Typography
-          component="h1"
-          variant="h2"
-          sx={{
-            width: '100%',
-          }}
-        >
-          Мои карты
-        </Typography>
-        <SearchLine onSearch={handleSwitchFilterBy} filterBy={filterBy} />
-      </Stack>
-
+    <Stack
+      component="main"
+      direction="column"
+      useFlexGap
+      spacing={2}
+      sx={mainContainerStyle}
+    >
+      <Typography
+        component="h1"
+        variant="h2"
+        sx={{
+          width: '100%',
+        }}
+      >
+        Мои карты
+      </Typography>
+      <SearchLine onSearch={handleSwitchFilterBy} filterBy={filterBy} />
       <SearchChips onFilter={handleSwitchFilterBy} filterBy={filterBy} />
       {sortedCards.length ? (
-        <Stack spacing={2} useFlexGap sx={contentStackStyle}>
-          <CardsList items={sortedCards} />
-        </Stack>
+        <CardsList items={sortedCards} />
       ) : (
         <Stack spacing={2} useFlexGap sx={noResultsStackStyle}>
           <Typography textAlign="center" sx={paragraphStyle}>

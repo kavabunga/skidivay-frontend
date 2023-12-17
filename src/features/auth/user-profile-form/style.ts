@@ -31,13 +31,6 @@ export const formStyle: SxProps = {
   paddingTop: '12px',
 };
 
-export const buttonStyle: SxProps = {
-  fontSize: '.875rem',
-  fontWeight: 500,
-  lineHeight: 1.4,
-  paddingY: 2.25,
-};
-
 export const linkGroupStyle: SxProps = {
   paddingBottom: '1.25rem',
 };

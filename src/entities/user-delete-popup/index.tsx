@@ -5,6 +5,7 @@ import {
   DialogTitle,
   Stack,
 } from '@mui/material';
+import { AccentButton } from '~/shared/ui';
 import { FC, useState } from 'react';
 import { IPopupProps, Popup } from '~/shared';
 import { titleStyle, itemStyle, textStyle, buttonStyle } from './style';
@@ -41,9 +42,7 @@ export const UserDeletePopup: FC<IPopupProps> = ({
 
       {!isDeleteConfirmed ? (
         <Stack useFlexGap spacing={1}>
-          <Button variant="contained" sx={buttonStyle} onClick={onClose}>
-            Ладно, остаюсь
-          </Button>
+          <AccentButton onClick={onClose}>Ладно, остаюсь</AccentButton>
           <Button variant="text" sx={buttonStyle} onClick={handleDeleteConfirm}>
             Да, все кончено
           </Button>

@@ -10,7 +10,13 @@ interface CardsListProps {
 
 export const CardsList: FC<CardsListProps> = ({ items = [] }) => {
   return (
-    <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
+    <Stack
+      direction="row"
+      spacing={2}
+      flexWrap="wrap"
+      useFlexGap
+      sx={{ width: '100%' }}
+    >
       <AddCardButton text="Добавить новую карту" />
       {items &&
         sortCards(items).map((item) => {

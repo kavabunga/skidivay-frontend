@@ -5,11 +5,11 @@ import Barcode from 'react-barcode';
 import {
   Box,
   TextField,
-  Button,
   Autocomplete,
   Card,
   createFilterOptions,
 } from '@mui/material';
+import { AccentButton } from '~/shared/ui';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import {
@@ -25,7 +25,6 @@ import {
   formStyle,
   helperTextStyle,
   listBoxStyle,
-  buttonStyle,
   barcodeStyle,
 } from './style';
 import { AddCardFormModel } from './model';
@@ -333,15 +332,9 @@ export const AddCardForm: FC = () => {
           </Card>
         </Box>
       )}
-      <Button
-        type="submit"
-        variant="contained"
-        disabled={isSubmitting}
-        fullWidth
-        sx={buttonStyle}
-      >
+      <AccentButton type="submit" disabled={isSubmitting}>
         {isSubmitting ? 'Подождите...' : 'Сохранить'}
-      </Button>
+      </AccentButton>
     </Box>
   );
 };

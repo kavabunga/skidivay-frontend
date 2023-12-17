@@ -13,6 +13,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Input } from '~/shared/ui';
 import { cardFormErrors } from '~/shared/lib';
+import { AccentButton } from '~/shared/ui';
 import {
   IBasicField,
   ICardContext,
@@ -21,7 +22,7 @@ import {
   validationSchemes,
 } from '~/shared';
 import { IApiError } from '~/shared/errors';
-import { formStyle, buttonStyle, helperTextStyle, listBoxStyle } from './style';
+import { formStyle, helperTextStyle, listBoxStyle } from './style';
 import { handleFormFieldsErrors } from '~/features/errors';
 import { useUser } from '~/shared/store/useUser';
 import { useMessages, useShops } from '~/shared/store';
@@ -247,16 +248,14 @@ export const EditCardForm: FC<EditCardFormProps> = ({
         )}
       />
       {isActive && (
-        <Button
+        <AccentButton
           type="submit"
-          variant="contained"
-          fullWidth
-          sx={buttonStyle}
           disabled={isSubmitting}
+          sx={{ marginBottom: 4 }}
           {...buttonSave}
         >
           {isSubmitting ? 'Подождите...' : buttonSave.label}
-        </Button>
+        </AccentButton>
       )}
     </Box>
   );
