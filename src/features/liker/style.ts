@@ -7,7 +7,12 @@ export const iconButtonLightStyle: SxProps = {
     filter: 'invert(100%)',
   },
   '& .MuiSvgIcon-root': {
-    fontSize: '2rem',
+    fontSize: '1.5rem',
+  },
+  '@media (max-width:600px)': {
+    '& .MuiSvgIcon-root': {
+      fontSize: '2rem',
+    },
   },
   '@media (max-width:480px)': {
     '& .MuiSvgIcon-root': {

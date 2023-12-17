@@ -9,3 +9,4 @@ export * from './input';
 export * from './preloader';
 export * from './popup';
 export * from './friend-icon';
+export * from './outline-button';

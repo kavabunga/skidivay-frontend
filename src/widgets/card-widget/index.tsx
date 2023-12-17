@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
-  Button,
   IconButton,
   Stack,
   Box,
@@ -10,13 +9,13 @@ import {
   DialogContent,
   DialogContentText,
 } from '@mui/material';
+import { AccentButton, OutlineButton } from '~/shared/ui';
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 import { BackButton, CardShareForm } from '~/features';
 import { CardFull, CardSharePopup, EditCardForm } from '~/entities';
 import { Liker } from '~/features';
 import {
   containerStyle,
-  buttonStyle,
   topButtonsStyle,
   paragraphStyle,
   deleteTitleStyle,
@@ -122,7 +121,7 @@ export const CardWidget = () => {
           <Stack
             direction="row"
             spacing={1.5}
-            justifyContent="space-between"
+            justifyContent="center"
             alignItems="center"
             useFlexGap
             sx={{ paddingY: 1.25 }}
@@ -147,20 +146,12 @@ export const CardWidget = () => {
             useFlexGap
             sx={{ paddingTop: '.75rem' }}
           >
-            <Button
-              variant="contained"
-              sx={buttonStyle}
-              onClick={handleActivateShareCard}
-            >
+            <AccentButton onClick={handleActivateShareCard}>
               Поделиться картой
-            </Button>
-            <Button
-              variant="outlined"
-              sx={buttonStyle}
-              onClick={handleActivateRemoveCard}
-            >
+            </AccentButton>
+            <OutlineButton onClick={handleActivateRemoveCard}>
               Удалить карту
-            </Button>
+            </OutlineButton>
           </Stack>
         )}
         <Popup
@@ -175,20 +166,10 @@ export const CardWidget = () => {
             </DialogContentText>
           </DialogContent>
           <Stack useFlexGap spacing={1}>
-            <Button
-              variant="contained"
-              sx={buttonStyle}
-              onClick={handleRemoveCard}
-            >
-              Да, удалить
-            </Button>
-            <Button
-              variant="outlined"
-              sx={buttonStyle}
-              onClick={handleCancelRemoveCard}
-            >
+            <AccentButton onClick={handleRemoveCard}>Да, удалить</AccentButton>
+            <OutlineButton onClick={handleCancelRemoveCard}>
               Нет, не удалять
-            </Button>
+            </OutlineButton>
           </Stack>
         </Popup>
         <CardSharePopup open={isShareActive} onClose={handleCancelShareCard}>

@@ -1,7 +1,8 @@
 import { FC } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { IMask } from 'react-imask';
-import { Box, Button, Stack, Link } from '@mui/material';
+import { Box, Stack, Link } from '@mui/material';
+import { AccentButton, OutlineButton } from '~/shared/ui';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import {
@@ -15,7 +16,7 @@ import {
 import { InputSelector } from '~/features';
 import { IApiError } from '~/shared/errors';
 import { handleFormFieldsErrors } from '~/features/errors';
-import { formStyle, buttonStyle, linkStyle, linkGroupStyle } from './style';
+import { formStyle, linkStyle, linkGroupStyle } from './style';
 import { useUser } from '~/shared/store/useUser';
 import { useMessages } from '~/shared/store';
 
@@ -189,25 +190,16 @@ export const UserProfileForm: FC<IUserProfileForm> = ({
 
       {isActive && (
         <Stack spacing={{ xs: 1, sm: 2 }} useFlexGap>
-          <Button
-            type="submit"
-            variant="contained"
-            disabled={isSubmitting}
-            fullWidth
-            sx={buttonStyle}
-          >
+          <AccentButton type="submit" disabled={isSubmitting}>
             {isSubmitting ? 'Подождите...' : 'Сохранить'}
-          </Button>
-          <Button
+          </AccentButton>
+          <OutlineButton
             type="button"
-            variant="outlined"
             disabled={isSubmitting}
-            fullWidth
-            sx={buttonStyle}
             onClick={handleCancelChanges}
           >
             Отменить изменения
-          </Button>
+          </OutlineButton>
         </Stack>
       )}
     </Box>

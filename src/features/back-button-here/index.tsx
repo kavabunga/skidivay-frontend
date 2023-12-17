@@ -10,6 +10,7 @@ export const BackButtonToUserProfile = () => {
     <Button
       onClick={() => navigate('/user', { state: { widgetScreen: 'default' } })}
       variant="text"
+      disableRipple
       startIcon={<ArrowBackIosOutlinedIcon sx={iconStyle} />}
       sx={backButtonStyle}
     >

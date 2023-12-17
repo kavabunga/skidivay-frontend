@@ -10,6 +10,7 @@ export const BackButton = () => {
     <Button
       onClick={() => navigate(-1)}
       variant="text"
+      disableRipple
       startIcon={<ArrowBackIosOutlinedIcon sx={iconStyle} />}
       sx={backButtonStyle}
     >

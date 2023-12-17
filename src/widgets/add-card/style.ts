@@ -1,9 +1,9 @@
 import { SxProps } from '@mui/material';
 
 export const containerStyle: SxProps = {
-  paddingX: '16px',
-  paddingTop: '8px',
-  paddingBottom: '30px',
+  paddingX: { xs: '1rem', sm: '1.5rem' },
+  paddingTop: '.5rem',
+  paddingBottom: '2rem',
 };
 
 export const titleStyle: SxProps = {

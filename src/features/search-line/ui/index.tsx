@@ -79,7 +79,7 @@ export const SearchLine: FC<ISearchLine> = ({ onSearch, filterBy }) => {
           {...params}
           placeholder="Поиск"
           variant="filled"
-          sx={{ ...searchLineStyle }}
+          sx={searchLineStyle}
         />
       )}
     />

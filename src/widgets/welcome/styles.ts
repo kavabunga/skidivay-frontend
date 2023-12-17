@@ -4,6 +4,7 @@ export const mainContainerStyle: SxProps = {
   position: 'relative',
   display: 'flex',
   height: '100%',
+  paddingX: { xs: '1rem', sm: '1.5rem' },
   paddingBottom: '1rem',
   flexDirection: 'column',
   justifyContent: 'flex-start',
