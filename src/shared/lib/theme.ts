@@ -69,6 +69,7 @@ export const lightTheme = createTheme({
       styleOverrides: (themeParam) => `
         body {
           background-color:  #e2dce5;
+          overscroll-behavior: none;
         }
         #root {
           display: flex;
