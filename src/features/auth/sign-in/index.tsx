@@ -72,10 +72,8 @@ export const SignInForm: FC<ISignInForm> = ({
           .then((res) => {
             if (!res?.is_active) {
               addInfoMessage('Email не подтвержден');
-              return res;
-            } else {
-              return res;
             }
+            return res;
           })
           .then((res) => {
             return setUser(res);
