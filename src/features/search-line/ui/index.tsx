@@ -8,7 +8,7 @@ import {
 } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { useUser } from '~/shared/store/useUser';
-import { searchLineStyle } from './style';
+import { searchLineStyle, listBoxStyle } from './style';
 interface ISearchLine {
   onSearch: (value: 'search' | 'chips' | 'none') => void;
   filterBy: 'search' | 'chips' | 'none';
@@ -68,6 +68,7 @@ export const SearchLine: FC<ISearchLine> = ({ onSearch, filterBy }) => {
 
   return (
     <Autocomplete
+      size="small"
       freeSolo
       fullWidth
       noOptionsText=""
@@ -95,6 +96,7 @@ export const SearchLine: FC<ISearchLine> = ({ onSearch, filterBy }) => {
           sx={searchLineStyle}
         />
       )}
+      ListboxProps={{ sx: listBoxStyle }}
     />
   );
 };
