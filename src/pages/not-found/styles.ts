@@ -9,5 +9,18 @@ export const mainImgStyle: SxProps = {
   objectFit: 'contain',
   objectPosition: 'center',
   flexShrink: '0',
-  padding: '2rem 0'
+  padding: '2rem 0',
+};
+
+export const buttonStyle: SxProps = {
+  borderRadius: '.5rem',
+  fontSize: '0.875rem',
+  lineHeight: 1.43,
+  padding: '1.125rem 0',
+  textTransform: 'none',
+};
+
+export const containerStyle: SxProps = {
+  paddingX: '1rem',
+  paddingBottom: '4rem',
 };
