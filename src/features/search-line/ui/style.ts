@@ -56,7 +56,14 @@ export const searchLineStyle: SxProps = {
       backgroundColor: 'secondary.light',
       borderBottom: 0,
     },
-  '&::before': {
+  '& .css-raw2ne-MuiInputBase-root-MuiFilledInput-root:before': {
+    borderBottom: 0,
+  },
+  '.css-raw2ne-MuiInputBase-root-MuiFilledInput-root:hover:not(.Mui-disabled, .Mui-error):before':
+    {
+      borderBottom: 0,
+    },
+  '& .css-raw2ne-MuiInputBase-root-MuiFilledInput-root:after': {
     borderBottom: 0,
   },
 };
