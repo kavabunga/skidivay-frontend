@@ -50,10 +50,14 @@ export const AuthForm: FC<AuthFormType> = ({
     const email = getValues('email');
     const { error, isDirty, invalid } = getFieldState('email');
     typeof email === 'string' &&
-      (!invalid ||
-        error?.message === 'Пользователь с таким email уже существует.') &&
+      (!invalid || error?.type === 'exists') &&
       isDirty &&
-      checkEmail(email).catch(handleError);
+      checkEmail(email).catch(
+        (err) =>
+          err?.detail?.email?.[0] ===
+            'Пользователь с таким email уже существует.' &&
+          setError('email', { type: 'exists', message: err.detail.email[0] })
+      );
   };
 
   const handleError = (err: IApiError) => {
