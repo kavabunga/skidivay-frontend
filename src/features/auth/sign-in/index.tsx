@@ -70,14 +70,10 @@ export const SignInForm: FC<ISignInForm> = ({
       .then(() => {
         const userPromise = getUser()
           .then((res) => {
-            if (!res?.is_active) {
-              addInfoMessage('Email не подтвержден');
-            }
+            !res?.is_active && addInfoMessage('Email не подтвержден');
             return res;
           })
-          .then((res) => {
-            return setUser(res);
-          });
+          .then((res) => setUser(res));
         const cardsPromise = api.getCards().then((res) => setCards(res));
         return Promise.all([userPromise, cardsPromise]);
       })

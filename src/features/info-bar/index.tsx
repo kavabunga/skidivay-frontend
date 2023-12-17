@@ -11,26 +11,18 @@ interface ISnackType {
   backgroundColor: string;
   defaultMessage: string;
 }
-interface ISnack {
-  message: IMessageContext;
-  type: ISnackType;
-}
 
 export const InfoBar: FC = () => {
   const messages = useMessages(useShallow((state) => state.messages));
   const setLastShown = useMessages((state) => state.setLastShown);
   const [open, setOpen] = useState(false);
-  const [snack, setSnack] = useState<ISnack | null>(null);
 
   useEffect(() => {
     if (messages?.[0]?.message && !messages?.[0]?.isShown) {
-      setSnack({ message: messages[0], type: snackTypeSelector(messages[0]) });
       setLastShown();
       setOpen(true);
     }
-    //NOTE: Need to update snackbar only on message updates
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [messages]);
+  }, [messages, setLastShown]);
 
   const handleClose = (
     _event: React.SyntheticEvent | Event,
@@ -66,27 +58,26 @@ export const InfoBar: FC = () => {
   };
 
   return (
-    snack && (
-      <Snackbar
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        open={open}
-        autoHideDuration={4000}
+    <Snackbar
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      open={open}
+      autoHideDuration={4000}
+      onClose={handleClose}
+    >
+      <Alert
+        elevation={6}
+        variant="filled"
         onClose={handleClose}
+        severity={messages?.[0] && snackTypeSelector(messages[0]).severity}
+        icon={false}
+        sx={{
+          width: '100%',
+          backgroundColor:
+            messages?.[0] && snackTypeSelector(messages[0]).backgroundColor,
+        }}
       >
-        <Alert
-          elevation={6}
-          variant="filled"
-          onClose={handleClose}
-          severity={snack.type.severity}
-          icon={false}
-          sx={{
-            width: '100%',
-            backgroundColor: snack.type.backgroundColor,
-          }}
-        >
-          {snack.message.message || snack.type.defaultMessage}
-        </Alert>
-      </Snackbar>
-    )
+        {messages?.[0]?.message}
+      </Alert>
+    </Snackbar>
   );
 };
