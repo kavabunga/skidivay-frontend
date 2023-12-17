@@ -45,6 +45,7 @@ export const Contexts: FC<IContexts> = ({ children }) => {
       })
       .catch(handleError)
       .finally(() => loaded());
+    //NOTE: Here we run initial loading of app data
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

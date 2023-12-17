@@ -4,7 +4,7 @@ import { Box, Button } from '@mui/material';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ZodType } from 'zod';
 import { FieldType } from '~/shared/ui';
-import { InputSelector } from '~/features';
+import { InputSelector, checkEmail } from '~/features';
 import { formStyle, buttonStyle } from './style';
 import { IApiError } from '~/shared/errors';
 import { handleFormFieldsErrors } from '~/features/errors';
@@ -37,12 +37,23 @@ export const AuthForm: FC<AuthFormType> = ({
     handleSubmit,
     setError,
     getValues,
+    getFieldState,
     formState: { errors, isSubmitting },
   } = useForm<IBasicField>({
     mode: 'onTouched',
     resolver: zodResolver(schema),
     defaultValues: defaultValues,
   });
+
+  const preValidateEmail = () => {
+    const email = getValues('email');
+    const { error, isDirty, invalid } = getFieldState('email');
+    typeof email === 'string' &&
+      (!invalid ||
+        error?.message === 'Пользователь с таким email уже существует.') &&
+      isDirty &&
+      checkEmail(email).catch(handleError);
+  };
 
   const handleError = (err: IApiError) => {
     const fields = Object.keys(getValues());
@@ -77,6 +88,7 @@ export const AuthForm: FC<AuthFormType> = ({
             key={field.name}
             register={register(field.name)}
             error={errors[field.name]}
+            {...(field.name === 'email' && { preValidator: preValidateEmail })}
           />
         ))}
 

@@ -23,5 +23,4 @@ export const handleFormFieldsErrors: IhandleFormFieldsErrors = (
       }
     });
   }
-  // return { key: 'none', error: { type: 'server' } };
 };

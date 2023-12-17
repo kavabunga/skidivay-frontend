@@ -12,6 +12,26 @@ interface ISearchChips {
   onFilter: (value: 'search' | 'chips' | 'none') => void;
   filterBy: 'search' | 'chips' | 'none';
 }
+interface SliderSettings {
+  arrows: boolean;
+  infinite: boolean;
+  slidesToShow: number;
+  slidesToScroll: number;
+  speed: number;
+  cssEase: string;
+  className: string;
+  variableWidth: boolean;
+}
+const settings: SliderSettings = {
+  arrows: false,
+  infinite: false,
+  slidesToShow: 1,
+  slidesToScroll: 3,
+  speed: 1000,
+  cssEase: 'ease',
+  className: 'slider variable-width',
+  variableWidth: true,
+};
 
 export const SearchChips: FC<ISearchChips> = ({ onFilter, filterBy }) => {
   const [chipsLabels, setChipsLabels] = useState<string[]>(['Избранное']);
@@ -32,28 +52,6 @@ export const SearchChips: FC<ISearchChips> = ({ onFilter, filterBy }) => {
   useEffect(() => {
     filterBy != 'chips' && setSelectedLabels([]);
   }, [filterBy]);
-
-  interface SliderSettings {
-    arrows: boolean;
-    infinite: boolean;
-    slidesToShow: number;
-    slidesToScroll: number;
-    speed: number;
-    cssEase: string;
-    className: string;
-    variableWidth: boolean;
-  }
-
-  const settings: SliderSettings = {
-    arrows: false,
-    infinite: false,
-    slidesToShow: 1,
-    slidesToScroll: 3,
-    speed: 1000,
-    cssEase: 'ease',
-    className: 'slider variable-width',
-    variableWidth: true,
-  };
 
   useEffect(() => {
     filterCards(selectedLabels);

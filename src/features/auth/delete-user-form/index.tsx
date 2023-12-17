@@ -12,7 +12,7 @@ export const DeleteUserForm: FC<{
   handleSubmit(data: IDeleteUserRequest): Promise<void>;
 }> = ({ handleSubmit }) => {
   const schema = z.object({
-    current_password: validationSchemes.password_old_not_required,
+    current_password: validationSchemes.password_old,
   });
 
   const fields: FieldType[] = [

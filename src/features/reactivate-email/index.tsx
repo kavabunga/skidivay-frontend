@@ -17,6 +17,7 @@ import { IApiError } from '~/shared/errors';
 import { handleFormFieldsErrors } from '../errors';
 import { useUser } from '~/shared/store/useUser';
 import { useMessages } from '~/shared/store';
+import { checkEmail } from '..';
 
 interface IReactivateEmail extends IPopupProps {
   afterSubmit: () => void;
@@ -38,11 +39,22 @@ export const ReactivateEmail: FC<IReactivateEmail> = ({
     email: validationSchemes.email,
   });
 
+  const preValidateEmail = () => {
+    const email = getValues('email');
+    const { error, isDirty, invalid } = getFieldState('email');
+    typeof email === 'string' &&
+      (!invalid ||
+        error?.message === 'Пользователь с таким email уже существует.') &&
+      isDirty &&
+      checkEmail(email).catch(handleError);
+  };
+
   const {
     register,
     handleSubmit,
     setError,
     getValues,
+    getFieldState,
     formState: { errors, isSubmitting },
   } = useForm<IFields>({
     mode: 'onTouched',
@@ -101,6 +113,8 @@ export const ReactivateEmail: FC<IReactivateEmail> = ({
           autoComplete="no"
           required={true}
           maxLength={validationLengths.email}
+          preValidator={preValidateEmail}
+          preValidate={true}
         />
         <Button
           type="submit"

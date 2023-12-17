@@ -1,10 +1,10 @@
-# Online Discount Card Service Frontend
+# "Скидывай" • фронтенд • ![Status in progress](https://badgen.net/badge/status/in%20progress/yellow)
+
+## ![](https://badgen.net/static/React/18/gray) ![](https://badgen.net/static/React%20Router/6/gray) ![](https://badgen.net/static/Zustand/4/gray) ![](https://badgen.net/static/react-hook-form/7/gray) ![](https://badgen.net/static/Zod/3/gray) ![](https://badgen.net/static/MUI/5/gray) ![](https://badgen.net/static/Storybook/7/gray) ![](https://badgen.net/static/Vite/4/gray)
 
 - [Фич лист](https://docs.google.com/spreadsheets/d/1GwV1-NoSkC2oHRamFoRoKfmjsDQTBtnCVACTTKllpCs/edit#gid=1450262909)
 
 - [Дизайн](https://www.figma.com/file/3SieWKz3TaNqmqWhlz0dSt/Online-discount-card-service?type=design&node-id=41%3A2638&mode=design&t=eCfXjjFrXwwvUsxf-1)
-
-- [Storybook](https://online-discount-card-service.github.io/odcs-frontend)
 
 ## 🤖 Запуск проекта
 
@@ -108,11 +108,32 @@ src
 
 ```
 
-## Деплой Storybook
+## Деплой
+
+### Для деплоя проекта:
+
+```bash
+## Для создания билда проекта с флагом --production
+## такой билд грузится на сервер
+npm run build
+
+## Для создания билда проекта с флагом --development
+## этот билд нужен для локального тестирования с бэкендом
+npm run build-dev
+
+## Для дефолтного превью билда
+npm run preview
+
+## Для превью билда на порту, запросы с которого пропускает бэкенд
+npm run preview-dev
+```
+
+### Для деплоя Storybook:
 
 ```bash
 ## Для создания билда Storybook:
 npm run predeploy
+
 ## Для деплоя билда в ветку gh-pages (которая отображается на GitHub Pages):
 npm run deploy-storybook
 ```

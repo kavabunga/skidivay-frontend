@@ -70,6 +70,7 @@ export const SignUpForm: FC<{
       required: true,
       hideAsterisk: true,
       maxLength: validationLengths.email,
+      preValidate: true,
     },
     {
       name: 'password',

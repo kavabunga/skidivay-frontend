@@ -27,6 +27,7 @@ export const ChangeEmailForm: FC<{
       required: true,
       hideAsterisk: true,
       maxLength: validationLengths.email,
+      preValidate: true,
     },
   ];
 

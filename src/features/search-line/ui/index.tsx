@@ -17,6 +17,7 @@ interface ISearchLine {
 export const SearchLine: FC<ISearchLine> = ({ onSearch, filterBy }) => {
   const [options, setOptions] = useState<string[]>([]);
   const [optionValue, setOptionValue] = useState<string | null>('');
+  const [open, setOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const searchCards = useUser((state) => state.searchCards);
   const setSortedCards = useUser((state) => state.setSortedCards);
@@ -69,11 +70,23 @@ export const SearchLine: FC<ISearchLine> = ({ onSearch, filterBy }) => {
     <Autocomplete
       freeSolo
       fullWidth
+      noOptionsText=""
+      open={open}
+      onClose={() => setOpen(false)}
       value={optionValue}
       inputValue={inputValue}
       onChange={(_e, newValue) => onChange(_e, newValue)}
-      onInputChange={(_e, newInputValue) => onInput(_e, newInputValue)}
-      options={options && optionValue ? options.map((option) => option) : ['']}
+      onInputChange={(_e, newInputValue) => {
+        onInput(_e, newInputValue);
+        if (newInputValue.length === 0) {
+          open && setOpen(false);
+        } else {
+          !open && setOpen(true);
+        }
+      }}
+      options={options.filter((option) =>
+        option.toLowerCase().includes(inputValue.toLowerCase())
+      )}
       renderInput={(params) => (
         <TextField
           {...params}

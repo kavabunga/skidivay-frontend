@@ -24,7 +24,7 @@ export const PasswordResetRequestWidget: FC<IPasswordResetRequestWidget> = ({
         Восстановление пароля
       </Typography>
       <Typography sx={paragraphStyle}>
-        Введите email и последние четыре цифры номера, который был указан при
+        Введите Email и последние четыре цифры телефона, который был указан при
         регистрации.
       </Typography>
       <ResetPasswordForm handleSetEmail={handleSetEmail} />

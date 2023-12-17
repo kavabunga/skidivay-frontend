@@ -37,3 +37,13 @@ export function deleteUser(data: IDeleteUserRequest, userId: number) {
     .deleteUser(data, userId)
     .then(() => localStorage.removeItem('token'));
 }
+
+export function checkEmail(email: string) {
+  return api
+    .checkCredentials({
+      email: email,
+    })
+    .then((res) => {
+      return res ? true : false;
+    });
+}

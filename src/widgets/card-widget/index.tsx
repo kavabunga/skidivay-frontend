@@ -129,9 +129,7 @@ export const CardWidget = () => {
           >
             <FriendIcon />
             <Typography component="p" sx={{ ...paragraphStyle }}>
-              {`Этой картой с вами поделился пользователь ${
-                card.shared_by?.name ?? ''
-              } (${card.shared_by?.email ?? ''})`}
+              {`Этой картой с вами поделился пользователь ${card.shared_by?.name} (${card.shared_by?.email})`}
             </Typography>
           </Stack>
         )}

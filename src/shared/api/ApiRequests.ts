@@ -15,6 +15,7 @@ import {
   IShopRequest,
   IShareCardRequest,
   IDeleteUserRequest,
+  ICredentialsCheckRequest,
 } from '..';
 import { ApiError } from '../errors';
 
@@ -319,5 +320,15 @@ export const ApiRequests = class ApiRequests {
       headers: this._headers,
     };
     return this._requestAuthorizedApi(url, options);
+  }
+
+  checkCredentials(data: ICredentialsCheckRequest) {
+    const url = `${this._url}/users/pre-check/`;
+    const options: IRequestOptions = {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify(data),
+    };
+    return this._requestApi(url, options);
   }
 };
