@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import Barcode from 'react-barcode';
@@ -96,10 +96,15 @@ export const AddCardForm: FC = () => {
     mode: 'onTouched',
     resolver: zodResolver(schema),
     defaultValues: {
-      shop_name: location.state?.shop.name ?? null,
-      shop_group: location.state?.shop.group?.[0].name ?? null,
+      shop_name: location.state?.shop?.name ?? null,
+      shop_group: location.state?.shop?.group?.[0]?.name ?? null,
     },
   });
+
+  useEffect(
+    () => location.state?.shop && setIsGroupInputBlocked(true),
+    [location.state?.shop]
+  );
 
   const crossValidationtrigger = () => {
     trigger(['card_number', 'barcode_number']);
@@ -137,7 +142,6 @@ export const AddCardForm: FC = () => {
           owner: true,
           favourite: false,
           pub_date: '',
-          shared_by: null,
         };
         return addCard(newCard);
       })

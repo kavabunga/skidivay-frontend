@@ -54,7 +54,6 @@ export const Primary: Story = {
       },
       owner: true,
       favourite: false,
-      shared_by: null,
       pub_date: '',
     },
   },

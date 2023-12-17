@@ -1,5 +1,4 @@
 export const authFormErrors = {
-  // wrongType: 'Введен неверный тип данных',
   requiredEmail: 'Введите Email',
   wrongEmail: 'Введен некорректный Email',
   maxLengthEmail: 'Максимальная длина - 256 знаков',

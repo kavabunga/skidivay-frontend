@@ -3,7 +3,6 @@ import { ApiMessageTypes } from '../enums';
 export interface ICard {
   id: number;
   shop: IShop;
-  image?: string | null;
   name: string;
   pub_date: string;
   card_number?: string;
@@ -19,7 +18,7 @@ export interface IShared {
 
 export interface ICardContext {
   card: ICard;
-  shared_by: IShared | null;
+  shared_by?: IShared;
   owner: boolean;
   favourite: boolean;
   pub_date: string;
@@ -99,16 +98,6 @@ export interface IPatchCard {
   encoding_type?: string;
 }
 
-// export interface IPostCardWithShop {
-//   shop: {
-//     name: string;
-//   };
-//   name: string;
-//   card_number?: string;
-//   barcode_number?: string;
-//   encoding_type?: string;
-// }
-
 export interface IMessageContext {
   message: string;
   type: ApiMessageTypes;
@@ -151,4 +140,9 @@ export interface IShareCardRequest {
 
 export interface IBasicField {
   [key: string]: string | number | null;
+}
+
+export interface ICredentialsCheckRequest {
+  email?: string;
+  password?: string;
 }

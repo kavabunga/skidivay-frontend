@@ -13,7 +13,7 @@ import {
   validationSchemes,
   IBasicField,
 } from '~/shared';
-import { InputSelector } from '~/features';
+import { InputSelector, checkEmail } from '~/features';
 import { IApiError } from '~/shared/errors';
 import { handleFormFieldsErrors } from '~/features/errors';
 import { formStyle, linkStyle, linkGroupStyle } from './style';
@@ -91,8 +91,19 @@ export const UserProfileForm: FC<IUserProfileForm> = ({
       required: true,
       hideAsterisk: true,
       maxLength: validationLengths.email,
+      preValidate: true,
     },
   ];
+
+  const preValidateEmail = () => {
+    const email = getValues('email');
+    const { error, isDirty, invalid } = getFieldState('email');
+    typeof email === 'string' &&
+      (!invalid ||
+        error?.message === 'Пользователь с таким email уже существует.') &&
+      isDirty &&
+      checkEmail(email).catch(handleError);
+  };
 
   const {
     register,
@@ -100,6 +111,7 @@ export const UserProfileForm: FC<IUserProfileForm> = ({
     setError,
     getValues,
     reset,
+    getFieldState,
     formState: { errors, isSubmitting },
   } = useForm<IFields>({
     mode: 'onTouched',
@@ -112,8 +124,8 @@ export const UserProfileForm: FC<IUserProfileForm> = ({
   });
 
   const handleCancelChanges = () => {
-    reset();
     onEditDisable();
+    reset();
   };
 
   const handleError = (err: IApiError) => {
@@ -175,6 +187,7 @@ export const UserProfileForm: FC<IUserProfileForm> = ({
             key={field.name}
             register={register(field.name)}
             error={errors[field.name]}
+            preValidator={preValidateEmail}
           />
         ))}
       <Stack sx={linkGroupStyle} useFlexGap spacing={2}>

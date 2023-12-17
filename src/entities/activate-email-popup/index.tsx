@@ -15,7 +15,7 @@ export const ActivateEmailPopup: FC<IPopupProps> = ({
 }) => {
   return (
     <Popup open={open} onClose={onClose} showCloseButton={true}>
-      <DialogTitle sx={titleStyle}>Подвердить Email?</DialogTitle>
+      <DialogTitle sx={titleStyle}>Подтвердить Email?</DialogTitle>
       <DialogContent sx={itemStyle}>
         <DialogContentText sx={textStyle}>
           Введите Email, чтобы мы отправили письмо с подтверждением

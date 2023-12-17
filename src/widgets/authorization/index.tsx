@@ -55,13 +55,6 @@ export const AuthWidget = () => {
     setCurrentTab(newValue);
   };
 
-  //TODO: Use it in header close button
-  // const handleShowDefault = () => {
-  //   setCurrentTab(0);
-  //   setRegistredEmail('');
-  //   setWidgetScreen('default');
-  // };
-
   const handleShowChangeEmail = () => {
     setWidgetScreen('changeEmail');
   };

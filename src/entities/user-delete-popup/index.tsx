@@ -28,7 +28,7 @@ export const UserDeletePopup: FC<IPopupProps> = ({
       <DialogTitle sx={titleStyle}>Вы уверены?</DialogTitle>
       <DialogContent sx={itemStyle}>
         <DialogContentText sx={textStyle}>
-          Наша общение было особенным и приносило радость...
+          Наше общение было особенным и приносило радость...
         </DialogContentText>
       </DialogContent>
       {isDeleteConfirmed && <DialogTitle sx={titleStyle}>Точно?</DialogTitle>}

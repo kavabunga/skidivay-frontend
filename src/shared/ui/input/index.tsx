@@ -15,17 +15,17 @@ export interface FieldType {
   required?: boolean;
   maxLength?: number;
   maskOptions?: IMask;
+  preValidate?: boolean;
 }
 
 export interface InputType extends FieldType {
   register: UseFormRegisterReturn;
   error?: FieldError;
-  onFocus?: () => void;
-  onBlur?: () => void;
   triggerOnChange?: () => void;
   triggerOnBlur?: () => void;
   disabled?: boolean;
   InputProps?: InputProps;
+  preValidator?: () => void;
 }
 
 interface IMask {
@@ -47,6 +47,8 @@ export const Input: FC<InputType> = ({
   maskOptions,
   triggerOnChange,
   triggerOnBlur,
+  preValidator,
+  preValidate,
   ...props
 }) => {
   const { onChange, onBlur, ref } = register;
@@ -66,6 +68,7 @@ export const Input: FC<InputType> = ({
         onBlur: (e) => {
           onBlur(e);
           triggerOnBlur && triggerOnBlur();
+          preValidator && preValidate && preValidator();
         },
         name: name,
         ...maskOptions,
