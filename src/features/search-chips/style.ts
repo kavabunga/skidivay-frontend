@@ -7,7 +7,7 @@ export const sliderWindowStyle: SxProps = {
   maxWidth: '100%',
   justifyContent: 'flex-start',
   alignItems: 'center',
-  overflow: 'hidden',
+  overflow: 'visible',
   '& > .slick-slider .slick-list': {
     margin: '0 -1rem',
   },
