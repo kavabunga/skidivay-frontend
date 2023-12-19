@@ -19,10 +19,12 @@ export const coverImgStyle: SxProps = {
 };
 
 export const paragraphStyle: SxProps = {
+  width: '90%',
+  margin: '0 auto',
   color: 'surface.dark',
-  fontSize: '.875rem',
+  fontSize: '1rem',
   fontWeight: 400,
-  lineHeight: 1.42,
+  lineHeight: 1.5,
 };
 
 export const linkStyle: SxProps = {

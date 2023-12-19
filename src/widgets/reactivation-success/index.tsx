@@ -16,7 +16,7 @@ export const ReactivationSuccessWidget: FC<IReactivationSuccessWidget> = ({
   useEffect(() => {
     const timer: ReturnType<typeof setTimeout> = setTimeout(
       () => onClose(),
-      3000
+      6000
     );
     return () => {
       clearTimeout(timer);
@@ -31,7 +31,9 @@ export const ReactivationSuccessWidget: FC<IReactivationSuccessWidget> = ({
       sx={mainContainerStyle}
     >
       <Typography textAlign="center" sx={paragraphStyle}>
-        {`Мы отправили письмо на адрес ${user?.email} Перейдите по ссылке в письме, чтобы подтвердить почту`}
+        {`Мы отправили письмо на адрес ${user?.email}`}
+        <br />
+        Перейдите по ссылке в письме, чтобы подтвердить почту
       </Typography>
       <Box
         component="img"

@@ -17,6 +17,7 @@ import { Liker } from '~/features';
 import {
   containerStyle,
   topButtonsStyle,
+  wrapperStyle,
   paragraphStyle,
   deleteTitleStyle,
   deleteTextStyle,
@@ -121,10 +122,11 @@ export const CardWidget = () => {
           <Stack
             direction="row"
             spacing={1.5}
-            justifyContent="center"
+            justifyContent="flex-center"
             alignItems="center"
+            alignSelf="center"
             useFlexGap
-            sx={{ paddingY: 1.25 }}
+            sx={wrapperStyle}
           >
             <FriendIcon />
             <Typography component="p" sx={{ ...paragraphStyle }}>

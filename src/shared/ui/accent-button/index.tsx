@@ -3,13 +3,16 @@ import { styled } from '@mui/material/styles';
 
 const PurpleButton = styled(Button)({
   width: '100%',
-  fontSize: '0.875rem',
+  fontSize: '1.125rem',
   lineHeight: '1.43',
   padding: '1.125rem',
   borderRadius: '.5rem',
   textTransform: 'none',
   boxShadow: 'none',
   backgroundColor: ' primary.main',
+  '@media (max-width:600px)': {
+    fontSize: '1rem',
+  },
   '&:hover': {
     backgroundColor: '#7965af',
   },

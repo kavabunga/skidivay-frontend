@@ -20,7 +20,7 @@ export const RegistrationSuccessWidget: FC<{
   useEffect(() => {
     const timer: ReturnType<typeof setTimeout> = setTimeout(
       () => navigate('/'),
-      10000
+      6000
     );
     return () => {
       clearTimeout(timer);
@@ -35,7 +35,9 @@ export const RegistrationSuccessWidget: FC<{
       sx={mainContainerStyle}
     >
       <Typography textAlign="center" sx={paragraphStyle}>
-        {`Мы отправили письмо на адрес ${user?.email} Перейдите по ссылке в письме, чтобы подтвердить почту`}
+        {`Мы отправили письмо на адрес ${user?.email}`}
+        <br />
+        Перейдите по ссылке в письме, чтобы подтвердить почту
       </Typography>
       <Box
         component="img"

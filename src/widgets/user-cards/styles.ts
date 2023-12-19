@@ -3,16 +3,16 @@ import { SxProps } from '@mui/material';
 export const mainContainerStyle: SxProps = {
   height: '100%',
   paddingX: { xs: '1rem', sm: '1.5rem' },
-  paddingBottom: '1rem',
+  paddingBottom: { xs: '1.5rem', sm: '2rem' },
   justifyContent: 'flex-start',
   alignItems: 'center',
   flexGrow: 1,
 };
 
 export const paragraphStyle: SxProps = {
-  fontSize: '.875rem',
+  fontSize: '1rem',
   fontWeight: 400,
-  lineHeight: 1.43,
+  lineHeight: 1.5,
 };
 
 export const noResultsStackStyle: SxProps = {
