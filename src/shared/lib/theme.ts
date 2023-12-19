@@ -84,6 +84,7 @@ export const lightTheme = createTheme({
           text-rendering: optimizeLegibility;
           box-sizing: border-box;
           background-color: ${themeParam.palette.surface.lighter};
+          overflow-x: hidden;
         }
       `,
     },

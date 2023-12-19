@@ -49,7 +49,7 @@ export const Welcome = () => {
         component="p"
         textAlign="left"
         sx={{
-          padding: '1.5rem 0 0.5rem',
+          padding: '1rem 0 0.5rem',
           ...paragraphStyle,
         }}
       >
