@@ -5,6 +5,11 @@ export const iconButtonLightStyle: SxProps = {
   padding: '0',
   '& .MuiSvgIcon-root': {
     fontSize: '1.5rem',
+    transform: 'scale(1)',
+    transition: 'scale 300ms cubic-bezier(.53,.01,1,.54) 0ms',
+  },
+  '&:hover': {
+    backgroundColor: 'transparent',
   },
   '@media (max-width:600px)': {
     '& .MuiSvgIcon-root': {
@@ -22,23 +27,13 @@ export const iconButtonLightStyle: SxProps = {
     },
   },
   '@media(hover: hover) and (pointer: fine)': {
-    '&:hover': {
-      color: 'primary.main',
+    '& .MuiSvgIcon-root:hover': {
+      transform: 'scale(1.1)',
     },
   },
   '@media(any-hover: hover) and (any-pointer: fine)': {
-    '&:hover': {
-      color: 'primary.main',
-    },
-  },
-  '@media(hover: none) and (any-hover: none)': {
-    '&:active': {
-      color: '#FFFBFF',
-    },
-  },
-  '@media(pointer: coarse) and (any-pointer: coarse) and (any-pointer: none)': {
-    '&:active': {
-      color: '#FFFBFF',
+    '& .MuiSvgIcon-root:hover': {
+      transform: 'scale(1.1)',
     },
   },
 };
@@ -49,24 +44,17 @@ export const iconButtonDarkStyle: SxProps = {
   '& .MuiSvgIcon-root': {
     fontSize: '1.5rem',
   },
+  '&:hover': {
+    backgroundColor: 'transparent',
+  },
   '@media(hover: hover) and (pointer: fine)': {
-    '&:hover': {
-      color: 'primary.main',
+    '& .MuiSvgIcon-root:hover': {
+      transform: 'scale(1.1)',
     },
   },
   '@media(any-hover: hover) and (any-pointer: fine)': {
-    '&:hover': {
-      color: 'primary.main',
-    },
-  },
-  '@media(hover: none) and (any-hover: none)': {
-    '&:active': {
-      color: 'surface.dark',
-    },
-  },
-  '@media(pointer: coarse) and (any-pointer: coarse) and (any-pointer: none)': {
-    '&:active': {
-      color: 'surface.dark',
+    '& .MuiSvgIcon-root:hover': {
+      transform: 'scale(1.1)',
     },
   },
 };
