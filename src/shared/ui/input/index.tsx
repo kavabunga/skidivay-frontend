@@ -1,6 +1,6 @@
 import { FC, forwardRef } from 'react';
 import { TextField, InputProps } from '@mui/material';
-import { IMaskInput } from 'react-imask';
+import { IMaskInput, ReactMaskOpts } from 'react-imask';
 import { Control, Controller } from 'react-hook-form';
 import { helperTextStyle } from './style';
 
@@ -14,7 +14,7 @@ export interface FieldType {
   hideAsterisk?: boolean;
   required?: boolean;
   maxLength?: number;
-  maskOptions?: IMask;
+  maskOptions?: ReactMaskOpts;
   preValidate?: boolean;
 }
 
@@ -29,15 +29,11 @@ export interface InputType extends FieldType {
   control?: Control<any>;
 }
 
-interface IMask {
-  mask?: string;
-  radix?: string;
-  unmask?: boolean | 'typed';
-}
-
-const Mask = forwardRef<HTMLInputElement, IMask>(function Mask(props, ref) {
-  return <IMaskInput {...props} inputRef={ref} overwrite />;
-});
+const Mask = forwardRef<HTMLInputElement, ReactMaskOpts>(
+  function Mask(props, ref) {
+    return <IMaskInput {...props} inputRef={ref} />;
+  }
+);
 
 export const Input: FC<InputType> = ({
   name,
@@ -66,7 +62,7 @@ export const Input: FC<InputType> = ({
           helperText={error ? error?.message : defaultHelperText}
           FormHelperTextProps={{ sx: helperTextStyle }}
           error={Boolean(error)}
-          InputLabelProps={{ required: !hideAsterisk }}
+          InputLabelProps={{ required: !hideAsterisk, shrink: Boolean(value) }}
           inputProps={{
             ...(maskOptions
               ? {

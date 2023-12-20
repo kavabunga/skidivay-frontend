@@ -45,7 +45,8 @@ export const ResetPasswordForm: FC<IResetPasswordForm> = ({
       placeholder: '+7 (XXX) XXX-99-99',
       maskOptions: {
         mask: '+7 (XXX) XXX-00-00',
-        unmask: true,
+        unmask: false,
+        overwrite: true,
       },
       hideAsterisk: true,
     },
@@ -55,7 +56,7 @@ export const ResetPasswordForm: FC<IResetPasswordForm> = ({
     const request = {
       phone_last_digits:
         typeof data.phone_last_digits === 'string'
-          ? data.phone_last_digits
+          ? data.phone_last_digits.replace(/\D/g, '').replace(/^7/, '')
           : '',
       email: typeof data.email === 'string' ? data.email : '',
     };
