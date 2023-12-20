@@ -55,17 +55,17 @@ export const ReactivateEmail: FC<IReactivateEmail> = ({
   };
 
   const {
-    register,
+    control,
     handleSubmit,
     setError,
     getValues,
     getFieldState,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<IFields>({
     mode: 'onTouched',
     resolver: zodResolver(schema),
     defaultValues: {
-      email: user?.email,
+      email: user?.email || '',
     },
   });
 
@@ -110,8 +110,7 @@ export const ReactivateEmail: FC<IReactivateEmail> = ({
         <Input
           name="email"
           defaultHelperText=""
-          register={register('email')}
-          error={errors.email}
+          control={control}
           hideAsterisk={true}
           label="Email"
           type="email"

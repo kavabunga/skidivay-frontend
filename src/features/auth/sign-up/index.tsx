@@ -13,11 +13,19 @@ import {
 import { useUser } from '~/shared/store/useUser';
 
 export const SignUpForm: FC<{
-  defaultValues?: object;
+  defaultValues?: { [key: string]: string };
   handleShowRegistrationSuccess: () => void;
 }> = ({ defaultValues, handleShowRegistrationSuccess }) => {
   const setUser = useUser((state) => state.setUser);
   const setCards = useUser((state) => state.setCards);
+
+  const defaults = {
+    name: defaultValues?.name || '',
+    email: defaultValues?.email || '',
+    phone_number: defaultValues?.phone || '',
+    password: defaultValues?.password || '',
+    passwordRepeat: defaultValues?.passwordRepeat || '',
+  };
 
   const schema = z
     .object({
@@ -58,6 +66,7 @@ export const SignUpForm: FC<{
       placeholder: '+7 (999) 999-99-99',
       maskOptions: {
         mask: '+7 (000) 000-00-00',
+        unmask: true,
       },
       hideAsterisk: true,
     },
@@ -98,9 +107,7 @@ export const SignUpForm: FC<{
       name: typeof data.name === 'string' ? data.name : '',
       email: typeof data.email === 'string' ? data.email : '',
       phone_number:
-        typeof data.phone_number === 'string'
-          ? data.phone_number.replace(/\D/g, '').replace(/^7/, '')
-          : '',
+        typeof data.phone_number === 'string' ? data.phone_number : '',
       password: typeof data.password === 'string' ? data.password : '',
     };
     return signUp(request)
@@ -123,7 +130,7 @@ export const SignUpForm: FC<{
       schema={schema}
       button={{ label: 'Далее', fullWidth: true }}
       submit={submit}
-      defaultValues={defaultValues}
+      defaultValues={defaults}
     />
   );
 };

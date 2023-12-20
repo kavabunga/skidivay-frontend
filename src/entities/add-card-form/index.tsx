@@ -84,20 +84,21 @@ export const AddCardForm: FC = () => {
 
   const {
     control,
-    register,
     trigger,
     handleSubmit,
     watch,
     setValue,
     setError,
     getValues,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<IFields>({
     mode: 'onTouched',
     resolver: zodResolver(schema),
     defaultValues: {
       shop_name: location.state?.shop?.name ?? null,
       shop_group: location.state?.shop?.group?.[0]?.name ?? null,
+      card_number: location.state?.card_number ?? '',
+      barcode_number: location.state?.barcode_number ?? '',
     },
   });
 
@@ -299,10 +300,9 @@ export const AddCardForm: FC = () => {
         autoComplete="no"
         defaultHelperText=" "
         placeholder=""
-        register={register('card_number')}
+        control={control}
         triggerOnChange={crossValidationtrigger}
         triggerOnBlur={crossValidationtrigger}
-        error={errors.card_number}
         hideAsterisk={true}
         maxLength={validationLengths.card_number}
       />
@@ -313,10 +313,9 @@ export const AddCardForm: FC = () => {
         autoComplete="no"
         defaultHelperText="Цифры, расположенные под черными штрихами"
         placeholder=""
-        register={register('barcode_number')}
+        control={control}
         triggerOnChange={crossValidationtrigger}
         triggerOnBlur={crossValidationtrigger}
-        error={errors.barcode_number}
         hideAsterisk={true}
         maxLength={validationLengths.barcode_number}
       />

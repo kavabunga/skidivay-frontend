@@ -15,6 +15,10 @@ export const DeleteUserForm: FC<{
     current_password: validationSchemes.password_old,
   });
 
+  const defaultValues = {
+    current_password: '',
+  };
+
   const fields: FieldType[] = [
     {
       name: 'current_password',
@@ -40,6 +44,7 @@ export const DeleteUserForm: FC<{
       schema={schema}
       button={{ label: 'Подтвердить', fullWidth: true }}
       submit={submit}
+      defaultValues={defaultValues}
     />
   );
 };

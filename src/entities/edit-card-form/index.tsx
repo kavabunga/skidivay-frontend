@@ -86,19 +86,18 @@ export const EditCardForm: FC<EditCardFormProps> = ({
 
   const {
     control,
-    register,
     trigger,
     handleSubmit,
     setError,
     watch,
     getValues,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<IFields>({
     mode: 'onTouched',
     resolver: zodResolver(schema),
     defaultValues: {
-      card_number: card.card.card_number,
-      barcode_number: card.card.barcode_number,
+      card_number: card.card.card_number || '',
+      barcode_number: card.card.barcode_number || '',
       shop_group: card.card.shop.group?.[0]?.name ?? null,
     },
   });
@@ -168,10 +167,9 @@ export const EditCardForm: FC<EditCardFormProps> = ({
         autoComplete="no"
         defaultHelperText=" "
         placeholder=""
-        register={register('card_number')}
+        control={control}
         triggerOnChange={crossValidationtrigger}
         triggerOnBlur={crossValidationtrigger}
-        error={errors.card_number}
         disabled={!isActive}
         hideAsterisk={true}
         maxLength={validationLengths.card_number}
@@ -203,10 +201,9 @@ export const EditCardForm: FC<EditCardFormProps> = ({
         autoComplete="no"
         defaultHelperText=" "
         placeholder=""
-        register={register('barcode_number')}
+        control={control}
         triggerOnChange={crossValidationtrigger}
         triggerOnBlur={crossValidationtrigger}
-        error={errors.barcode_number}
         disabled={!isActive}
         hideAsterisk={true}
         maxLength={validationLengths.barcode_number}

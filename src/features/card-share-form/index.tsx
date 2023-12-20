@@ -38,14 +38,17 @@ export const CardShareForm: FC<ICardShareFormProps> = ({
   });
 
   const {
-    register,
+    control,
     handleSubmit,
     setError,
     getValues,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<IFields>({
     mode: 'onTouched',
     resolver: zodResolver(schema),
+    defaultValues: {
+      email: '',
+    },
   });
 
   const handleError = (err: IApiError) => {
@@ -89,8 +92,7 @@ export const CardShareForm: FC<ICardShareFormProps> = ({
       <Input
         name="email"
         defaultHelperText=""
-        register={register('email')}
-        error={errors.email}
+        control={control}
         hideAsterisk={true}
         label="Email"
         type="email"

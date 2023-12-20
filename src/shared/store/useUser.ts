@@ -96,6 +96,6 @@ export const useUser = create<IuseUser>()((set) => ({
       }
     }),
   clearUser: () => set(() => ({ user: null })),
-  clearCards: () => set(() => ({ cards: [] })),
+  clearCards: () => set(() => ({ cards: [], sortedCards: [] })),
   clearSortedCards: () => set(() => ({ sortedCards: [] })),
 }));

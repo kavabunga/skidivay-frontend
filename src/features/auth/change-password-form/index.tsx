@@ -29,6 +29,12 @@ export const ChangePasswordForm: FC<{
       }
     });
 
+  const defaultValues = {
+    current_password: '',
+    new_password: '',
+    new_password_repeat: '',
+  };
+
   const fields: FieldType[] = [
     {
       name: 'current_password',
@@ -75,6 +81,7 @@ export const ChangePasswordForm: FC<{
       schema={schema}
       button={{ label: 'Сохранить', fullWidth: true }}
       submit={submit}
+      defaultValues={defaultValues}
     />
   );
 };

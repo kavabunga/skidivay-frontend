@@ -1,7 +1,7 @@
 import { Stack, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { SignInForm } from '~/features';
+import { SignInForm, getUser } from '~/features';
 import { Preloader, api } from '~/shared';
 import { stackStyle, titleStyle, paragraphStyle } from './style';
 import { IApiError } from '~/shared/errors';
@@ -15,6 +15,7 @@ export const Activation = () => {
   const addErrorMessage = useMessages((state) => state.addErrorMessage);
   const addSuccessMessage = useMessages((state) => state.addSuccessMessage);
   const user = useUser((state) => state.user);
+  const setUser = useUser((state) => state.setUser);
   const navigate = useNavigate();
   const { uid, token } = useParams();
 
@@ -33,16 +34,19 @@ export const Activation = () => {
     if (user && user.email !== '' && !user.is_active) {
       api
         .activateEmail(uid || '', token || '')
+        .then(() => getUser())
+        .then((res) => setUser(res))
         .then(handleSuccess)
         .catch(handleError)
         .finally(() => {
           navigate('/', { replace: true });
           handleSuccess();
+          loaded();
         });
     } else if (user?.is_active) {
       handleSuccess();
+      loaded();
     }
-    loaded();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
