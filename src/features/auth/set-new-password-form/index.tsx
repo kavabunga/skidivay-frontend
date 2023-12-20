@@ -27,6 +27,11 @@ export const SetNewPasswordForm: FC<{
       }
     });
 
+  const defaultValues = {
+    password: '',
+    passwordRepeat: '',
+  };
+
   const fields: FieldType[] = [
     {
       name: 'password',
@@ -60,6 +65,7 @@ export const SetNewPasswordForm: FC<{
       schema={schema}
       button={{ label: 'Сохранить', fullWidth: true }}
       submit={submit}
+      defaultValues={defaultValues}
     />
   );
 };

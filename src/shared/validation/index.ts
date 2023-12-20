@@ -36,7 +36,7 @@ export const validationSchemes = {
   phone_number: z
     .string()
     .min(1, { message: authFormErrors.requiredPhone })
-    .regex(/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/, {
+    .regex(/^\d{10}$/, {
       message: authFormErrors.wrongPhone,
     }),
   phone_last_digits: z

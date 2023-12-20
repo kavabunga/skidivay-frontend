@@ -20,6 +20,11 @@ export const ResetPasswordForm: FC<IResetPasswordForm> = ({
     phone_last_digits: validationSchemes.phone_last_digits,
   });
 
+  const defaultValues = {
+    email: '',
+    phone_last_digits: '',
+  };
+
   const fields: FieldType[] = [
     {
       name: 'email',
@@ -40,6 +45,7 @@ export const ResetPasswordForm: FC<IResetPasswordForm> = ({
       placeholder: '+7 (XXX) XXX-99-99',
       maskOptions: {
         mask: '+7 (XXX) XXX-00-00',
+        unmask: true,
       },
       hideAsterisk: true,
     },
@@ -49,7 +55,7 @@ export const ResetPasswordForm: FC<IResetPasswordForm> = ({
     const request = {
       phone_last_digits:
         typeof data.phone_last_digits === 'string'
-          ? data.phone_last_digits.replace(/\D/g, '').replace(/^7/, '')
+          ? data.phone_last_digits
           : '',
       email: typeof data.email === 'string' ? data.email : '',
     };
@@ -64,6 +70,7 @@ export const ResetPasswordForm: FC<IResetPasswordForm> = ({
       schema={schema}
       button={{ label: 'Далее', fullWidth: true }}
       submit={submit}
+      defaultValues={defaultValues}
     />
   );
 };

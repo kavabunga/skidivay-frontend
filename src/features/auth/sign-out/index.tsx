@@ -11,8 +11,8 @@ interface ISignOut extends ButtonProps {
 }
 
 export const SignOut: FC<ISignOut> = ({ element: Component, ...props }) => {
-  const setUser = useUser((state) => state.setUser);
-  const setCards = useUser((state) => state.setCards);
+  const clearUser = useUser((state) => state.clearUser);
+  const clearCards = useUser((state) => state.clearCards);
   const addSuccessMessage = useMessages((state) => state.addSuccessMessage);
   const addErrorMessage = useMessages((state) => state.addInfoMessage);
 
@@ -20,8 +20,8 @@ export const SignOut: FC<ISignOut> = ({ element: Component, ...props }) => {
   const handleSignOut = () => {
     signOut()
       .then((res) => {
-        setUser(null);
-        setCards([]);
+        clearUser();
+        clearCards();
         addSuccessMessage(res.message);
         navigate('/');
       })

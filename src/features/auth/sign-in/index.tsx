@@ -38,6 +38,11 @@ export const SignInForm: FC<ISignInForm> = ({
     password: validationSchemes.password_old,
   });
 
+  const defaultValues = {
+    email: '',
+    password: '',
+  };
+
   const fields: FieldType[] = [
     {
       name: 'email',
@@ -89,6 +94,7 @@ export const SignInForm: FC<ISignInForm> = ({
       schema={schema}
       button={{ label: 'Войти', fullWidth: true }}
       submit={submit}
+      defaultValues={defaultValues}
     >
       <List sx={{ ...listStyle }} color="secondary" dense disablePadding>
         <ListItem disableGutters disablePadding dense>

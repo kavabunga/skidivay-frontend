@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { IMask } from 'react-imask';
 import { Box, Stack, Link } from '@mui/material';
 import { AccentButton, OutlineButton } from '~/shared/ui';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -44,12 +43,6 @@ export const UserProfileForm: FC<IUserProfileForm> = ({
   const addErrorMessage = useMessages((state) => state.addErrorMessage);
   const addSuccessMessage = useMessages((state) => state.addSuccessMessage);
 
-  //TODO: Move to User Store
-  const masked = IMask.createMask({
-    mask: '+7 (000) 000-00-00',
-  });
-  masked.resolve(user?.phone_number || '');
-
   const schema = z.object({
     name: validationSchemes.name,
     email: validationSchemes.email,
@@ -78,6 +71,7 @@ export const UserProfileForm: FC<IUserProfileForm> = ({
       placeholder: '+7 (999) 999-99-99',
       maskOptions: {
         mask: '+7 (000) 000-00-00',
+        unmask: true,
       },
       hideAsterisk: true,
     },
@@ -111,26 +105,32 @@ export const UserProfileForm: FC<IUserProfileForm> = ({
   };
 
   const {
-    register,
+    control,
     handleSubmit,
     setError,
     getValues,
     reset,
     getFieldState,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<IFields>({
     mode: 'onTouched',
     resolver: zodResolver(schema),
     defaultValues: {
       name: user?.name,
       email: user?.email,
-      phone_number: masked.value,
+      phone_number: user?.phone_number,
     },
   });
 
   const handleCancelChanges = () => {
     onEditDisable();
-    reset();
+    if (user) {
+      reset({
+        name: user.name,
+        email: user.email,
+        phone_number: user.phone_number,
+      });
+    }
   };
 
   const handleError = (err: IApiError) => {
@@ -151,10 +151,9 @@ export const UserProfileForm: FC<IUserProfileForm> = ({
       ...(data.name && { name: data.name }),
       ...(data.email && { email: data.email }),
       ...(data.phone_number && {
-        phone_number: data.phone_number.replace(/\D/g, '').replace(/^7/, ''),
+        phone_number: data.phone_number,
       }),
     };
-
     if (
       request.name === user?.name &&
       request.email === user?.email &&
@@ -188,10 +187,9 @@ export const UserProfileForm: FC<IUserProfileForm> = ({
         fields.map((field) => (
           <InputSelector
             {...field}
+            control={control}
             disabled={!isActive || isSubmitting}
             key={field.name}
-            register={register(field.name)}
-            error={errors[field.name]}
             preValidator={preValidateEmail}
           />
         ))}

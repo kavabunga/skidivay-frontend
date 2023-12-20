@@ -20,7 +20,7 @@ export interface AuthFormType {
     label: string;
     width?: number;
   };
-  defaultValues?: object;
+  defaultValues?: { [key: string]: string };
   submit: (data: IBasicField) => Promise<void>;
 }
 
@@ -34,16 +34,16 @@ export const AuthForm: FC<AuthFormType> = ({
 }) => {
   const addErrorMessage = useMessages((state) => state.addErrorMessage);
   const {
-    register,
+    control,
     handleSubmit,
     setError,
     getValues,
     getFieldState,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<IBasicField>({
     mode: 'onTouched',
     resolver: zodResolver(schema),
-    defaultValues: defaultValues,
+    ...(defaultValues && { defaultValues: defaultValues }),
   });
 
   const preValidateEmail = () => {
@@ -91,8 +91,7 @@ export const AuthForm: FC<AuthFormType> = ({
             {...field}
             disabled={isSubmitting}
             key={field.name}
-            register={register(field.name)}
-            error={errors[field.name]}
+            control={control}
             {...(field.name === 'email' && { preValidator: preValidateEmail })}
           />
         ))}
