@@ -1,3 +1,4 @@
+import { IMask } from 'react-imask';
 import { create } from 'zustand';
 import { ICard, ICardContext, ICardsContext, IUserContext } from '~/shared';
 
@@ -23,7 +24,17 @@ export const useUser = create<IuseUser>()((set) => ({
   user: null,
   cards: [],
   sortedCards: [],
-  setUser: (user) => set(() => ({ user: user })),
+  setUser: (user) =>
+    set(() => {
+      if (user?.phone_number) {
+        const masked = IMask.createMask({
+          mask: '+7 (000) 000-00-00',
+        });
+        masked.resolve(user?.phone_number);
+        user.phone_number = masked.value;
+      }
+      return { user: user };
+    }),
   setCards: (cards) => set(() => ({ cards: cards })),
   addCard: (card) => set((state) => ({ cards: [...state.cards, card] })),
   editCard: (data) =>

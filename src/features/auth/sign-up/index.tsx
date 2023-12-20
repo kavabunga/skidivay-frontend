@@ -66,7 +66,8 @@ export const SignUpForm: FC<{
       placeholder: '+7 (999) 999-99-99',
       maskOptions: {
         mask: '+7 (000) 000-00-00',
-        unmask: true,
+        unmask: false,
+        overwrite: true,
       },
       hideAsterisk: true,
     },
@@ -107,7 +108,9 @@ export const SignUpForm: FC<{
       name: typeof data.name === 'string' ? data.name : '',
       email: typeof data.email === 'string' ? data.email : '',
       phone_number:
-        typeof data.phone_number === 'string' ? data.phone_number : '',
+        typeof data.phone_number === 'string'
+          ? data.phone_number.replace(/\D/g, '').replace(/^7/, '')
+          : '',
       password: typeof data.password === 'string' ? data.password : '',
     };
     return signUp(request)

@@ -71,7 +71,8 @@ export const UserProfileForm: FC<IUserProfileForm> = ({
       placeholder: '+7 (999) 999-99-99',
       maskOptions: {
         mask: '+7 (000) 000-00-00',
-        unmask: true,
+        unmask: false,
+        overwrite: true,
       },
       hideAsterisk: true,
     },
@@ -151,7 +152,7 @@ export const UserProfileForm: FC<IUserProfileForm> = ({
       ...(data.name && { name: data.name }),
       ...(data.email && { email: data.email }),
       ...(data.phone_number && {
-        phone_number: data.phone_number,
+        phone_number: data.phone_number.replace(/\D/g, '').replace(/^7/, ''),
       }),
     };
     if (
