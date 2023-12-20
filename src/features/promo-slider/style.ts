@@ -10,12 +10,26 @@ export const sliderWindowStyle: SxProps = {
   justifyContent: 'flex-start',
   alignItems: 'center',
   fontSize: 0,
-  overflow: 'hidden',
   '& > .slick-slider .slick-list': {
-    margin: '0 -0.5rem',
+    overflow: 'visible',
+  },
+  '@media (min-width:600px)': {
+    '& > .slick-slider .slick-list': {
+      margin: '0 -0.75rem',
+    },
+  },
+  '@media (max-width:599px)': {
+    '& > .slick-slider .slick-list': {
+      margin: '0 -0.5rem',
+    },
   },
 };
 
 export const slideStyle: SxProps = {
-  padding: '0 0.5rem',
+  '@media (min-width:600px)': {
+    padding: '0 0.75rem',
+  },
+  '@media (max-width:599px)': {
+    padding: '0 0.5rem',
+  },
 };

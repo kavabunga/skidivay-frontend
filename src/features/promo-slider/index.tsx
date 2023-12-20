@@ -23,6 +23,7 @@ export const PromoSlider: FC<PromoSliderProps> = ({ items = [] }) => {
     autoplaySpeed: 4000,
     pauseOnHover: true,
     cssEase: 'ease',
+    arrows: false,
   };
 
   const children: JSX.Element[] = items.map((item) => {

@@ -26,7 +26,6 @@ export const Home = () => {
       >
         Удобный и быстрый доступ к вашим картам лояльности в любом месте
       </Typography>
-
       <Box
         component="img"
         sx={{ ...coverImgStyle }}
@@ -40,15 +39,13 @@ export const Home = () => {
       >
         Попробовать
       </AccentButton>
-
       <Typography
         component="p"
         textAlign="left"
-        sx={{ ...paragraphStyle, lineHeight: 1 }}
+        sx={{ ...paragraphStyle, marginBottom: '-.5rem' }}
       >
         Добавьте в свой кошелёк
       </Typography>
-
       <PromoSlider items={shops} />
     </Stack>
   );
