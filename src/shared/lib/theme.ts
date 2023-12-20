@@ -42,7 +42,7 @@ export const lightTheme = createTheme({
       fontSize: '2.125rem',
       fontWeight: 400,
       lineHeight: 1,
-      color: 'surface.darker',
+      color: '#1C1B1E',
       textAlign: 'left',
       '@media (max-width:760px)': {
         fontSize: '2rem',
@@ -53,7 +53,7 @@ export const lightTheme = createTheme({
       fontWeight: 400,
       lineHeight: 1,
       letterSpacing: 0,
-      color: 'surface.darker',
+      color: '#1C1B1E',
       textAlign: 'left',
       '@media (max-width:600px)': {
         fontSize: '1.5rem',
@@ -66,7 +66,8 @@ export const lightTheme = createTheme({
   components: {
     MuiCssBaseline: {
       styleOverrides: (themeParam) => `
-        body {
+          body {
+          width: 100%;
           background-color:  #e2dce5;
           overflow-wrap: break-word;
           overscroll-behavior: none;
@@ -84,7 +85,8 @@ export const lightTheme = createTheme({
           text-rendering: optimizeLegibility;
           box-sizing: border-box;
           background-color: ${themeParam.palette.surface.lighter};
-          overflow-x: hidden;
+          overflow: hidden;
+          overscroll-behavior: none;
         }
       `,
     },
