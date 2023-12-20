@@ -51,9 +51,11 @@ export const ChangePasswordWidget: FC<{
 
   const handleResetPassword = () => {
     const request: IRequestResetPassword = {
-      phone_last_digits: user?.phone_number?.slice(6) ?? '',
+      phone_last_digits:
+        user?.phone_number?.replace(/\D/g, '').replace(/^7/, '').slice(6) ?? '',
       email: user?.email ?? '',
     };
+    console.log(request);
     return requestResetPassword(request).then(() =>
       onShowPasswordResetSuccess()
     );
