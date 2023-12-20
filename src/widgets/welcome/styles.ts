@@ -27,7 +27,7 @@ export const paragraphStyle: SxProps = {
   fontSize: '1.25rem',
   fontWeight: 400,
   lineHeight: 1.5,
-  letterSpacing: 0,
+  color: 'surface.darker',
   '@media (max-width:600px)': {
     fontSize: '1.125rem',
   },

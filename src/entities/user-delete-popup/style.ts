@@ -24,7 +24,10 @@ export const textStyle: SxProps = {
 
 export const buttonStyle: SxProps = {
   borderRadius: '.5rem',
-  fontSize: '0.875rem',
+  fontSize: '1.125rem',
   padding: '1.125rem 0',
   textTransform: 'none',
+  '@media (max-width:600px)': {
+    fontSize: '1rem',
+  },
 };
