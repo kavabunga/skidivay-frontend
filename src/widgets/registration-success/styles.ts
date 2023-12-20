@@ -19,18 +19,20 @@ export const coverImgStyle: SxProps = {
 };
 
 export const paragraphStyle: SxProps = {
+  width: '90%',
+  margin: '0 auto',
   color: 'surface.dark',
-  fontSize: '.875rem',
+  fontSize: '1rem',
   fontWeight: 400,
-  lineHeight: 1.42,
+  lineHeight: 1.5,
 };
 
 export const linkStyle: SxProps = {
   color: 'surface.dark',
   padding: '0 0 0.25rem',
-  fontSize: '.75rem',
+  fontSize: '1rem',
   fontWeight: 400,
-  lineHeight: 1.33,
+  lineHeight: 1.5,
   textDecoration: 'underline',
   textAlign: 'center',
   cursor: 'pointer',

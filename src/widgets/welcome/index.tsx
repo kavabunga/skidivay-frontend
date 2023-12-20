@@ -16,7 +16,7 @@ export const Welcome = () => {
     <Container component="main" sx={{ ...mainContainerStyle }}>
       <Typography
         component="h1"
-        variant="h1"
+        variant="h2"
         textAlign="left"
         sx={{ padding: '0 0 1.5rem', width: '100%' }}
       >

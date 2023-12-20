@@ -55,6 +55,10 @@ export const AuthWidget = () => {
     setCurrentTab(newValue);
   };
 
+  const handleShowDefault = () => {
+    setWidgetScreen('default');
+  };
+
   const handleShowChangeEmail = () => {
     setWidgetScreen('changeEmail');
   };
@@ -80,7 +84,12 @@ export const AuthWidget = () => {
         />
       );
     case 'resetPasswordRequestSuccess':
-      return <ResetPasswordRequestSuccessWidget email={registredEmail} />;
+      return (
+        <ResetPasswordRequestSuccessWidget
+          email={registredEmail}
+          onClose={handleShowDefault}
+        />
+      );
     case 'passwordReset':
       return (
         <PasswordResetRequestWidget

@@ -33,6 +33,12 @@ export const deleteTextStyle: SxProps = {
   lineHeight: 1.5,
 };
 
+export const wrapperStyle: SxProps = {
+  maxWidth: '100%',
+  paddingY: 1.25,
+  overflow: 'hidden',
+};
+
 export const paragraphStyle: SxProps = {
   fontSize: '.875rem',
   fontWeight: 400,

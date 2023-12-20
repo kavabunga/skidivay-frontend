@@ -13,11 +13,17 @@ export const Home = () => {
   return (
     <Stack
       component="main"
+      direction="column"
+      justifyContent="stretch"
       useFlexGap
       spacing={2}
       sx={{ ...mainContainerStyle }}
     >
-      <Typography component="p" textAlign="center" sx={{ ...paragraphStyle }}>
+      <Typography
+        component="p"
+        textAlign="center"
+        sx={{ margin: '0 auto', ...paragraphStyle }}
+      >
         Удобный и быстрый доступ к вашим картам лояльности в любом месте
       </Typography>
 

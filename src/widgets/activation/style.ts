@@ -15,9 +15,9 @@ export const titleStyle: SxProps = {
 };
 
 export const paragraphStyle: SxProps = {
-  fontSize: '.875rem',
+  fontSize: '1rem',
   fontWeight: 400,
-  lineHeight: 1.42,
+  lineHeight: 1.5,
   paddingTop: '4.875rem',
   paddingBottom: '1.25rem',
 };

@@ -11,13 +11,6 @@ export const titleStyle: SxProps = {
   fontWeight: 400,
 };
 
-export const paragraphStyle: SxProps = {
-  fontSize: '.875rem',
-  fontWeight: 400,
-  lineHeight: 1.42,
-  paddingTop: '.75rem',
-};
-
 export const topButtonsStyle: SxProps = {
   padding: '2.5rem 0 1.25rem',
 };

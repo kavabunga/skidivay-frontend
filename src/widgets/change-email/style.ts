@@ -10,8 +10,8 @@ export const containerStyle: SxProps = {
 
 export const paragraphStyle: SxProps = {
   paddingX: '1.5rem',
-  fontSize: '.875rem',
-  lineHeight: 1.43,
+  fontSize: '1rem',
+  lineHeight: 1.5,
   fontWeight: 400,
   paddingTop: '3.5rem',
   paddingBottom: '1.75rem',

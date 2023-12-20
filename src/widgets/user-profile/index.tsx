@@ -81,7 +81,12 @@ export const UserProfileWidget = () => {
         />
       );
     case 'resetPasswordRequestSuccess':
-      return <ResetPasswordRequestSuccessWidget email={user?.email || ''} />;
+      return (
+        <ResetPasswordRequestSuccessWidget
+          email={user?.email || ''}
+          onClose={handleShowDefault}
+        />
+      );
     case 'reactivationSuccess':
       return <ReactivationSuccessWidget onClose={handleShowDefault} />;
     case 'default':
